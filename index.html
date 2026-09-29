@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#111827" />
-  <meta name="description" content="Halaman peraturan pertandingan IMSSU Air Rifle .177 — baca dan unduh PDF." />
+  <meta name="description" content="Halaman peraturan pertandingan IMSSU Air Rifle .177 — baca, zoom, dan unduh PDF." />
   <title>Peraturan Pertandingan — IMSSU Air Rifle .177</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
@@ -18,31 +18,83 @@
       <div class="actions" aria-label="Aksi dokumen">
         <a class="btn btn-primary" href="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/view" target="_blank" rel="noopener">Baca PDF penuh</a>
         <a class="btn btn-secondary" href="https://drive.google.com/uc?export=download&id=1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl">Download PDF</a>
+        <a class="btn btn-secondary" href="https://www.metallsilhuett.no/wp-content/uploads/2025/05/IMSSU-Rules-English-2025.pdf" target="_blank" rel="noopener">Rulebook IMSSU Lengkap</a>
       </div>
 
-      <p class="hint">Dokumen disimpan di Google Drive. Jika preview tidak tampil, gunakan tombol <strong>Baca PDF penuh</strong>.</p>
+      <p class="hint">Preview di bawah dapat discroll dan diperbesar/diperkecil. Rulebook lengkap dibuka terpisah sebagai dokumen sumber.</p>
     </section>
 
     <section class="viewer-wrap" aria-labelledby="viewer-title">
       <div class="viewer-head">
         <div>
           <p class="eyebrow small">DOKUMEN</p>
-          <h2 id="viewer-title">Preview peraturan</h2>
+          <h2 id="viewer-title">Preview peraturan Air Rifle .177</h2>
         </div>
         <span class="badge">PDF</span>
       </div>
 
-      <iframe class="pdf-viewer"
-        src="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/preview"
-        title="Preview PDF IMSSU Air Rifle .177"
-        loading="lazy"
-        allow="autoplay">
-      </iframe>
+      <div class="viewer-toolbar" aria-label="Kontrol preview PDF">
+        <button class="viewer-btn" id="zoomOut" type="button" aria-label="Perkecil preview">−</button>
+        <span class="zoom-label" id="zoomLabel" aria-live="polite">100%</span>
+        <button class="viewer-btn" id="zoomIn" type="button" aria-label="Perbesar preview">+</button>
+        <button class="viewer-btn viewer-btn-text" id="zoomReset" type="button">Reset</button>
+        <a class="viewer-btn viewer-btn-text viewer-open" href="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/view" target="_blank" rel="noopener">Layar penuh</a>
+      </div>
+
+      <div class="pdf-scroll" id="pdfScroll">
+        <iframe
+          class="pdf-viewer"
+          id="pdfViewer"
+          src="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/preview"
+          title="Preview PDF IMSSU Air Rifle .177"
+          loading="lazy"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p class="viewer-help">Geser/scroll di area preview untuk melihat dokumen. Di HP, pinch-to-zoom pada viewer juga dapat digunakan jika didukung browser.</p>
     </section>
 
     <footer>
       <p>Dokumen referensi IMSSU Air Rifle .177 untuk penggunaan pertandingan 2026.</p>
     </footer>
   </main>
+
+  <script>
+    (() => {
+      const frame = document.getElementById('pdfViewer');
+      const label = document.getElementById('zoomLabel');
+      const zoomIn = document.getElementById('zoomIn');
+      const zoomOut = document.getElementById('zoomOut');
+      const reset = document.getElementById('zoomReset');
+      let zoom = 100;
+
+      function applyZoom() {
+        frame.style.width = zoom + '%';
+        frame.style.height = 'calc(72vh * ' + (zoom / 100) + ')';
+        label.textContent = zoom + '%';
+        zoomOut.disabled = zoom <= 75;
+        zoomIn.disabled = zoom >= 175;
+      }
+
+      zoomIn.addEventListener('click', () => {
+        zoom = Math.min(175, zoom + 25);
+        applyZoom();
+      });
+
+      zoomOut.addEventListener('click', () => {
+        zoom = Math.max(75, zoom - 25);
+        applyZoom();
+      });
+
+      reset.addEventListener('click', () => {
+        zoom = 100;
+        applyZoom();
+      });
+
+      applyZoom();
+    })();
+  </script>
 </body>
 </html>
