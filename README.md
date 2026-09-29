@@ -9,10 +9,9 @@ Repo ini berdiri sendiri dan tidak menggunakan kode maupun runtime Kingdom WarHu
 ## Arsitektur
 
 - GitHub repo: source halaman statis.
-- Google Drive: penyimpanan PDF ringkasan.
+- Google Drive: penyimpanan PDF.
 - Vercel: hosting halaman publik.
 - QR banner: diarahkan ke URL Vercel.
-- Rulebook IMSSU lengkap dibuka sebagai sumber eksternal terpisah.
 
 ## Preview PDF
 
@@ -24,11 +23,8 @@ File ID: `1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl`
 
 Akses publik: **Anyone with the link — Viewer**.
 
-## Rulebook sumber
-
-Rulebook IMSSU lengkap:
-`https://www.metallsilhuett.no/wp-content/uploads/2025/05/IMSSU-Rules-English-2025.pdf`
+Website hanya menyediakan dua aksi dokumen utama: **Baca PDF penuh** dan **Download PDF**, keduanya melalui Google Drive.
 
 ## Deploy
 
-Import repo ini sebagai project Vercel terpisah. Tidak membutuhkan database, Supabase, environment variable, atau runtime bot.
+Project Vercel berdiri terpisah dan tidak membutuhkan database, Supabase, environment variable, atau runtime bot.
