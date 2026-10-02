@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="Halaman peraturan pertandingan IMSSU Air Rifle .177 — baca, zoom, dan unduh PDF." />
+  <title>Peraturan Pertandingan — IMSSU Air Rifle .177</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <div style="margin-bottom:12px">
+      <a href="/" style="display:inline-flex;min-height:44px;align-items:center;text-decoration:none;font-weight:800;color:#111827">← Twin Shooter</a>
+    </div>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">PERATURAN PERTANDINGAN</p>
+      <h1 id="page-title">IMSSU Air Rifle .177</h1>
+      <p class="subtitle">Competition Rules 2026</p>
+
+      <div class="actions" aria-label="Aksi dokumen">
+        <a class="btn btn-primary" href="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/view" target="_blank" rel="noopener">Baca PDF penuh</a>
+        <a class="btn btn-secondary" href="https://drive.google.com/uc?export=download&id=1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl">Download PDF</a>
+      </div>
+
+      <p class="hint">Preview di bawah dapat discroll dan diperbesar/diperkecil. PDF dibaca dan diunduh melalui Google Drive.</p>
+    </section>
+
+    <section class="viewer-wrap" aria-labelledby="viewer-title">
+      <div class="viewer-head">
+        <div>
+          <p class="eyebrow small">DOKUMEN</p>
+          <h2 id="viewer-title">Preview peraturan Air Rifle .177</h2>
+        </div>
+        <span class="badge">PDF</span>
+      </div>
+
+      <div class="viewer-toolbar" aria-label="Kontrol preview PDF">
+        <button class="viewer-btn" id="zoomOut" type="button" aria-label="Perkecil preview">−</button>
+        <span class="zoom-label" id="zoomLabel" aria-live="polite">100%</span>
+        <button class="viewer-btn" id="zoomIn" type="button" aria-label="Perbesar preview">+</button>
+        <button class="viewer-btn viewer-btn-text" id="zoomReset" type="button">Reset</button>
+        <a class="viewer-btn viewer-btn-text viewer-open" href="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/view" target="_blank" rel="noopener">Layar penuh</a>
+      </div>
+
+      <div class="pdf-scroll" id="pdfScroll">
+        <iframe
+          class="pdf-viewer"
+          id="pdfViewer"
+          src="https://drive.google.com/file/d/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/preview"
+          title="Preview PDF IMSSU Air Rifle .177"
+          loading="lazy"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p class="viewer-help">Geser/scroll di area preview untuk melihat dokumen. Di HP, pinch-to-zoom pada viewer juga dapat digunakan jika didukung browser.</p>
+    </section>
+
+    <footer>
+      <p>Dokumen referensi IMSSU Air Rifle .177 untuk penggunaan pertandingan 2026.</p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const frame = document.getElementById('pdfViewer');
+      const label = document.getElementById('zoomLabel');
+      const zoomIn = document.getElementById('zoomIn');
+      const zoomOut = document.getElementById('zoomOut');
+      const reset = document.getElementById('zoomReset');
+      let zoom = 100;
+
+      function applyZoom() {
+        frame.style.width = zoom + '%';
+        frame.style.height = 'calc(72vh * ' + (zoom / 100) + ')';
+        label.textContent = zoom + '%';
+        zoomOut.disabled = zoom <= 75;
+        zoomIn.disabled = zoom >= 175;
+      }
+
+      zoomIn.addEventListener('click', () => {
+        zoom = Math.min(175, zoom + 25);
+        applyZoom();
+      });
+
+      zoomOut.addEventListener('click', () => {
+        zoom = Math.max(75, zoom - 25);
+        applyZoom();
+      });
+
+      reset.addEventListener('click', () => {
+        zoom = 100;
+        applyZoom();
+      });
+
+      applyZoom();
+    })();
+  </script>
+</body>
+</html>
