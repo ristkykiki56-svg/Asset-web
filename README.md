@@ -1,30 +1,22 @@
-# IMSSU Air Rifle .177 Rules Site
+# Twin Shooter
 
-Standalone static site untuk halaman peraturan pertandingan IMSSU Air Rifle .177.
+Static website untuk profil gabungan Clarisa Azalia dan Aurellia Cassandra, dengan halaman IMSSU Air Rifle rules yang tetap terpisah.
 
-## Pemisahan
+## Public routes
 
-Repo ini berdiri sendiri dan tidak menggunakan kode maupun runtime Kingdom WarHub bot/dashboard.
+- `/` — Twin Shooter athlete profile 2021–2023.
+- `/rules` — preview/read/download IMSSU Air Rifle rules melalui Google Drive.
 
-## Arsitektur
+## Source policy
 
-- GitHub repo: source halaman statis.
-- Google Drive: penyimpanan PDF.
-- Vercel: hosting halaman publik.
-- QR banner: diarahkan ke URL Vercel.
+Profil atlet hanya menggunakan data yang didukung dua PDF profil 2021–2023.
 
-## Preview PDF
+- Hasil Clarisa dan Aurellia disimpan terpisah di tampilan.
+- Usia lama pada PDF tidak ditampilkan sebagai usia saat ini.
+- Partisipasi kompetisi tidak otomatis dianggap podium.
+- Tanggal yang konflik pada sumber tidak ditebak.
+- Kartu identitas dan data administratif tidak dipublikasikan.
 
-Preview menggunakan Google Drive viewer dan dibungkus area scroll dengan kontrol zoom 75%–175%, tombol reset, serta tautan layar penuh. Pada perangkat mobile, viewer juga dapat memakai pinch-to-zoom jika didukung browser.
+## Runtime
 
-## Google Drive PDF
-
-File ID: `1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl`
-
-Akses publik: **Anyone with the link — Viewer**.
-
-Website hanya menyediakan dua aksi dokumen utama: **Baca PDF penuh** dan **Download PDF**, keduanya melalui Google Drive.
-
-## Deploy
-
-Project Vercel berdiri terpisah dan tidak membutuhkan database, Supabase, environment variable, atau runtime bot.
+Pure static HTML/CSS/JS. Tidak memerlukan database, Supabase, environment variable, atau runtime bot.
