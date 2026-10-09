@@ -1,22 +1,14 @@
 # Twin Shooter
 
-Static website untuk profil gabungan Clarisa Azalia dan Aurellia Cassandra, dengan halaman IMSSU Air Rifle rules yang tetap terpisah.
+Static website untuk profil Clarisa Azalia dan Aurellia Cassandra (arsip 2021–2023).
 
-## Public routes
+- `/` — profil, riwayat, kemampuan, dan hasil pertandingan.
+- `/rules` — referensi PDF IMSSU Air Rifle .177 melalui Google Drive.
 
-- `/` — Twin Shooter athlete profile 2021–2023.
-- `/rules` — preview/read/download IMSSU Air Rifle rules melalui Google Drive.
+## Implementasi
 
-## Source policy
+HTML statis, CSS, dan JavaScript ringan tanpa build step. Kartu hasil pertandingan dirender dalam HTML, lalu filter bekerja pada kartu yang sudah ada. Halaman tetap terbaca tanpa JavaScript. Aset foto disimpan terpisah sebagai WebP yang dapat di-cache. SEO memakai canonical, Open Graph, Twitter Card, JSON-LD, sitemap, robots.txt, serta gambar berbagi sosial.
 
-Profil atlet hanya menggunakan data yang didukung dua PDF profil 2021–2023.
+## Data dan privasi
 
-- Hasil Clarisa dan Aurellia disimpan terpisah di tampilan.
-- Usia lama pada PDF tidak ditampilkan sebagai usia saat ini.
-- Partisipasi kompetisi tidak otomatis dianggap podium.
-- Tanggal yang konflik pada sumber tidak ditebak.
-- Kartu identitas dan data administratif tidak dipublikasikan.
-
-## Runtime
-
-Pure static HTML/CSS/JS. Tidak memerlukan database, Supabase, environment variable, atau runtime bot.
+Data atlet mengikuti dua profil PDF periode 2021–2023. Usia lama, identitas administratif, dan hasil pertandingan yang tidak didokumentasikan tidak ditampilkan sebagai fakta baru. Konflik tanggal dalam PDF tidak ditebak. Halaman Rules tetap terpisah.
