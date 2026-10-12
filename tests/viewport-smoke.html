@@ -14,22 +14,19 @@ iframe{display:block;border:0;height:920px;width:320px}
 <output id="result" data-status="pending">RUNNING</output>
 <iframe id="page" title="Twin Shooter responsive test" src="/"></iframe>
 <script>
-(async () => {
+(() => {
   const frame = document.getElementById('page');
   const result = document.getElementById('result');
   const widths = [320, 360, 375, 390, 680, 768, 900, 1024, 1280, 1440];
   const errors = [];
-  const paint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  frame.addEventListener('load', async () => {
+  window.addEventListener('load', () => {
     try {
       const doc = frame.contentDocument;
       if (!doc || !doc.querySelector('.hero')) throw new Error('Homepage was not loaded');
-      await paint();
       const imgs = [...doc.querySelectorAll('.duo img')];
       if (imgs.length !== 2 || imgs.some(img => img.naturalWidth < 1)) errors.push('athlete photos missing');
       for (const width of widths) {
         frame.style.width = width + 'px';
-        await paint();
         const root = doc.documentElement;
         const actual = Math.max(root.scrollWidth, doc.body.scrollWidth);
         if (actual > width + 1) errors.push(width + 'px horizontal overflow (' + actual + 'px)');
