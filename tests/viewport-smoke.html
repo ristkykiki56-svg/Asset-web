@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Twin Shooter viewport smoke harness</title>
+<style>
+body{margin:0;padding:0;font:14px system-ui,sans-serif;background:#fff}
+#result{padding:8px;white-space:pre-wrap}
+iframe{display:block;border:0;height:920px;width:320px}
+</style>
+</head>
+<body>
+<output id="result" data-status="pending">RUNNING</output>
+<iframe id="page" title="Twin Shooter responsive test" src="/"></iframe>
+<script>
+(async () => {
+  const frame = document.getElementById('page');
+  const result = document.getElementById('result');
+  const widths = [320, 360, 375, 390, 680, 768, 900, 1024, 1280, 1440];
+  const errors = [];
+  const paint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  frame.addEventListener('load', async () => {
+    try {
+      const doc = frame.contentDocument;
+      if (!doc || !doc.querySelector('.hero')) throw new Error('Homepage was not loaded');
+      await paint();
+      const imgs = [...doc.querySelectorAll('.duo img')];
+      if (imgs.length !== 2 || imgs.some(img => img.naturalWidth < 1)) errors.push('athlete photos missing');
+      for (const width of widths) {
+        frame.style.width = width + 'px';
+        await paint();
+        const root = doc.documentElement;
+        const actual = Math.max(root.scrollWidth, doc.body.scrollWidth);
+        if (actual > width + 1) errors.push(width + 'px horizontal overflow (' + actual + 'px)');
+        for (const selector of ['.hero h1', '.duo', '.band', '.band-features', '#achievements']) {
+          const el = doc.querySelector(selector);
+          if (!el || el.getBoundingClientRect().width <= 0) errors.push(width + 'px missing layout ' + selector);
+        }
+      }
+      const all = doc.querySelectorAll('#grid .achievement:not([hidden])').length;
+      if (all !== 25) errors.push('expected 25 results, got ' + all);
+      const clarisa = doc.querySelector('[data-filter="clarisa"]');
+      clarisa.click();
+      const filtered = doc.querySelectorAll('#grid .achievement:not([hidden])').length;
+      if (!filtered || filtered >= 25) errors.push('athlete filter did not change results');
+      if (clarisa.getAttribute('aria-pressed') !== 'true') errors.push('aria-pressed not updated');
+      if (!doc.querySelector('#results-status').textContent.includes(String(filtered))) errors.push('live status not updated');
+      doc.querySelector('[data-filter="all"]').click();
+      if (doc.querySelectorAll('#grid .achievement:not([hidden])').length !== 25) errors.push('reset filter failed');
+      result.dataset.status = errors.length ? 'fail' : 'pass';
+      result.textContent = errors.length ? errors.join(' | ') : 'PASS: responsive widths, images, 25 results, filter & aria feedback';
+    } catch(err) {
+      result.dataset.status='fail';
+      result.textContent='EXCEPTION: ' + String(err.message || err);
+    }
+  },{once:true});
+})();
+</script>
+</body>
+</html>
