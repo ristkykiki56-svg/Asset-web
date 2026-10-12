@@ -18,4 +18,16 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify Node smoke tests
-        run: node --test tests/motion-smoke.test.mjs
+        run: node --test tests/*.test.mjs
+      - name: Check real-browser viewport behavior
+        run: bash tests/browser-smoke.sh
+      - name: Upload homepage QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: twinshooter-homepage-qa
+          path: |
+            /tmp/twinshooter-qa/desktop.png
+            /tmp/twinshooter-qa/mobile.png
+            /tmp/twinshooter-qa/viewport-result.html
+          if-no-files-found: ignore
