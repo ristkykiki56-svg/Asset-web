@@ -18,4 +18,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify Node smoke tests
-        run: node --test tests/motion-smoke.test.mjs
+        run: node --test tests/*.test.mjs
