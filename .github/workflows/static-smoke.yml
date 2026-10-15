@@ -21,13 +21,16 @@ jobs:
         run: node --test tests/*.test.mjs
       - name: Check real-browser viewport behavior
         run: bash tests/browser-smoke.sh
-      - name: Upload homepage QA screenshots
+      - name: Upload website QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: twinshooter-homepage-qa
+          name: twinshooter-pages-qa
           path: |
             /tmp/twinshooter-qa/desktop.png
             /tmp/twinshooter-qa/mobile.png
             /tmp/twinshooter-qa/viewport-result.html
+            /tmp/twinshooter-qa/lab-desktop.png
+            /tmp/twinshooter-qa/lab-mobile.png
+            /tmp/twinshooter-qa/lab-viewport-result.html
           if-no-files-found: ignore

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="id">
+<head><meta charset="utf-8"><title>Laboratory browser regression</title></head>
+<body>
+<output id="result" data-status="pending">CHECKING</output>
+<iframe id="lab" src="/lab.html" title="Lab QA" style="width:320px;height:900px;border:0;display:block"></iframe>
+<script>
+const frame=document.getElementById('lab');
+const output=document.getElementById('result');
+frame.addEventListener('load',()=>{
+ const problems=[];
+ try {
+ const w=frame.contentWindow;
+ const doc=frame.contentDocument;
+ if(!doc.querySelector('.lab-notice')) problems.push('illustrative warning missing');
+ if(!doc.querySelector('a[href="/"]')) problems.push('home backlink missing');
+ if(doc.querySelectorAll('input[type=range]').length!==9) problems.push('slider count');
+ if(doc.querySelectorAll('input[type=range]:not([aria-label])').length) problems.push('unlabelled sliders');
+ if(doc.querySelectorAll('.steel-target-btn').length!==20) problems.push('target count');
+ if(doc.querySelectorAll('.steel-target-btn:not([aria-label])').length) problems.push('unlabelled targets');
+ if(!Array.from(doc.styleSheets).some(sheet => sheet.href && sheet.href.includes('lab-utilities.css'))) problems.push('static CSS missing');
+ for(const width of [320,360,375,390,768,1024,1280,1440]){
+   frame.style.width=width+'px';
+   const contentW=Math.max(doc.documentElement.scrollWidth,doc.body.scrollWidth);
+   if(contentW>width+2){
+     const offenders=Array.from(doc.querySelectorAll('body *')).map(el=>({name:el.tagName.toLowerCase()+'.'+String(el.className?.baseVal??el.className).slice(0,45),right:Math.round(el.getBoundingClientRect().right),sw:el.scrollWidth,cw:el.clientWidth})).filter(el=>el.right>width+3 && el.sw>0).sort((a,b)=>b.right-a.right).slice(0,6);
+     problems.push('overflow '+width+': '+contentW+' '+JSON.stringify(offenders));
+   }
+ }
+ frame.style.width='390px';
+ w.switchPose('sideRight');
+ if(!doc.getElementById('dossierRef').textContent.includes('KANAN ATAS'))problems.push('pose/dossier mismatch');
+ w.switchPose('front');
+ if(!doc.getElementById('stagePoseTitle').textContent.includes('DEPAN'))problems.push('pose not changed');
+ const first=doc.getElementById('target-chicken-0');
+ first.click();
+ if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');
+ if(!doc.getElementById('rackHitScore').textContent.includes('01'))problems.push('target count feedback');
+ doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true}));
+ if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='true') problems.push('keyboard trigger down');
+ doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keyup',{key:' ',bubbles:true}));
+ if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='false') problems.push('keyboard trigger up');
+ }catch(e){problems.push('exception: '+String(e.message||e));}
+ output.dataset.status=problems.length?'fail':'pass';
+ output.textContent=problems.length?problems.join('; '):'PASS: 320-1440px, labels, controls, pose sync, keyboard, static CSS';
+},{once:true});
+</script>
+</body></html>
