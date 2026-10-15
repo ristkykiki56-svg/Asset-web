@@ -53,7 +53,7 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.match(html,/id="lab-sources"/);
  assert.match(html,/IMSSU Official Sporting Rules 2025/);
  assert.match(html,/toleransi jarak ±2,5%/);
- assert.match(html,/ref="noopener noreferrer"/);
+ assert.match(html,/rel="noopener noreferrer"/);
  assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
  assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
  assert.doesNotMatch(js,/ref: 'REF POSTER/);
