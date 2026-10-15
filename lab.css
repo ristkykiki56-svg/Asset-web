@@ -203,3 +203,15 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
  .lab-section-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;overflow:visible;white-space:normal;border:0}
  .lab-section-nav a{min-width:0;min-height:44px;padding:.55rem .4rem;border:1px solid var(--rule-light);font-size:11px;line-height:1.3;justify-content:center;text-align:center}
 }
+
+/* Transparent sourcing: verified rules and demonstration are deliberately distinguished. */
+.source-audit{padding:clamp(1.1rem,3.4vw,2.5rem);scroll-margin-top:9rem}
+.source-audit h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin:.5rem 0 1rem}
+.source-audit p{font-size:.91rem;line-height:1.65;max-width:80ch;margin:.7rem 0;color:var(--ink-700)}
+.source-audit .source-eyebrow{font-size:.74rem;font-family:'IBM Plex Mono',monospace;font-weight:800;color:var(--clarisa-blue);letter-spacing:.07em}
+.source-table-wrap{width:100%;overflow-x:auto;margin:1.35rem 0}
+.source-audit table{border-collapse:collapse;width:100%;min-width:510px;font-size:.78rem;line-height:1.6}
+.source-audit th,.source-audit td{border:1px solid var(--rule-light);padding:.75rem;vertical-align:top;text-align:left}
+.source-audit thead th{background:var(--bg-subtle);color:var(--ink-900)}
+.source-audit tbody th{font-weight:650}
+.source-audit a{color:var(--clarisa-blue);text-decoration:underline;text-underline-offset:4px}

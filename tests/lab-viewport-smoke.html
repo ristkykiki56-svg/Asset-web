@@ -29,7 +29,7 @@ frame.addEventListener('load',()=>{
  }
  frame.style.width='390px';
  w.switchPose('sideRight');
- if(!doc.getElementById('dossierRef').textContent.includes('KANAN ATAS'))problems.push('pose/dossier mismatch');
+ if(!doc.getElementById('dossierRef').textContent.includes('SKEMA EDUKATIF'))problems.push('pose/dossier provenance label missing');
  w.switchPose('front');
  if(!doc.getElementById('stagePoseTitle').textContent.includes('DEPAN'))problems.push('pose not changed');
  const first=doc.getElementById('target-chicken-0');

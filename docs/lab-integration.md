@@ -21,3 +21,13 @@ This interactive demonstration is not an IMSSU rules edition, training measureme
 - Node smoke: node --test tests/*.test.mjs
 - Browser QA: homepage profile, /rules, /lab load; at 320/375/768/1280 check no horizontal overflow, navigation, labelled sliders, 20 targets, pose and dossier consistency, trigger keyboard/pointercancel, reduced motion and offline CSS.
 - Validate production static delivery before merging. Do not merge if browser checks fail.
+
+## Verification of published technical claims (16 October 2026)
+
+The available primary rules reference is IMSSU Official Sporting Rules **2025**, Airgun Rules, https://imssu.org/wp-content/uploads/2025/04/IMSSU-Rules-English-2025.pdf . The site should not describe a new 2026 rules release without a newer official source.
+
+**Officially supported:** Production Rifle .177 (4.5 mm), lead pellets, standing position, airgun silhouette targets at chicken 18m/pig 27m/turkey 33m/ram 41m, 1/10 full-size targets, +/- 2.5% range tolerance. The HTML identifies these as grounded rules and links the primary document.
+
+**Not verified:** the alleged original anatomical poster, its locations/ref codes, athlete-specific posture and equipment, force ratios (60/40 or 65/35), 12-degree back arch, 80% sway reduction, 85mm ideal eye relief, 110gf trigger, exact muzzle sway, 200 bar rifle, particular pellet aerodynamic superiority, and 14 clicks/6.8cm drop. The uploaded HTML prototype was the only source for those values. These have been removed, replaced with non-quantitative demonstrations, or labelled as unmeasured model parameters. The trajectory view does not compute external ballistics or live click adjustments. SVG animals are not official cutout templates.
+
+**Provenance unresolved:** Without the purported v14 source poster or measured athlete/equipment data, diagram accuracy cannot be certified. Athlete labels on schematic views are not evidence of actual stance or specific models. Any subsequent claim requires a retrievable source and citation. The distinction between IMSSU rules and coaching guidance from other organizations must be maintained.

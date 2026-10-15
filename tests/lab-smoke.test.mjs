@@ -44,7 +44,21 @@ test('pointer cancellation, keyboard input, pose sync, and RAF throttling are im
 });
 test('disclaimers separate illustration from rules and provenance',()=>{
  assert.match(html,/SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR/);
- assert.match(html,/bukan rekomendasi setelan peralatan/);
+ assert.match(html,/Tidak ada rekomendasi angka setelan/);
  assert.doesNotMatch(html,/ANTI-SLOP EDITION|REV\.14|DOKTRIN POSTER/);
  assert.match(html,/href="\/rules"/);
+});
+
+test('published claims distinguish official rules from unvalidated demonstrations',()=>{
+ assert.match(html,/id="lab-sources"/);
+ assert.match(html,/IMSSU Official Sporting Rules 2025/);
+ assert.match(html,/toleransi jarak ±2,5%/);
+ assert.match(html,/rel="noopener noreferrer"/);
+ assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
+ assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
+ assert.doesNotMatch(js,/ref: 'REF POSTER/);
+ assert.match(js,/unit model/);
+ assert.match(js,/JARAK SESUAI ATURAN/);
+ assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
+ assert.match(html,/bukan template produksi sasaran/);
 });
