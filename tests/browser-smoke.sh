@@ -40,3 +40,25 @@ echo 'Chrome viewport smoke PASS (320px–1440px)'
 test -s /tmp/twinshooter-qa/desktop.png
 test -s /tmp/twinshooter-qa/mobile.png
 echo 'Captured desktop/mobile homepage screenshots'
+
+# Lab route, viewport and interaction checks (production CSS, no Tailwind Play CDN).
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --window-size=1500,1000 --virtual-time-budget=8000 --dump-dom \
+  "http://127.0.0.1:$PORT/tests/lab-viewport-smoke.html" \
+  >/tmp/twinshooter-qa/lab-viewport-result.html 2>/tmp/twinshooter-qa/lab-chrome.log
+if ! grep -Fq 'data-status="pass"' /tmp/twinshooter-qa/lab-viewport-result.html; then
+  grep -E 'data-status="fail"|exception|overflow' /tmp/twinshooter-qa/lab-viewport-result.html || true
+  echo 'Lab viewport/interactions smoke failed' >&2
+  exit 1
+fi
+echo 'Lab browser QA PASS (320px–1440px)'
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --hide-scrollbars --window-size=1440,1000 --virtual-time-budget=1200 \
+  --screenshot=/tmp/twinshooter-qa/lab-desktop.png "http://127.0.0.1:$PORT/lab.html" \
+  >/dev/null 2>/dev/null
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --hide-scrollbars --window-size=390,900 --virtual-time-budget=1200 \
+  --screenshot=/tmp/twinshooter-qa/lab-mobile.png "http://127.0.0.1:$PORT/lab.html" \
+  >/dev/null 2>/dev/null
+test -s /tmp/twinshooter-qa/lab-desktop.png
+test -s /tmp/twinshooter-qa/lab-mobile.png
