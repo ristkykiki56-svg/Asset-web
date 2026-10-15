@@ -44,7 +44,7 @@ test('pointer cancellation, keyboard input, pose sync, and RAF throttling are im
 });
 test('disclaimers separate illustration from rules and provenance',()=>{
  assert.match(html,/SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR/);
- assert.match(html,/bukan rekomendasi setelan peralatan/);
+ assert.match(html,/Tidak ada rekomendasi angka setelan/);
  assert.doesNotMatch(html,/ANTI-SLOP EDITION|REV\.14|DOKTRIN POSTER/);
  assert.match(html,/href="\/rules"/);
 });
