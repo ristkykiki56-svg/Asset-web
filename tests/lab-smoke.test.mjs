@@ -59,5 +59,6 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.doesNotMatch(js,/ref: 'REF POSTER/);
  assert.match(js,/unit model/);
  assert.match(js,/JARAK SESUAI ATURAN/);
+ assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
  assert.match(html,/bukan template produksi sasaran/);
 });
