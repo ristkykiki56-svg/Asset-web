@@ -72,23 +72,23 @@ let sfxActive = false;
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
                 code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
-                ref: 'REF POSTER: CLARISA AZALIA (KIRI ATAS)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Lengkungan Punggung & Tahanan Beban Pasif',
-                desc: 'Tubuh melengkung pada bagian punggung. Untuk mendapatkan posisi ini secara efektif dan nyaman: (1) Condongkan tubuh bagian atas menjauhi target, (2) Dorong pinggul ke depan ke arah sasaran, dan (3) Putar sedikit bahu. Dalam posisi ini tahanan beban terjadi secara pasif melalui struktur tulang, bukan otot, sehingga memperkecil getaran dan mencegah kelelahan.',
-                metrics: ['CONDONG ATAS: Menjauhi target', 'PINGGUL: Dorong ke depan', 'BEBAN: Kerangka Pasif']
+                desc: 'Garis tubuh dan tumpuan pada gambar adalah skema dua dimensi. Diagram memperlihatkan bagaimana perubahan satu parameter menggeser bentuk SVG, bukan menunjukkan distribusi gaya yang telah diukur.',
+                metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
             },
             {
                 id: 'head', num: '02', pose: 'front', x: 50, y: 16,
                 code: 'TITIK ANATOMI #02 // POSISI KEPALA',
-                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Posisi Kepala Tegak & Pandangan Lurus',
-                desc: 'Arahkan kepala ke arah sasaran dengan mata melihat lurus ke depan melalui teleskop (pastikan posisi ini nyaman). Hindari kemiringan leher berlebihan agar sistem keseimbangan telinga dalam (vestibular) bekerja optimal.',
-                metrics: ['ARAH KEPALA: Lurus ke target', 'LEHER: Bebas ketegangan', 'KONTAK PIPI: Konsisten']
+                desc: 'Ilustrasi posisi kepala dan garis pandang. Bentuk serta jarak pada gambar tidak mengacu pada pengukuran Clarisa atau Aurellia.',
+                metrics: ['FOKUS: posisi kepala', 'ACUAN: skema visual', 'UKURAN: bukan data atlet']
             },
             {
                 id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
                 code: 'TITIK ANATOMI #03 // BAHU KANAN',
-                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Bahu Kanan & Sandaran Buttplate',
                 desc: 'Bahu kanan rileks dan tidak terangkat tegang. Pastikan buttplate (karet popor belakang) menempel secara konsisten pada lekukan bahu kanan di setiap tembakan.',
                 metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: Penuh & Stabil', 'TINGGI HOOK: Sesuai leher']
@@ -96,23 +96,23 @@ let sfxActive = false;
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
                 code: 'TITIK ANATOMI #04 // BAHU KIRI & LENGAN KIRI',
-                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Bahu Kiri & Segitiga Penopang Lengan Kiri',
-                desc: 'Bahu kiri rileks dan turun secara alami. Lengan atas dan lengan bawah kiri membentuk segitiga penopang vertikal di bawah titik berat senapan sehingga otot bisep tidak menahan beban secara aktif.',
-                metrics: ['BAHU KIRI: Turun rileks', 'LENGAN BAWAH: Tiang vertikal', 'OTOT BISEP: Pasif (0% Tegang)']
+                desc: 'Ilustrasi posisi lengan penopang sebagai komponen postur berdiri. Tidak dapat digunakan untuk menyimpulkan persentase kerja otot.',
+                metrics: ['LENGAN: ilustrasi', 'POSISI: contoh', 'AKTIVITAS OTOT: tidak diukur']
             },
             {
                 id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
                 code: 'TITIK ANATOMI #05 // TANGAN & PERGELANGAN KIRI',
-                ref: 'REF POSTER: AURELLIA CASSANDRA (TENGAH KANAN)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Tangan dan Pergelangan Tangan Kiri',
-                desc: 'Ada banyak cara berbeda untuk memposisikan tangan dan pergelangan tangan kiri (kepalan tangan, bertumpu pada buku jari, atau V-shape) tergantung panjang lengan dan tinggi fore-end. Pergelangan tangan wajib lurus dan terkunci tulang.',
-                metrics: ['PERGELANGAN: Lurus vertikal', 'TUMPUAN: Di bawah CoB', 'KETEGANGAN: Bebas kaku']
+                desc: 'Variasi posisi pergelangan ditampilkan secara konseptual. Posisi latihan nyata harus disesuaikan secara langsung oleh pelatih dan atlet.',
+                metrics: ['FUNGSI: dukungan posisi', 'VARIASI: anatomi atlet', 'ACUAN: bukan ukuran tunggal']
             },
             {
                 id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
                 code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
-                ref: 'REF POSTER: AURELLIA CASSANDRA (TENGAH KANAN)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Tangan Kanan, Grip & Jari Pelatuk',
                 desc: 'Tangan kanan menggenggam pistol grip dengan kuat, nyaman, dan rileks tanpa meremas kayu popor. Jari telunjuk ditempatkan mandiri pada bilah pelatuk membentuk sudut tarikan 90° lurus ke belakang.',
                 metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: 90.0° Lurus']
@@ -120,15 +120,15 @@ let sfxActive = false;
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
                 code: 'TITIK ANATOMI #07 // SIKU KIRI & PINGGUL',
-                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Kunci Siku Kiri pada Tulang Pinggul',
-                desc: 'Letakkan siku kiri tepat bertumpu pada lekuk atas tulang pinggul (iliac crest) atau rusuk bawah. Kontak tulang-ke-tulang ini menyalurkan seluruh bobot senapan langsung ke panggul dan kaki kiri.',
-                metrics: ['KONTAK: Siku ke Pinggul', 'GESEKAN: Stabil tidak selip', 'EFEK: Reduksi goyangan 80%']
+                desc: 'Diagram menampilkan letak siku terhadap pinggul. Klaim tentang pengurangan goyangan dalam persen tidak didukung pengukuran pada simulator.',
+                metrics: ['KONTAK: ilustrasi', 'EFEK: belum terukur', 'ANGKA REDUKSI: tidak tersedia']
             },
             {
                 id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
                 code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
-                ref: 'REF POSTER: AURELLIA CASSANDRA (KANAN ATAS)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Penyelarasan Badan, Bahu & Pinggul',
                 desc: 'Condongkan tubuh bagian atas ke belakang dengan bahu hampir sejajar garis tembak. Sejajarkan pinggul dengan arah sasaran dan kunci posisi panggul agar tidak berputar (twist) saat membidik.',
                 metrics: ['PINGGUL: Sejajar target', 'TORSO: Condong kompensasi', 'PUNTIRAN: Nol rotasi']
@@ -136,18 +136,18 @@ let sfxActive = false;
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
                 code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
-                ref: 'REF POSTER: CLARISA AZALIA (BAWAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Kaki Kiri Menahan 60% – 70% Total Beban',
-                desc: 'Tempatkan titik berat tubuh lebih dominan pada kaki kiri (sekitar 60–70% beban) karena kaki kiri berada lurus di bawah tumpuan siku kiri dan senapan. Lutut lurus rileks tanpa dikunci paksa.',
-                metrics: ['BEBAN KAKI KIRI: 60% – 70%', 'POSISI: Lurus di bawah CoG', 'LUTUT: Lurus tanpa tegang']
+                desc: 'Kaki kiri merupakan salah satu titik tumpu postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
+                metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
                 code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
-                ref: 'REF POSTER: CLARISA & AURELLIA (BAWAH)',
+                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Kaki Kanan (30% – 40%) & Sudut Kaki 90°',
-                desc: 'Kaki kanan berfungsi sebagai tiang penyeimbang yang menopang 30–40% beban tubuh. Posisikan kedua kaki selebar bahu dengan arah badan membentuk sudut sekitar 90° terhadap garis sasaran.',
-                metrics: ['BEBAN KANAN: 30% – 40%', 'LEBAR KAKI: Selebar bahu', 'ORIENTASI: 90° ke Target']
+                desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
+                metrics: ['DISTRIBUSI: tidak diukur', 'SUDUT: hanya ilustrasi', 'ATURAN: posisi berdiri']
             }
         ];
 
@@ -322,10 +322,10 @@ let sfxActive = false;
                     : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
             });
             const labels = {
-                back: 'FIG 1.1 — CLARISA AZALIA (PUNGGUNG & ALUR BEBAN PASIF)',
-                front: 'FIG 1.2 — CLARISA AZALIA (TAMPAK DEPAN MEMBIDIK)',
-                sideLeft: 'FIG 1.3 — AURELLIA CASSANDRA (PROFIL SAMPING KIRI)',
-                sideRight: 'FIG 1.4 — AURELLIA CASSANDRA (PROFIL SAMPING KANAN)'
+                back: 'FIG 1.1 — SKEMA PUNGGUNG (ILUSTRASI)',
+                front: 'FIG 1.2 — SKEMA TAMPAK DEPAN (ILUSTRASI)',
+                sideLeft: 'FIG 1.3 — SKEMA SAMPING KIRI (ILUSTRASI)',
+                sideRight: 'FIG 1.4 — SKEMA SAMPING KANAN (ILUSTRASI)'
             };
             document.getElementById('stagePoseTitle').textContent = labels[poseKey];
             const chosen = POSTER_BIOMECH_DATA.find(item => item.id === activeBiomechId);
@@ -403,27 +403,27 @@ let sfxActive = false;
             const arch = parseFloat(document.getElementById('archSlider').value);
             const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
 
-            document.getElementById('archDegReadout').textContent = `${arch > 0 ? '+' : ''}${arch.toFixed(1)}° ${arch >= 10 && arch <= 15 ? '(IDEAL)' : '(DEVIASI)'}`;
-            document.getElementById('hipLockReadout').textContent = hipLock >= 85 ? `${hipLock}% KONTAK TULANG` : `${hipLock}% MENAHAN OTOT`;
+            document.getElementById('archDegReadout').textContent = `${arch > 0 ? '+' : ''}${arch.toFixed(1)}° (MODEL VISUAL)`;
+            document.getElementById('hipLockReadout').textContent = `${hipLock} / 100 (MODEL)`;
 
             const stability = Math.max(15, Math.min(99, Math.round(100 - Math.abs(arch - 12) * 3.4 - (100 - hipLock) * 0.55)));
-            const sway = (0.7 + (100 - stability) * 0.08).toFixed(1);
+            const changeIndex = Math.max(0, Math.min(100, 100 - stability)); // unitless display model, not mm
             const leftLoad = Math.min(78, Math.max(48, Math.round(65 + (12 - arch) * 0.7)));
             const rightLoad = 100 - leftLoad;
 
-            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad}%`;
-            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad}%`;
-            document.getElementById('muzzleSwayReadout').textContent = `${sway} mm`;
+            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad} (MODEL)`;
+            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad} (MODEL)`;
+            document.getElementById('muzzleSwayReadout').textContent = `${changeIndex} / 100`;
 
             const statusEl = document.getElementById('skeletalStatusLabel');
             if (stability >= 82) {
-                statusEl.textContent = 'BEBAN PASIF TULANG BELAKANG (OPTIMAL)';
+                statusEl.textContent = 'PARAMETER MODEL DI POSISI AWAL';
                 statusEl.className = 'text-[var(--ok-green)]';
             } else if (stability >= 55) {
-                statusEl.textContent = 'KOMPENSASI OTOT AKTIF (RAWAN TREMOR)';
+                statusEl.textContent = 'PARAMETER MODEL BERUBAH';
                 statusEl.className = 'text-[#B37B24]';
             } else {
-                statusEl.textContent = ' TIDAK STABIL — BEBAN OTOT BERLEBIH!';
+                statusEl.textContent = 'PARAMETER MODEL JAUH DARI TITIK AWAL';
                 statusEl.className = 'text-[var(--aurellia-red)]';
             }
 
@@ -464,21 +464,21 @@ let sfxActive = false;
             if (vec === 'B') {
                 stamp.textContent = 'VEKTOR B: 90° LURUS';
                 stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                dev.textContent = '0.0 mm (NOL)';
+                dev.textContent = 'Vektor lurus (contoh)';
                 dev.className = 'text-[var(--ok-green)]';
                 box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
                 box.innerHTML = '<strong>SPESIFIKASI VEKTOR B (TEPAT 90&deg;):</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.';
             } else if (vec === 'C') {
                 stamp.textContent = 'VEKTOR C: TERLALU DALAM';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = '-4.4 mm DORONG KIRI';
+                dev.textContent = 'Vektor bergeser kiri (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
                 box.innerHTML = '<strong>KESALAHAN VEKTOR C (TERLALU DALAM):</strong> Jari telunjuk masuk terlalu dalam melewati bilah pelatuk, menghasilkan vektor gaya miring yang mendorong senapan ke samping saat pelepasan.';
             } else {
                 stamp.textContent = 'VEKTOR A: UJUNG JARI';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = '+4.8 mm TARIK KANAN';
+                dev.textContent = 'Vektor bergeser kanan (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
                 box.innerHTML = '<strong>KESALAHAN VEKTOR A (UJUNG JARI):</strong> Menarik hanya dengan ujung luar jari telunjuk membuat sudut tarikan miring ke kanan dan mengurangi sensitivitas terhadap titik tahanan (<em>sear wall</em>).';
@@ -488,8 +488,8 @@ let sfxActive = false;
         function adjustTriggerShoeContact(val) {
             const v = parseFloat(val);
             document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
-            const searGf = Math.round(110 - v * 1.4);
-            document.getElementById('searWeightReadout').textContent = `${searGf} gf`;
+            const searGf = Math.round(110 - v * 1.4); // arbitrary demonstration scale, not grams-force
+            document.getElementById('searWeightReadout').textContent = `${searGf} unit model`;
             document.getElementById('shoeHeightText').textContent =
                 Math.abs(v) <= 5 ? 'TENGAH (LUBANG #2 — OPTIMAL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
         }
@@ -545,7 +545,7 @@ let sfxActive = false;
 
             ctx.fillStyle = '#94A3B8';
             ctx.font = 'bold 10px IBM Plex Mono';
-            ctx.fillText('TEKANAN (gf)', padL + 6, padT + 10);
+            ctx.fillText('GAYA (UNIT MODEL)', padL + 6, padT + 10);
             ctx.fillText('WAKTU (ms) \u2192', padL + pw - 82, padT + ph + 22);
 
             // Reference Curve
@@ -701,7 +701,7 @@ let sfxActive = false;
             const lat = parseFloat(document.getElementById('optLat').value);
             const press = parseFloat(document.getElementById('optPressure').value);
 
-            document.getElementById('optEyeDistLabel').textContent = `${dist} mm ${Math.abs(dist - 85) <= 5 ? '(IDEAL)' : ''}`;
+            document.getElementById('optEyeDistLabel').textContent = `${dist} mm (ACUAN MODEL: 85)`;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm`;
             document.getElementById('optPressureLabel').textContent =
@@ -717,12 +717,12 @@ let sfxActive = false;
             const badge = document.getElementById('opticsLockBadge');
             const mini = document.getElementById('axisStatusMini');
             if (err < 7) {
-                badge.textContent = 'LINGKARAN PENUH (0 PARALAKS)';
+                badge.textContent = 'SIMULASI LINGKARAN TERLIHAT';
                 badge.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
                 mini.textContent = 'SUMBU OPTIK SEJAJAR';
                 mini.className = 'text-[var(--ok-green)] font-bold';
             } else {
-                badge.textContent = 'BAYANGAN SABIT MUNCUL!';
+                badge.textContent = 'SIMULASI BAYANGAN TEPI';
                 badge.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
                 mini.textContent = 'DEVIASI SUMBU MATA';
                 mini.className = 'text-[var(--aurellia-red)] font-bold';
@@ -822,10 +822,10 @@ let sfxActive = false;
         };
 
         const RANGE_SPECS = {
-            chicken: { label: 'AYAM (CHICKEN)', dist: 18, drop: 0.0, clicks: 0 },
-            pig:     { label: 'BABI (PIG)',     dist: 27, drop: -1.4, clicks: 4 },
-            turkey:  { label: 'KALKUN (TURKEY)',dist: 33, drop: -3.5, clicks: 9 },
-            ram:     { label: 'DOMBA (RAM)',    dist: 41, drop: -6.8, clicks: 14 }
+            chicken: { label: 'AYAM (CHICKEN)', dist: 18 },
+            pig:     { label: 'BABI (PIG)',     dist: 27 },
+            turkey:  { label: 'KALKUN (TURKEY)',dist: 33 },
+            ram:     { label: 'DOMBA (RAM)',    dist: 41 }
         };
 
         let selectedAnimal = 'ram';
@@ -916,12 +916,12 @@ let sfxActive = false;
             ctx.clearRect(0, 0, w, h);
 
             const wind = parseFloat(document.getElementById('windRangeInput').value);
-            document.getElementById('windValText').textContent = `${wind.toFixed(1)} m/s`;
+            document.getElementById('windValText').textContent = `${wind.toFixed(1)} unit model`;
 
             const spec = RANGE_SPECS[selectedAnimal];
-            const drift = ((spec.dist / 18) * wind * 0.45).toFixed(1);
+            // No wind drift or turret click predictions: the input only changes the illustration.
             document.getElementById('ballisticSpecLine').textContent =
-                `${spec.label} ${spec.dist}M // LINTASAN CONTOH: ${spec.drop} CM // KLIK CONTOH: +${spec.clicks} // PERGESERAN CONTOH: ${drift} CM`;
+                `${spec.label} ${spec.dist}M // JARAK SESUAI ATURAN; LINTASAN SKEMATIS (BUKAN HITUNGAN)`;
 
             const padL = 40, padR = 28, losY = 54;
             const scaleX = (w - padL - padR) / 45;
@@ -974,13 +974,13 @@ let sfxActive = false;
                 code: 'KOMPONEN #01 // STOCK, BERAT & PANJANG POPOR',
                 title: 'Stock (Popor), Buttplate & Panjang Popor',
                 body: 'Panjang popor diatur menyesuaikan panjang lengan bawah penembak. Tinggi serta sudut buttplate diatur agar kontak dengan lekukan bahu kanan selalu konsisten dan kepala tetap tegak alami saat membidik.',
-                note: 'STANDAR: Seluruh permukaan buttplate wajib menempel merata di bahu kanan.'
+                note: 'CATATAN ILUSTRASI: Seluruh permukaan buttplate wajib menempel merata di bahu kanan.'
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // PENYELARASAN KEPALA',
                 title: 'Cheek Piece (Sandaran Pipi Presisi)',
                 body: 'Ketinggian, kemiringan, dan sudut sandaran pipi diatur mengikuti anatomi tulang pipi penembak. Prinsip utamanya adalah menyelaraskan komponen senapan terhadap tubuh, bukan memaksa leher membungkuk mencari teleskop.',
-                note: 'STANDAR UJI: Saat mata dibuka, reticle harus langsung berada tepat di tengah lensa.'
+                note: 'CATATAN ILUSTRASI: Saat mata dibuka, reticle harus langsung berada tepat di tengah lensa.'
             },
             grip: {
                 code: 'KOMPONEN #03 // GRIP & TRIGGER',
@@ -996,7 +996,7 @@ let sfxActive = false;
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
-                title: 'Tabung Udara Bertekanan Tinggi (200 Bar PCP)',
+                title: 'Tabung Udara Bertekanan (PCP) — Skema',
                 body: 'Menyimpan udara bertekanan dengan sistem regulator presisi agar setiap tembakan menghasilkan kecepatan lontar peluru (muzzle velocity) yang konsisten dari sasaran pertama hingga terakhir.',
                 note: 'STANDAR: Pastikan tekanan udara berada dalam rentang kerja regulator sebelum bertanding.'
             },
@@ -1074,13 +1074,13 @@ let sfxActive = false;
             document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 248)`);
             const fb = document.getElementById('cobFeedbackText');
             if (x >= 402 && x <= 438) {
-                fb.textContent = 'IDEAL — TEPAT DI ATAS TANGAN PENOPANG KIRI';
+                fb.textContent = 'TITIK TENGAH PADA DIAGRAM';
                 fb.className = 'text-[var(--ok-green)]';
             } else if (x < 402) {
-                fb.textContent = 'BERAT BELAKANG — MONCONG LARAS MUDAH MENGAYUN';
+                fb.textContent = 'TITIK BERGESER KE BELAKANG (SKEMA)';
                 fb.className = 'text-[var(--aurellia-red)]';
             } else {
-                fb.textContent = 'BERAT DEPAN — MEMBEBANI OTOT LENGAN KIRI';
+                fb.textContent = 'TITIK BERGESER KE DEPAN (SKEMA)';
                 fb.className = 'text-[var(--aurellia-red)]';
             }
         }

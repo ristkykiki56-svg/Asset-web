@@ -48,3 +48,16 @@ test('disclaimers separate illustration from rules and provenance',()=>{
  assert.doesNotMatch(html,/ANTI-SLOP EDITION|REV\.14|DOKTRIN POSTER/);
  assert.match(html,/href="\/rules"/);
 });
+
+test('published claims distinguish official rules from unvalidated demonstrations',()=>{
+ assert.match(html,/id="lab-sources"/);
+ assert.match(html,/IMSSU Official Sporting Rules 2025/);
+ assert.match(html,/toleransi jarak ±2,5%/);
+ assert.match(html,/ref="noopener noreferrer"/);
+ assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
+ assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
+ assert.doesNotMatch(js,/ref: 'REF POSTER/);
+ assert.match(js,/unit model/);
+ assert.match(js,/JARAK SESUAI ATURAN/);
+ assert.match(html,/bukan template produksi sasaran/);
+});

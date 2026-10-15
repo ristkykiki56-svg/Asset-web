@@ -74,7 +74,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
                 <div class="lg:col-span-8 space-y-3">
                     <div class="inline-flex items-center gap-2 font-mono-tech text-[11px] uppercase tracking-widest text-[var(--ink-500)]">
-                        <span>INTERNATIONAL METALLIC SILHOUETTE SHOOTING UNION</span>
+                        <span>AIR RIFLE SILHOUETTE — REFERENSI ATURAN IMSSU 2025</span>
                         <span>/</span>
                         <span class="text-[#FF4800] font-semibold">LABORATORIUM VISUAL INTERAKTIF</span>
                     </div>
@@ -101,24 +101,24 @@
                 <!-- Right: Poster Specification Key-Value Matrix -->
                 <div class="lg:col-span-4 border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 font-mono-tech text-xs">
                     <div class="flex justify-between items-center pb-2 mb-3 border-b border-[var(--rule-light)]">
-                        <span class="font-bold uppercase">PARAMETER ILUSTRASI</span>
+                        <span class="font-bold uppercase">FAKTA ATURAN vs MODEL VISUAL</span>
                         <span class="text-[10px] px-1.5 py-0.5 bg-[var(--ink-900)] text-[var(--bg-surface)]">MODEL DEMO</span>
                     </div>
                     <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-[11px]">
                         <div>
-                            <span class="text-[var(--ink-500)] block">DISTRIBUSI KAKI KIRI</span>
-                            <strong class="text-sm text-[var(--clarisa-blue)]">60% – 70% Beban</strong>
+                            <span class="text-[var(--ink-500)] block">KALIBER ATURAN</span>
+                            <strong class="text-sm text-[var(--clarisa-blue)]">4,5 mm (.177)</strong>
                         </div>
                         <div>
-                            <span class="text-[var(--ink-500)] block">DISTRIBUSI KAKI KANAN</span>
-                            <strong class="text-sm text-[var(--aurellia-red)]">30% – 40% Beban</strong>
+                            <span class="text-[var(--ink-500)] block">POSISI AIR RIFLE</span>
+                            <strong class="text-sm text-[var(--aurellia-red)]">Berdiri / standing</strong>
                         </div>
                         <div>
-                            <span class="text-[var(--ink-500)] block">VEKTOR TARIK PELATUK</span>
-                            <strong class="text-sm">90.0&deg; Orthogonal (B)</strong>
+                            <span class="text-[var(--ink-500)] block">TAMPILAN POSTUR</span>
+                            <strong class="text-sm">Skema, bukan pengukuran</strong>
                         </div>
                         <div>
-                            <span class="text-[var(--ink-500)] block">JARAK SASARAN IMSSU</span>
+                            <span class="text-[var(--ink-500)] block">JARAK AIR RIFLE IMSSU</span>
                             <strong class="text-sm text-[#FF4800]">18m / 27m / 33m / 41m</strong>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
     <main id="main-content" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 space-y-16">
         <aside class="lab-notice" role="note" aria-label="Batas penggunaan simulasi">
           <strong>SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR</strong>
-          <p>Gambar, grafik, nilai milimeter, gaya, persentase, dan angka klik berasal dari parameter contoh di prototipe. Hasilnya bukan pengukuran biomekanika atau balistik, bukan rekomendasi setelan peralatan, dan tidak menggantikan peraturan resmi IMSSU atau bimbingan pelatih. <a href="/rules">Baca dokumen peraturan</a>.</p>
+          <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, X-Ray, kurva pelatuk, optik, senapan, serta lintasan bukan rekonstruksi tersertifikasi atau hasil ukur. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
         </aside>
 
         <!-- =====================================================================
@@ -147,7 +147,7 @@
                     </h2>
                 </div>
 
-                <!-- 4 Original Poster Pose Switchers + X-Ray Skeletal Toggle -->
+                <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
                 <div class="flex flex-wrap items-center gap-2 font-mono-tech text-xs">
                     <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                         <button onclick="switchPose('back')" id="poseTab-back" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
@@ -173,7 +173,7 @@
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between drafting-bg reg-corner">
                     <div class="flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
-                        <span id="stagePoseTitle" class="font-bold">FIG 1.1 — CLARISA AZALIA (PUNGGUNG &amp; ALUR BEBAN PASIF)</span>
+                        <span id="stagePoseTitle" class="font-bold">FIG 1.1 — ILUSTRASI PUNGGUNG (BUKAN REKONSTRUKSI POSTER)</span>
                         <span class="text-[var(--ink-500)]">SKEMA TIDAK BERSKALA // PILIH PIN [01–10]</span>
                     </div>
 
@@ -218,7 +218,7 @@
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
                             <g id="svgAthleteLayer"></g>
 
-                            <!-- Cascading Spinal Load Arrows (Exact recreation of Poster's back-arch arrows) -->
+                            <!-- Cascading Spinal Load Arrows (Conceptual illustration back-arch arrows) -->
                             <g id="svgSpinalArrowsLayer"></g>
 
                             <!-- Dynamic Leader Line pointing to Active Anatomical Node -->
@@ -240,7 +240,7 @@
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                     <span>LENGKUNGAN PUNGGUNG (ARCH):</span>
-                                    <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0&deg; (IDEAL)</strong>
+                                    <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0° (MODEL)</strong>
                                 </div>
                                 <input id="archSlider" type="range" min="-4" max="22" step="1" value="12" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Lengkungan punggung model, derajat">
                             </div>
@@ -248,20 +248,20 @@
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                     <span>KUNCI SIKU KIRI DI PINGGUL:</span>
-                                    <strong id="hipLockReadout" class="text-[var(--ok-green)]">100% KONTAK TULANG</strong>
+                                    <strong id="hipLockReadout" class="text-[var(--ok-green)]">100 / 100 (MODEL)</strong>
                                 </div>
-                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Persentase kontak penopang siku kiri">
+                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Indeks ilustrasi tumpuan siku kiri, bukan persentase beban tubuh">
                             </div>
                         </div>
 
                         <!-- Telemetry Bar: Muscle EMG Load vs Passive Bone Load -->
                         <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono-tech text-[11px]">
                             <div>
-                                <span class="text-[var(--ink-500)]">STATUS PENOPANG: </span>
-                                <strong id="skeletalStatusLabel" class="text-[var(--ok-green)]">BEBAN PASIF TULANG BELAKANG (OPTIMAL)</strong>
+                                <span class="text-[var(--ink-500)]">STATUS DIAGRAM: </span>
+                                <strong id="skeletalStatusLabel" class="text-[var(--ok-green)]">PARAMETER AWAL MODEL</strong>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span>GOYANGAN MONCONG LARAS: <strong id="muzzleSwayReadout">0.7 mm</strong></span>
+                                <span>INDEKS PERUBAHAN VISUAL: <strong id="muzzleSwayReadout">0 / 100</strong></span>
                             </div>
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                     <div class="border-2 border-[var(--rule-heavy)] p-5 bg-[var(--bg-paper)] space-y-3">
                         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
                             <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK ANATOMI #01 // TULANG BELAKANG</span>
-                            <span id="dossierRef" class="text-[var(--ink-500)]">REF POSTER: CLARISA AZALIA (KIRI ATAS)</span>
+                            <span id="dossierRef" class="text-[var(--ink-500)]">SKEMA ILUSTRATIF — SUMBER POSTER BELUM TERVERIFIKASI</span>
                         </div>
 
                         <h3 id="dossierTitle" class="text-xl font-extrabold tracking-tight">
@@ -287,10 +287,10 @@
                         <div id="dossierMetrics" class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 font-mono-tech text-[11px]"></div>
                     </div>
 
-                    <!-- All 10 Original Poster Callouts Table -->
+                    <!-- All 10 Prototype Callouts Table -->
                     <div class="space-y-2">
                         <div class="flex items-center justify-between font-mono-tech text-xs pb-1 border-b border-[var(--rule-light)]">
-                            <span class="font-bold uppercase">INDEKS 10 TITIK BIOMEKANIKA POSTER (KLIK UNTUK MEMERIKSA)</span>
+                            <span class="font-bold uppercase">INDEKS 10 TITIK DIAGRAM ILUSTRATIF (KLIK UNTUK MEMERIKSA)</span>
                             <span class="text-[var(--ink-500)]">10 SPESIFIKASI</span>
                         </div>
 
@@ -307,19 +307,19 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[var(--aurellia-red)] font-bold uppercase tracking-wider">
-                        BAGIAN 02 // MEKANIKA BILAH PELATUK, VEKTOR JARI (C–B–A) &amp; KURVA TARIKAN IDEAL
+                        BAGIAN 02 // MEKANIKA BILAH PELATUK, VEKTOR JARI (C–B–A) &amp; KURVA ILUSTRATIF
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
                         Simulasi Tarikan Pemicu 90&deg; &amp; Osiloskop 4 Fase Pelepasan
                     </h2>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                    CONTOH SUDUT JARI: <strong class="text-[var(--ok-green)]">90.0&deg; &plusmn; 1.5&deg; (VEKTOR B)</strong>
+                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">VEKTOR B (GARIS LURUS) — BUKAN TOLERANSI RESMI</strong>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
-                <!-- Left 6 Cols: Vector C-B-A & Mechanical Sear Cutaway from Poster -->
+                <!-- Left 6 Cols: Vector C-B-A & Mechanical Sear Cutaway from prototype -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5">
                     <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
                         <span class="font-bold">FIG 2.1 — PERGERAKAN PEMICU (C/B/A) &amp; TUAS BILAH PELATUK</span>
@@ -395,7 +395,7 @@
                             </svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
                                 <span>BEBAN LEPAS (SEAR):</span>
-                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">110 gf (IDEAL)</strong>
+                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">110 unit model</strong>
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                         </div>
 
                         <div id="vectorExplanationBox" class="p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed">
-                            <strong>SPESIFIKASI VEKTOR B (TEPAT 90&deg;):</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.
+                            <strong>ILUSTRASI VEKTOR B:</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.
                         </div>
                     </div>
                 </div>
@@ -451,7 +451,7 @@
                             </div>
                             <div id="oscStage-3" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-emerald-400">3. PELEPASAN</div>
-                                <div>Sear Break (110 gf)</div>
+                                <div>Sear Break (contoh)</div>
                             </div>
                             <div id="oscStage-4" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-orange-400">4. GERAKAN LANJUTAN</div>
@@ -475,7 +475,7 @@
 
                         <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-wrap justify-between gap-2 font-mono-tech text-[11px]">
                             <span>DIAGNOSTIK TARIKAN: <strong id="pullDiagnosticText" class="text-[var(--ok-green)]">KURVA ILUSTRATIF DITAMPILKAN</strong></span>
-                            <span>FOLLOW-THROUGH: <strong class="text-[var(--clarisa-blue)]">TAHAN JARI &ge; 0.8 DETIK SETELAH LEPAS</strong></span>
+                            <span>FOLLOW-THROUGH: <strong class="text-[var(--clarisa-blue)]">FASE AKHIR — TIDAK MEMUAT ACUAN WAKTU</strong></span>
                         </div>
                     </div>
                 </div>
@@ -496,7 +496,7 @@
                     </h2>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
-                    Kalibrasi Posisi Mata Sempurna (0mm Offset)
+                    Reset Posisi Model Optik
                 </button>
             </div>
 
@@ -551,7 +551,7 @@
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>1. JARAK BACA MATA (EYE RELIEF):</span>
-                                <strong id="optEyeDistLabel" class="text-[var(--ok-green)]">85 mm (IDEAL)</strong>
+                                <strong id="optEyeDistLabel" class="text-[var(--ok-green)]">85 mm (ACUAN MODEL)</strong>
                             </div>
                             <input id="optEyeDist" type="range" min="45" max="125" value="85" oninput="updateOpticalSim()" class="mech-slider" aria-label="Jarak mata ke lensa ilustrasi, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
@@ -717,7 +717,7 @@
                 <!-- Right 6 Cols: Poster's Nested Silhouette Reticle Diagram + Diabolo Pellet Trajectory -->
                 <div class="lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-5">
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-                        <!-- Exact Recreation of the Poster's Nested Animal Reticle Comparison Circle -->
+                        <!-- Conceptual illustration Nested Animal Reticle Comparison Circle -->
                         <div class="sm:col-span-5 border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
                             <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-1">PROPORSI TARGET DI RETICLE</span>
                             <svg viewBox="0 0 200 200" class="w-40 h-40">
@@ -732,11 +732,11 @@
                                 <circle cx="100" cy="100" r="3.5" fill="#D11F26"/>
                             </svg>
                             <p class="font-mono-tech text-[10px] text-center text-[var(--ink-500)] mt-1">
-                                Fokus paralaks wajib disesuaikan di tiap jarak (18m–41m).
+                                Perbandingan gambar ilustratif; bukan template atau penampang optik berskala.
                             </p>
                         </div>
 
-                        <!-- Diabolo Round-Nose Pellet & Barrel Maintenance Spec from Poster -->
+                        <!-- Diabolo Round-Nose Pellet & Barrel Maintenance Spec from prototype -->
                         <div class="sm:col-span-7 space-y-3">
                             <div class="p-3.5 border border-[var(--rule-light)] bg-[var(--bg-paper)] flex items-center gap-3">
                                 <!-- Technical Cutaway of .177 Diabolo Dome Pellet -->
@@ -747,7 +747,7 @@
                                 <div>
                                     <div class="font-mono-tech text-xs font-bold uppercase">PELURU DIABOLO UJUNG BULAT (4.5mm)</div>
                                     <p class="text-xs text-[var(--ink-700)] leading-relaxed mt-0.5">
-                                        Profil kepala bulat (<em>round-nose/domed</em>) adalah yang paling stabil menembus hambatan udara pada jarak 18m hingga 41m.
+                                        Bentuk pellet pada gambar bersifat ilustratif. Rulebook IMSSU mengatur kaliber dan bahan pellet, bukan menyatakan bentuk ini paling akurat.
                                     </p>
                                 </div>
                             </div>
@@ -755,7 +755,7 @@
                             <div class="p-3.5 border border-[var(--rule-light)] bg-[var(--bg-paper)]">
                                 <div class="font-mono-tech text-xs font-bold uppercase text-[var(--clarisa-blue)]">PEMBERSIHAN LARAS BERKALA</div>
                                 <p class="text-xs text-[var(--ink-700)] leading-relaxed mt-0.5">
-                                    Laras sebaiknya rutin dibersihkan setelah mencapai jumlah tembakan tertentu agar penumpukan timah tidak menurunkan akurasi.
+                                    Jadwal perawatan dan prosedur pembersihan mengikuti manual pabrikan, bukan angka putaran/tembakan yang ditentukan simulator ini.
                                 </p>
                             </div>
                         </div>
@@ -765,13 +765,13 @@
                     <div class="border border-[var(--rule-heavy)] bg-[#0E1116] p-3 space-y-2">
                         <div class="flex flex-wrap justify-between items-center font-mono-tech text-[11px] text-slate-200">
                             <span>GRAFIK ILUSTRATIF (BUKAN PERHITUNGAN BALISTIK)</span>
-                            <span id="ballisticSpecLine" class="text-[#FF4800] font-bold">DOMBA 41M // DROP: -6.8 CM // KLIK CONTOH: +14</span>
+                            <span id="ballisticSpecLine" class="text-[#FF4800] font-bold">DOMBA 41M // JARAK RESMI · BENTUK LINTASAN ILUSTRASI</span>
                         </div>
                         <canvas id="trajectoryCanvas" width="580" height="170" class="w-full h-[160px] block"></canvas>
                         <div class="flex flex-col sm:flex-row items-center gap-3 pt-1">
                             <div class="w-full sm:flex-1 flex items-center gap-3 font-mono-tech text-[11px] text-slate-300">
-                                <span class="shrink-0">ANGIN SAMPING: <strong id="windValText" class="text-sky-400">2.0 m/s</strong></span>
-                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Kecepatan angin contoh, meter per detik">
+                                <span class="shrink-0">PARAMETER VISUAL: <strong id="windValText" class="text-sky-400">2.0 unit model</strong></span>
+                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Parameter visual untuk lintasan ilustratif, bukan kecepatan angin">
                             </div>
                             <button onclick="triggerBallisticTrace()" class="w-full sm:w-auto px-4 py-2 bg-[#FF4800] text-white font-mono-tech text-xs font-bold uppercase hover:bg-[#e03f00] transition">
                                 Putar Ilustrasi
@@ -799,10 +799,10 @@
                 <!-- Switch between Aurellia Red Feinwerkbau & Clarisa Blue Precision Rig -->
                 <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)] font-mono-tech text-xs">
                     <button onclick="switchRifleRig('aurellia')" id="rigSwitch-aurellia" class="px-3.5 py-2 font-bold bg-[#D11F26] text-white transition">
-                        RIG AURELLIA (FEINWERKBAU RED/WALNUT)
+                        DIAGRAM MERAH — ILUSTRASI
                     </button>
                     <button onclick="switchRifleRig('clarisa')" id="rigSwitch-clarisa" class="px-3.5 py-2 font-bold hover:bg-[var(--bg-subtle)] transition">
-                        RIG CLARISA (ANODIZED BLUE MATCH)
+                        DIAGRAM BIRU — ILUSTRASI
                     </button>
                 </div>
             </div>
@@ -823,7 +823,7 @@
                                 <line x1="48" y1="365" x2="830" y2="365"/>
                                 <line x1="48" y1="358" x2="48" y2="372"/>
                                 <line x1="830" y1="358" x2="830" y2="372"/>
-                                <text x="439" y="378" text-anchor="middle">PANJANG TOTAL SENAPAN &amp; PENYELARASAN KOMPONEN (1085 mm)</text>
+                                <text x="439" y="378" text-anchor="middle">GAMBAR KOMPONEN SKEMATIS — TIDAK BERSKALA</text>
                             </g>
 
                             <!-- SECTION A: Detailed Rifle Scope Cutaway (Top — recreating bottom-left of poster) -->
@@ -940,7 +940,7 @@
                     <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
                         <div class="flex flex-wrap justify-between font-mono-tech text-[11px] mb-1.5">
                             <span>DISTRIBUSI BERAT &amp; TITIK KESEIMBANGAN SENAPAN (CENTER OF BALANCE):</span>
-                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">IDEAL — TEPAT DI ATAS TANGAN PENOPANG KIRI</strong>
+                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">POSISI TENGAH PADA MODEL</strong>
                         </div>
                         <input type="range" min="350" max="490" value="420" oninput="adjustRifleBalancePoint(this.value)" class="mech-slider" aria-label="Titik keseimbangan model senapan">
                     </div>
@@ -1005,6 +1005,25 @@
             </div>
         </section>
 
+
+        <section id="lab-sources" class="source-audit tech-sheet" aria-labelledby="sources-title">
+          <p class="source-eyebrow">SUMBER, STATUS KLAIM &amp; BATAS SIMULASI</p>
+          <h2 id="sources-title">Mana yang berasal dari aturan resmi?</h2>
+          <p>Rujukan regulasi yang dapat diperiksa adalah <strong>IMSSU Official Sporting Rules 2025, bagian Airgun Rules</strong>. Halaman ini tidak mengklaim adanya edisi resmi baru tahun 2026.</p>
+          <div class="source-table-wrap"><table>
+            <thead><tr><th scope="col">Materi</th><th scope="col">Status</th><th scope="col">Penjelasan</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Production Rifle, 4,5 mm (.177), lead pellet, posisi berdiri</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025.</td></tr>
+              <tr><th scope="row">Jarak ayam 18 m, babi 27 m, kalkun 33 m, domba 41 m</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025; toleransi jarak ±2,5%.</td></tr>
+              <tr><th scope="row">Siluet airgun ukuran 1/10</th><td>Aturan resmi</td><td>Aturan mencantumkan skala target; SVG pada website hanyalah ikon, bukan template produksi sasaran.</td></tr>
+              <tr><th scope="row">Postur, anatomi X-Ray dan presentasi diagram senapan</th><td>Ilustrasi</td><td>Tidak ada foto/poster sumber yang tersedia untuk memvalidasi bentuk dan posisi setiap bagian.</td></tr>
+              <tr><th scope="row">Pembagian berat badan, sudut, indeks penopang, grafik pelatuk dan optik</th><td>Model demonstrasi</td><td>Angka dan respons slider tidak berasal dari pengukuran atlet atau pedoman kuantitatif IMSSU.</td></tr>
+              <tr><th scope="row">Lintasan, pengaruh angin, titik nol, klik elevasi</th><td>Bukan kalkulator</td><td>Grafik hanya animasi bentuk; tidak menghitung koreksi tembakan atau karakteristik peralatan.</td></tr>
+            </tbody>
+          </table></div>
+          <p class="source-links">Rujukan: <a href="https://imssu.org/wp-content/uploads/2025/04/IMSSU-Rules-English-2025.pdf" target="_blank" rel="noopener noreferrer">IMSSU Official Sporting Rules 2025 (PDF)</a> · <a href="https://imssu.net/documents/" target="_blank" rel="noopener noreferrer">Indeks dokumen IMSSU</a> · <a href="/rules">Halaman peraturan Twin Shooter</a>.</p>
+          <p class="source-caveat">Aturan kompetisi, instruksi pabrikan, dan keputusan petugas pertandingan tetap menjadi rujukan untuk pelaksanaan nyata. Diagram di halaman ini tidak digunakan untuk menetapkan aturan, mengukur biomekanika, atau mengatur senapan.</p>
+        </section>
     </main>
 
     <footer class="tech-border-t bg-[var(--bg-surface)] mt-16 py-6">
