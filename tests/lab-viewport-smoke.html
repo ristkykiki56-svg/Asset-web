@@ -22,7 +22,10 @@ frame.addEventListener('load',()=>{
  for(const width of [320,360,375,390,768,1024,1280,1440]){
    frame.style.width=width+'px';
    const contentW=Math.max(doc.documentElement.scrollWidth,doc.body.scrollWidth);
-   if(contentW>width+2)problems.push('overflow '+width+': '+contentW);
+   if(contentW>width+2){
+     const offenders=Array.from(doc.querySelectorAll('body *')).map(el=>({name:el.tagName.toLowerCase()+'.'+String(el.className?.baseVal??el.className).slice(0,45),right:Math.round(el.getBoundingClientRect().right),sw:el.scrollWidth,cw:el.clientWidth})).filter(el=>el.right>width+3 && el.sw>0).sort((a,b)=>b.right-a.right).slice(0,6);
+     problems.push('overflow '+width+': '+contentW+' '+JSON.stringify(offenders));
+   }
  }
  frame.style.width='390px';
  w.switchPose('sideRight');
