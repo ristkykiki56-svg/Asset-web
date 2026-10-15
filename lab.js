@@ -1,0 +1,1098 @@
+let sfxActive = false;
+        let audioCtx = null;
+
+        function ensureAudio() {
+            if (!audioCtx) {
+                const Cls = window.AudioContext || window.webkitAudioContext;
+                if (Cls) audioCtx = new Cls();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+
+        function playMechTick(freq = 900) {
+            if (!sfxActive) return;
+            try {
+                const ctx = ensureAudio();
+                if (!ctx) return;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.06, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.04);
+            } catch (e) {}
+        }
+
+        function playSteelImpactSound() {
+            if (!sfxActive) return;
+            try {
+                const ctx = ensureAudio();
+                if (!ctx) return;
+                [1240, 1890, 2920].forEach((f, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = idx === 0 ? 'square' : 'sine';
+                    osc.frequency.setValueAtTime(f, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(f * 0.93, ctx.currentTime + 0.42);
+                    gain.gain.setValueAtTime(0.07 / (idx + 1), ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0008, ctx.currentTime + 0.44);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.45);
+                });
+            } catch (e) {}
+        }
+
+        function toggleAudioSfx() {
+            sfxActive = !sfxActive;
+            document.getElementById('sfxDot').style.backgroundColor = sfxActive ? '#0E7C47' : '#7E838C';
+            document.getElementById('sfxLabel').textContent = sfxActive ? 'AUDIO: AKTIF' : 'AUDIO: BISU';
+            document.getElementById('sfxSwitchBtn').setAttribute('aria-pressed', String(sfxActive));
+            if (sfxActive) playMechTick(1050);
+        }
+
+        function togglePaperTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.toggle('cad-dark');
+            document.getElementById('themeText').textContent = isDark ? 'MODE: DARKROOM CAD' : 'MODE: KERTAS CETAK';
+            document.getElementById('themeSwitchBtn').setAttribute('aria-pressed',String(isDark));
+            playMechTick(760);
+            renderBiomechViewport();
+            drawOscilloscope(oscProgress);
+            renderTrajectoryGraph();
+        }
+
+        const POSTER_BIOMECH_DATA = [
+            {
+                id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
+                code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
+                ref: 'REF POSTER: CLARISA AZALIA (KIRI ATAS)',
+                title: 'Lengkungan Punggung & Tahanan Beban Pasif',
+                desc: 'Tubuh melengkung pada bagian punggung. Untuk mendapatkan posisi ini secara efektif dan nyaman: (1) Condongkan tubuh bagian atas menjauhi target, (2) Dorong pinggul ke depan ke arah sasaran, dan (3) Putar sedikit bahu. Dalam posisi ini tahanan beban terjadi secara pasif melalui struktur tulang, bukan otot, sehingga memperkecil getaran dan mencegah kelelahan.',
+                metrics: ['CONDONG ATAS: Menjauhi target', 'PINGGUL: Dorong ke depan', 'BEBAN: Kerangka Pasif']
+            },
+            {
+                id: 'head', num: '02', pose: 'front', x: 50, y: 16,
+                code: 'TITIK ANATOMI #02 // POSISI KEPALA',
+                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                title: 'Posisi Kepala Tegak & Pandangan Lurus',
+                desc: 'Arahkan kepala ke arah sasaran dengan mata melihat lurus ke depan melalui teleskop (pastikan posisi ini nyaman). Hindari kemiringan leher berlebihan agar sistem keseimbangan telinga dalam (vestibular) bekerja optimal.',
+                metrics: ['ARAH KEPALA: Lurus ke target', 'LEHER: Bebas ketegangan', 'KONTAK PIPI: Konsisten']
+            },
+            {
+                id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
+                code: 'TITIK ANATOMI #03 // BAHU KANAN',
+                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                title: 'Bahu Kanan & Sandaran Buttplate',
+                desc: 'Bahu kanan rileks dan tidak terangkat tegang. Pastikan buttplate (karet popor belakang) menempel secara konsisten pada lekukan bahu kanan di setiap tembakan.',
+                metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: Penuh & Stabil', 'TINGGI HOOK: Sesuai leher']
+            },
+            {
+                id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
+                code: 'TITIK ANATOMI #04 // BAHU KIRI & LENGAN KIRI',
+                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                title: 'Bahu Kiri & Segitiga Penopang Lengan Kiri',
+                desc: 'Bahu kiri rileks dan turun secara alami. Lengan atas dan lengan bawah kiri membentuk segitiga penopang vertikal di bawah titik berat senapan sehingga otot bisep tidak menahan beban secara aktif.',
+                metrics: ['BAHU KIRI: Turun rileks', 'LENGAN BAWAH: Tiang vertikal', 'OTOT BISEP: Pasif (0% Tegang)']
+            },
+            {
+                id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
+                code: 'TITIK ANATOMI #05 // TANGAN & PERGELANGAN KIRI',
+                ref: 'REF POSTER: AURELLIA CASSANDRA (TENGAH KANAN)',
+                title: 'Tangan dan Pergelangan Tangan Kiri',
+                desc: 'Ada banyak cara berbeda untuk memposisikan tangan dan pergelangan tangan kiri (kepalan tangan, bertumpu pada buku jari, atau V-shape) tergantung panjang lengan dan tinggi fore-end. Pergelangan tangan wajib lurus dan terkunci tulang.',
+                metrics: ['PERGELANGAN: Lurus vertikal', 'TUMPUAN: Di bawah CoB', 'KETEGANGAN: Bebas kaku']
+            },
+            {
+                id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
+                code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
+                ref: 'REF POSTER: AURELLIA CASSANDRA (TENGAH KANAN)',
+                title: 'Tangan Kanan, Grip & Jari Pelatuk',
+                desc: 'Tangan kanan menggenggam pistol grip dengan kuat, nyaman, dan rileks tanpa meremas kayu popor. Jari telunjuk ditempatkan mandiri pada bilah pelatuk membentuk sudut tarikan 90° lurus ke belakang.',
+                metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: 90.0° Lurus']
+            },
+            {
+                id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
+                code: 'TITIK ANATOMI #07 // SIKU KIRI & PINGGUL',
+                ref: 'REF POSTER: CLARISA AZALIA (TENGAH)',
+                title: 'Kunci Siku Kiri pada Tulang Pinggul',
+                desc: 'Letakkan siku kiri tepat bertumpu pada lekuk atas tulang pinggul (iliac crest) atau rusuk bawah. Kontak tulang-ke-tulang ini menyalurkan seluruh bobot senapan langsung ke panggul dan kaki kiri.',
+                metrics: ['KONTAK: Siku ke Pinggul', 'GESEKAN: Stabil tidak selip', 'EFEK: Reduksi goyangan 80%']
+            },
+            {
+                id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
+                code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
+                ref: 'REF POSTER: AURELLIA CASSANDRA (KANAN ATAS)',
+                title: 'Penyelarasan Badan, Bahu & Pinggul',
+                desc: 'Condongkan tubuh bagian atas ke belakang dengan bahu hampir sejajar garis tembak. Sejajarkan pinggul dengan arah sasaran dan kunci posisi panggul agar tidak berputar (twist) saat membidik.',
+                metrics: ['PINGGUL: Sejajar target', 'TORSO: Condong kompensasi', 'PUNTIRAN: Nol rotasi']
+            },
+            {
+                id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
+                code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
+                ref: 'REF POSTER: CLARISA AZALIA (BAWAH)',
+                title: 'Kaki Kiri Menahan 60% – 70% Total Beban',
+                desc: 'Tempatkan titik berat tubuh lebih dominan pada kaki kiri (sekitar 60–70% beban) karena kaki kiri berada lurus di bawah tumpuan siku kiri dan senapan. Lutut lurus rileks tanpa dikunci paksa.',
+                metrics: ['BEBAN KAKI KIRI: 60% – 70%', 'POSISI: Lurus di bawah CoG', 'LUTUT: Lurus tanpa tegang']
+            },
+            {
+                id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
+                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
+                ref: 'REF POSTER: CLARISA & AURELLIA (BAWAH)',
+                title: 'Kaki Kanan (30% – 40%) & Sudut Kaki 90°',
+                desc: 'Kaki kanan berfungsi sebagai tiang penyeimbang yang menopang 30–40% beban tubuh. Posisikan kedua kaki selebar bahu dengan arah badan membentuk sudut sekitar 90° terhadap garis sasaran.',
+                metrics: ['BEBAN KANAN: 30% – 40%', 'LEBAR KAKI: Selebar bahu', 'ORIENTASI: 90° ke Target']
+            }
+        ];
+
+        let currentPose = 'back';
+        let activeBiomechId = 'spine';
+        let showXraySkeleton = true;
+
+        function renderBiomechViewport() {
+            const athleteLayer = document.getElementById('svgAthleteLayer');
+            const arrowsLayer = document.getElementById('svgSpinalArrowsLayer');
+            const leaderLayer = document.getElementById('svgActiveLeaderLine');
+            const pinsContainer = document.getElementById('biomechPinsOverlay');
+
+            const arch = parseFloat(document.getElementById('archSlider').value);
+            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
+
+            const upperShift = -arch * 1.1;
+            const pelvisShift = arch * 0.65;
+
+            let figSvg = '';
+            let arrowsSvg = '';
+
+            if (currentPose === 'back') {
+                figSvg = `
+                    <!-- Lower Limbs -->
+                    <path d="M162 475 L172 275 L212 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <path d="M292 475 L268 275 L228 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <!-- Athletic Shoes -->
+                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
+                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
+                    <!-- Clarisa Blue Rifle Barrel & Scope extending Left -->
+                    <g transform="translate(${upperShift}, -4)">
+                        <rect x="22" y="92" width="210" height="8" fill="#94A3B8" stroke="#111315" stroke-width="1.2"/>
+                        <rect x="52" y="100" width="165" height="13" fill="#0055B8" stroke="#111315" stroke-width="1.2"/>
+                        <rect x="98" y="75" width="88" height="11" fill="#111315"/>
+                    </g>
+                    <!-- Torso (Clarisa Blue Technical Jersey) -->
+                    <path d="M${172 + pelvisShift} 278 C${165 + pelvisShift} 215, ${165 + upperShift} 152, ${176 + upperShift} 106 L${262 + upperShift} 110 C${268 + upperShift} 165, ${260 + pelvisShift} 222, ${255 + pelvisShift} 278 Z"
+                          fill="#0055B8" fill-opacity="0.9" stroke="#111315" stroke-width="2"/>
+                    <text x="${218 + upperShift * 0.5}" y="176" text-anchor="middle" fill="#FDE68A" font-family="Cormorant Garamond" font-style="italic" font-weight="bold" font-size="20">Clarisa</text>
+                    <!-- Head & Ponytail -->
+                    <circle cx="${214 + upperShift}" cy="74" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
+                    <path d="M${228 + upperShift} 65 Q${262 + upperShift} 75 ${258 + upperShift} 122" fill="none" stroke="#111315" stroke-width="14" stroke-linecap="round"/>
+                `;
+
+                // Cascading Spinal Load Arrows along the back curve (Exact match to Poster)
+                for (let i = 0; i < 12; i++) {
+                    const y = 108 + i * 29;
+                    const x = 278 + Math.sin(i * 0.42) * 14 + pelvisShift * 0.4;
+                    arrowsSvg += `
+                        <g class="spine-vector-arrow" style="animation-delay: ${i * 0.1}s" transform="translate(${x}, ${y})">
+                            <polygon points="0,4 16,0 13,4 16,8" fill="none" stroke="var(--ink-900)" stroke-width="1.4"/>
+                        </g>
+                    `;
+                }
+            } else if (currentPose === 'front') {
+                figSvg = `
+                    <!-- Legs -->
+                    <path d="M160 475 L172 275 L212 275 L188 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <path d="M292 475 L266 275 L226 275 L264 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <rect x="146" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#0055B8" stroke-width="1.5"/>
+                    <rect x="262" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#111315" stroke-width="1.5"/>
+                    <!-- Torso -->
+                    <path d="M${170 + pelvisShift} 278 L${166 + upperShift} 112 L${258 + upperShift} 112 L${254 + pelvisShift} 278 Z"
+                          fill="#0055B8" stroke="#111315" stroke-width="2"/>
+                    <!-- Left Support Arm Locked into Ilium Hip -->
+                    <path d="M${236 + upperShift} 122 L${244 + pelvisShift} 232 L${198 + upperShift} 108"
+                          fill="none" stroke="#E2E8F0" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Head tilted onto Stock -->
+                    <circle cx="${218 + upperShift}" cy="78" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
+                    <!-- Front Concentric Muzzle & Scope Objective (as in Clarisa Front Photo) -->
+                    <g transform="translate(${196 + upperShift}, 88)">
+                        <rect x="-13" y="0" width="26" height="54" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
+                        <circle cx="0" cy="-14" r="16" fill="#111315" stroke="#FFFFFF" stroke-width="2"/>
+                        <circle cx="0" cy="-14" r="6" fill="#38BDF8"/>
+                        <circle cx="0" cy="15" r="11" fill="#475569" stroke="#FFFFFF" stroke-width="1.5"/>
+                    </g>
+                `;
+            } else if (currentPose === 'sideLeft') {
+                figSvg = `
+                    <!-- Legs -->
+                    <path d="M164 475 L175 275 L214 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <path d="M290 475 L266 275 L226 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
+                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
+                    <!-- Aurellia Red/Black Torso -->
+                    <path d="M${168 + pelvisShift} 278 L${162 + upperShift} 112 L${256 + upperShift} 112 L${250 + pelvisShift} 278 Z"
+                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
+                    <circle cx="${208 + upperShift}" cy="76" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
+                    <!-- Red Feinwerkbau Rifle pointing Right -->
+                    <g transform="translate(${165 + upperShift}, 92)">
+                        <rect x="0" y="10" width="245" height="11" fill="#D11F26" stroke="#111315" stroke-width="1.2"/>
+                        <rect x="40" y="2" width="215" height="8" fill="#CBD5E1" stroke="#111315" stroke-width="1.2"/>
+                        <rect x="52" y="-14" width="102" height="11" fill="#111315"/>
+                        <rect x="8" y="0" width="34" height="14" fill="#B37B24" stroke="#111315"/>
+                    </g>
+                    <!-- Left Support Arm Triangle -->
+                    <path d="M${225 + upperShift} 132 L${238 + pelvisShift} 218 L${292 + upperShift} 112"
+                          fill="none" stroke="#FECDD3" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+                `;
+            } else {
+                figSvg = `
+                    <!-- Side-Right Profile (Aurellia) -->
+                    <path d="M198 475 L205 275 L242 275 L228 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
+                    <rect x="192" y="465" width="52" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
+                    <path d="M${192 + pelvisShift} 278 C${200 + pelvisShift} 215, ${182 + upperShift} 155, ${188 + upperShift} 108 L${244 + upperShift} 108 C${236 + upperShift} 165, ${252 + pelvisShift} 218, ${242 + pelvisShift} 278 Z"
+                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
+                    <circle cx="${218 + upperShift}" cy="74" r="23" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
+                `;
+            }
+
+            // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
+            if (showXraySkeleton) {
+                figSvg += `
+                    <g stroke="#00FFAA" stroke-width="2.2" fill="none" opacity="0.9">
+                        <!-- Spinal Column Curve -->
+                        <path d="M${214 + upperShift} 98 Q${236 + pelvisShift} 190 ${214 + pelvisShift} 275" stroke-dasharray="5 3"/>
+                        <!-- Pelvic Iliac Crest Bar -->
+                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(0, 255, 170, 0.15)"/>
+                        <!-- Elbow-to-Hip Bone Lock Node -->
+                        <circle cx="${238 + pelvisShift}" cy="230" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
+                        <!-- Left & Right Femur Load Vectors -->
+                        <line x1="${190 + pelvisShift}" y1="278" x2="177" y2="465"/>
+                        <line x1="${238 + pelvisShift}" y1="278" x2="284" y2="465" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+                    </g>
+                `;
+            }
+
+            athleteLayer.innerHTML = figSvg;
+            arrowsLayer.innerHTML = arrowsSvg;
+
+            // Render active technical leader line
+            const activePt = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId);
+            if (activePt) {
+                const px = (activePt.x / 100) * 460;
+                const py = (activePt.y / 100) * 540;
+                leaderLayer.innerHTML = `
+                    <polyline points="${px},${py} ${px + 42},${py - 24} 445,${py - 24}" fill="none" stroke="#FF4800" stroke-width="1.8" marker-start="url(#leaderDot)"/>
+                    <rect x="355" y="${py - 42}" width="90" height="16" fill="#FF4800"/>
+                    <text x="400" y="${py - 31}" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TITIK #${activePt.num}</text>
+                `;
+            }
+
+            // Render Numbered Callout Pins
+            pinsContainer.innerHTML = '';
+            POSTER_BIOMECH_DATA.forEach(pt => {
+                const isSelected = pt.id === activeBiomechId;
+                const btn = document.createElement('button');
+                btn.className = `callout-node pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-7 h-7 font-mono-tech text-[11px] font-bold flex items-center justify-center border ${
+                    isSelected
+                        ? 'bg-[#FF4800] text-white border-white ring-2 ring-[#FF4800] z-20 scale-110'
+                        : 'bg-[var(--ink-900)] text-[var(--bg-surface)] border-[var(--bg-surface)] z-10'
+                }`;
+                btn.style.left = `${pt.x}%`;
+                btn.style.top = `${pt.y}%`;
+                btn.textContent = pt.num;
+                btn.setAttribute('aria-label', `Titik ${pt.num}: ${pt.title}`);
+                btn.setAttribute('aria-pressed', String(isSelected));
+                btn.onclick = () => selectBiomechCallout(pt.id);
+                pinsContainer.appendChild(btn);
+            });
+        }
+
+        function switchPose(poseKey) {
+            currentPose = poseKey;
+            playMechTick(820);
+            ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
+                const b = document.getElementById(`poseTab-${k}`);
+                if (!b) return;
+                b.className = k === poseKey
+                    ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
+                    : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
+            });
+            const labels = {
+                back: 'FIG 1.1 — CLARISA AZALIA (PUNGGUNG & ALUR BEBAN PASIF)',
+                front: 'FIG 1.2 — CLARISA AZALIA (TAMPAK DEPAN MEMBIDIK)',
+                sideLeft: 'FIG 1.3 — AURELLIA CASSANDRA (PROFIL SAMPING KIRI)',
+                sideRight: 'FIG 1.4 — AURELLIA CASSANDRA (PROFIL SAMPING KANAN)'
+            };
+            document.getElementById('stagePoseTitle').textContent = labels[poseKey];
+            const chosen = POSTER_BIOMECH_DATA.find(item => item.id === activeBiomechId);
+            if (!chosen || chosen.pose !== poseKey) {
+                const first = POSTER_BIOMECH_DATA.find(item => item.pose === poseKey);
+                if (first) activeBiomechId = first.id;
+            }
+            selectBiomechCallout(activeBiomechId);
+        }
+
+        function toggleXraySkeleton() {
+            showXraySkeleton = !showXraySkeleton;
+            playMechTick(960);
+            const btn = document.getElementById('xrayToggleBtn');
+            btn.textContent = showXraySkeleton ? '[X-RAY KERANGKA: AKTIF]' : '[X-RAY KERANGKA: NONAKTIF]';
+            btn.setAttribute('aria-pressed',String(showXraySkeleton));
+            btn.className = showXraySkeleton
+                ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
+                : 'px-3 py-2 border border-[var(--rule-heavy)] text-[var(--ink-900)] font-bold transition';
+            renderBiomechViewport();
+        }
+
+        function selectBiomechCallout(id) {
+            activeBiomechId = id;
+            playMechTick(880);
+            const item = POSTER_BIOMECH_DATA.find(d => d.id === id);
+            if (!item) return;
+
+            if (item.pose !== currentPose) {
+                switchPose(item.pose);
+            } else {
+                renderBiomechViewport();
+            }
+
+            document.getElementById('dossierCode').textContent = item.code;
+            document.getElementById('dossierRef').textContent = item.ref;
+            document.getElementById('dossierTitle').textContent = item.title;
+            document.getElementById('dossierBody').textContent = item.desc;
+            document.getElementById('dossierMetrics').innerHTML = item.metrics.map(m => {
+                const [k, v] = m.split(':');
+                return `
+                    <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
+                        <span class="text-[var(--ink-500)] block text-[10px]">${k}</span>
+                        <strong class="text-[var(--ink-900)]">${v || ''}</strong>
+                    </div>
+                `;
+            }).join('');
+
+            renderBiomechIndexTable();
+        }
+
+        function renderBiomechIndexTable() {
+            const list = document.getElementById('biomechIndexList');
+            list.innerHTML = POSTER_BIOMECH_DATA.map(item => {
+                const active = item.id === activeBiomechId;
+                return `
+                    <button aria-pressed="${active}" onclick="selectBiomechCallout('${item.id}')" class="text-left p-2.5 border transition flex items-start gap-2.5 ${
+                        active
+                            ? 'border-[var(--rule-heavy)] bg-[var(--bg-paper)] ring-1 ring-[#FF4800]'
+                            : 'border-[var(--rule-light)] bg-[var(--bg-surface)] hover:bg-[var(--bg-subtle)]'
+                    }">
+                        <span class="font-mono-tech text-xs font-bold px-1.5 py-0.5 ${
+                            active ? 'bg-[#FF4800] text-white' : 'bg-[var(--ink-900)] text-[var(--bg-surface)]'
+                        }">${item.num}</span>
+                        <div class="min-w-0">
+                            <div class="font-bold text-xs truncate">${item.title}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${item.code.split('//')[1]}</div>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function updatePosturePhysics() {
+            const arch = parseFloat(document.getElementById('archSlider').value);
+            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
+
+            document.getElementById('archDegReadout').textContent = `${arch > 0 ? '+' : ''}${arch.toFixed(1)}° ${arch >= 10 && arch <= 15 ? '(IDEAL)' : '(DEVIASI)'}`;
+            document.getElementById('hipLockReadout').textContent = hipLock >= 85 ? `${hipLock}% KONTAK TULANG` : `${hipLock}% MENAHAN OTOT`;
+
+            const stability = Math.max(15, Math.min(99, Math.round(100 - Math.abs(arch - 12) * 3.4 - (100 - hipLock) * 0.55)));
+            const sway = (0.7 + (100 - stability) * 0.08).toFixed(1);
+            const leftLoad = Math.min(78, Math.max(48, Math.round(65 + (12 - arch) * 0.7)));
+            const rightLoad = 100 - leftLoad;
+
+            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad}%`;
+            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad}%`;
+            document.getElementById('muzzleSwayReadout').textContent = `${sway} mm`;
+
+            const statusEl = document.getElementById('skeletalStatusLabel');
+            if (stability >= 82) {
+                statusEl.textContent = 'BEBAN PASIF TULANG BELAKANG (OPTIMAL)';
+                statusEl.className = 'text-[var(--ok-green)]';
+            } else if (stability >= 55) {
+                statusEl.textContent = 'KOMPENSASI OTOT AKTIF (RAWAN TREMOR)';
+                statusEl.className = 'text-[#B37B24]';
+            } else {
+                statusEl.textContent = ' TIDAK STABIL — BEBAN OTOT BERLEBIH!';
+                statusEl.className = 'text-[var(--aurellia-red)]';
+            }
+
+            const cogGroup = document.getElementById('svgCogPlumbGroup');
+            cogGroup.setAttribute('transform', `translate(${230 + (12 - arch) * 2.2}, 0)`);
+            renderBiomechViewport();
+        }
+
+        function resetPostureParameters() {
+            document.getElementById('archSlider').value = 12;
+            document.getElementById('hipLockSlider').value = 100;
+            playMechTick(1000);
+            updatePosturePhysics();
+        }
+
+        function selectFingerVector(vec) {
+            playMechTick(vec === 'B' ? 980 : 520);
+            ['A', 'B', 'C'].forEach(v => {
+                const btn = document.getElementById(`btnVec-${v}`);
+                const path = document.getElementById(`svgVec${v}`);
+                if (v === vec) {
+                    btn.className = v === 'B'
+                        ? 'py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition'
+                        : 'py-2 px-2 border-2 border-[#D11F26] bg-[#D11F26] text-white font-bold transition';
+                    path.setAttribute('stroke', v === 'B' ? '#0E7C47' : '#D11F26');
+                    path.setAttribute('stroke-width', '5.5');
+                } else {
+                    btn.className = 'py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition';
+                    path.setAttribute('stroke', '#9CA3AF');
+                    path.setAttribute('stroke-width', '3.5');
+                }
+            });
+
+            const stamp = document.getElementById('activeVectorStamp');
+            const dev = document.getElementById('vecDeviationReadout');
+            const box = document.getElementById('vectorExplanationBox');
+
+            if (vec === 'B') {
+                stamp.textContent = 'VEKTOR B: 90° LURUS';
+                stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
+                dev.textContent = '0.0 mm (NOL)';
+                dev.className = 'text-[var(--ok-green)]';
+                box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
+                box.innerHTML = '<strong>SPESIFIKASI VEKTOR B (TEPAT 90&deg;):</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.';
+            } else if (vec === 'C') {
+                stamp.textContent = 'VEKTOR C: TERLALU DALAM';
+                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
+                dev.textContent = '-4.4 mm DORONG KIRI';
+                dev.className = 'text-[var(--aurellia-red)]';
+                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
+                box.innerHTML = '<strong>KESALAHAN VEKTOR C (TERLALU DALAM):</strong> Jari telunjuk masuk terlalu dalam melewati bilah pelatuk, menghasilkan vektor gaya miring yang mendorong senapan ke samping saat pelepasan.';
+            } else {
+                stamp.textContent = 'VEKTOR A: UJUNG JARI';
+                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
+                dev.textContent = '+4.8 mm TARIK KANAN';
+                dev.className = 'text-[var(--aurellia-red)]';
+                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
+                box.innerHTML = '<strong>KESALAHAN VEKTOR A (UJUNG JARI):</strong> Menarik hanya dengan ujung luar jari telunjuk membuat sudut tarikan miring ke kanan dan mengurangi sensitivitas terhadap titik tahanan (<em>sear wall</em>).';
+            }
+        }
+
+        function adjustTriggerShoeContact(val) {
+            const v = parseFloat(val);
+            document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
+            const searGf = Math.round(110 - v * 1.4);
+            document.getElementById('searWeightReadout').textContent = `${searGf} gf`;
+            document.getElementById('shoeHeightText').textContent =
+                Math.abs(v) <= 5 ? 'TENGAH (LUBANG #2 — OPTIMAL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
+        }
+
+        let oscProgress = 0.65;
+        let oscPulling = false;
+        let oscReq = null;
+        let oscShotFired = false;
+        let oscPlaybackMode = false;
+
+        function computePosterTriggerCurve(t) {
+            if (t < 0.28) return 0.72 * Math.sin((t / 0.28) * (Math.PI / 2));
+            if (t < 0.58) return 0.72 + ((t - 0.28) / 0.30) * 0.11;
+            if (t < 0.64) return 0.83 - ((t - 0.58) / 0.06) * 0.09;
+            return 0.74;
+        }
+
+        function drawOscilloscope(prog = 0) {
+            const canvas = document.getElementById('triggerOscCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const padL = 46, padR = 18, padT = 22, padB = 32;
+            const pw = w - padL - padR, ph = h - padT - padB;
+
+            // Technical Grid
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.14)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 4; i++) {
+                const y = padT + (i / 4) * ph;
+                ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + pw, y); ctx.stroke();
+            }
+
+            // 4 Phase Vertical Dividers (Penarikan Awal | Stabil | Pelepasan | Gerakan Lanjutan)
+            [0.28, 0.58, 0.66, 1.0].forEach(p => {
+                const x = padL + p * pw;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, padT + ph); ctx.stroke();
+            });
+            ctx.setLineDash([]);
+
+            // Axes
+            ctx.strokeStyle = '#94A3B8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(padL, padT);
+            ctx.lineTo(padL, padT + ph);
+            ctx.lineTo(padL + pw, padT + ph);
+            ctx.stroke();
+
+            ctx.fillStyle = '#94A3B8';
+            ctx.font = 'bold 10px IBM Plex Mono';
+            ctx.fillText('TEKANAN (gf)', padL + 6, padT + 10);
+            ctx.fillText('WAKTU (ms) \u2192', padL + pw - 82, padT + ph + 22);
+
+            // Reference Curve
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let i = 0; i <= 120; i++) {
+                const t = i / 120;
+                const x = padL + t * pw;
+                const y = padT + ph - computePosterTriggerCurve(t) * ph;
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Active Trace
+            if (prog > 0) {
+                const steps = Math.floor(prog * 120);
+                ctx.strokeStyle = '#FF4800';
+                ctx.lineWidth = 3.5;
+                ctx.beginPath();
+                for (let i = 0; i <= steps; i++) {
+                    const t = i / 120;
+                    const x = padL + t * pw;
+                    const y = padT + ph - computePosterTriggerCurve(t) * ph;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                if (prog >= 0.60) {
+                    const bx = padL + 0.60 * pw;
+                    const by = padT + ph - computePosterTriggerCurve(0.60) * ph;
+                    ctx.fillStyle = '#10B981';
+                    ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillText('SEAR BREAK (LEPAS)', bx - 48, by - 12);
+                }
+            }
+
+            [1, 2, 3, 4].forEach(n => {
+                const el = document.getElementById(`oscStage-${n}`);
+                if (!el) return;
+                const on =
+                    (n === 1 && prog > 0 && prog < 0.28) ||
+                    (n === 2 && prog >= 0.28 && prog < 0.58) ||
+                    (n === 3 && prog >= 0.58 && prog < 0.67) ||
+                    (n === 4 && prog >= 0.67);
+                el.className = on
+                    ? 'p-1.5 border border-[#FF4800] bg-[#FF4800]/20 text-white'
+                    : 'p-1.5 border border-slate-800 text-slate-400';
+            });
+        }
+
+        function beginLiveTriggerPull(playback = false) {
+            oscPlaybackMode = playback;
+            oscPulling = true;
+            oscProgress = 0;
+            oscShotFired = false;
+            playMechTick(600);
+            if (oscReq) cancelAnimationFrame(oscReq);
+
+            function frame() {
+                if (!oscPulling) return;
+                oscProgress = Math.min(1, oscProgress + 0.0085);
+                document.getElementById('mechTriggerBlade').setAttribute('transform', `rotate(${oscProgress * 10}, 132, 44)`);
+
+                const lbl = document.getElementById('oscPhaseLabel');
+                if (oscProgress < 0.28) lbl.textContent = 'FASE 1: PENARIKAN AWAL';
+                else if (oscProgress < 0.58) lbl.textContent = 'FASE 2: STABIL DI TITIK TAHANAN';
+                else if (oscProgress < 0.67) {
+                    lbl.textContent = 'FASE 3: PELEPASAN PELURU!';
+                    if (!oscShotFired) {
+                        oscShotFired = true;
+                        playSteelImpactSound();
+                    }
+                } else {
+                    lbl.textContent = 'FASE 4: FOLLOW-THROUGH STABIL';
+                }
+
+                drawOscilloscope(oscProgress);
+                if (oscProgress < 1) oscReq = requestAnimationFrame(frame);
+                else { oscPulling = false; oscReq = null; document.getElementById('tactileTriggerBtn').setAttribute('aria-pressed','false'); }
+            }
+            oscReq = requestAnimationFrame(frame);
+        }
+
+        function endLiveTriggerPull() {
+            if (oscPlaybackMode) return;
+            oscPulling = false;
+            if (oscReq != null) cancelAnimationFrame(oscReq);
+            oscReq = null;
+            document.getElementById('tactileTriggerBtn').setAttribute('aria-pressed','false');
+            document.getElementById('mechTriggerBlade').setAttribute('transform', 'rotate(0, 132, 44)');
+        }
+
+        function runIdealCurvePlayback() {
+            beginLiveTriggerPull(true);
+        }
+
+        function setupTriggerInput() {
+            const btn = document.getElementById('tactileTriggerBtn');
+            btn.setAttribute('aria-pressed','false');
+            btn.addEventListener('pointerdown', ev => {
+                if (!ev.isPrimary || (ev.pointerType === 'mouse' && ev.button !== 0)) return;
+                oscPlaybackMode = false;
+                btn.setPointerCapture(ev.pointerId);
+                btn.setAttribute('aria-pressed','true');
+                beginLiveTriggerPull(false);
+            });
+            btn.addEventListener('pointerup', endLiveTriggerPull);
+            btn.addEventListener('pointercancel', endLiveTriggerPull);
+            btn.addEventListener('lostpointercapture', endLiveTriggerPull);
+            btn.addEventListener('keydown', ev => {
+                if (ev.key === ' ' || ev.key === 'Enter') {
+                    ev.preventDefault();
+                    if (!ev.repeat && !oscPulling) {
+                        btn.setAttribute('aria-pressed','true');
+                        beginLiveTriggerPull(false);
+                    }
+                }
+            });
+            btn.addEventListener('keyup', ev => {
+                if (ev.key === ' ' || ev.key === 'Enter') {ev.preventDefault();endLiveTriggerPull();}
+            });
+            btn.addEventListener('blur', endLiveTriggerPull);
+            document.addEventListener('visibilitychange', () => {if(document.hidden) endLiveTriggerPull();});
+        }
+
+        let ocularTick = 0;
+        let ocularVisible = false;
+        let ocularReq = null;
+        let ocularLast = 0;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        function scheduleOcularFrame() {
+            if (ocularReq == null && !document.hidden && ocularVisible) ocularReq = requestAnimationFrame(renderOcularLoop);
+        }
+        function setupOcularVisibility() {
+            const target = document.getElementById('ocularLensCanvas');
+            if ('IntersectionObserver' in window) {
+                const obs = new IntersectionObserver(entries => {
+                    ocularVisible = entries.some(e => e.isIntersecting);
+                    if (ocularVisible) scheduleOcularFrame();
+                    else if (ocularReq != null) {cancelAnimationFrame(ocularReq); ocularReq=null;}
+                }, {threshold:0});
+                obs.observe(target);
+            } else {ocularVisible=true; scheduleOcularFrame();}
+            document.addEventListener('visibilitychange', () => {if(!document.hidden) scheduleOcularFrame();});
+            reducedMotion.addEventListener?.('change', () => {if(ocularVisible) scheduleOcularFrame();});
+        }
+
+        function updateOpticalSim() {
+            const dist = parseFloat(document.getElementById('optEyeDist').value);
+            const comb = parseFloat(document.getElementById('optCheekHeight').value);
+            const lat = parseFloat(document.getElementById('optLat').value);
+            const press = parseFloat(document.getElementById('optPressure').value);
+
+            document.getElementById('optEyeDistLabel').textContent = `${dist} mm ${Math.abs(dist - 85) <= 5 ? '(IDEAL)' : ''}`;
+            document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm`;
+            document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm`;
+            document.getElementById('optPressureLabel').textContent =
+                press > 72 ? `${press}% (TEGANG / NADI)` : press < 25 ? `${press}% (LONGGAR)` : `${press}% (RILEKS KONSISTEN)`;
+
+            // Move side-profile SVG head & cheekpiece
+            const dx = (dist - 85) * 0.9;
+            const dy = -comb * 0.85;
+            document.getElementById('svgShooterHeadSide').setAttribute('transform', `translate(${dx}, ${dy})`);
+            document.getElementById('svgSideCheekpiece').setAttribute('transform', `translate(0, ${dy})`);
+
+            const err = Math.hypot(dist - 85, comb * 1.5, lat * 1.5);
+            const badge = document.getElementById('opticsLockBadge');
+            const mini = document.getElementById('axisStatusMini');
+            if (err < 7) {
+                badge.textContent = 'LINGKARAN PENUH (0 PARALAKS)';
+                badge.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
+                mini.textContent = 'SUMBU OPTIK SEJAJAR';
+                mini.className = 'text-[var(--ok-green)] font-bold';
+            } else {
+                badge.textContent = 'BAYANGAN SABIT MUNCUL!';
+                badge.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
+                mini.textContent = 'DEVIASI SUMBU MATA';
+                mini.className = 'text-[var(--aurellia-red)] font-bold';
+            }
+            if (reducedMotion.matches && ocularVisible) scheduleOcularFrame();
+        }
+
+        function calibratePerfectOptics() {
+            document.getElementById('optEyeDist').value = 85;
+            document.getElementById('optCheekHeight').value = 0;
+            document.getElementById('optLat').value = 0;
+            document.getElementById('optPressure').value = 50;
+            playMechTick(1020);
+            updateOpticalSim();
+        }
+
+        function renderOcularLoop(timestamp = performance.now()) {
+            ocularReq = null;
+            if (!ocularVisible || document.hidden) return;
+            if (!reducedMotion.matches && timestamp - ocularLast < 32) {scheduleOcularFrame(); return;}
+            ocularLast = timestamp;
+            const canvas = document.getElementById('ocularLensCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height, cx = w / 2, cy = h / 2;
+            if (!reducedMotion.matches) ocularTick += 0.05;
+
+            const dist = parseFloat(document.getElementById('optEyeDist').value);
+            const comb = parseFloat(document.getElementById('optCheekHeight').value);
+            const lat = parseFloat(document.getElementById('optLat').value);
+            const press = parseFloat(document.getElementById('optPressure').value);
+
+            const tremor = Math.abs(press - 50) > 20 ? (Math.abs(press - 50) - 20) * 0.15 : 0.25;
+            const tx = Math.sin(ocularTick * 2.8) * tremor;
+            const ty = Math.cos(ocularTick * 3.5) * tremor;
+
+            ctx.fillStyle = '#090B0E';
+            ctx.fillRect(0, 0, w, h);
+
+            const exitPupilRadius = Math.max(52, 128 - Math.abs(dist - 85) * 1.6);
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx - lat * 2.5 + tx, cy + comb * 2.5 + ty, exitPupilRadius, 0, Math.PI * 2);
+            ctx.clip();
+
+            // Crisp outdoor target berm background inside lens
+            ctx.fillStyle = '#DCE4EC';
+            ctx.fillRect(0, 0, w, cy + 12);
+            ctx.fillStyle = '#4B5E43';
+            ctx.fillRect(0, cy + 12, w, h);
+
+            // Distant Orange IMSSU Ram Silhouette
+            ctx.save();
+            ctx.translate(cx + tx, cy + ty);
+            ctx.fillStyle = '#FF4800';
+            ctx.fillRect(-20, -12, 34, 20);
+            ctx.beginPath(); ctx.arc(18, -14, 8, 0, Math.PI * 2); ctx.fill();
+            ctx.fillRect(-16, 8, 5, 13);
+            ctx.fillRect(8, 8, 5, 13);
+            ctx.restore();
+
+            // Etched Match Reticle
+            ctx.strokeStyle = '#111315';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(w, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#0055B8';
+            ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.stroke();
+            ctx.fillStyle = '#D11F26';
+            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+
+            ctx.restore();
+
+            // Lunar Shadow Vignette
+            const grad = ctx.createRadialGradient(
+                cx - lat * 2.2, cy + comb * 2.2, exitPupilRadius * 0.75,
+                cx, cy, 144
+            );
+            grad.addColorStop(0, 'rgba(0,0,0,0)');
+            grad.addColorStop(0.85, 'rgba(9,11,14,0.88)');
+            grad.addColorStop(1, 'rgba(9,11,14,1)');
+            ctx.fillStyle = grad;
+            ctx.beginPath(); ctx.arc(cx, cy, 148, 0, Math.PI * 2); ctx.fill();
+
+            if (!reducedMotion.matches) scheduleOcularFrame();
+        }
+
+        const IMSSU_SVGS = {
+            chicken: `<svg viewBox="0 0 48 42" class="w-9 h-8 sm:w-11 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M14 24 L10 12 L16 8 L20 14 L34 14 L38 8 L41 18 L35 28 L26 30 L26 38 L20 38 L20 30 Z"/></svg>`,
+            pig: `<svg viewBox="0 0 60 42" class="w-11 h-8 sm:w-12 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M10 16 Q14 8 28 8 L46 10 L54 18 L50 26 L44 28 L44 38 L38 38 L38 29 L22 29 L22 38 L16 38 L16 27 L10 24 Z"/></svg>`,
+            turkey: `<svg viewBox="0 0 54 50" class="w-10 h-9 sm:w-12 sm:h-11"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 16 L18 10 L22 22 L36 16 L42 6 L46 8 L42 22 L38 32 L28 34 L28 46 L22 46 L22 34 L12 28 Z"/></svg>`,
+            ram: `<svg viewBox="0 0 64 52" class="w-12 h-10 sm:w-14 sm:h-12"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 22 L18 16 L38 16 L44 8 C50 4 58 8 56 16 C54 22 48 20 46 16 L44 28 L42 46 L36 46 L36 33 L22 33 L22 46 L16 46 L16 32 Z"/></svg>`
+        };
+
+        const RANGE_SPECS = {
+            chicken: { label: 'AYAM (CHICKEN)', dist: 18, drop: 0.0, clicks: 0 },
+            pig:     { label: 'BABI (PIG)',     dist: 27, drop: -1.4, clicks: 4 },
+            turkey:  { label: 'KALKUN (TURKEY)',dist: 33, drop: -3.5, clicks: 9 },
+            ram:     { label: 'DOMBA (RAM)',    dist: 41, drop: -6.8, clicks: 14 }
+        };
+
+        let selectedAnimal = 'ram';
+        let downedSet = new Set();
+        let shotTraceProg = 1;
+        let ballisticReq = null;
+
+        function buildSilhouetteRack() {
+            ['ram', 'turkey', 'pig', 'chicken'].forEach(animal => {
+                const container = document.getElementById(`rackRow-${animal}`);
+                if (!container) return;
+                container.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    const btn = document.createElement('button');
+                    btn.id = `target-${animal}-${i}`;
+                    btn.className = 'steel-target-btn hover:scale-110 cursor-pointer';
+                    btn.setAttribute('aria-label', `${({ram:'Domba',turkey:'Kalkun',pig:'Babi',chicken:'Ayam'})[animal]} sasaran ${i + 1}`);
+                    btn.setAttribute('aria-pressed','false');
+                    btn.innerHTML = IMSSU_SVGS[animal];
+                    btn.onclick = () => hitSteelTarget(animal, i);
+                    container.appendChild(btn);
+                }
+            });
+        }
+
+        function hitSteelTarget(animal, idx) {
+            const key = `${animal}-${idx}`;
+            const el = document.getElementById(`target-${animal}-${idx}`);
+            if (!el) return;
+            playSteelImpactSound();
+            selectRangeAnimal(animal);
+
+            if (downedSet.has(key)) {
+                downedSet.delete(key);
+                el.classList.remove('steel-knocked');
+                el.setAttribute('aria-pressed','false');
+            } else {
+                downedSet.add(key);
+                el.classList.add('steel-knocked');
+                el.setAttribute('aria-pressed','true');
+            }
+            const count = downedSet.size;
+            document.getElementById('rackHitScore').textContent = `${count < 10 ? '0' + count : count} / 20`;
+            triggerBallisticTrace();
+        }
+
+        function resetSilhouetteRack() {
+            downedSet.clear();
+            playMechTick(840);
+            document.querySelectorAll('.steel-target-btn').forEach(b => {b.classList.remove('steel-knocked');b.setAttribute('aria-pressed','false');});
+            document.getElementById('rackHitScore').textContent = '00 / 20';
+        }
+
+        function selectRangeAnimal(animal) {
+            selectedAnimal = animal;
+            const s = RANGE_SPECS[animal];
+            document.getElementById('activeRangeBadge').textContent = `${s.label} // ${s.dist} METER`;
+
+            ['chicken', 'pig', 'turkey', 'ram'].forEach(k => {
+                const b = document.getElementById(`rangeBtn-${k}`);
+                if (!b) return;
+                b.className = k === animal
+                    ? 'p-2.5 border-2 border-[#FF4800] bg-[#FF4800]/10 text-center transition'
+                    : 'p-2.5 border border-[var(--rule-light)] bg-[var(--bg-surface)] text-center transition';
+            });
+            renderTrajectoryGraph();
+        }
+
+        function triggerBallisticTrace() {
+            if (ballisticReq != null) cancelAnimationFrame(ballisticReq);
+            ballisticReq = null;
+            if (reducedMotion.matches) {shotTraceProg = 1;renderTrajectoryGraph();return;}
+            shotTraceProg = 0;
+            function step() {
+                shotTraceProg = Math.min(1, shotTraceProg + 0.045);
+                renderTrajectoryGraph();
+                if (shotTraceProg < 1) ballisticReq = requestAnimationFrame(step);
+                else ballisticReq = null;
+            }
+            ballisticReq = requestAnimationFrame(step);
+        }
+
+        function renderTrajectoryGraph() {
+            const canvas = document.getElementById('trajectoryCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const wind = parseFloat(document.getElementById('windRangeInput').value);
+            document.getElementById('windValText').textContent = `${wind.toFixed(1)} m/s`;
+
+            const spec = RANGE_SPECS[selectedAnimal];
+            const drift = ((spec.dist / 18) * wind * 0.45).toFixed(1);
+            document.getElementById('ballisticSpecLine').textContent =
+                `${spec.label} ${spec.dist}M // LINTASAN CONTOH: ${spec.drop} CM // KLIK CONTOH: +${spec.clicks} // PERGESERAN CONTOH: ${drift} CM`;
+
+            const padL = 40, padR = 28, losY = 54;
+            const scaleX = (w - padL - padR) / 45;
+
+            // Line of Sight
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath(); ctx.moveTo(padL, losY); ctx.lineTo(w - padR, losY); ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Distance Posts (18m, 27m, 33m, 41m)
+            [
+                { m: 18, t: '18m Ayam' },
+                { m: 27, t: '27m Babi' },
+                { m: 33, t: '33m Kalkun' },
+                { m: 41, t: '41m Domba' }
+            ].forEach(p => {
+                const x = padL + p.m * scaleX;
+                ctx.strokeStyle = p.m === spec.dist ? '#FF4800' : '#334155';
+                ctx.lineWidth = p.m === spec.dist ? 2 : 1;
+                ctx.beginPath(); ctx.moveTo(x, 18); ctx.lineTo(x, h - 22); ctx.stroke();
+                ctx.fillStyle = p.m === spec.dist ? '#FF4800' : '#94A3B8';
+                ctx.font = 'bold 10px IBM Plex Mono';
+                ctx.fillText(p.t, x - 26, h - 8);
+            });
+
+            function yCurve(m) {
+                const rel = (m - 20) / 21;
+                return losY - 6 + rel * rel * 68;
+            }
+
+            const maxM = spec.dist * shotTraceProg;
+            ctx.strokeStyle = '#FF4800';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let m = 0; m <= maxM; m += 0.5) {
+                const x = padL + m * scaleX;
+                const y = yCurve(m);
+                if (m === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            const px = padL + maxM * scaleX, py = yCurve(maxM);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+        }
+
+        const HARDWARE_SPECS = {
+            stock: {
+                code: 'KOMPONEN #01 // STOCK, BERAT & PANJANG POPOR',
+                title: 'Stock (Popor), Buttplate & Panjang Popor',
+                body: 'Panjang popor diatur menyesuaikan panjang lengan bawah penembak. Tinggi serta sudut buttplate diatur agar kontak dengan lekukan bahu kanan selalu konsisten dan kepala tetap tegak alami saat membidik.',
+                note: 'STANDAR: Seluruh permukaan buttplate wajib menempel merata di bahu kanan.'
+            },
+            cheekpiece: {
+                code: 'KOMPONEN #02 // PENYELARASAN KEPALA',
+                title: 'Cheek Piece (Sandaran Pipi Presisi)',
+                body: 'Ketinggian, kemiringan, dan sudut sandaran pipi diatur mengikuti anatomi tulang pipi penembak. Prinsip utamanya adalah menyelaraskan komponen senapan terhadap tubuh, bukan memaksa leher membungkuk mencari teleskop.',
+                note: 'STANDAR UJI: Saat mata dibuka, reticle harus langsung berada tepat di tengah lensa.'
+            },
+            grip: {
+                code: 'KOMPONEN #03 // GRIP & TRIGGER',
+                title: 'Grip Anatomis & Bilah Pemicu (Trigger Shoe)',
+                body: 'Pistol grip menopang tangan kanan secara ergonomis sehingga jari telunjuk dapat mencapai trigger shoe secara bebas dan membentuk sudut tarikan 90° lurus ke belakang tanpa bergesekan dengan kayu popor.',
+                note: 'STANDAR: Jari telunjuk bekerja mandiri dengan sudut 90.0° terhadap bilah pemicu.'
+            },
+            riser: {
+                code: 'KOMPONEN #04 // PENYELARASAN KOMPONEN SENAPAN',
+                title: 'Peninggi Teleskop (Scope Riser) & Fore-End',
+                body: 'Peninggi rel teleskop dan balok penopang bawah (fore-end) diselaraskan agar tinggi senapan pas di atas tangan kiri tanpa memaksa bahu terangkat atau kepala menunduk.',
+                note: 'STANDAR: Menjaga leher tetap tegak dan pergelangan tangan kiri tetap lurus.'
+            },
+            cylinder: {
+                code: 'KOMPONEN #05 // TABUNG UDARA',
+                title: 'Tabung Udara Bertekanan Tinggi (200 Bar PCP)',
+                body: 'Menyimpan udara bertekanan dengan sistem regulator presisi agar setiap tembakan menghasilkan kecepatan lontar peluru (muzzle velocity) yang konsisten dari sasaran pertama hingga terakhir.',
+                note: 'STANDAR: Pastikan tekanan udara berada dalam rentang kerja regulator sebelum bertanding.'
+            },
+            barrel: {
+                code: 'KOMPONEN #06 // PANJANG SENAPAN & LARAS',
+                title: 'Laras Match Presisi & Muzzle Shroud',
+                body: 'Laras berulir presisi tinggi mengarahkan dan menstabilkan putaran peluru diabolo 4.5mm. Kebersihan alur laras sangat menentukan ketajaman pengelompokan tembakan (grouping) hingga jarak 41m.',
+                note: 'STANDAR: Bersihkan laras secara berkala setelah mencapai jumlah tembakan tertentu.'
+            },
+            objective: {
+                code: 'KOMPONEN #07 // LENSA OBJEKTIF & PARALAKS',
+                title: 'Lensa Objektif & Cincin Fokus Paralaks (AO)',
+                body: 'Bagian depan teleskop yang mengumpulkan cahaya sekaligus dilengkapi pengatur fokus jarak (Adjustable Objective / Parallax) untuk menghilangkan kesalahan paralaks pada jarak 18m, 27m, 33m, dan 41m.',
+                note: 'STANDAR: Bayangan target dan garis reticle harus berada pada satu bidang fokus yang sama.'
+            },
+            turrets: {
+                code: 'KOMPONEN #08 // TURRET ELEVASI & WINDAGE',
+                title: 'Turret Elevasi (Atas) & Turret Windage (Samping)',
+                body: 'Knop mekanis presisi dalam satuan klik (MOA / MRAD) untuk menggeser titik kena peluru secara vertikal (mengikuti jarak hewan 18m–41m) maupun horizontal (melawan bias angin samping).',
+                note: 'STANDAR: Catat jumlah klik elevasi pasti untuk Ayam, Babi, Kalkun, dan Domba.'
+            },
+            zoom: {
+                code: 'KOMPONEN #09 // PEMBESARAN OPTIK',
+                title: 'Cincin Pengatur Pembesaran (Zoom Ring)',
+                body: 'Mengatur tingkat pembesaran bayangan sasaran. Pembesaran tinggi memperjelas detail siluet, namun juga memperbesar tampilan goyangan alami tubuh di dalam reticle.',
+                note: 'STANDAR: Pilih tingkat pembesaran yang seimbang antara ketajaman visual dan ketenangan bidikan.'
+            },
+            ocular: {
+                code: 'KOMPONEN #10 // LENSA OKULER & FOKUS RETICLE',
+                title: 'Lensa Okuler & Pengatur Dioptri Mata',
+                body: 'Lensa paling belakang tempat mata penembak membidik. Dilengkapi cincin fokus reticle (diopter adjustment) agar garis palang reticle tampak hitam tajam tanpa membuat mata cepat lelah.',
+                note: 'STANDAR: Fokuskan dioptri okuler terlebih dahulu sebelum mengatur paralaks jarak.'
+            }
+        };
+
+        function inspectHardware(key) {
+            playMechTick(860);
+            const item = HARDWARE_SPECS[key];
+            if (!item) return;
+            document.getElementById('blueprintActiveLabel').textContent = `INSPEKSI: ${item.title.toUpperCase()}`;
+            document.getElementById('hwSpecCode').textContent = item.code;
+            document.getElementById('hwSpecTitle').textContent = item.title;
+            document.getElementById('hwSpecBody').textContent = item.body;
+            document.getElementById('hwSpecNote').textContent = item.note;
+        }
+
+        function switchRifleRig(athlete) {
+            playMechTick(780);
+            const chassis = document.getElementById('rigMainChassis');
+            const rear = document.getElementById('rigRearBlock');
+            const muzzle = document.getElementById('rigMuzzleCap');
+            const sig = document.getElementById('rigCheekName');
+            const bA = document.getElementById('rigSwitch-aurellia');
+            const bC = document.getElementById('rigSwitch-clarisa');
+
+            if (athlete === 'clarisa') {
+                chassis.setAttribute('fill', '#0055B8');
+                rear.setAttribute('fill', '#0055B8');
+                muzzle.setAttribute('fill', '#0055B8');
+                sig.textContent = 'Clarisa';
+                bC.className = 'px-3.5 py-2 font-bold bg-[#0055B8] text-white transition';
+                bA.className = 'px-3.5 py-2 font-bold hover:bg-[var(--bg-subtle)] transition';
+            } else {
+                chassis.setAttribute('fill', '#D11F26');
+                rear.setAttribute('fill', '#D11F26');
+                muzzle.setAttribute('fill', '#D11F26');
+                sig.textContent = 'Aurellia';
+                bA.className = 'px-3.5 py-2 font-bold bg-[#D11F26] text-white transition';
+                bC.className = 'px-3.5 py-2 font-bold hover:bg-[var(--bg-subtle)] transition';
+            }
+        }
+
+        function adjustRifleBalancePoint(val) {
+            const x = parseFloat(val);
+            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 248)`);
+            const fb = document.getElementById('cobFeedbackText');
+            if (x >= 402 && x <= 438) {
+                fb.textContent = 'IDEAL — TEPAT DI ATAS TANGAN PENOPANG KIRI';
+                fb.className = 'text-[var(--ok-green)]';
+            } else if (x < 402) {
+                fb.textContent = 'BERAT BELAKANG — MONCONG LARAS MUDAH MENGAYUN';
+                fb.className = 'text-[var(--aurellia-red)]';
+            } else {
+                fb.textContent = 'BERAT DEPAN — MEMBEBANI OTOT LENGAN KIRI';
+                fb.className = 'text-[var(--aurellia-red)]';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            setupTriggerInput();
+            setupOcularVisibility();
+            renderBiomechIndexTable();
+            selectBiomechCallout('spine');
+            updatePosturePhysics();
+            drawOscilloscope(0.65);
+            updateOpticalSim();
+            buildSilhouetteRack();
+            selectRangeAnimal('ram');
+        });
