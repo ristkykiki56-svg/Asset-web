@@ -467,7 +467,7 @@ let sfxActive = false;
                 dev.textContent = 'Vektor lurus (contoh)';
                 dev.className = 'text-[var(--ok-green)]';
                 box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SPESIFIKASI VEKTOR B (TEPAT 90&deg;):</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.';
+                box.innerHTML = '<strong>SKEMA VEKTOR B:</strong> Garis hijau menunjukkan arah lurus dalam diagram dua dimensi; bukan toleransi IMSSU atau instruksi menyetel senapan.';
             } else if (vec === 'C') {
                 stamp.textContent = 'VEKTOR C: TERLALU DALAM';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
@@ -986,13 +986,13 @@ let sfxActive = false;
                 code: 'KOMPONEN #03 // GRIP & TRIGGER',
                 title: 'Grip Anatomis & Bilah Pemicu (Trigger Shoe)',
                 body: 'Pistol grip menopang tangan kanan secara ergonomis sehingga jari telunjuk dapat mencapai trigger shoe secara bebas dan membentuk sudut tarikan 90° lurus ke belakang tanpa bergesekan dengan kayu popor.',
-                note: 'STANDAR: Jari telunjuk bekerja mandiri dengan sudut 90.0° terhadap bilah pemicu.'
+                note: 'SKEMA: garis gaya pada gambar tidak menetapkan sudut toleransi atau tekanan alat nyata.'
             },
             riser: {
                 code: 'KOMPONEN #04 // PENYELARASAN KOMPONEN SENAPAN',
                 title: 'Peninggi Teleskop (Scope Riser) & Fore-End',
                 body: 'Peninggi rel teleskop dan balok penopang bawah (fore-end) diselaraskan agar tinggi senapan pas di atas tangan kiri tanpa memaksa bahu terangkat atau kepala menunduk.',
-                note: 'STANDAR: Menjaga leher tetap tegak dan pergelangan tangan kiri tetap lurus.'
+                note: 'SKEMA: posisi komponen relatif terhadap tubuh hanya gambaran konseptual.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
@@ -1004,13 +1004,13 @@ let sfxActive = false;
                 code: 'KOMPONEN #06 // PANJANG SENAPAN & LARAS',
                 title: 'Laras Match Presisi & Muzzle Shroud',
                 body: 'Laras berulir presisi tinggi mengarahkan dan menstabilkan putaran peluru diabolo 4.5mm. Kebersihan alur laras sangat menentukan ketajaman pengelompokan tembakan (grouping) hingga jarak 41m.',
-                note: 'STANDAR: Bersihkan laras secara berkala setelah mencapai jumlah tembakan tertentu.'
+                note: 'Perawatan dan pembersihan mengikuti petunjuk pabrikan senapan yang benar-benar digunakan.'
             },
             objective: {
                 code: 'KOMPONEN #07 // LENSA OBJEKTIF & PARALAKS',
                 title: 'Lensa Objektif & Cincin Fokus Paralaks (AO)',
                 body: 'Bagian depan teleskop yang mengumpulkan cahaya sekaligus dilengkapi pengatur fokus jarak (Adjustable Objective / Parallax) untuk menghilangkan kesalahan paralaks pada jarak 18m, 27m, 33m, dan 41m.',
-                note: 'STANDAR: Bayangan target dan garis reticle harus berada pada satu bidang fokus yang sama.'
+                note: 'SKEMA: kebutuhan fokus bergantung jenis dan rancangan perangkat optik yang dipakai.'
             },
             turrets: {
                 code: 'KOMPONEN #08 // TURRET ELEVASI & WINDAGE',
@@ -1022,13 +1022,13 @@ let sfxActive = false;
                 code: 'KOMPONEN #09 // PEMBESARAN OPTIK',
                 title: 'Cincin Pengatur Pembesaran (Zoom Ring)',
                 body: 'Mengatur tingkat pembesaran bayangan sasaran. Pembesaran tinggi memperjelas detail siluet, namun juga memperbesar tampilan goyangan alami tubuh di dalam reticle.',
-                note: 'STANDAR: Pilih tingkat pembesaran yang seimbang antara ketajaman visual dan ketenangan bidikan.'
+                note: 'SKEMA: pembesaran ditampilkan sebagai konsep; nilai optimalnya tidak dihitung halaman ini.'
             },
             ocular: {
                 code: 'KOMPONEN #10 // LENSA OKULER & FOKUS RETICLE',
                 title: 'Lensa Okuler & Pengatur Dioptri Mata',
                 body: 'Lensa paling belakang tempat mata penembak membidik. Dilengkapi cincin fokus reticle (diopter adjustment) agar garis palang reticle tampak hitam tajam tanpa membuat mata cepat lelah.',
-                note: 'STANDAR: Fokuskan dioptri okuler terlebih dahulu sebelum mengatur paralaks jarak.'
+                note: 'SKEMA: pengaturan fokus mengikuti manual dan karakteristik optik yang benar-benar dipakai.'
             }
         };
 
