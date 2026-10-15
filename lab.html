@@ -151,16 +151,16 @@
                 <div class="flex flex-wrap items-center gap-2 font-mono-tech text-xs">
                     <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                         <button onclick="switchPose('back')" id="poseTab-back" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
-                            1. Punggung &amp; Panah Beban (Clarisa)
+                            1. Skema Punggung
                         </button>
                         <button onclick="switchPose('front')" id="poseTab-front" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            2. Tampak Depan (Clarisa)
+                            2. Skema Depan
                         </button>
                         <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            3. Samping Kiri (Aurellia)
+                            3. Samping Kiri
                         </button>
                         <button onclick="switchPose('sideRight')" id="poseTab-sideRight" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            4. Samping Kanan (Aurellia)
+                            4. Samping Kanan
                         </button>
                     </div>
                     <button onclick="toggleXraySkeleton()" id="xrayToggleBtn" aria-pressed="true" class="px-3 py-2 border border-[#0055B8] text-[var(--clarisa-blue)] font-bold hover:bg-[#0055B8] hover:text-white transition">
@@ -395,7 +395,7 @@
                             </svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
                                 <span>BEBAN LEPAS (SEAR):</span>
-                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">110 unit model</strong>
+                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">50 / 100 (MODEL)</strong>
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                         </div>
 
                         <div id="vectorExplanationBox" class="p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed">
-                            <strong>ILUSTRASI VEKTOR B:</strong> Jari telunjuk membentuk sudut 90&deg; lurus ke belakang terhadap permukaan bilah pelatuk. Gunakan bagian tengah bantalan jari ujung (<em>distal pad</em>) dan pastikan jari tidak menyentuh sisi kayu popor.
+                            <strong>ILUSTRASI VEKTOR B:</strong> Garis hijau menggambarkan arah lurus dalam skema dua dimensi. Sudut dan titik sentuh pada gambar bukan toleransi resmi atau instruksi pengaturan senapan.
                         </div>
                     </div>
                 </div>
@@ -770,8 +770,8 @@
                         <canvas id="trajectoryCanvas" width="580" height="170" class="w-full h-[160px] block"></canvas>
                         <div class="flex flex-col sm:flex-row items-center gap-3 pt-1">
                             <div class="w-full sm:flex-1 flex items-center gap-3 font-mono-tech text-[11px] text-slate-300">
-                                <span class="shrink-0">PARAMETER VISUAL: <strong id="windValText" class="text-sky-400">2.0 unit model</strong></span>
-                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Parameter visual untuk lintasan ilustratif, bukan kecepatan angin">
+                                <span class="shrink-0">INTENSITAS GRAFIK: <strong id="windValText" class="text-sky-400">2.0 unit model</strong></span>
+                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Intensitas kurva ilustrasi, bukan data angin atau balistik">
                             </div>
                             <button onclick="triggerBallisticTrace()" class="w-full sm:w-auto px-4 py-2 bg-[#FF4800] text-white font-mono-tech text-xs font-bold uppercase hover:bg-[#e03f00] transition">
                                 Putar Ilustrasi
@@ -792,7 +792,7 @@
                         BAGIAN 05 // ANATOMI SENAPAN ANGIN MATCH, TITIK KESEIMBANGAN &amp; BEDAH TELESKOP
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Blueprint Komponen Senapan (Aurellia &amp; Clarisa Rig) + 8 Bagian Teleskop
+                        Skema Komponen Senapan &amp; Teleskop — Bukan Perangkat Atlet Terverifikasi
                     </h2>
                 </div>
 
@@ -897,7 +897,7 @@
                                 <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
                                     <rect x="445" y="164" width="300" height="20" fill="#CBD5E1" stroke="#111315" stroke-width="1.5"/>
                                     <rect x="745" y="164" width="24" height="20" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
-                                    <text x="595" y="177" text-anchor="middle" fill="#111315" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TABUNG UDARA 200 BAR (PCP)</text>
+                                    <text x="595" y="177" text-anchor="middle" fill="#111315" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TABUNG UDARA (PCP) — SKEMA</text>
                                 </g>
 
                                 <!-- 6. Match Barrel & Riser Rail -->

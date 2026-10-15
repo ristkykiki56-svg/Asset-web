@@ -137,7 +137,7 @@ let sfxActive = false;
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
                 code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
                 ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
-                title: 'Kaki Kiri Menahan 60% – 70% Total Beban',
+                title: 'Kaki Kiri — Skema Penopang Berdiri',
                 desc: 'Kaki kiri merupakan salah satu titik tumpu postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
                 metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
             },
@@ -145,7 +145,7 @@ let sfxActive = false;
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
                 code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
                 ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
-                title: 'Kaki Kanan (30% – 40%) & Sudut Kaki 90°',
+                title: 'Kaki Kanan — Skema Penopang Berdiri',
                 desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
                 metrics: ['DISTRIBUSI: tidak diukur', 'SUDUT: hanya ilustrasi', 'ATURAN: posisi berdiri']
             }
@@ -488,8 +488,8 @@ let sfxActive = false;
         function adjustTriggerShoeContact(val) {
             const v = parseFloat(val);
             document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
-            const searGf = Math.round(110 - v * 1.4); // arbitrary demonstration scale, not grams-force
-            document.getElementById('searWeightReadout').textContent = `${searGf} unit model`;
+            const searGf = Math.max(0, Math.min(100, Math.round(50 - v * 0.65))); // demonstration index, never gf
+            document.getElementById('searWeightReadout').textContent = `${searGf} / 100 (MODEL)`;
             document.getElementById('shoeHeightText').textContent =
                 Math.abs(v) <= 5 ? 'TENGAH (LUBANG #2 — OPTIMAL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
         }
@@ -545,7 +545,7 @@ let sfxActive = false;
 
             ctx.fillStyle = '#94A3B8';
             ctx.font = 'bold 10px IBM Plex Mono';
-            ctx.fillText('GAYA (UNIT MODEL)', padL + 6, padT + 10);
+            ctx.fillText('PROGRES (MODEL)', padL + 6, padT + 10);
             ctx.fillText('WAKTU (ms) \u2192', padL + pw - 82, padT + ph + 22);
 
             // Reference Curve
@@ -950,7 +950,7 @@ let sfxActive = false;
 
             function yCurve(m) {
                 const rel = (m - 20) / 21;
-                return losY - 6 + rel * rel * 68;
+                return losY - 6 + rel * rel * (40 + wind * 7); // illustrative curve only
             }
 
             const maxM = spec.dist * shotTraceProg;
@@ -974,7 +974,7 @@ let sfxActive = false;
                 code: 'KOMPONEN #01 // STOCK, BERAT & PANJANG POPOR',
                 title: 'Stock (Popor), Buttplate & Panjang Popor',
                 body: 'Panjang popor diatur menyesuaikan panjang lengan bawah penembak. Tinggi serta sudut buttplate diatur agar kontak dengan lekukan bahu kanan selalu konsisten dan kepala tetap tegak alami saat membidik.',
-                note: 'CATATAN ILUSTRASI: Seluruh permukaan buttplate wajib menempel merata di bahu kanan.'
+                note: 'Diagram hanya menandai komponen buttplate, bukan panduan pengaturannya.'
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // PENYELARASAN KEPALA',
@@ -998,7 +998,7 @@ let sfxActive = false;
                 code: 'KOMPONEN #05 // TABUNG UDARA',
                 title: 'Tabung Udara Bertekanan (PCP) — Skema',
                 body: 'Menyimpan udara bertekanan dengan sistem regulator presisi agar setiap tembakan menghasilkan kecepatan lontar peluru (muzzle velocity) yang konsisten dari sasaran pertama hingga terakhir.',
-                note: 'STANDAR: Pastikan tekanan udara berada dalam rentang kerja regulator sebelum bertanding.'
+                note: 'Informasi tekanan harus mengikuti label dan manual senapan yang benar-benar digunakan.'
             },
             barrel: {
                 code: 'KOMPONEN #06 // PANJANG SENAPAN & LARAS',
@@ -1016,7 +1016,7 @@ let sfxActive = false;
                 code: 'KOMPONEN #08 // TURRET ELEVASI & WINDAGE',
                 title: 'Turret Elevasi (Atas) & Turret Windage (Samping)',
                 body: 'Knop mekanis presisi dalam satuan klik (MOA / MRAD) untuk menggeser titik kena peluru secara vertikal (mengikuti jarak hewan 18m–41m) maupun horizontal (melawan bias angin samping).',
-                note: 'STANDAR: Catat jumlah klik elevasi pasti untuk Ayam, Babi, Kalkun, dan Domba.'
+                note: 'Halaman ini tidak menghitung klik elevasi senapan atau optik nyata.'
             },
             zoom: {
                 code: 'KOMPONEN #09 // PEMBESARAN OPTIK',
