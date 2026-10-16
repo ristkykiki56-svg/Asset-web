@@ -62,3 +62,16 @@ echo 'Lab browser QA PASS (320px–1440px)'
   >/dev/null 2>/dev/null
 test -s /tmp/twinshooter-qa/lab-desktop.png
 test -s /tmp/twinshooter-qa/lab-mobile.png
+
+# Inspect the redesigned equipment illustration, not just the Lab introduction.
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --hide-scrollbars --window-size=1440,1050 --virtual-time-budget=2200 \
+  --screenshot=/tmp/twinshooter-qa/lab-hardware-desktop.png "http://127.0.0.1:$PORT/lab.html#sec-hardware" \
+  >/dev/null 2>/dev/null
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --hide-scrollbars --window-size=390,900 --virtual-time-budget=2200 \
+  --screenshot=/tmp/twinshooter-qa/lab-hardware-mobile.png "http://127.0.0.1:$PORT/lab.html#sec-hardware" \
+  >/dev/null 2>/dev/null
+test -s /tmp/twinshooter-qa/lab-hardware-desktop.png
+test -s /tmp/twinshooter-qa/lab-hardware-mobile.png
+echo 'Captured Hardware illustration screenshots for visual QA'
