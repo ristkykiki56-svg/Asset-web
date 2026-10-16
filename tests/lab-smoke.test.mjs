@@ -66,6 +66,8 @@ test('published claims distinguish official rules from unvalidated demonstration
 
 test('mobile Lab offers five focused lessons without removing desktop content',()=>{
  assert.match(html,/id="labMobileModuleSelect"/);
+ assert.match(html,/id="labMobilePosePicker"/);
+ assert.match(js,/posePicker\?\.addEventListener\('change'/);
  assert.match(html,/id="labNextModule"/);
  assert.match(html,/id="labPrevModule"/);
  assert.equal((html.match(/class="lab-heading-short"/g)||[]).length,5);
