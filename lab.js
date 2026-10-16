@@ -737,20 +737,53 @@ function buildEditorialPostureIllustration(pose, arch) {
             ctx.arc(cx - lat * 2.5 + tx, cy + comb * 2.5 + ty, exitPupilRadius, 0, Math.PI * 2);
             ctx.clip();
 
-            // Crisp outdoor target berm background inside lens
-            ctx.fillStyle = '#DCE4EC';
-            ctx.fillRect(0, 0, w, cy + 12);
-            ctx.fillStyle = '#4B5E43';
-            ctx.fillRect(0, cy + 12, w, h);
+            // Neutral field-study illustration, not a simulated optical measurement.
+            const sky = ctx.createLinearGradient(0, 15, 0, cy + 35);
+            sky.addColorStop(0, '#C4CDD0');
+            sky.addColorStop(0.58, '#E4E5DD');
+            sky.addColorStop(1, '#D4D5C7');
+            ctx.fillStyle = sky;
+            ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = '#AAB5A8';
+            ctx.beginPath();
+            ctx.moveTo(0, cy + 10);
+            ctx.quadraticCurveTo(80, cy + 1, 156, cy + 17);
+            ctx.quadraticCurveTo(224, cy + 7, 300, cy + 16);
+            ctx.lineTo(300, 300);ctx.lineTo(0,300);ctx.closePath();ctx.fill();
+            const ground = ctx.createLinearGradient(0, cy + 14, 0, h);
+            ground.addColorStop(0, '#849286');
+            ground.addColorStop(0.36, '#68796A');
+            ground.addColorStop(1, '#46574D');
+            ctx.fillStyle = ground;
+            ctx.fillRect(0, cy + 32, w, h);
+            ctx.strokeStyle = 'rgba(34,54,47,.16)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 8; i++) {
+                ctx.beginPath(); ctx.moveTo(i * 46 - 24, cy + 39);
+                ctx.lineTo(i * 50 - 10, h); ctx.stroke();
+            }
 
-            // Distant Orange IMSSU Ram Silhouette
+            // A restrained conceptual silhouette; deliberately no score or aim feedback.
             ctx.save();
             ctx.translate(cx + tx, cy + ty);
-            ctx.fillStyle = '#FF4800';
-            ctx.fillRect(-20, -12, 34, 20);
-            ctx.beginPath(); ctx.arc(18, -14, 8, 0, Math.PI * 2); ctx.fill();
-            ctx.fillRect(-16, 8, 5, 13);
-            ctx.fillRect(8, 8, 5, 13);
+            ctx.fillStyle = '#25302B';
+            ctx.beginPath();
+            ctx.moveTo(-19,-13);
+            ctx.lineTo(9,-13);
+            ctx.lineTo(15,-20);
+            ctx.bezierCurveTo(19,-29,32,-25,31,-17);
+            ctx.bezierCurveTo(31,-12,27,-10,23,-13);
+            ctx.lineTo(19,-7);
+            ctx.lineTo(18,11);
+            ctx.lineTo(12,11);
+            ctx.lineTo(10,3);
+            ctx.lineTo(-11,3);
+            ctx.lineTo(-13,12);
+            ctx.lineTo(-19,12);
+            ctx.lineTo(-18,2);
+            ctx.lineTo(-23,-7);
+            ctx.closePath();
+            ctx.fill();
             ctx.restore();
 
             // Etched Match Reticle
@@ -761,10 +794,11 @@ function buildEditorialPostureIllustration(pose, arch) {
             ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
             ctx.stroke();
 
-            ctx.strokeStyle = '#0055B8';
+            ctx.strokeStyle = '#466875';
+            ctx.lineWidth = 1.1;
             ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.stroke();
-            ctx.fillStyle = '#D11F26';
-            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#B4603B';
+            ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, Math.PI * 2); ctx.fill();
 
             ctx.restore();
 
