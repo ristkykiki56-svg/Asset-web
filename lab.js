@@ -305,7 +305,7 @@ function buildEditorialPostureIllustration(pose, arch) {
             showXraySkeleton = !showXraySkeleton;
             playMechTick(960);
             const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? 'Kerangka: tampil' : 'Kerangka: sembunyi';
+            btn.textContent = showXraySkeleton ? 'Garis postur: tampil' : 'Garis postur: sembunyi';
             btn.setAttribute('aria-pressed',String(showXraySkeleton));
             btn.className = showXraySkeleton
                 ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
@@ -430,7 +430,7 @@ function buildEditorialPostureIllustration(pose, arch) {
             const box = document.getElementById('vectorExplanationBox');
 
             if (vec === 'B') {
-                stamp.textContent = 'VEKTOR B: 90° LURUS';
+                stamp.textContent = 'VEKTOR B: GARIS TENGAH';
                 stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
                 dev.textContent = 'Vektor lurus (contoh)';
                 dev.className = 'text-[var(--ok-green)]';
@@ -828,11 +828,8 @@ function buildEditorialPostureIllustration(pose, arch) {
             key,
             `<svg data-target-animal="${key}" viewBox="0 0 66 54" class="silhouette-study" role="presentation" aria-hidden="true">
                 <path class="silhouette-shadow" d="${path}" transform="translate(0.8,2)" fill="#151F23" opacity=".12"/>
-                <path class="silhouette-form" d="${path}" fill="url(#targetSteel-${key})" stroke="#293338" stroke-width="2.3" stroke-linejoin="round"/>
+                <path class="silhouette-form" d="${path}" fill="#CA744F" stroke="#293338" stroke-width="2.3" stroke-linejoin="round"/>
                 <path class="silhouette-footline" d="M8 48H60" stroke="#7A8581" stroke-width=".85" opacity=".65"/>
-                <defs><linearGradient id="targetSteel-${key}" x1="0" y1="0" x2=".25" y2="1">
-                    <stop offset="0" stop-color="#E49E6D"/><stop offset=".36" stop-color="#D87749"/><stop offset="1" stop-color="#A34D35"/>
-                </linearGradient></defs>
             </svg>`
         ]));
 
