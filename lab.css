@@ -808,3 +808,70 @@ html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {colo
  #hardwareBlueprintSvg .hw-marker-halo,#hardwareBlueprintSvg .hw-marker-disc,
  #hardwareBlueprintSvg .hw-region {transition:none!important}
 }
+
+
+/* Four-module visual refinement: editorial sports diagrams, not measurements. */
+#sec-biomech .lab-biomech-stage {background:linear-gradient(180deg,rgba(252,250,245,.45),rgba(223,229,225,.18));}
+#sec-biomech .biomech-editorial-figure {filter:drop-shadow(0 3px 3px rgba(20,32,35,.10))}
+#sec-biomech .callout-node:not([hidden]) {border-radius:50%;box-shadow:0 2px 6px rgba(20,30,34,.15)}
+#sec-biomech #svgActiveLeaderLine rect {fill:#B75B37}
+#sec-biomech #svgActiveLeaderLine polyline {stroke:#B75B37}
+#sec-biomech .lab-pose-controls {align-items:center}
+#sec-biomech #xrayToggleBtn {font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;letter-spacing:0}
+#sec-trigger #triggerVectorDiagram,#sec-trigger #triggerMechanismDiagram {
+  display:block;max-width:100%;filter:drop-shadow(0 2px 3px rgba(27,35,39,.075));
+}
+#sec-trigger .trigger-vector-node:hover rect,
+#sec-trigger .trigger-vector-node:focus-visible rect {stroke:var(--clarisa-blue);stroke-width:3}
+#sec-trigger .trigger-vector-node:focus-visible {outline:none;filter:drop-shadow(0 0 3px var(--clarisa-blue))}
+#sec-trigger #vectorExplanationBox {font:500 13px/1.7 'Plus Jakarta Sans',sans-serif}
+#sec-trigger .grid.grid-cols-3.gap-2 button {min-height:48px;line-height:1.45;font-family:'Plus Jakarta Sans',sans-serif}
+#sec-optics #ocularLensCanvas {
+  box-shadow:0 4px 16px rgba(21,31,33,.16),0 0 0 7px rgba(31,45,49,.035);
+  border-color:#202B30;
+}
+#sec-optics #opticalAlignmentIllustration {
+  display:block;max-width:100%;background:linear-gradient(180deg,rgba(236,237,230,.27),transparent);
+}
+#sec-optics #axisStatusMini {line-height:1.45;text-align:right}
+#sec-imssu [data-rack-animal] {padding:4px 5px 0}
+#sec-imssu .steel-target-btn {
+  display:inline-flex;align-items:end;justify-content:center;position:relative;
+  border-radius:4px 4px 0 0;cursor:pointer;touch-action:manipulation;
+  min-height:47px;min-width:44px;padding:0 1px;
+}
+#sec-imssu .silhouette-study {
+  display:block;width:clamp(40px,4vw,58px);height:46px;max-width:100%;
+  filter:drop-shadow(0 1px 1px rgba(30,39,41,.18));
+  transition:filter .2s ease;
+}
+#sec-imssu .steel-target-btn:hover .silhouette-study,
+#sec-imssu .steel-target-btn:focus-visible .silhouette-study {
+  filter:drop-shadow(0 0 3px rgba(224,104,56,.4));
+}
+#sec-imssu .silhouette-form {stroke:#273236;stroke-width:2.1}
+#sec-imssu .steel-target-btn[aria-pressed="true"] {opacity:.55}
+#sec-imssu [data-rack-animal] > div:nth-child(2) {
+  background:#293338!important;border-color:#293338!important;border-radius:2px;
+  min-height:22px;height:auto!important;padding:3px 7px!important;
+}
+#sec-imssu [data-rack-animal] > div:nth-child(2) span {font-size:10px;line-height:1.3}
+#sec-imssu .grid.grid-cols-4.gap-2 button {
+  min-height:56px;font-family:'Plus Jakarta Sans',sans-serif;
+}
+html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg,rgba(36,43,47,.2),rgba(23,30,36,.03))}
+@media(max-width:767px) {
+ #sec-biomech .lab-biomech-stage {height:clamp(340px,107vw,420px)}
+ #sec-trigger #triggerVectorDiagram,#sec-trigger #triggerMechanismDiagram {height:180px}
+ #sec-trigger .grid.grid-cols-3.gap-2 button {font-size:12px;min-height:48px}
+ #sec-optics #opticalAlignmentIllustration {height:105px}
+ #sec-imssu .silhouette-study {width:41px;height:42px}
+ #sec-imssu .steel-target-btn {min-height:48px;min-width:44px}
+ #sec-imssu [data-rack-animal] {width:100%!important}
+ #sec-imssu [data-rack-animal] > div:nth-child(2) {min-height:25px}
+ #sec-imssu [data-rack-animal] > div:nth-child(2) span {font-size:11px}
+}
+@media(prefers-reduced-motion:reduce) {
+ #sec-imssu .silhouette-study {transition:none!important}
+ #sec-biomech .biomech-editorial-figure {filter:none}
+}
