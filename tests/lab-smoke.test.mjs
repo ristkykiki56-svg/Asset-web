@@ -62,3 +62,32 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
  assert.match(html,/bukan template produksi sasaran/);
 });
+
+
+test('mobile Lab offers five focused lessons without removing desktop content',()=>{
+ assert.match(html,/id="labMobileModuleSelect"/);
+ assert.match(html,/id="labNextModule"/);
+ assert.match(html,/id="labPrevModule"/);
+ assert.equal((html.match(/class="lab-heading-short"/g)||[]).length,5);
+ assert.equal((html.match(/data-lab-mobile-collapse/g)||[]).length,8);
+ assert.equal((html.match(/data-rack-animal=/g)||[]).length,4);
+ assert.match(html,/aria-label="Diagram senapan, geser horizontal/);
+ assert.match(js,/function setupLabMobileExperience/);
+ assert.match(js,/lab-mobile-focused/);
+ assert.match(js,/classList\.toggle\('is-active'/);
+ assert.match(js,/tier\.classList\.toggle\('is-current'/);
+ assert.match(css,/lab-mobile-focused main#main-content/);
+ assert.match(css,/\.lab-mobile-stepper/);
+ assert.match(css,/lab-settings:not\(\[open\]\)/);
+});
+
+test('mobile disclosure markup preserves balanced major HTML containers',()=>{
+ const source=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
+ const stack=[];
+ for(const tag of source.matchAll(/<\/?(div|details|section|aside|header|main)\b[^>]*>/g)){
+  const closing=tag[0].startsWith('</');
+  if(closing) assert.equal(stack.pop(),tag[1], 'closing '+tag[1]);
+  else stack.push(tag[1]);
+ }
+ assert.deepEqual(stack,[]);
+});
