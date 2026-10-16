@@ -358,39 +358,42 @@
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5">
                     <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
                         <span class="font-bold">FIG 2.1 — PERGERAKAN PEMICU (C/B/A) &amp; TUAS BILAH PELATUK</span>
-                        <span id="activeVectorStamp" class="px-2 py-0.5 bg-[#0E7C47] text-white font-bold">VEKTOR B: 90&deg; LURUS</span>
+                        <span id="activeVectorStamp" class="px-2 py-0.5 bg-[#0E7C47] text-white font-bold">VEKTOR B: GARIS TENGAH</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- Left Diagram: Exact Poster "PELATUK" C - B - A Vector Diagram -->
                         <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">DIAGRAM VEKTOR TARIKAN (ATAS)</span>
-                            <svg viewBox="0 0 230 220" class="w-full h-48">
-                                <!-- Black Receiver Block "PELATUK" -->
-                                <rect x="65" y="10" width="100" height="56" fill="#111315"/>
-                                <text x="115" y="43" text-anchor="middle" fill="#FFFFFF" font-size="13" font-family="Plus Jakarta Sans" font-weight="800" letter-spacing="1">PELATUK</text>
-
-                                <!-- Vector C (Too deep - curves left) -->
-                                <path id="svgVecC" d="M95 66 C95 112, 78 145, 62 178" fill="none" stroke="#9CA3AF" stroke-width="4" stroke-linecap="round"/>
-                                <!-- Vector B (Orthogonal 90 deg - straight center) -->
-                                <path id="svgVecB" d="M115 66 L115 178" fill="none" stroke="#0E7C47" stroke-width="5" stroke-linecap="round"/>
-                                <!-- Vector A (Finger tip - curves right) -->
-                                <path id="svgVecA" d="M135 66 C135 112, 152 145, 168 178" fill="none" stroke="#9CA3AF" stroke-width="4" stroke-linecap="round"/>
-
-                                <!-- Box Labels C, B, A -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih C" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('C');}" onclick="selectFingerVector('C')" transform="translate(48, 184)">
-                                    <rect width="28" height="24" fill="var(--bg-surface)" stroke="#D11F26" stroke-width="1.5"/>
-                                    <text x="14" y="16" text-anchor="middle" fill="var(--ink-900)" font-family="IBM Plex Mono" font-size="12" font-weight="bold">C</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih B" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('B');}" onclick="selectFingerVector('B')" transform="translate(101, 184)">
-                                    <rect width="28" height="24" fill="#0E7C47" stroke="#111315" stroke-width="1.5"/>
-                                    <text x="14" y="16" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="12" font-weight="bold">B</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih A" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('A');}" onclick="selectFingerVector('A')" transform="translate(154, 184)">
-                                    <rect width="28" height="24" fill="var(--bg-surface)" stroke="#D11F26" stroke-width="1.5"/>
-                                    <text x="14" y="16" text-anchor="middle" fill="var(--ink-900)" font-family="IBM Plex Mono" font-size="12" font-weight="bold">A</text>
-                                </g>
-                            </svg>
+                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">TIGA JALUR PERGERAKAN · SKEMA</span>
+                            <svg id="triggerVectorDiagram" viewBox="0 0 230 220" class="w-full h-48" role="group" aria-labelledby="triggerVectorTitle triggerVectorDesc">
+<title id="triggerVectorTitle">Tiga arah pergerakan ilustratif</title><desc id="triggerVectorDesc">Pilih A, B, atau C untuk melihat perbandingan garis, bukan ukuran gaya atau anjuran posisi nyata.</desc>
+<defs>
+<linearGradient id="triggerGraphite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68777B"/><stop offset=".33" stop-color="#39494B"/><stop offset="1" stop-color="#202A2E"/></linearGradient>
+<linearGradient id="triggerPlate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3F4F0"/><stop offset="1" stop-color="#D8DDD8"/></linearGradient>
+</defs>
+<path d="M22 166H207" stroke="#C6C9C3" stroke-width="1" stroke-dasharray="4 5"/>
+<path d="M115 18V178" stroke="#D1D6D0" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="57" y="13" width="116" height="57" rx="9" fill="url(#triggerGraphite)" stroke="#263338" stroke-width="2"/>
+<path d="M62 22H167" stroke="#DAE2E0" opacity=".5" stroke-width="2"/>
+<rect x="99" y="63" width="33" height="21" rx="5" fill="url(#triggerPlate)" stroke="#455259" stroke-width="1.5"/>
+<path id="svgVecC" d="M95 75 C94 111 82 141 62 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
+<path id="svgVecB" d="M115 75 L115 170" fill="none" stroke="#0E7C47" stroke-width="5" stroke-linecap="round"/>
+<path id="svgVecA" d="M135 75 C136 109 151 143 168 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
+<circle cx="95" cy="75" r="4" fill="#D1D9D8"/><circle cx="115" cy="75" r="4" fill="#D1D9D8"/><circle cx="135" cy="75" r="4" fill="#D1D9D8"/>
+<text x="115" y="45" text-anchor="middle" fill="#EDF1F0" font-family="IBM Plex Mono" font-size="10" font-weight="700" letter-spacing="1">MODEL ARAH</text>
+<g tabindex="0" role="button" aria-label="Pilih skema C: garis melengkung kiri" onclick="selectFingerVector('C')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('C');}" class="trigger-vector-node cursor-pointer" transform="translate(62,185)">
+<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
+<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">C</text>
+</g>
+<g tabindex="0" role="button" aria-label="Pilih skema B: garis tengah" onclick="selectFingerVector('B')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('B');}" class="trigger-vector-node cursor-pointer" transform="translate(115,185)">
+<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
+<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">B</text>
+</g>
+<g tabindex="0" role="button" aria-label="Pilih skema A: garis melengkung kanan" onclick="selectFingerVector('A')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('A');}" class="trigger-vector-node cursor-pointer" transform="translate(168,185)">
+<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
+<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">A</text>
+</g>
+</svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
                                 <span>DEVIASI MONCONG:</span>
                                 <strong id="vecDeviationReadout" class="text-[var(--ok-green)]">0.0 mm (NOL)</strong>
@@ -399,35 +402,33 @@
 
                         <!-- Right Diagram: Mechanical Sear & Blue Anodized Trigger Shoe Cutaway -->
                         <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">MEKANISME SEAR &amp; TRIGGER SHOE</span>
-                            <svg viewBox="0 0 240 220" class="w-full h-48">
-                                <!-- Upper Sear Bar & Spring -->
-                                <rect x="30" y="18" width="155" height="26" fill="none" stroke="var(--ink-900)" stroke-width="1.8"/>
-                                <line x1="42" y1="31" x2="170" y2="31" stroke="#0055B8" stroke-width="2" stroke-dasharray="5 3"/>
-                                <circle cx="75" cy="44" r="4" fill="#FF4800"/>
-                                <circle cx="132" cy="44" r="4" fill="#FF4800"/>
-
-                                <!-- Trigger Guard Frame -->
-                                <path d="M52 44 L52 172 Q52 192 76 192 L162 192" fill="none" stroke="var(--ink-700)" stroke-width="5"/>
-
-                                <!-- Pivoting Match Trigger Blade & Blue Anodized Shoe -->
-                                <g id="mechTriggerBlade" transform="rotate(0, 132, 44)">
-                                    <line x1="132" y1="44" x2="132" y2="155" stroke="#0055B8" stroke-width="9" stroke-linecap="butt"/>
-                                    <!-- 3 Vertical Adjustment Holes in Blue Trigger Shoe (like Poster photo) -->
-                                    <circle cx="132" cy="84" r="2.8" fill="var(--bg-surface)"/>
-                                    <circle cx="132" cy="108" r="2.8" fill="var(--bg-surface)"/>
-                                    <circle cx="132" cy="132" r="2.8" fill="var(--bg-surface)"/>
-
-                                    <!-- Distal Finger Pad Contact & 90° Force Vector -->
-                                    <g id="mechFingerPad" transform="translate(0, 0)">
-                                        <ellipse cx="156" cy="108" rx="22" ry="13" fill="rgba(255, 72, 0, 0.2)" stroke="#FF4800" stroke-width="1.8"/>
-                                        <circle cx="132" cy="108" r="15" fill="none" stroke="#0E7C47" stroke-width="1.5" stroke-dasharray="3 2"/>
-                                        <line x1="184" y1="108" x2="136" y2="108" stroke="#0E7C47" stroke-width="2.5"/>
-                                    </g>
-                                </g>
-                                <text x="148" y="68" fill="var(--ink-700)" font-family="IBM Plex Mono" font-size="8" font-weight="bold">BILAH PELATUK</text>
-                                <text x="148" y="148" fill="#FF4800" font-family="IBM Plex Mono" font-size="8" font-weight="bold">BANTALAN JARI</text>
-                            </svg>
+                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">AREA PERGERAKAN · BUKAN MEKANISME INTERNAL</span>
+                            <svg id="triggerMechanismDiagram" viewBox="0 0 240 220" class="w-full h-48" role="img" aria-labelledby="triggerMechanismTitle triggerMechanismDesc">
+<title id="triggerMechanismTitle">Ilustrasi eksternal bilah dan bidang sentuh</title>
+<desc id="triggerMechanismDesc">Diagram skematis interaksi arah garis dan bidang sentuh, bukan mekanisme internal atau panduan penyetelan.</desc>
+<defs>
+<linearGradient id="triggerOuterMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E9B9D"/><stop offset=".4" stop-color="#45575D"/><stop offset="1" stop-color="#24333A"/></linearGradient>
+<linearGradient id="triggerAccentBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#163C68"/><stop offset=".5" stop-color="#3373AD"/><stop offset="1" stop-color="#1C4E84"/></linearGradient>
+</defs>
+<path d="M29 170H207" stroke="#CDD0C8" stroke-width="1" stroke-dasharray="4 4"/>
+<path d="M38 30H198Q207 30 207 39V56H38Z" fill="url(#triggerOuterMetal)" stroke="#2E3A3F" stroke-width="2"/>
+<path d="M44 35H197" stroke="#EDF1EF" stroke-width="2" opacity=".4"/>
+<path d="M57 57V160Q57 180 77 180H186" fill="none" stroke="url(#triggerOuterMetal)" stroke-width="8" stroke-linecap="round"/>
+<path d="M62 59V155" stroke="#D9E0DC" stroke-width="1.4" opacity=".44"/>
+<circle cx="132" cy="44" r="7" fill="#2C414A" stroke="#C3CDCA" stroke-width="2"/>
+<g id="mechTriggerBlade" transform="rotate(0, 132, 44)">
+ <rect x="127" y="44" width="10" height="118" rx="5" fill="url(#triggerAccentBlue)" stroke="#1C4568" stroke-width="1.5"/>
+ <path d="M129 52V156" stroke="#BBD8EE" stroke-width="1.6" opacity=".48"/>
+ <circle cx="132" cy="86" r="3" fill="#DFECEB"/><circle cx="132" cy="112" r="3" fill="#DFECEB"/><circle cx="132" cy="137" r="3" fill="#DFECEB"/>
+ <g id="mechFingerPad" transform="translate(0, 0)">
+  <ellipse cx="158" cy="109" rx="21" ry="13" fill="#DB8B6B" fill-opacity=".42" stroke="#CB6745" stroke-width="1.8"/>
+  <circle cx="137" cy="109" r="13" fill="none" stroke="#537A82" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <path d="M190 109H148" stroke="#DD7146" stroke-width="2" stroke-dasharray="3 3"/>
+ </g>
+</g>
+<text x="157" y="72" fill="#465455" font-size="9" font-family="IBM Plex Mono" font-weight="700">BILAH</text>
+<text x="165" y="142" fill="#A95338" font-size="9" font-family="IBM Plex Mono" font-weight="700">AREA CONTOH</text>
+</svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
                                 <span>INDEKS GERAKAN MODEL:</span>
                                 <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">50 / 100 (MODEL)</strong>
@@ -439,13 +440,13 @@
                     <div class="space-y-3 pt-1">
                         <div class="grid grid-cols-3 gap-2 font-mono-tech text-xs">
                             <button onclick="selectFingerVector('C')" id="btnVec-C" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [C] Terlalu Dalam
+                                [C] Arah kiri
                             </button>
                             <button onclick="selectFingerVector('B')" id="btnVec-B" aria-pressed="true" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
                                 [B] Garis lurus (contoh)
                             </button>
                             <button onclick="selectFingerVector('A')" id="btnVec-A" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [A] Ujung Jari
+                                [A] Arah kanan
                             </button>
                         </div>
 
