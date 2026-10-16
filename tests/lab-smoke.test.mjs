@@ -93,3 +93,49 @@ test('mobile disclosure markup preserves balanced major HTML containers',()=>{
  }
  assert.deepEqual(stack,[]);
 });
+
+
+test('desktop and mobile field guide preserve clear navigation and all five experiments',()=>{
+ assert.match(html,/data-lab-desktop-nav/);
+ assert.match(html,/class="lab-intro-provenance"/);
+ assert.match(html,/href="#lab-sources">Sumber/);
+ assert.match(css,/min-width:1200px/);
+ assert.match(css,/\.lab-section-nav a\.is-current/);
+ assert.match(css,/\.lab-mobile-stepper/);
+ assert.match(js,/function setupLabDesktopActiveNav/);
+ assert.match(js,/IntersectionObserver/);
+ assert.equal((html.match(/id="sec-(?:biomech|trigger|optics|imssu|hardware)"/g)||[]).length,5);
+});
+
+test('educational model avoids unsupported ideal-settings and explains recorded vs illustrative values',()=>{
+ assert.doesNotMatch(html,/Take-Up \(0–70 gf\)/);
+ assert.doesNotMatch(html,/LUBANG #2 — OPTIMAL/);
+ assert.doesNotMatch(html,/85 mm \(IDEAL\)/);
+ assert.match(html,/INDEKS GERAKAN MODEL:/);
+ assert.match(html,/bukan rekaman gaya, waktu, atau performa atlet/);
+ assert.match(html,/ATURAN · IMSSU 2025/);
+ assert.match(html,/MODEL · BUKAN DATA UKUR/);
+ assert.doesNotMatch(js,/KESALAHAN VEKTOR [AC]/);
+ assert.doesNotMatch(js,/LUBANG #2 — OPTIMAL/);
+});
+
+test('guided anatomy selection and equipment inspection preserve accessible click targets',()=>{
+ assert.match(html,/id="labCalloutPicker"/);
+ assert.match(html,/id="labHardwarePicker"/);
+ assert.equal((html.match(/data-hw-key="/g)||[]).length,15);
+ assert.match(js,/anatomySelect\.addEventListener\('change'/);
+ assert.match(js,/hardwareSelect\?\.addEventListener\('change'/);
+ assert.match(js,/btn\.hidden = pt\.pose !== currentPose/);
+ assert.match(js,/calloutPicker\.value = item\.id/);
+ assert.match(js,/node\.classList\.toggle\('is-highlighted'/);
+ assert.match(css,/\.callout-node\[hidden\]/);
+ assert.match(css,/\.callout-node\[aria-pressed="true"\]/);
+});
+
+test('active and total silhouette counts both update across selection and reset',()=>{
+ assert.match(html,/id="rackGroupScore"/);
+ assert.match(html,/id="rackHitScore"/);
+ assert.match(js,/function updateRackCounters/);
+ assert.match(js,/key\.startsWith\(selectedAnimal \+ '-'\)/);
+ assert.match(js,/updateRackCounters\(\);\s+renderTrajectoryGraph/);
+});
