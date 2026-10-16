@@ -139,3 +139,30 @@ test('active and total silhouette counts both update across selection and reset'
  assert.match(js,/key\.startsWith\(selectedAnimal \+ '-'\)/);
  assert.match(js,/updateRackCounters\(\);\s+renderTrajectoryGraph/);
 });
+
+
+test('equipment v2 is real layered inline SVG with stable interactive contracts',()=>{
+ const svg=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0];
+ assert.ok(svg,'missing diagram');
+ assert.match(svg,/class="hw-illustration/);
+ assert.match(svg,/role="group"/);
+ assert.match(svg,/aria-labelledby="hwArtTitle hwArtDesc"/);
+ assert.match(svg,/linearGradient id="hwGraphite"/);
+ assert.match(svg,/linearGradient id="hwSteel"/);
+ assert.match(svg,/radialGradient id="hwLens"/);
+ assert.match(svg,/class="hw-scope-section"/);
+ assert.match(svg,/class="hw-rifle-section"/);
+ assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
+ assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
+ for (const id of ['svgCobFulcrum','rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
+   assert.equal((svg.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
+ }
+ for (const key of ['stock','cheekpiece','grip','riser','cylinder','barrel','objective','turrets','zoom','ocular']) {
+   assert.match(svg,new RegExp('data-hw-key="'+key+'"'),key);
+ }
+ assert.match(css,/Equipment illustration v2/);
+ assert.match(css,/\.hw-marker\.is-highlighted/);
+ assert.match(js,/document\.getElementById\('labHardwarePicker'\)/);
+ assert.match(js,/document\.getElementById\('blueprintActiveLabel'\)/);
+ assert.match(html,/Bukan spesifikasi|bukan spesifikasi|bukan skala|BUKAN SKALA/);
+});
