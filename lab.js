@@ -816,12 +816,25 @@ function buildEditorialPostureIllustration(pose, arch) {
             if (!reducedMotion.matches) scheduleOcularFrame();
         }
 
-        const IMSSU_SVGS = {
-            chicken: `<svg viewBox="0 0 48 42" class="w-9 h-8 sm:w-11 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M14 24 L10 12 L16 8 L20 14 L34 14 L38 8 L41 18 L35 28 L26 30 L26 38 L20 38 L20 30 Z"/></svg>`,
-            pig: `<svg viewBox="0 0 60 42" class="w-11 h-8 sm:w-12 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M10 16 Q14 8 28 8 L46 10 L54 18 L50 26 L44 28 L44 38 L38 38 L38 29 L22 29 L22 38 L16 38 L16 27 L10 24 Z"/></svg>`,
-            turkey: `<svg viewBox="0 0 54 50" class="w-10 h-9 sm:w-12 sm:h-11"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 16 L18 10 L22 22 L36 16 L42 6 L46 8 L42 22 L38 32 L28 34 L28 46 L22 46 L22 34 L12 28 Z"/></svg>`,
-            ram: `<svg viewBox="0 0 64 52" class="w-12 h-10 sm:w-14 sm:h-12"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 22 L18 16 L38 16 L44 8 C50 4 58 8 56 16 C54 22 48 20 46 16 L44 28 L42 46 L36 46 L36 33 L22 33 L22 46 L16 46 L16 32 Z"/></svg>`
+        // Distinctive editorial silhouette studies, not competition target templates.
+        // The official dimensions and distances must come from the linked rulebook.
+        const SILHOUETTE_PATHS = {
+            chicken: 'M13 24Q9 19 10 12L15 14L16 7L21 14Q26 12 30 15Q33 10 37 10Q44 12 43 19L39 23L36 30L31 32L30 39H25L24 31H20L19 39H14L16 27Z',
+            pig: 'M9 19Q11 12 22 11H41Q47 8 52 14L56 15L57 21L53 24L50 28L46 29L45 38H39L38 30H23L21 38H15L16 28Q9 27 9 19Z',
+            turkey: 'M11 24Q10 16 15 12L14 8Q21 9 25 17L28 13L33 16Q34 9 39 8Q45 8 45 13L42 21L46 25Q46 31 37 33L33 37L34 47H28L27 37L23 34Q13 34 11 24Z',
+            ram: 'M10 25L17 16L34 15L40 17Q43 8 49 8Q58 8 57 16Q56 24 50 23Q47 23 46 19L43 28L40 44H34L34 33H21L20 44H14L14 30Z'
         };
+        const IMSSU_SVGS = Object.fromEntries(Object.entries(SILHOUETTE_PATHS).map(([key,path]) => [
+            key,
+            `<svg data-target-animal="${key}" viewBox="0 0 66 54" class="silhouette-study" role="presentation" aria-hidden="true">
+                <path class="silhouette-shadow" d="${path}" transform="translate(0.8,2)" fill="#151F23" opacity=".12"/>
+                <path class="silhouette-form" d="${path}" fill="url(#targetSteel-${key})" stroke="#293338" stroke-width="2.3" stroke-linejoin="round"/>
+                <path class="silhouette-footline" d="M8 48H60" stroke="#7A8581" stroke-width=".85" opacity=".65"/>
+                <defs><linearGradient id="targetSteel-${key}" x1="0" y1="0" x2=".25" y2="1">
+                    <stop offset="0" stop-color="#E49E6D"/><stop offset=".36" stop-color="#D87749"/><stop offset="1" stop-color="#A34D35"/>
+                </linearGradient></defs>
+            </svg>`
+        ]));
 
         const RANGE_SPECS = {
             chicken: { label: 'AYAM (CHICKEN)', dist: 18 },
