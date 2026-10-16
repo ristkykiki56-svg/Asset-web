@@ -645,7 +645,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
     background:var(--bg-surface);color:var(--ink-900);border:1px solid var(--rule-heavy);
     padding:.5rem .75rem;border-radius:0;font:650 13px/1.4 'Plus Jakarta Sans',sans-serif;
   }
-  #sec-biomech .callout-node:not([aria-pressed="true"]){display:none!important}
+  #sec-biomech .callout-node:not([hidden]){display:flex!important;width:40px;height:40px;min-width:40px;min-height:40px;pointer-events:auto}
   #sec-biomech .callout-node[aria-pressed="true"]{
     width:44px;height:44px;min-width:44px;min-height:44px;touch-action:manipulation;
     font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.16);
@@ -936,4 +936,22 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
   #sec-hardware #hardwareBlueprintSvg .hw-marker {
     transition:none!important;
   }
+}
+
+
+/* Anatomy markers remain operable after redraws on every viewport. */
+#sec-biomech #biomechPinsOverlay .callout-node {
+  cursor:pointer;
+  border-radius:50%;
+  outline-offset:3px;
+}
+#sec-biomech #biomechPinsOverlay .callout-node:focus-visible {
+  outline:3px solid var(--clarisa-blue);
+  box-shadow:0 0 0 3px var(--bg-surface);
+}
+#sec-biomech #biomechPinsOverlay .callout-node[aria-pressed="true"]{
+  box-shadow:0 1px 8px rgba(185,91,55,.27);
+}
+@media(max-width:767px){
+ #sec-biomech #biomechPinsOverlay .callout-node[aria-pressed="true"] {width:44px;height:44px}
 }
