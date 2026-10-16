@@ -693,3 +693,23 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 @media(prefers-reduced-motion:reduce) {
   .lab-section-nav a,.lab-intro-provenance a,.callout-node {transition:none!important}
 }
+
+/* Reference summaries must stay operable on large screens, too. */
+@media(min-width:768px) {
+  .lab-notice-wrap > summary,.lab-sources-wrap > summary {
+    display:flex;
+    justify-content:space-between;align-items:center;gap:.5rem;
+    padding:.7rem 1rem;background:var(--bg-surface);
+    border:1px solid var(--rule-light);
+    color:var(--ink-700);list-style:none;
+    cursor:pointer;font:650 12px/1.55 'Plus Jakarta Sans',sans-serif;
+  }
+  .lab-notice-wrap > summary {border-left:3px solid var(--imssu-orange);}
+  .lab-notice-wrap > summary::-webkit-details-marker,
+  .lab-sources-wrap > summary::-webkit-details-marker {display:none}
+  .lab-notice-wrap > summary:after,.lab-sources-wrap > summary:after {content:"+";font-size:18px}
+  .lab-notice-wrap[open] > summary:after,.lab-sources-wrap[open] > summary:after {content:"−"}
+  .lab-notice-wrap .lab-notice {border-top:0}
+  .lab-sources-wrap > section {margin-top:.65rem}
+  #sec-biomech .lab-diagram-context {margin-top:.5rem}
+}
