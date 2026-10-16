@@ -26,11 +26,11 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('all nine sliders and sixteen SVG input nodes remain accessible',()=>{
+test('nine sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
  assert.equal(sliders.length,9);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
- assert.ok((html.match(/tabindex="0" role="button"/g)||[]).length>=16);
+ assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,13);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
  assert.match(js,/btn\.setAttribute\('aria-pressed','false'\)/);
 });
@@ -205,4 +205,16 @@ test('diagram labels do not misrepresent conceptual plots as measured data',()=>
   assert.match(js,/URUTAN MODEL/);
   assert.match(html,/BUKAN GAYA\/WAKTU UKUR/);
   assert.match(html,/POSISI SIKU RELATIF KE PINGGUL \(MODEL\)/);
+});
+
+
+test('interactive diagram markers expose a single keyboard path and truthful pressed state',()=>{
+ const hardware=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0]||'';
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer" tabindex="0" role="button"/g)||[]).length,10);
+ assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
+ assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);
+ assert.equal((html.match(/data-trigger-vector="[ABC]" aria-pressed=/g)||[]).length,3);
+ assert.match(js,/marker\.setAttribute\('aria-pressed', String\(v === vec\)\)/);
+ assert.match(js,/if \(node\.classList\.contains\('hw-marker'\)\) node\.setAttribute\('aria-pressed', String\(selected\)\)/);
 });
