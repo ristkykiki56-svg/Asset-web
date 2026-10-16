@@ -890,6 +890,9 @@ let sfxActive = false;
                 b.className = k === animal
                     ? 'p-2.5 border-2 border-[#FF4800] bg-[#FF4800]/10 text-center transition'
                     : 'p-2.5 border border-[var(--rule-light)] bg-[var(--bg-surface)] text-center transition';
+                b.setAttribute('aria-pressed', String(k === animal));
+                const tier = document.querySelector('[data-rack-animal="' + k + '"]');
+                if (tier) tier.classList.toggle('is-current', k === animal);
             });
             renderTrajectoryGraph();
         }
@@ -1096,3 +1099,35 @@ let sfxActive = false;
             buildSilhouetteRack();
             selectRangeAnimal('ram');
         });
+
+/* Mobile disclosure and navigation only; visual experiment calculations are unchanged. */
+function setupLabMobileExperience() {
+    const media = window.matchMedia('(max-width: 767px)');
+    const disclosures = Array.from(document.querySelectorAll('[data-lab-mobile-collapse]'));
+    const settings = document.querySelector('.lab-settings');
+    const syncBreakpoint = () => {
+        for (const panel of disclosures) panel.open = !media.matches;
+        if (settings) settings.open = !media.matches;
+    };
+    syncBreakpoint();
+    if (typeof media.addEventListener === 'function') {
+        media.addEventListener('change', syncBreakpoint);
+    } else if (typeof media.addListener === 'function') {
+        media.addListener(syncBreakpoint);
+    }
+
+    const picker = document.getElementById('labMobileModuleSelect');
+    if (!picker) return;
+    const ids = ['sec-biomech', 'sec-trigger', 'sec-optics', 'sec-imssu', 'sec-hardware'];
+    const syncHash = () => {
+        const chosen = decodeURIComponent(window.location.hash.slice(1));
+        if (ids.includes(chosen)) picker.value = chosen;
+    };
+    picker.addEventListener('change', () => {
+        if (!ids.includes(picker.value)) return;
+        window.location.hash = picker.value;
+    });
+    window.addEventListener('hashchange', syncHash);
+    syncHash();
+}
+window.addEventListener('DOMContentLoaded', setupLabMobileExperience);
