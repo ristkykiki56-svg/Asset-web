@@ -92,3 +92,16 @@ for lesson in posture trigger optics silhouette; do
   test -s "/tmp/twinshooter-qa/lab-${lesson}-mobile.png"
 done
 echo 'Captured focused desktop/mobile screenshots for four Lab illustrations'
+
+
+# Capture the six simultaneous front-view anatomy hotspots (the reported defect).
+for size in desktop mobile; do
+  if [[ "$size" == desktop ]]; then dimensions="1440,1060"; else dimensions="390,900"; fi
+  "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+    --hide-scrollbars --window-size="$dimensions" --virtual-time-budget=2100 \
+    --screenshot="/tmp/twinshooter-qa/lab-anatomy-front-${size}.png" \
+    "http://127.0.0.1:$PORT/tests/lab-four-visual-qa.html?lesson=posture&pose=front" \
+    >/dev/null 2>/dev/null
+  test -s "/tmp/twinshooter-qa/lab-anatomy-front-${size}.png"
+done
+echo 'Captured front-view anatomy visual QA for desktop/mobile'
