@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Shooting Lab Hardware — isolated visual QA</title>
+  <style>
+    * { box-sizing: border-box; }
+    html,body { margin:0; padding:0; background:#f3f1ea; width:100%;height:100%;overflow:hidden; }
+    iframe { display:block; width:100%;height:100%;border:0; }
+  </style>
+</head>
+<body>
+  <iframe id="lab" src="/lab.html#sec-hardware" title="Isolated hardware visual QA"></iframe>
+  <script>
+    const frame=document.getElementById('lab');
+    frame.addEventListener('load',()=>{
+      try {
+        const doc=frame.contentDocument;
+        const win=frame.contentWindow;
+        const section=doc.getElementById('sec-hardware');
+        const main=doc.getElementById('main-content');
+        if(!section||!main)throw new Error('Missing hardware section');
+        for(const selector of ['.lab-header','.lab-local-nav','body > section.tech-border-b','.lab-notice-wrap','.lab-mobile-stepper','.lab-sources-wrap','footer']){
+          doc.querySelectorAll(selector).forEach(node=>node.style.setProperty('display','none','important'));
+        }
+        main.querySelectorAll('section[id^="sec-"]').forEach(node=>{
+          if(node!==section)node.style.setProperty('display','none','important');
+        });
+        section.style.setProperty('display','block','important');
+        section.style.margin='0';
+        main.classList.remove('space-y-16');
+        main.style.padding='12px 14px 18px';
+        main.style.margin='0 auto';
+        win.scrollTo(0,0);
+        requestAnimationFrame(()=>{
+          win.scrollTo(0,0);
+          document.body.dataset.snapshot='ready';
+        });
+      }catch(e){document.body.dataset.snapshot='error';document.body.dataset.reason=e.message;}
+    },{once:true});
+  </script>
+</body>
+</html>
