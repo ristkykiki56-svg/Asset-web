@@ -313,6 +313,8 @@ let sfxActive = false;
 
         function switchPose(poseKey) {
             currentPose = poseKey;
+            const mobilePose = document.getElementById('labMobilePosePicker');
+            if (mobilePose) mobilePose.value = poseKey;
             playMechTick(820);
             ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
                 const b = document.getElementById(`poseTab-${k}`);
@@ -1157,6 +1159,8 @@ function setupLabMobileExperience() {
         if (settings) settings.open = !media.matches;
         showModule(active, false);
     };
+    const posePicker = document.getElementById('labMobilePosePicker');
+    posePicker?.addEventListener('change', () => switchPose(posePicker.value));
     picker.addEventListener('change', () => navigate(picker.value));
     prev?.addEventListener('click', () => navigate(ids[Math.max(0, ids.indexOf(active) - 1)]));
     next?.addEventListener('click', () => navigate(ids[Math.min(ids.length - 1, ids.indexOf(active) + 1)]));
