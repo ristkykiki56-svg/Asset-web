@@ -61,6 +61,27 @@ frame.addEventListener('load',()=>{
  if(!doc.documentElement.classList.contains('lab-mobile-focused'))problems.push('mobile focus mode missing');
  if(!doc.getElementById('sec-biomech').classList.contains('is-active'))problems.push('initial module not active');
  if(doc.querySelector('.lab-notice-wrap').open)problems.push('notice should begin collapsed on mobile');
+
+ const svg=doc.getElementById('biomechDraftSvg');
+ const selected=doc.querySelector('#biomechPinsOverlay .callout-node[aria-pressed="true"]');
+ w.positionBiomechPins();
+ if(!selected || !svg?.getScreenCTM())problems.push('posture selected SVG callout missing');
+ else {
+   const p=svg.createSVGPoint();
+   p.x=Number(selected.dataset.svgX);p.y=Number(selected.dataset.svgY);
+   const expected=p.matrixTransform(svg.getScreenCTM());
+   const rect=selected.getBoundingClientRect();
+   if(Math.hypot((rect.left+rect.width/2)-expected.x,(rect.top+rect.height/2)-expected.y)>3)
+     problems.push('posture hotspot position not aligned with SVG');
+ }
+ const elbowControl=doc.getElementById('hipLockSlider');
+ const beforeArm=doc.querySelector('#svgAthleteLayer .biomech-editorial-figure')?.innerHTML;
+ elbowControl.value='20';elbowControl.dispatchEvent(new Event('input',{bubbles:true}));
+ const afterArm=doc.querySelector('#svgAthleteLayer .biomech-editorial-figure')?.innerHTML;
+ if(beforeArm===afterArm)problems.push('elbow control did not change illustrated figure');
+ w.resetPostureParameters();
+ if(doc.getElementById('hipLockSlider').value!=='100')problems.push('posture reset did not restore elbow value');
+
  if(picker){
    picker.value='sec-optics';
    picker.dispatchEvent(new Event('change',{bubbles:true}));
