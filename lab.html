@@ -83,7 +83,7 @@
                     </div>
 
                     <!-- Athlete names retained from the supplied prototype, not represented as official branding -->
-                    <h1 class="lab-sr-only lab-main-heading">Shooting Lab — Clarisa Azalia dan Aurellia Cassandra</h1><p class="lab-mobile-intro">Pilih materi, lihat gambarnya, lalu coba kontrol interaktif. Semua simulasi bersifat ilustratif.</p>
+                    <h1 class="lab-sr-only lab-main-heading">Shooting Lab</h1><p class="lab-mobile-byline">Clarisa Azalia <span aria-hidden="true">·</span> Aurellia Cassandra</p><p class="lab-mobile-intro">Pilih materi, lihat gambarnya, lalu coba kontrol interaktif. Semua simulasi bersifat ilustratif.</p>
                     <div class="lab-athlete-wordmarks flex flex-wrap items-baseline gap-x-6 gap-y-1 pt-1">
                         <div class="flex items-baseline gap-2">
                             <span class="font-signature italic font-bold text-4xl sm:text-6xl tracking-tight text-[#B37B24]">Clarisa</span>
@@ -154,7 +154,9 @@
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
-                <div class="flex flex-wrap items-center gap-2 font-mono-tech text-xs">
+                <div class="lab-pose-controls flex flex-wrap items-center gap-2 font-mono-tech text-xs">
+                    <label class="lab-mobile-pose-label" for="labMobilePosePicker">Sudut pandang</label>
+                    <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Punggung</option><option value="front">Depan</option><option value="sideLeft">Samping kiri</option><option value="sideRight">Samping kanan</option></select>
                     <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                         <button onclick="switchPose('back')" id="poseTab-back" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
                             1. Skema Punggung
@@ -178,7 +180,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between drafting-bg reg-corner">
-                    <div class="flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
+                    <div class="lab-figure-caption flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
                         <span id="stagePoseTitle" class="font-bold">FIG 1.1 — ILUSTRASI PUNGGUNG (BUKAN REKONSTRUKSI POSTER)</span>
                         <span class="text-[var(--ink-500)]">SKEMA TIDAK BERSKALA // PILIH PIN [01–10]</span>
                     </div>
