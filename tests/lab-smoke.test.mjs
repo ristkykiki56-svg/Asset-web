@@ -206,3 +206,15 @@ test('diagram labels do not misrepresent conceptual plots as measured data',()=>
   assert.match(html,/BUKAN GAYA\/WAKTU UKUR/);
   assert.match(html,/POSISI SIKU RELATIF KE PINGGUL \(MODEL\)/);
 });
+
+
+test('interactive diagram markers expose a single keyboard path and truthful pressed state',()=>{
+ const hardware=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0]||'';
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer" tabindex="0" role="button"/g)||[]).length,10);
+ assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
+ assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);
+ assert.equal((html.match(/data-trigger-vector="[ABC]" aria-pressed=/g)||[]).length,3);
+ assert.match(js,/marker\.setAttribute\('aria-pressed', String\(v === vec\)\)/);
+ assert.match(js,/if \(node\.classList\.contains\('hw-marker'\)\) node\.setAttribute\('aria-pressed', String\(selected\)\)/);
+});
