@@ -90,8 +90,8 @@ let sfxActive = false;
                 code: 'TITIK ANATOMI #03 // BAHU KANAN',
                 ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Bahu Kanan & Sandaran Buttplate',
-                desc: 'Bahu kanan rileks dan tidak terangkat tegang. Pastikan buttplate (karet popor belakang) menempel secara konsisten pada lekukan bahu kanan di setiap tembakan.',
-                metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: Penuh & Stabil', 'TINGGI HOOK: Sesuai leher']
+                desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
+                metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
@@ -114,8 +114,8 @@ let sfxActive = false;
                 code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
                 ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Tangan Kanan, Grip & Jari Pelatuk',
-                desc: 'Tangan kanan menggenggam pistol grip dengan kuat, nyaman, dan rileks tanpa meremas kayu popor. Jari telunjuk ditempatkan mandiri pada bilah pelatuk membentuk sudut tarikan 90° lurus ke belakang.',
-                metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: 90.0° Lurus']
+                desc: 'Diagram menunjukkan letak grip, telunjuk, dan pelatuk dalam satu contoh posisi. Sudut dan tekanan tangan tidak diukur dan bukan rekomendasi untuk semua atlet.',
+                metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: skema arah']
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
@@ -130,8 +130,8 @@ let sfxActive = false;
                 code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
                 ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
                 title: 'Penyelarasan Badan, Bahu & Pinggul',
-                desc: 'Condongkan tubuh bagian atas ke belakang dengan bahu hampir sejajar garis tembak. Sejajarkan pinggul dengan arah sasaran dan kunci posisi panggul agar tidak berputar (twist) saat membidik.',
-                metrics: ['PINGGUL: Sejajar target', 'TORSO: Condong kompensasi', 'PUNTIRAN: Nol rotasi']
+                desc: 'Ilustrasi menampilkan hubungan badan, bahu, dan pinggul dari satu sudut. Gambar tidak menunjukkan sudut ideal atau pedoman teknik yang terverifikasi.',
+                metrics: ['PINGGUL: contoh visual', 'TORSO: contoh orientasi', 'PUNTIRAN: tidak diukur']
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
@@ -301,6 +301,7 @@ let sfxActive = false;
                         ? 'bg-[#FF4800] text-white border-white ring-2 ring-[#FF4800] z-20 scale-110'
                         : 'bg-[var(--ink-900)] text-[var(--bg-surface)] border-[var(--bg-surface)] z-10'
                 }`;
+                btn.hidden = pt.pose !== currentPose;
                 btn.style.left = `${pt.x}%`;
                 btn.style.top = `${pt.y}%`;
                 btn.textContent = pt.num;
@@ -355,6 +356,8 @@ let sfxActive = false;
             playMechTick(880);
             const item = POSTER_BIOMECH_DATA.find(d => d.id === id);
             if (!item) return;
+            const calloutPicker = document.getElementById('labCalloutPicker');
+            if (calloutPicker) calloutPicker.value = item.id;
 
             if (item.pose !== currentPose) {
                 switchPose(item.pose);
@@ -413,8 +416,8 @@ let sfxActive = false;
             const leftLoad = Math.min(78, Math.max(48, Math.round(65 + (12 - arch) * 0.7)));
             const rightLoad = 100 - leftLoad;
 
-            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad} (MODEL)`;
-            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad} (MODEL)`;
+            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad} unit contoh`;
+            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad} unit contoh`;
             document.getElementById('muzzleSwayReadout').textContent = `${changeIndex} / 100`;
 
             const statusEl = document.getElementById('skeletalStatusLabel');
@@ -471,19 +474,19 @@ let sfxActive = false;
                 box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
                 box.innerHTML = '<strong>SKEMA VEKTOR B:</strong> Garis hijau menunjukkan arah lurus dalam diagram dua dimensi; bukan toleransi IMSSU atau instruksi menyetel senapan.';
             } else if (vec === 'C') {
-                stamp.textContent = 'VEKTOR C: TERLALU DALAM';
+                stamp.textContent = 'VEKTOR C: ARAH MIRING (MODEL)';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
                 dev.textContent = 'Vektor bergeser kiri (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>KESALAHAN VEKTOR C (TERLALU DALAM):</strong> Jari telunjuk masuk terlalu dalam melewati bilah pelatuk, menghasilkan vektor gaya miring yang mendorong senapan ke samping saat pelepasan.';
+                box.innerHTML = '<strong>SKEMA VEKTOR C:</strong> Jalur garis pada gambar miring ke kiri. Ini adalah perbandingan arah pada diagram, bukan ukuran efek atau penilaian teknik atlet.';
             } else {
-                stamp.textContent = 'VEKTOR A: UJUNG JARI';
+                stamp.textContent = 'VEKTOR A: ARAH MIRING (MODEL)';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
                 dev.textContent = 'Vektor bergeser kanan (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>KESALAHAN VEKTOR A (UJUNG JARI):</strong> Menarik hanya dengan ujung luar jari telunjuk membuat sudut tarikan miring ke kanan dan mengurangi sensitivitas terhadap titik tahanan (<em>sear wall</em>).';
+                box.innerHTML = '<strong>SKEMA VEKTOR A:</strong> Jalur garis pada gambar miring ke kanan. Model ini tidak menghitung pengaruhnya pada akurasi atau gaya pelepasan nyata.';
             }
         }
 
@@ -493,7 +496,7 @@ let sfxActive = false;
             const searGf = Math.max(0, Math.min(100, Math.round(50 - v * 0.65))); // demonstration index, never gf
             document.getElementById('searWeightReadout').textContent = `${searGf} / 100 (MODEL)`;
             document.getElementById('shoeHeightText').textContent =
-                Math.abs(v) <= 5 ? 'TENGAH (LUBANG #2 — OPTIMAL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
+                Math.abs(v) <= 5 ? 'TENGAH (POSISI MODEL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
         }
 
         let oscProgress = 0.65;
@@ -703,11 +706,11 @@ let sfxActive = false;
             const lat = parseFloat(document.getElementById('optLat').value);
             const press = parseFloat(document.getElementById('optPressure').value);
 
-            document.getElementById('optEyeDistLabel').textContent = `${dist} mm (ACUAN MODEL: 85)`;
+            document.getElementById('optEyeDistLabel').textContent = `${dist} mm (CONTOH MODEL)`;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm`;
             document.getElementById('optPressureLabel').textContent =
-                press > 72 ? `${press}% (TEGANG / NADI)` : press < 25 ? `${press}% (LONGGAR)` : `${press}% (RILEKS KONSISTEN)`;
+                press > 72 ? `${press}% (NILAI TINGGI MODEL)` : press < 25 ? `${press}% (NILAI RENDAH MODEL)` : `${press}% (NILAI TENGAH MODEL)`;
 
             // Move side-profile SVG head & cheekpiece
             const dx = (dist - 85) * 0.9;
@@ -869,8 +872,7 @@ let sfxActive = false;
                 el.classList.add('steel-knocked');
                 el.setAttribute('aria-pressed','true');
             }
-            const count = downedSet.size;
-            document.getElementById('rackHitScore').textContent = `${count < 10 ? '0' + count : count} / 20`;
+            updateRackCounters();
             triggerBallisticTrace();
         }
 
@@ -878,7 +880,7 @@ let sfxActive = false;
             downedSet.clear();
             playMechTick(840);
             document.querySelectorAll('.steel-target-btn').forEach(b => {b.classList.remove('steel-knocked');b.setAttribute('aria-pressed','false');});
-            document.getElementById('rackHitScore').textContent = '00 / 20';
+            updateRackCounters();
         }
 
         function selectRangeAnimal(animal) {
@@ -896,7 +898,16 @@ let sfxActive = false;
                 const tier = document.querySelector('[data-rack-animal="' + k + '"]');
                 if (tier) tier.classList.toggle('is-current', k === animal);
             });
+            updateRackCounters();
             renderTrajectoryGraph();
+        }
+
+        function updateRackCounters() {
+            const total = downedSet.size;
+            const group = [...downedSet].filter(key => key.startsWith(selectedAnimal + '-')).length;
+            document.getElementById('rackHitScore').textContent = `${String(total).padStart(2, '0')} / 20`;
+            const active = document.getElementById('rackGroupScore');
+            if (active) active.textContent = `${group} / 5`;
         }
 
         function triggerBallisticTrace() {
@@ -1041,6 +1052,8 @@ let sfxActive = false;
             playMechTick(860);
             const item = HARDWARE_SPECS[key];
             if (!item) return;
+            const componentSelect = document.getElementById('labHardwarePicker');
+            if (componentSelect) componentSelect.value = key;
             document.getElementById('blueprintActiveLabel').textContent = `INSPEKSI: ${item.title.toUpperCase()}`;
             document.getElementById('hwSpecCode').textContent = item.code;
             document.getElementById('hwSpecTitle').textContent = item.title;
@@ -1109,6 +1122,20 @@ function setupLabMobileExperience() {
     const settings = document.querySelector('.lab-settings');
     const picker = document.getElementById('labMobileModuleSelect');
     if (!picker) return;
+    const anatomySelect = document.getElementById('labCalloutPicker');
+    if (anatomySelect) {
+        anatomySelect.replaceChildren(...POSTER_BIOMECH_DATA.map(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = `${item.num} · ${item.title}`;
+            return option;
+        }));
+        anatomySelect.value = activeBiomechId;
+        anatomySelect.addEventListener('change', () => selectBiomechCallout(anatomySelect.value));
+    }
+    const hardwareSelect = document.getElementById('labHardwarePicker');
+    hardwareSelect?.addEventListener('change', () => inspectHardware(hardwareSelect.value));
+    if (hardwareSelect) hardwareSelect.value = 'cheekpiece';
 
     const ids = ['sec-biomech', 'sec-trigger', 'sec-optics', 'sec-imssu', 'sec-hardware'];
     const labels = ['Postur', 'Pelatuk', 'Optik', 'Siluet', 'Peralatan'];
@@ -1172,5 +1199,29 @@ function setupLabMobileExperience() {
         media.addListener(syncBreakpoint);
     }
     syncHash();
+    setupLabDesktopActiveNav(ids);
+}
+function setupLabDesktopActiveNav(ids) {
+    const links = [...document.querySelectorAll('[data-lab-desktop-nav] a[href^="#sec-"]')];
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    const setActive = id => {
+        links.forEach(link => {
+            const active = link.getAttribute('href') === '#' + id;
+            link.classList.toggle('is-current', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+    };
+    const observer = new IntersectionObserver(entries => {
+        if (window.matchMedia('(max-width: 767px)').matches) return;
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActive(visible[0].target.id);
+    }, {rootMargin:'-125px 0px -50% 0px',threshold:[0,0.15,0.5]});
+    ids.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) observer.observe(section);
+    });
+    const hash = window.location.hash.slice(1);
+    setActive(ids.includes(hash) ? hash : ids[0]);
 }
 window.addEventListener('DOMContentLoaded', setupLabMobileExperience);
