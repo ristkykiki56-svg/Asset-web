@@ -20,6 +20,7 @@
     <header class="lab-header sticky top-0 z-50 bg-[var(--bg-surface)] tech-border-b">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
             <div class="lab-header-row min-h-14 flex items-center justify-between gap-4">
+                <a class="lab-mobile-back" href="/" aria-label="Kembali ke profil Twin Shooter">←</a>
                 <!-- Left: IMSSU Official Specification Stamp -->
                 <div class="lab-brand flex items-center gap-3">
                     <div class="w-9 h-9 border border-[var(--rule-heavy)] flex items-center justify-center bg-[var(--ink-900)] text-[var(--bg-surface)] shrink-0">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="lab-brand-text leading-none">
                         <div class="flex items-center gap-2">
-                            <span class="font-mono-tech text-[11px] font-bold tracking-wider uppercase">TWIN SHOOTER // LABORATORIUM INTERAKTIF</span>
+                            <span class="lab-desktop-brand-label font-mono-tech text-[11px] font-bold tracking-wider uppercase">TWIN SHOOTER // LABORATORIUM INTERAKTIF</span><span class="lab-mobile-brand-label">Shooting Lab</span>
                             <span class="hidden md:inline-block font-mono-tech text-[10px] px-1.5 py-0.5 bg-[#FF4800] text-white font-semibold">CAL 4.5mm (.177)</span>
                         </div>
                         <p class="text-xs text-[var(--ink-500)] font-mono-tech mt-0.5">
@@ -49,7 +50,7 @@
                 </nav>
 
                 <!-- Right: Paper / CAD Dark Mode & Audio Switch -->
-                <div class="lab-controls flex items-center gap-2 font-mono-tech text-[11px]">
+                <details class="lab-settings" open><summary>Pengaturan <span aria-hidden="true">⌄</span></summary><div class="lab-controls flex items-center gap-2 font-mono-tech text-[11px]">
                     <button aria-pressed="false" onclick="togglePaperTheme()" id="themeSwitchBtn" class="px-2.5 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-subtle)] transition flex items-center gap-1.5">
                         <span id="themeIndicator" class="w-2 h-2 bg-[var(--ink-900)] inline-block"></span>
                         <span id="themeText">MODE: KERTAS CETAK</span>
@@ -59,6 +60,8 @@
                         <span id="sfxLabel">AUDIO: BISU</span>
                     </button>
                 </div>
+                </details>
+                <div class="lab-mobile-picker"><label for="labMobileModuleSelect">Pilih materi</label><select id="labMobileModuleSelect" aria-label="Pilih materi Shooting Lab"><option value="sec-biomech">01 · Postur tubuh</option><option value="sec-trigger">02 · Pelatuk</option><option value="sec-optics">03 · Optik</option><option value="sec-imssu">04 · Sasaran siluet</option><option value="sec-hardware">05 · Peralatan</option></select></div>
             </div>
         </div>
     </header>
@@ -80,8 +83,8 @@
                     </div>
 
                     <!-- Athlete names retained from the supplied prototype, not represented as official branding -->
-                    <h1 class="lab-sr-only">Laboratorium interaktif Twin Shooter — Clarisa Azalia dan Aurellia Cassandra</h1>
-                    <div class="flex flex-wrap items-baseline gap-x-6 gap-y-1 pt-1">
+                    <h1 class="lab-sr-only lab-main-heading">Shooting Lab — Clarisa Azalia dan Aurellia Cassandra</h1><p class="lab-mobile-intro">Pilih materi, lihat gambarnya, lalu coba kontrol interaktif. Semua simulasi bersifat ilustratif.</p>
+                    <div class="lab-athlete-wordmarks flex flex-wrap items-baseline gap-x-6 gap-y-1 pt-1">
                         <div class="flex items-baseline gap-2">
                             <span class="font-signature italic font-bold text-4xl sm:text-6xl tracking-tight text-[#B37B24]">Clarisa</span>
                             <span class="font-mono-tech font-bold text-lg sm:text-2xl tracking-[0.2em] text-[var(--clarisa-blue)]">AZALIA</span>
@@ -93,13 +96,14 @@
                         </div>
                     </div>
 
-                    <p class="text-sm text-[var(--ink-700)] max-w-3xl leading-relaxed">
+                    <p class="lab-hero-description text-sm text-[var(--ink-700)] max-w-3xl leading-relaxed">
                         Halaman eksplorasi konsep postur, diagram optik, dan ilustrasi sasaran berdasarkan prototipe yang disediakan. Gunakan kontrol untuk melihat perubahan gambar; simulasi tidak mengukur tubuh, senapan, atau lintasan nyata.
                     </p>
                 </div>
 
                 <!-- Right: Poster Specification Key-Value Matrix -->
-                <div class="lg:col-span-4 border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 font-mono-tech text-xs">
+                <details class="lab-mobile-disclosure lg:col-span-4" data-lab-mobile-collapse open><summary>Fakta aturan dan batas model <span aria-hidden="true">⌄</span></summary>
+<div class="lg:col-span-4 border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 font-mono-tech text-xs">
                     <div class="flex justify-between items-center pb-2 mb-3 border-b border-[var(--rule-light)]">
                         <span class="font-bold uppercase">FAKTA ATURAN vs MODEL VISUAL</span>
                         <span class="text-[10px] px-1.5 py-0.5 bg-[var(--ink-900)] text-[var(--bg-surface)]">MODEL DEMO</span>
@@ -123,15 +127,16 @@
                         </div>
                     </div>
                 </div>
+</details>
             </div>
         </div>
     </section>
 
     <main id="main-content" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 space-y-16">
-        <aside class="lab-notice" role="note" aria-label="Batas penggunaan simulasi">
+        <details class="lab-mobile-disclosure lab-notice-wrap" data-lab-mobile-collapse open><summary>Simulasi edukatif — lihat batas penggunaan <span aria-hidden="true">⌄</span></summary><aside class="lab-notice" role="note" aria-label="Batas penggunaan simulasi">
           <strong>SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR</strong>
           <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, X-Ray, kurva pelatuk, optik, senapan, serta lintasan bukan rekonstruksi tersertifikasi atau hasil ukur. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
-        </aside>
+        </aside></details>
 
         <!-- =====================================================================
              BAGIAN 01: BIOMEKANIKA & PENOPANG PASIF TULANG (4 SUDUT PANDANG ASLI)
@@ -143,8 +148,9 @@
                         BAGIAN 01 // BIOMEKANIKA POSTUR BERDIRI &amp; STRUKTUR PENOPANG TULANG
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Analisis 4 Sudut Pandang Atlet &amp; Alur Beban Pasif (Skeletal Support)
-                    </h2>
+<span class="lab-heading-long">Analisis 4 Sudut Pandang Atlet &amp; Alur Beban Pasif (Skeletal Support)</span><span class="lab-heading-short">Postur tubuh</span>
+</h2>
+<p class="lab-section-hint">Pilih sudut pandang, lalu sentuh angka pada gambar untuk membaca penjelasannya.</p>
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
@@ -178,7 +184,7 @@
                     </div>
 
                     <!-- Main Interactive SVG Drafting Viewport -->
-                    <div class="relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
+                    <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
                             <defs>
                                 <marker id="leaderDot" markerWidth="6" markerHeight="6" refX="3" refY="3">
@@ -236,7 +242,8 @@
                             <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset Ilustrasi</button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah parameter ilustrasi</summary>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                     <span>LENGKUNGAN PUNGGUNG (ARCH):</span>
@@ -253,6 +260,7 @@
                                 <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Indeks ilustrasi tumpuan siku kiri, bukan persentase beban tubuh">
                             </div>
                         </div>
+</details>
 
                         <!-- Telemetry Bar: Muscle EMG Load vs Passive Bone Load -->
                         <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono-tech text-[11px]">
@@ -288,7 +296,8 @@
                     </div>
 
                     <!-- All 10 Prototype Callouts Table -->
-                    <div class="space-y-2">
+                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Lihat semua 10 titik anatomi</summary>
+<div class="space-y-2">
                         <div class="flex items-center justify-between font-mono-tech text-xs pb-1 border-b border-[var(--rule-light)]">
                             <span class="font-bold uppercase">INDEKS 10 TITIK DIAGRAM ILUSTRATIF (KLIK UNTUK MEMERIKSA)</span>
                             <span class="text-[var(--ink-500)]">10 SPESIFIKASI</span>
@@ -296,6 +305,7 @@
 
                         <div id="biomechIndexList" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
                     </div>
+</details>
                 </div>
             </div>
         </section>
@@ -310,8 +320,9 @@
                         BAGIAN 02 // MEKANIKA BILAH PELATUK, VEKTOR JARI (C–B–A) &amp; KURVA ILUSTRATIF
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Simulasi Tarikan Pemicu 90&deg; &amp; Osiloskop 4 Fase Pelepasan
-                    </h2>
+<span class="lab-heading-long">Simulasi Tarikan Pemicu 90&deg; &amp; Osiloskop 4 Fase Pelepasan</span><span class="lab-heading-short">Pelatuk</span>
+</h2>
+<p class="lab-section-hint">Pilih arah gerakan jari. Coba tekan dan tahan tombol untuk melihat kurva ilustratif.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                     MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">VEKTOR B (GARIS LURUS) — BUKAN TOLERANSI RESMI</strong>
@@ -492,8 +503,9 @@
                         BAGIAN 03 // POSISI KEPALA PADA STOCK, FOKUS RETICLE &amp; EYE RELIEF
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Simulator Penyelarasan Mata–Lensa &amp; Tekanan Sandaran Pipi (Cheekpiece)
-                    </h2>
+<span class="lab-heading-long">Simulator Penyelarasan Mata–Lensa &amp; Tekanan Sandaran Pipi (Cheekpiece)</span><span class="lab-heading-short">Pandangan optik</span>
+</h2>
+<p class="lab-section-hint">Lihat posisi mata pada lensa. Buka pengaturan jika ingin mengubah model.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
                     Reset Posisi Model Optik
@@ -546,7 +558,8 @@
 
                 <!-- Right 7 Cols: Precision Optical Sliders & Poster Guidelines -->
                 <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-5">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah tampilan optik</summary>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- 1. Eye Relief Distance -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
@@ -598,6 +611,7 @@
                             </div>
                         </div>
                     </div>
+</details>
 
                     <!-- Educational descriptions supplied in the original prototype; not an authoritative rules quotation -->
                     <div class="border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 space-y-3">
@@ -633,8 +647,9 @@
                         BAGIAN 04 // ARENA SASARAN SILUET IMSSU 4 TINGKAT &amp; BALISTIK PELURU DIABOLO
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Simulasi Rak Target 20 Siluet, Perbandingan Reticle &amp; Kompensasi Elevasi
-                    </h2>
+<span class="lab-heading-long">Simulasi Rak Target 20 Siluet, Perbandingan Reticle &amp; Kompensasi Elevasi</span><span class="lab-heading-short">Sasaran siluet</span>
+</h2>
+<p class="lab-section-hint">Pilih hewan dan sentuh sasaran untuk menjatuhkannya. Jarak yang ditampilkan berasal dari aturan IMSSU.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
@@ -657,7 +672,7 @@
                     <!-- 4-Tier Steel Frame Replica from Top-Right of Poster -->
                     <div class="py-4 px-2 flex flex-col items-center space-y-3 select-none">
                         <!-- TIER 4: RAMS (41m) -->
-                        <div class="w-[78%] flex flex-col items-center">
+                        <div data-rack-animal="ram" class="is-current w-[78%] flex flex-col items-center">
                             <div id="rackRow-ram" class="w-full flex justify-around items-end px-2 pb-0.5"></div>
                             <div class="w-full h-3.5 bg-[#16191E] border border-black flex items-center justify-between px-2 font-mono-tech text-[9px] text-white">
                                 <span>TIER 4 // DOMBA (RAM)</span>
@@ -666,7 +681,7 @@
                         </div>
 
                         <!-- TIER 3: TURKEYS (33m) -->
-                        <div class="w-[85%] flex flex-col items-center">
+                        <div data-rack-animal="turkey" class="w-[85%] flex flex-col items-center">
                             <div id="rackRow-turkey" class="w-full flex justify-around items-end px-2 pb-0.5"></div>
                             <div class="w-full h-3.5 bg-[#16191E] border border-black flex items-center justify-between px-2 font-mono-tech text-[9px] text-white">
                                 <span>TIER 3 // KALKUN (TURKEY)</span>
@@ -675,7 +690,7 @@
                         </div>
 
                         <!-- TIER 2: PIGS (27m) -->
-                        <div class="w-[92%] flex flex-col items-center">
+                        <div data-rack-animal="pig" class="w-[92%] flex flex-col items-center">
                             <div id="rackRow-pig" class="w-full flex justify-around items-end px-2 pb-0.5"></div>
                             <div class="w-full h-3.5 bg-[#16191E] border border-black flex items-center justify-between px-2 font-mono-tech text-[9px] text-white">
                                 <span>TIER 2 // BABI (PIG)</span>
@@ -684,7 +699,7 @@
                         </div>
 
                         <!-- TIER 1: CHICKENS (18m) -->
-                        <div class="w-full flex flex-col items-center">
+                        <div data-rack-animal="chicken" class="w-full flex flex-col items-center">
                             <div id="rackRow-chicken" class="w-full flex justify-around items-end px-2 pb-0.5"></div>
                             <div class="w-full h-4 bg-[#16191E] border border-black flex items-center justify-between px-2 font-mono-tech text-[9px] text-white">
                                 <span>TIER 1 // AYAM (CHICKEN)</span>
@@ -715,7 +730,8 @@
                 </div>
 
                 <!-- Right 6 Cols: Poster's Nested Silhouette Reticle Diagram + Diabolo Pellet Trajectory -->
-                <div class="lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-5">
+                <details class="lab-mobile-disclosure lg:col-span-6" data-lab-mobile-collapse open><summary>Grafik dan penjelasan tambahan</summary>
+<div class="lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-5">
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                         <!-- Conceptual illustration Nested Animal Reticle Comparison Circle -->
                         <div class="sm:col-span-5 border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
@@ -779,6 +795,7 @@
                         </div>
                     </div>
                 </div>
+</details>
             </div>
         </section>
 
@@ -792,8 +809,9 @@
                         BAGIAN 05 // ANATOMI SENAPAN ANGIN MATCH, TITIK KESEIMBANGAN &amp; BEDAH TELESKOP
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-                        Skema Komponen Senapan &amp; Teleskop — Bukan Perangkat Atlet Terverifikasi
-                    </h2>
+<span class="lab-heading-long">Skema Komponen Senapan &amp; Teleskop — Bukan Perangkat Atlet Terverifikasi</span><span class="lab-heading-short">Bagian peralatan</span>
+</h2>
+<p class="lab-section-hint">Geser diagram ke samping, lalu pilih bagian senapan untuk melihat keterangannya.</p>
                 </div>
 
                 <!-- Switch between Aurellia Red Feinwerkbau & Clarisa Blue Precision Rig -->
@@ -816,8 +834,8 @@
                     </div>
 
                     <!-- Technical Blueprint SVG -->
-                    <div class="border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 overflow-x-auto">
-                        <svg id="hardwareBlueprintSvg" viewBox="0 0 880 390" class="w-full h-auto min-w-[640px] select-none">
+                    <div class="lab-hardware-scroll border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 overflow-x-auto" tabindex="0" role="region" aria-label="Diagram senapan, geser horizontal untuk melihat bagian lainnya">
+                        <p class="lab-mobile-scroll-hint" aria-hidden="true">Geser gambar ke samping untuk melihat seluruh bagian →</p><svg id="hardwareBlueprintSvg" viewBox="0 0 880 390" class="w-full h-auto min-w-[640px] select-none">
                             <!-- Dimension Lines (Panjang Senapan & Laras) -->
                             <g stroke="var(--ink-500)" stroke-width="1" font-family="IBM Plex Mono" font-size="9" fill="var(--ink-500)">
                                 <line x1="48" y1="365" x2="830" y2="365"/>
@@ -968,7 +986,8 @@
                         <div class="font-bold uppercase text-[var(--ink-500)] pb-1 border-b border-[var(--rule-light)]">
                             DAFTAR 10 KOMPONEN SENAPAN &amp; TELESKOP:
                         </div>
-                        <div class="grid grid-cols-1 gap-1">
+                        <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Daftar 10 komponen</summary>
+<div class="grid grid-cols-1 gap-1">
                             <button onclick="inspectHardware('stock')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
                                 <span>[01] Stock, Buttplate &amp; Panjang Popor</span><span>&rarr;</span>
                             </button>
@@ -1000,6 +1019,7 @@
                                 <span>[10] Lensa Okuler &amp; Fokus Reticle</span><span>&rarr;</span>
                             </button>
                         </div>
+</details>
                     </div>
                 </div>
             </div>
