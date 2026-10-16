@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Four Lab Illustrations — visual QA</title>
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#F3F1EA}iframe{display:block;width:100%;height:100%;border:0}</style>
+</head><body>
+<iframe id="lab" src="/lab.html" title="Isolated Shooting Lab illustration QA"></iframe>
+<script>
+const names={posture:'sec-biomech',trigger:'sec-trigger',optics:'sec-optics',silhouette:'sec-imssu'};
+const lesson=new URL(location.href).searchParams.get('lesson')||'posture';
+const id=names[lesson]||names.posture;
+const frame=document.getElementById('lab');
+frame.addEventListener('load',()=>{
+ try {
+  const doc=frame.contentDocument,win=frame.contentWindow;
+  const main=doc.getElementById('main-content'),section=doc.getElementById(id);
+  if(!main||!section)throw Error('missing module');
+  for(const selector of ['.lab-header','.lab-local-nav','body > section.tech-border-b','.lab-notice-wrap','.lab-sources-wrap','.lab-mobile-stepper','footer']){
+   doc.querySelectorAll(selector).forEach(node=>node.style.setProperty('display','none','important'));
+  }
+  main.querySelectorAll('section[id^="sec-"]').forEach(node=>{if(node!==section)node.style.setProperty('display','none','important')});
+  section.style.setProperty('display','block','important');
+  section.style.margin='0';
+  main.classList.remove('space-y-16');main.style.padding='14px 14px 20px';main.style.margin='0 auto';
+  win.scrollTo(0,0);
+  requestAnimationFrame(()=>{win.scrollTo(0,0);document.body.dataset.snapshot='ready'});
+ } catch(e){document.body.dataset.snapshot='error';document.body.dataset.reason=e.message}
+},{once:true});
+</script></body></html>

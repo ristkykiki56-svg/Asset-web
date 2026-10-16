@@ -34,5 +34,13 @@ jobs:
             /tmp/twinshooter-qa/lab-mobile.png
             /tmp/twinshooter-qa/lab-hardware-desktop.png
             /tmp/twinshooter-qa/lab-hardware-mobile.png
+            /tmp/twinshooter-qa/lab-posture-desktop.png
+            /tmp/twinshooter-qa/lab-posture-mobile.png
+            /tmp/twinshooter-qa/lab-trigger-desktop.png
+            /tmp/twinshooter-qa/lab-trigger-mobile.png
+            /tmp/twinshooter-qa/lab-optics-desktop.png
+            /tmp/twinshooter-qa/lab-optics-mobile.png
+            /tmp/twinshooter-qa/lab-silhouette-desktop.png
+            /tmp/twinshooter-qa/lab-silhouette-mobile.png
             /tmp/twinshooter-qa/lab-viewport-result.html
           if-no-files-found: ignore

@@ -75,3 +75,20 @@ test -s /tmp/twinshooter-qa/lab-mobile.png
 test -s /tmp/twinshooter-qa/lab-hardware-desktop.png
 test -s /tmp/twinshooter-qa/lab-hardware-mobile.png
 echo 'Captured Hardware illustration screenshots for visual QA'
+
+# Isolated screenshots avoid deep-scroll limitations of headless Chrome.
+for lesson in posture trigger optics silhouette; do
+  "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+    --hide-scrollbars --window-size=1440,1060 --virtual-time-budget=1800 \
+    --screenshot="/tmp/twinshooter-qa/lab-${lesson}-desktop.png" \
+    "http://127.0.0.1:$PORT/tests/lab-four-visual-qa.html?lesson=${lesson}" \
+    >/dev/null 2>/dev/null
+  "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+    --hide-scrollbars --window-size=390,900 --virtual-time-budget=1800 \
+    --screenshot="/tmp/twinshooter-qa/lab-${lesson}-mobile.png" \
+    "http://127.0.0.1:$PORT/tests/lab-four-visual-qa.html?lesson=${lesson}" \
+    >/dev/null 2>/dev/null
+  test -s "/tmp/twinshooter-qa/lab-${lesson}-desktop.png"
+  test -s "/tmp/twinshooter-qa/lab-${lesson}-mobile.png"
+done
+echo 'Captured focused desktop/mobile screenshots for four Lab illustrations'

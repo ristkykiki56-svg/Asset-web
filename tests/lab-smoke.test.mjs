@@ -166,3 +166,24 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.match(js,/document\.getElementById\('blueprintActiveLabel'\)/);
  assert.match(html,/Bukan spesifikasi|bukan spesifikasi|bukan skala|BUKAN SKALA/);
 });
+
+
+test('four remaining Lab visuals use layered illustrations and preserve DOM wiring',()=>{
+ assert.match(js,/function buildEditorialPostureIllustration/);
+ assert.match(html,/id="biomechBlueKit"/);
+ assert.match(html,/id="biomechRedKit"/);
+ assert.match(html,/id="svgAthleteLayer"/);
+ assert.match(html,/id="svgCogPlumbGroup"/);
+ assert.match(js,/figSvg = buildEditorialPostureIllustration\(currentPose, arch\)/);
+ assert.match(html,/id="triggerVectorDiagram"/);
+ assert.match(html,/id="triggerMechanismDiagram"/);
+ for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','svgSideCheekpiece','svgShooterHeadSide']){
+  assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
+ }
+ assert.match(html,/id="opticalAlignmentIllustration"/);
+ assert.match(js,/const SILHOUETTE_PATHS =/);
+ assert.match(js,/class="silhouette-study"/);
+ assert.match(css,/Four-module visual refinement/);
+ assert.doesNotMatch(js,/id="targetSteel-/);
+ assert.match(html,/role="group" aria-labelledby="triggerVectorTitle/);
+});

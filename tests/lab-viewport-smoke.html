@@ -78,6 +78,11 @@ frame.addEventListener('load',()=>{
  compactPose.value='sideLeft';
  compactPose.dispatchEvent(new Event('change',{bubbles:true}));
  if(!doc.getElementById('stagePoseTitle').textContent.includes('KIRI'))problems.push('compact pose selection did not update drawing');
+ if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure'))problems.push('editorial posture art absent');
+ if(!doc.getElementById('biomechRedKit'))problems.push('posture illustration gradients absent');
+ if(!doc.getElementById('triggerVectorDiagram')||!doc.getElementById('triggerMechanismDiagram'))problems.push('trigger illustration absent');
+ if(!doc.getElementById('opticalAlignmentIllustration'))problems.push('optics side study absent');
+ if(!doc.querySelector('.silhouette-study'))problems.push('silhouette vector studies absent');
  const first=doc.getElementById('target-chicken-0');
  first.click();
  if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');

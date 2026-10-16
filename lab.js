@@ -155,6 +155,53 @@ let sfxActive = false;
         let activeBiomechId = 'spine';
         let showXraySkeleton = true;
 
+function buildEditorialPostureIllustration(pose, arch) {
+    // Generic sports-kit figure, deliberately NOT a replica or biomechanical measurement.
+    const side = pose === "sideLeft" || pose === "sideRight";
+    const blue = pose === "front" || pose === "back";
+    const u = -arch * 1.1;
+    const p = arch * .65;
+    const kit = blue ? "url(#biomechBlueKit)" : "url(#biomechRedKit)";
+    const skin = "url(#biomechSkin)";
+    const torsoX = side ? 177 : 170;
+    const direction = pose === "sideRight" ? -1 : 1;
+    const legs = side
+      ? `<path d="M184 274L178 471H219L234 287Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M224 280L260 471H297L264 276Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`
+      : `<path d="M177 277L157 471H198L223 288Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M228 286L259 471H300L270 275Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`;
+    const shoes=side
+      ? `<path d="M169 463H220Q233 470 239 482H167Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M254 463H298Q314 469 324 482H253Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`
+      : `<path d="M151 463H199Q210 469 219 482H149Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M256 463H303Q320 469 324 482H254Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`;
+    const upper = side
+      ? `<path d="M181 118Q203 109 235 115Q252 132 247 170L257 274Q219 287 185 277Q187 210 179 160Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
+         <path d="M189 136Q200 127 230 132" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="2.7"/>
+         <path d="M191 159L196 256" fill="none" stroke="#FFFFFF" stroke-opacity=".19" stroke-width="4"/>
+         <path d="M238 147L247 256" fill="none" stroke="#151C24" stroke-opacity=".28" stroke-width="3"/>`
+      : `<path d="M169 121Q191 107 223 111Q259 108 270 124L263 184L269 277Q223 290 177 277L171 186Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
+         <path d="M180 134Q212 122 258 134" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3"/>
+         <path d="M187 165L190 261M252 158L257 261" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3"/>`;
+    const arms = side
+      ? `<path d="M246 141Q267 175 242 219Q265 212 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+         <path d="M250 142Q267 169 253 188" fill="none" stroke="${kit}" stroke-width="24" stroke-linecap="round"/>`
+      : `<path d="M170 143Q147 183 163 224M269 143Q286 172 269 229" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
+         <path d="M168 143L157 167M269 143L277 166" stroke="${kit}" stroke-width="25" stroke-linecap="round"/>`;
+    const equipment = side
+      ? `<g opacity=".82"><path d="M${direction===1?233:50} 119H${direction===1?392:200}" stroke="#4C6167" stroke-width="7" stroke-linecap="round"/><path d="M${direction===1?254:70} 105H${direction===1?363:173}" stroke="#202D34" stroke-width="9" stroke-linecap="round"/></g>`
+      : `<g opacity=".82"><path d="M49 123H198" stroke="#586A6C" stroke-width="8" stroke-linecap="round"/><rect x="109" y="109" width="94" height="9" rx="3" fill="#29383B"/></g>`;
+    const faceX=side?210:216;
+    return `<g class="biomech-editorial-figure" aria-hidden="true">
+      <ellipse cx="230" cy="489" rx="120" ry="8" fill="#233136" opacity=".11"/>
+      ${legs}${shoes}${equipment}
+      <g transform="translate(${u*.45},${p*.12})">${upper}${arms}</g>
+      <g transform="translate(${u},0)">
+        <path d="M${faceX-12} 100L${faceX-11} 115H${faceX+10}L${faceX+10} 102" fill="${skin}" stroke="#796357" stroke-width="1.2"/>
+        <ellipse cx="${faceX}" cy="78" rx="24" ry="29" fill="${skin}" stroke="#7A625A" stroke-width="1.7"/>
+        <path d="M${faceX-22} 76Q${faceX-28} 42 ${faceX} 44Q${faceX+28} 46 ${faceX+23} 69Q${faceX+7} 60 ${faceX-1} 55Q${faceX-15} 68 ${faceX-22} 76" fill="url(#biomechHair)"/>
+        <path d="M${faceX+19} 67Q${faceX+35} 85 ${faceX+25} 122" fill="none" stroke="#34353B" stroke-width="10" stroke-linecap="round"/>
+      </g>
+      <path d="M${faceX+u} 115Q${faceX+11} 188 ${faceX+p} 277" fill="none" stroke="#478D94" stroke-width="2.2" stroke-dasharray="5 7" opacity=".85"/>
+    </g>`;
+}
+
         function renderBiomechViewport() {
             const athleteLayer = document.getElementById('svgAthleteLayer');
             const arrowsLayer = document.getElementById('svgSpinalArrowsLayer');
@@ -170,103 +217,17 @@ let sfxActive = false;
             let figSvg = '';
             let arrowsSvg = '';
 
-            if (currentPose === 'back') {
-                figSvg = `
-                    <!-- Lower Limbs -->
-                    <path d="M162 475 L172 275 L212 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M292 475 L268 275 L228 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <!-- Athletic Shoes -->
-                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
-                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
-                    <!-- Clarisa Blue Rifle Barrel & Scope extending Left -->
-                    <g transform="translate(${upperShift}, -4)">
-                        <rect x="22" y="92" width="210" height="8" fill="#94A3B8" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="52" y="100" width="165" height="13" fill="#0055B8" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="98" y="75" width="88" height="11" fill="#111315"/>
-                    </g>
-                    <!-- Torso (Clarisa Blue Technical Jersey) -->
-                    <path d="M${172 + pelvisShift} 278 C${165 + pelvisShift} 215, ${165 + upperShift} 152, ${176 + upperShift} 106 L${262 + upperShift} 110 C${268 + upperShift} 165, ${260 + pelvisShift} 222, ${255 + pelvisShift} 278 Z"
-                          fill="#0055B8" fill-opacity="0.9" stroke="#111315" stroke-width="2"/>
-                    <text x="${218 + upperShift * 0.5}" y="176" text-anchor="middle" fill="#FDE68A" font-family="Cormorant Garamond" font-style="italic" font-weight="bold" font-size="20">Clarisa</text>
-                    <!-- Head & Ponytail -->
-                    <circle cx="${214 + upperShift}" cy="74" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <path d="M${228 + upperShift} 65 Q${262 + upperShift} 75 ${258 + upperShift} 122" fill="none" stroke="#111315" stroke-width="14" stroke-linecap="round"/>
-                `;
-
-                // Cascading Spinal Load Arrows along the back curve (Exact match to Poster)
-                for (let i = 0; i < 12; i++) {
-                    const y = 108 + i * 29;
-                    const x = 278 + Math.sin(i * 0.42) * 14 + pelvisShift * 0.4;
-                    arrowsSvg += `
-                        <g class="spine-vector-arrow" style="animation-delay: ${i * 0.1}s" transform="translate(${x}, ${y})">
-                            <polygon points="0,4 16,0 13,4 16,8" fill="none" stroke="var(--ink-900)" stroke-width="1.4"/>
-                        </g>
-                    `;
-                }
-            } else if (currentPose === 'front') {
-                figSvg = `
-                    <!-- Legs -->
-                    <path d="M160 475 L172 275 L212 275 L188 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M292 475 L266 275 L226 275 L264 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="146" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#0055B8" stroke-width="1.5"/>
-                    <rect x="262" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#111315" stroke-width="1.5"/>
-                    <!-- Torso -->
-                    <path d="M${170 + pelvisShift} 278 L${166 + upperShift} 112 L${258 + upperShift} 112 L${254 + pelvisShift} 278 Z"
-                          fill="#0055B8" stroke="#111315" stroke-width="2"/>
-                    <!-- Left Support Arm Locked into Ilium Hip -->
-                    <path d="M${236 + upperShift} 122 L${244 + pelvisShift} 232 L${198 + upperShift} 108"
-                          fill="none" stroke="#E2E8F0" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Head tilted onto Stock -->
-                    <circle cx="${218 + upperShift}" cy="78" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <!-- Front Concentric Muzzle & Scope Objective (as in Clarisa Front Photo) -->
-                    <g transform="translate(${196 + upperShift}, 88)">
-                        <rect x="-13" y="0" width="26" height="54" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
-                        <circle cx="0" cy="-14" r="16" fill="#111315" stroke="#FFFFFF" stroke-width="2"/>
-                        <circle cx="0" cy="-14" r="6" fill="#38BDF8"/>
-                        <circle cx="0" cy="15" r="11" fill="#475569" stroke="#FFFFFF" stroke-width="1.5"/>
-                    </g>
-                `;
-            } else if (currentPose === 'sideLeft') {
-                figSvg = `
-                    <!-- Legs -->
-                    <path d="M164 475 L175 275 L214 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M290 475 L266 275 L226 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <!-- Aurellia Red/Black Torso -->
-                    <path d="M${168 + pelvisShift} 278 L${162 + upperShift} 112 L${256 + upperShift} 112 L${250 + pelvisShift} 278 Z"
-                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
-                    <circle cx="${208 + upperShift}" cy="76" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <!-- Red Feinwerkbau Rifle pointing Right -->
-                    <g transform="translate(${165 + upperShift}, 92)">
-                        <rect x="0" y="10" width="245" height="11" fill="#D11F26" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="40" y="2" width="215" height="8" fill="#CBD5E1" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="52" y="-14" width="102" height="11" fill="#111315"/>
-                        <rect x="8" y="0" width="34" height="14" fill="#B37B24" stroke="#111315"/>
-                    </g>
-                    <!-- Left Support Arm Triangle -->
-                    <path d="M${225 + upperShift} 132 L${238 + pelvisShift} 218 L${292 + upperShift} 112"
-                          fill="none" stroke="#FECDD3" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
-                `;
-            } else {
-                figSvg = `
-                    <!-- Side-Right Profile (Aurellia) -->
-                    <path d="M198 475 L205 275 L242 275 L228 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="192" y="465" width="52" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <path d="M${192 + pelvisShift} 278 C${200 + pelvisShift} 215, ${182 + upperShift} 155, ${188 + upperShift} 108 L${244 + upperShift} 108 C${236 + upperShift} 165, ${252 + pelvisShift} 218, ${242 + pelvisShift} 278 Z"
-                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
-                    <circle cx="${218 + upperShift}" cy="74" r="23" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                `;
-            }
+            figSvg = buildEditorialPostureIllustration(currentPose, arch);
+            arrowsSvg = '';
 
             // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
             if (showXraySkeleton) {
                 figSvg += `
-                    <g stroke="#00FFAA" stroke-width="2.2" fill="none" opacity="0.9">
+                    <g stroke="#3F9DA0" stroke-width="2.1" fill="none" opacity="0.9">
                         <!-- Spinal Column Curve -->
                         <path d="M${214 + upperShift} 98 Q${236 + pelvisShift} 190 ${214 + pelvisShift} 275" stroke-dasharray="5 3"/>
                         <!-- Pelvic Iliac Crest Bar -->
-                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(0, 255, 170, 0.15)"/>
+                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(63, 157, 160, 0.08)"/>
                         <!-- Elbow-to-Hip Bone Lock Node -->
                         <circle cx="${238 + pelvisShift}" cy="230" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
                         <!-- Left & Right Femur Load Vectors -->
@@ -344,7 +305,7 @@ let sfxActive = false;
             showXraySkeleton = !showXraySkeleton;
             playMechTick(960);
             const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? 'Kerangka: tampil' : 'Kerangka: sembunyi';
+            btn.textContent = showXraySkeleton ? 'Garis postur: tampil' : 'Garis postur: sembunyi';
             btn.setAttribute('aria-pressed',String(showXraySkeleton));
             btn.className = showXraySkeleton
                 ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
@@ -469,7 +430,7 @@ let sfxActive = false;
             const box = document.getElementById('vectorExplanationBox');
 
             if (vec === 'B') {
-                stamp.textContent = 'VEKTOR B: 90° LURUS';
+                stamp.textContent = 'VEKTOR B: GARIS TENGAH';
                 stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
                 dev.textContent = 'Vektor lurus (contoh)';
                 dev.className = 'text-[var(--ok-green)]';
@@ -776,20 +737,53 @@ let sfxActive = false;
             ctx.arc(cx - lat * 2.5 + tx, cy + comb * 2.5 + ty, exitPupilRadius, 0, Math.PI * 2);
             ctx.clip();
 
-            // Crisp outdoor target berm background inside lens
-            ctx.fillStyle = '#DCE4EC';
-            ctx.fillRect(0, 0, w, cy + 12);
-            ctx.fillStyle = '#4B5E43';
-            ctx.fillRect(0, cy + 12, w, h);
+            // Neutral field-study illustration, not a simulated optical measurement.
+            const sky = ctx.createLinearGradient(0, 15, 0, cy + 35);
+            sky.addColorStop(0, '#C4CDD0');
+            sky.addColorStop(0.58, '#E4E5DD');
+            sky.addColorStop(1, '#D4D5C7');
+            ctx.fillStyle = sky;
+            ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = '#AAB5A8';
+            ctx.beginPath();
+            ctx.moveTo(0, cy + 10);
+            ctx.quadraticCurveTo(80, cy + 1, 156, cy + 17);
+            ctx.quadraticCurveTo(224, cy + 7, 300, cy + 16);
+            ctx.lineTo(300, 300);ctx.lineTo(0,300);ctx.closePath();ctx.fill();
+            const ground = ctx.createLinearGradient(0, cy + 14, 0, h);
+            ground.addColorStop(0, '#849286');
+            ground.addColorStop(0.36, '#68796A');
+            ground.addColorStop(1, '#46574D');
+            ctx.fillStyle = ground;
+            ctx.fillRect(0, cy + 32, w, h);
+            ctx.strokeStyle = 'rgba(34,54,47,.16)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 8; i++) {
+                ctx.beginPath(); ctx.moveTo(i * 46 - 24, cy + 39);
+                ctx.lineTo(i * 50 - 10, h); ctx.stroke();
+            }
 
-            // Distant Orange IMSSU Ram Silhouette
+            // A restrained conceptual silhouette; deliberately no score or aim feedback.
             ctx.save();
             ctx.translate(cx + tx, cy + ty);
-            ctx.fillStyle = '#FF4800';
-            ctx.fillRect(-20, -12, 34, 20);
-            ctx.beginPath(); ctx.arc(18, -14, 8, 0, Math.PI * 2); ctx.fill();
-            ctx.fillRect(-16, 8, 5, 13);
-            ctx.fillRect(8, 8, 5, 13);
+            ctx.fillStyle = '#25302B';
+            ctx.beginPath();
+            ctx.moveTo(-19,-13);
+            ctx.lineTo(9,-13);
+            ctx.lineTo(15,-20);
+            ctx.bezierCurveTo(19,-29,32,-25,31,-17);
+            ctx.bezierCurveTo(31,-12,27,-10,23,-13);
+            ctx.lineTo(19,-7);
+            ctx.lineTo(18,11);
+            ctx.lineTo(12,11);
+            ctx.lineTo(10,3);
+            ctx.lineTo(-11,3);
+            ctx.lineTo(-13,12);
+            ctx.lineTo(-19,12);
+            ctx.lineTo(-18,2);
+            ctx.lineTo(-23,-7);
+            ctx.closePath();
+            ctx.fill();
             ctx.restore();
 
             // Etched Match Reticle
@@ -800,10 +794,11 @@ let sfxActive = false;
             ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
             ctx.stroke();
 
-            ctx.strokeStyle = '#0055B8';
+            ctx.strokeStyle = '#466875';
+            ctx.lineWidth = 1.1;
             ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.stroke();
-            ctx.fillStyle = '#D11F26';
-            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#B4603B';
+            ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, Math.PI * 2); ctx.fill();
 
             ctx.restore();
 
@@ -821,12 +816,22 @@ let sfxActive = false;
             if (!reducedMotion.matches) scheduleOcularFrame();
         }
 
-        const IMSSU_SVGS = {
-            chicken: `<svg viewBox="0 0 48 42" class="w-9 h-8 sm:w-11 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M14 24 L10 12 L16 8 L20 14 L34 14 L38 8 L41 18 L35 28 L26 30 L26 38 L20 38 L20 30 Z"/></svg>`,
-            pig: `<svg viewBox="0 0 60 42" class="w-11 h-8 sm:w-12 sm:h-10"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M10 16 Q14 8 28 8 L46 10 L54 18 L50 26 L44 28 L44 38 L38 38 L38 29 L22 29 L22 38 L16 38 L16 27 L10 24 Z"/></svg>`,
-            turkey: `<svg viewBox="0 0 54 50" class="w-10 h-9 sm:w-12 sm:h-11"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 16 L18 10 L22 22 L36 16 L42 6 L46 8 L42 22 L38 32 L28 34 L28 46 L22 46 L22 34 L12 28 Z"/></svg>`,
-            ram: `<svg viewBox="0 0 64 52" class="w-12 h-10 sm:w-14 sm:h-12"><path fill="#FF4800" stroke="#111315" stroke-width="1.5" d="M12 22 L18 16 L38 16 L44 8 C50 4 58 8 56 16 C54 22 48 20 46 16 L44 28 L42 46 L36 46 L36 33 L22 33 L22 46 L16 46 L16 32 Z"/></svg>`
+        // Distinctive editorial silhouette studies, not competition target templates.
+        // The official dimensions and distances must come from the linked rulebook.
+        const SILHOUETTE_PATHS = {
+            chicken: 'M13 24Q9 19 10 12L15 14L16 7L21 14Q26 12 30 15Q33 10 37 10Q44 12 43 19L39 23L36 30L31 32L30 39H25L24 31H20L19 39H14L16 27Z',
+            pig: 'M9 19Q11 12 22 11H41Q47 8 52 14L56 15L57 21L53 24L50 28L46 29L45 38H39L38 30H23L21 38H15L16 28Q9 27 9 19Z',
+            turkey: 'M11 24Q10 16 15 12L14 8Q21 9 25 17L28 13L33 16Q34 9 39 8Q45 8 45 13L42 21L46 25Q46 31 37 33L33 37L34 47H28L27 37L23 34Q13 34 11 24Z',
+            ram: 'M10 25L17 16L34 15L40 17Q43 8 49 8Q58 8 57 16Q56 24 50 23Q47 23 46 19L43 28L40 44H34L34 33H21L20 44H14L14 30Z'
         };
+        const IMSSU_SVGS = Object.fromEntries(Object.entries(SILHOUETTE_PATHS).map(([key,path]) => [
+            key,
+            `<svg data-target-animal="${key}" viewBox="0 0 66 54" class="silhouette-study" role="presentation" aria-hidden="true">
+                <path class="silhouette-shadow" d="${path}" transform="translate(0.8,2)" fill="#151F23" opacity=".12"/>
+                <path class="silhouette-form" d="${path}" fill="#CA744F" stroke="#293338" stroke-width="2.3" stroke-linejoin="round"/>
+                <path class="silhouette-footline" d="M8 48H60" stroke="#7A8581" stroke-width=".85" opacity=".65"/>
+            </svg>`
+        ]));
 
         const RANGE_SPECS = {
             chicken: { label: 'AYAM (CHICKEN)', dist: 18 },
