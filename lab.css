@@ -487,3 +487,54 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-sources-wrap > .source-audit { margin-top: .75rem; }
   .lab-mobile-stepper button:focus-visible { outline: 2px solid var(--clarisa-blue); outline-offset: 3px; }
 }
+
+/* Additional first-fold polish after screenshot inspection. */
+.lab-mobile-byline, .lab-mobile-pose-label, .lab-mobile-pose-select { display: none; }
+@media (max-width: 767px) {
+  .lab-facts { display: none; } /* Verified rules remain in the source disclosure below. */
+  .lab-mobile-byline {
+    display: block;
+    margin: .25rem 0 0;
+    font: 650 12px/1.5 'Plus Jakarta Sans',sans-serif;
+    color: var(--ink-700);
+  }
+  .lab-mobile-intro { margin-top: .45rem; }
+  main#main-content.space-y-16 > :not(:last-child) { margin-bottom: 1.25rem; }
+  main section[id^="sec-"] .tech-rule-heavy .font-mono-tech.uppercase.tracking-wider { display: none; }
+  .lab-notice-wrap > summary {
+    padding: .65rem .75rem;
+    font-size: 12px;
+  }
+  .lab-pose-controls {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    width: 100%;
+    gap: .4rem .55rem;
+  }
+  #sec-biomech .lab-pose-controls .inline-flex.border { display: none !important; }
+  .lab-mobile-pose-label {
+    display: block;
+    grid-column: 1 / -1;
+    font: 700 12px 'Plus Jakarta Sans',sans-serif;
+    color: var(--ink-700);
+  }
+  .lab-mobile-pose-select {
+    grid-column: 1;
+    display: block;
+    min-height: 44px;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--rule-heavy);
+    border-radius: 0;
+    background: var(--bg-surface);
+    color: var(--ink-900);
+    padding: .55rem;
+    font: 650 13px 'Plus Jakarta Sans',sans-serif;
+  }
+  #xrayToggleBtn { grid-column: 2; padding: .6rem; font-size: 11px; }
+  .lab-figure-caption { gap: .4rem; }
+  .lab-figure-caption > span:last-child { display: none; }
+  .lab-figure-caption > span:first-child { flex: 1; min-width: 0; font-size: 11px; }
+  .lab-mobile-pose-select:focus-visible { outline: 2px solid var(--clarisa-blue); outline-offset: 2px; }
+}
