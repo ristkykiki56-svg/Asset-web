@@ -187,3 +187,22 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.doesNotMatch(js,/id="targetSteel-/);
  assert.match(html,/role="group" aria-labelledby="triggerVectorTitle/);
 });
+
+
+test('callout alignment and elbow controls are connected to the rendered SVG',()=>{
+  assert.match(js,/function positionBiomechPins\(\)/);
+  assert.match(js,/getScreenCTM/);
+  assert.match(js,/createSVGPoint/);
+  assert.match(js,/button\.dataset\.svgX/);
+  assert.match(js,/new ResizeObserver/);
+  assert.match(js,/buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
+  assert.match(js,/const armShift = Math\.round\(\(100 - hipLock\)/);
+  assert.match(js,/cy="\$\{230 \+ elbowShift\}"/);
+});
+
+test('diagram labels do not misrepresent conceptual plots as measured data',()=>{
+  assert.doesNotMatch(js,/WAKTU \(ms\)/);
+  assert.match(js,/URUTAN MODEL/);
+  assert.match(html,/BUKAN GAYA\/WAKTU UKUR/);
+  assert.match(html,/POSISI SIKU RELATIF KE PINGGUL \(MODEL\)/);
+});
