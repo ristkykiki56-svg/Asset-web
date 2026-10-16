@@ -26,11 +26,11 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('all nine sliders and sixteen SVG input nodes remain accessible',()=>{
+test('nine sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
  assert.equal(sliders.length,9);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
- assert.ok((html.match(/tabindex="0" role="button"/g)||[]).length>=16);
+ assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,13);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
  assert.match(js,/btn\.setAttribute\('aria-pressed','false'\)/);
 });
