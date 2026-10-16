@@ -888,3 +888,11 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  #sec-biomech #svgActiveLeaderLine rect {opacity:.9}
  #sec-optics #opticalAlignmentIllustration {height:112px}
 }
+
+/* Editorial content should follow naturally, not be pinned to opposite ends of tall diagrams. */
+@media(min-width:768px) {
+ #sec-biomech > .grid.tech-sheet > div:nth-child(2),
+ #sec-optics > .grid.tech-sheet > div:nth-child(2) {justify-content:flex-start!important;}
+ #sec-biomech > .grid.tech-sheet > div:nth-child(2) {gap:1.2rem!important}
+ #sec-optics > .grid.tech-sheet > div:nth-child(2) {gap:1.2rem!important}
+}
