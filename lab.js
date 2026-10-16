@@ -155,6 +155,53 @@ let sfxActive = false;
         let activeBiomechId = 'spine';
         let showXraySkeleton = true;
 
+function buildEditorialPostureIllustration(pose, arch) {
+    // Generic sports-kit figure, deliberately NOT a replica or biomechanical measurement.
+    const side = pose === "sideLeft" || pose === "sideRight";
+    const blue = pose === "front" || pose === "back";
+    const u = -arch * 1.1;
+    const p = arch * .65;
+    const kit = blue ? "url(#biomechBlueKit)" : "url(#biomechRedKit)";
+    const skin = "url(#biomechSkin)";
+    const torsoX = side ? 177 : 170;
+    const direction = pose === "sideRight" ? -1 : 1;
+    const legs = side
+      ? `<path d="M184 274L178 471H219L234 287Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M224 280L260 471H297L264 276Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`
+      : `<path d="M177 277L157 471H198L223 288Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M228 286L259 471H300L270 275Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`;
+    const shoes=side
+      ? `<path d="M169 463H220Q233 470 239 482H167Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M254 463H298Q314 469 324 482H253Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`
+      : `<path d="M151 463H199Q210 469 219 482H149Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M256 463H303Q320 469 324 482H254Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`;
+    const upper = side
+      ? `<path d="M181 118Q203 109 235 115Q252 132 247 170L257 274Q219 287 185 277Q187 210 179 160Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
+         <path d="M189 136Q200 127 230 132" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="2.7"/>
+         <path d="M191 159L196 256" fill="none" stroke="#FFFFFF" stroke-opacity=".19" stroke-width="4"/>
+         <path d="M238 147L247 256" fill="none" stroke="#151C24" stroke-opacity=".28" stroke-width="3"/>`
+      : `<path d="M169 121Q191 107 223 111Q259 108 270 124L263 184L269 277Q223 290 177 277L171 186Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
+         <path d="M180 134Q212 122 258 134" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3"/>
+         <path d="M187 165L190 261M252 158L257 261" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3"/>`;
+    const arms = side
+      ? `<path d="M246 141Q267 175 242 219Q265 212 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+         <path d="M250 142Q267 169 253 188" fill="none" stroke="${kit}" stroke-width="24" stroke-linecap="round"/>`
+      : `<path d="M170 143Q147 183 163 224M269 143Q286 172 269 229" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
+         <path d="M168 143L157 167M269 143L277 166" stroke="${kit}" stroke-width="25" stroke-linecap="round"/>`;
+    const equipment = side
+      ? `<g opacity=".82"><path d="M${direction===1?233:50} 119H${direction===1?392:200}" stroke="#4C6167" stroke-width="7" stroke-linecap="round"/><path d="M${direction===1?254:70} 105H${direction===1?363:173}" stroke="#202D34" stroke-width="9" stroke-linecap="round"/></g>`
+      : `<g opacity=".82"><path d="M49 123H198" stroke="#586A6C" stroke-width="8" stroke-linecap="round"/><rect x="109" y="109" width="94" height="9" rx="3" fill="#29383B"/></g>`;
+    const faceX=side?210:216;
+    return `<g class="biomech-editorial-figure" aria-hidden="true">
+      <ellipse cx="230" cy="489" rx="120" ry="8" fill="#233136" opacity=".11"/>
+      ${legs}${shoes}${equipment}
+      <g transform="translate(${u*.45},${p*.12})">${upper}${arms}</g>
+      <g transform="translate(${u},0)">
+        <path d="M${faceX-12} 100L${faceX-11} 115H${faceX+10}L${faceX+10} 102" fill="${skin}" stroke="#796357" stroke-width="1.2"/>
+        <ellipse cx="${faceX}" cy="78" rx="24" ry="29" fill="${skin}" stroke="#7A625A" stroke-width="1.7"/>
+        <path d="M${faceX-22} 76Q${faceX-28} 42 ${faceX} 44Q${faceX+28} 46 ${faceX+23} 69Q${faceX+7} 60 ${faceX-1} 55Q${faceX-15} 68 ${faceX-22} 76" fill="url(#biomechHair)"/>
+        <path d="M${faceX+19} 67Q${faceX+35} 85 ${faceX+25} 122" fill="none" stroke="#34353B" stroke-width="10" stroke-linecap="round"/>
+      </g>
+      <path d="M${faceX+u} 115Q${faceX+11} 188 ${faceX+p} 277" fill="none" stroke="#478D94" stroke-width="2.2" stroke-dasharray="5 7" opacity=".85"/>
+    </g>`;
+}
+
         function renderBiomechViewport() {
             const athleteLayer = document.getElementById('svgAthleteLayer');
             const arrowsLayer = document.getElementById('svgSpinalArrowsLayer');
@@ -170,103 +217,17 @@ let sfxActive = false;
             let figSvg = '';
             let arrowsSvg = '';
 
-            if (currentPose === 'back') {
-                figSvg = `
-                    <!-- Lower Limbs -->
-                    <path d="M162 475 L172 275 L212 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M292 475 L268 275 L228 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <!-- Athletic Shoes -->
-                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
-                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#E0F2FE" stroke="#0055B8" stroke-width="1.5"/>
-                    <!-- Clarisa Blue Rifle Barrel & Scope extending Left -->
-                    <g transform="translate(${upperShift}, -4)">
-                        <rect x="22" y="92" width="210" height="8" fill="#94A3B8" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="52" y="100" width="165" height="13" fill="#0055B8" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="98" y="75" width="88" height="11" fill="#111315"/>
-                    </g>
-                    <!-- Torso (Clarisa Blue Technical Jersey) -->
-                    <path d="M${172 + pelvisShift} 278 C${165 + pelvisShift} 215, ${165 + upperShift} 152, ${176 + upperShift} 106 L${262 + upperShift} 110 C${268 + upperShift} 165, ${260 + pelvisShift} 222, ${255 + pelvisShift} 278 Z"
-                          fill="#0055B8" fill-opacity="0.9" stroke="#111315" stroke-width="2"/>
-                    <text x="${218 + upperShift * 0.5}" y="176" text-anchor="middle" fill="#FDE68A" font-family="Cormorant Garamond" font-style="italic" font-weight="bold" font-size="20">Clarisa</text>
-                    <!-- Head & Ponytail -->
-                    <circle cx="${214 + upperShift}" cy="74" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <path d="M${228 + upperShift} 65 Q${262 + upperShift} 75 ${258 + upperShift} 122" fill="none" stroke="#111315" stroke-width="14" stroke-linecap="round"/>
-                `;
-
-                // Cascading Spinal Load Arrows along the back curve (Exact match to Poster)
-                for (let i = 0; i < 12; i++) {
-                    const y = 108 + i * 29;
-                    const x = 278 + Math.sin(i * 0.42) * 14 + pelvisShift * 0.4;
-                    arrowsSvg += `
-                        <g class="spine-vector-arrow" style="animation-delay: ${i * 0.1}s" transform="translate(${x}, ${y})">
-                            <polygon points="0,4 16,0 13,4 16,8" fill="none" stroke="var(--ink-900)" stroke-width="1.4"/>
-                        </g>
-                    `;
-                }
-            } else if (currentPose === 'front') {
-                figSvg = `
-                    <!-- Legs -->
-                    <path d="M160 475 L172 275 L212 275 L188 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M292 475 L266 275 L226 275 L264 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="146" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#0055B8" stroke-width="1.5"/>
-                    <rect x="262" y="465" width="46" height="16" rx="4" fill="#FFFFFF" stroke="#111315" stroke-width="1.5"/>
-                    <!-- Torso -->
-                    <path d="M${170 + pelvisShift} 278 L${166 + upperShift} 112 L${258 + upperShift} 112 L${254 + pelvisShift} 278 Z"
-                          fill="#0055B8" stroke="#111315" stroke-width="2"/>
-                    <!-- Left Support Arm Locked into Ilium Hip -->
-                    <path d="M${236 + upperShift} 122 L${244 + pelvisShift} 232 L${198 + upperShift} 108"
-                          fill="none" stroke="#E2E8F0" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Head tilted onto Stock -->
-                    <circle cx="${218 + upperShift}" cy="78" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <!-- Front Concentric Muzzle & Scope Objective (as in Clarisa Front Photo) -->
-                    <g transform="translate(${196 + upperShift}, 88)">
-                        <rect x="-13" y="0" width="26" height="54" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
-                        <circle cx="0" cy="-14" r="16" fill="#111315" stroke="#FFFFFF" stroke-width="2"/>
-                        <circle cx="0" cy="-14" r="6" fill="#38BDF8"/>
-                        <circle cx="0" cy="15" r="11" fill="#475569" stroke="#FFFFFF" stroke-width="1.5"/>
-                    </g>
-                `;
-            } else if (currentPose === 'sideLeft') {
-                figSvg = `
-                    <!-- Legs -->
-                    <path d="M164 475 L175 275 L214 275 L190 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <path d="M290 475 L266 275 L226 275 L262 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="148" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <rect x="260" y="465" width="46" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <!-- Aurellia Red/Black Torso -->
-                    <path d="M${168 + pelvisShift} 278 L${162 + upperShift} 112 L${256 + upperShift} 112 L${250 + pelvisShift} 278 Z"
-                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
-                    <circle cx="${208 + upperShift}" cy="76" r="24" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                    <!-- Red Feinwerkbau Rifle pointing Right -->
-                    <g transform="translate(${165 + upperShift}, 92)">
-                        <rect x="0" y="10" width="245" height="11" fill="#D11F26" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="40" y="2" width="215" height="8" fill="#CBD5E1" stroke="#111315" stroke-width="1.2"/>
-                        <rect x="52" y="-14" width="102" height="11" fill="#111315"/>
-                        <rect x="8" y="0" width="34" height="14" fill="#B37B24" stroke="#111315"/>
-                    </g>
-                    <!-- Left Support Arm Triangle -->
-                    <path d="M${225 + upperShift} 132 L${238 + pelvisShift} 218 L${292 + upperShift} 112"
-                          fill="none" stroke="#FECDD3" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
-                `;
-            } else {
-                figSvg = `
-                    <!-- Side-Right Profile (Aurellia) -->
-                    <path d="M198 475 L205 275 L242 275 L228 475 Z" fill="#181B20" stroke="#111315" stroke-width="1.5"/>
-                    <rect x="192" y="465" width="52" height="16" rx="4" fill="#FFE4E6" stroke="#D11F26" stroke-width="1.5"/>
-                    <path d="M${192 + pelvisShift} 278 C${200 + pelvisShift} 215, ${182 + upperShift} 155, ${188 + upperShift} 108 L${244 + upperShift} 108 C${236 + upperShift} 165, ${252 + pelvisShift} 218, ${242 + pelvisShift} 278 Z"
-                          fill="#D11F26" stroke="#111315" stroke-width="2"/>
-                    <circle cx="${218 + upperShift}" cy="74" r="23" fill="#F3F1EA" stroke="#111315" stroke-width="2"/>
-                `;
-            }
+            figSvg = buildEditorialPostureIllustration(currentPose, arch);
+            arrowsSvg = '';
 
             // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
             if (showXraySkeleton) {
                 figSvg += `
-                    <g stroke="#00FFAA" stroke-width="2.2" fill="none" opacity="0.9">
+                    <g stroke="#3F9DA0" stroke-width="2.1" fill="none" opacity="0.9">
                         <!-- Spinal Column Curve -->
                         <path d="M${214 + upperShift} 98 Q${236 + pelvisShift} 190 ${214 + pelvisShift} 275" stroke-dasharray="5 3"/>
                         <!-- Pelvic Iliac Crest Bar -->
-                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(0, 255, 170, 0.15)"/>
+                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(63, 157, 160, 0.08)"/>
                         <!-- Elbow-to-Hip Bone Lock Node -->
                         <circle cx="${238 + pelvisShift}" cy="230" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
                         <!-- Left & Right Femur Load Vectors -->
