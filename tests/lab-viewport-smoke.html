@@ -28,14 +28,33 @@ frame.addEventListener('load',()=>{
    }
  }
  frame.style.width='390px';
+ const picker=doc.getElementById('labMobileModuleSelect');
+ if(!picker || picker.options.length!==5) problems.push('mobile picker missing options');
+ if(!doc.documentElement.classList.contains('lab-mobile-focused'))problems.push('mobile focus mode missing');
+ if(!doc.getElementById('sec-biomech').classList.contains('is-active'))problems.push('initial module not active');
+ if(doc.querySelector('.lab-notice-wrap').open)problems.push('notice should begin collapsed on mobile');
+ if(picker){
+   picker.value='sec-optics';
+   picker.dispatchEvent(new Event('change',{bubbles:true}));
+   if(!doc.getElementById('sec-optics').classList.contains('is-active'))problems.push('picker did not select optics');
+   if(!doc.getElementById('labModuleProgress').textContent.includes('3 dari 5'))problems.push('module progress mismatch');
+   doc.getElementById('labNextModule').click();
+   if(!doc.getElementById('sec-imssu').classList.contains('is-active'))problems.push('next lesson failed');
+ }
  w.switchPose('sideRight');
  if(!doc.getElementById('dossierRef').textContent.includes('SKEMA EDUKATIF'))problems.push('pose/dossier provenance label missing');
  w.switchPose('front');
  if(!doc.getElementById('stagePoseTitle').textContent.includes('DEPAN'))problems.push('pose not changed');
+ if(doc.getElementById('labMobilePosePicker').value!=='front')problems.push('compact pose selector out of sync');
+ const compactPose=doc.getElementById('labMobilePosePicker');
+ compactPose.value='sideLeft';
+ compactPose.dispatchEvent(new Event('change',{bubbles:true}));
+ if(!doc.getElementById('stagePoseTitle').textContent.includes('KIRI'))problems.push('compact pose selection did not update drawing');
  const first=doc.getElementById('target-chicken-0');
  first.click();
  if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');
  if(!doc.getElementById('rackHitScore').textContent.includes('01'))problems.push('target count feedback');
+ if(!doc.querySelector('[data-rack-animal="chicken"]').classList.contains('is-current'))problems.push('active target group mismatch');
  doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true}));
  if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='true') problems.push('keyboard trigger down');
  doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keyup',{key:' ',bubbles:true}));

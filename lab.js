@@ -313,6 +313,8 @@ let sfxActive = false;
 
         function switchPose(poseKey) {
             currentPose = poseKey;
+            const mobilePose = document.getElementById('labMobilePosePicker');
+            if (mobilePose) mobilePose.value = poseKey;
             playMechTick(820);
             ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
                 const b = document.getElementById(`poseTab-${k}`);
@@ -890,6 +892,9 @@ let sfxActive = false;
                 b.className = k === animal
                     ? 'p-2.5 border-2 border-[#FF4800] bg-[#FF4800]/10 text-center transition'
                     : 'p-2.5 border border-[var(--rule-light)] bg-[var(--bg-surface)] text-center transition';
+                b.setAttribute('aria-pressed', String(k === animal));
+                const tier = document.querySelector('[data-rack-animal="' + k + '"]');
+                if (tier) tier.classList.toggle('is-current', k === animal);
             });
             renderTrajectoryGraph();
         }
@@ -1096,3 +1101,76 @@ let sfxActive = false;
             buildSilhouetteRack();
             selectRangeAnimal('ram');
         });
+
+/* Mobile lesson navigation. Original five experiments and their calculations remain intact. */
+function setupLabMobileExperience() {
+    const media = window.matchMedia('(max-width: 767px)');
+    const disclosures = Array.from(document.querySelectorAll('[data-lab-mobile-collapse]'));
+    const settings = document.querySelector('.lab-settings');
+    const picker = document.getElementById('labMobileModuleSelect');
+    if (!picker) return;
+
+    const ids = ['sec-biomech', 'sec-trigger', 'sec-optics', 'sec-imssu', 'sec-hardware'];
+    const labels = ['Postur', 'Pelatuk', 'Optik', 'Siluet', 'Peralatan'];
+    const sections = ids.map(id => document.getElementById(id));
+    const prev = document.getElementById('labPrevModule');
+    const next = document.getElementById('labNextModule');
+    const progress = document.getElementById('labModuleProgress');
+    let active = ids[0];
+
+    function showModule(id, scroll) {
+        if (!ids.includes(id)) return;
+        active = id;
+        const index = ids.indexOf(id);
+        picker.value = id;
+        sections.forEach((section, n) => {
+            if (section) section.classList.toggle('is-active', n === index);
+        });
+        if (prev) prev.disabled = index === 0;
+        if (next) {
+            next.disabled = index === ids.length - 1;
+            next.textContent = index < ids.length - 1 ? 'Berikutnya: ' + labels[index + 1] + ' →' : 'Selesai';
+        }
+        if (progress) progress.textContent = (index + 1) + ' dari ' + ids.length;
+        if (scroll && media.matches) {
+            window.requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({block:'start', behavior:'auto'}));
+        }
+    }
+    function navigate(id) {
+        if (!ids.includes(id)) return;
+        showModule(id, true);
+        if (window.location.hash !== '#' + id) window.location.hash = id;
+    }
+    const syncHash = () => {
+        const hash = decodeURIComponent(window.location.hash.slice(1));
+        if (ids.includes(hash)) {
+            showModule(hash, media.matches);
+        } else if (hash === 'lab-sources') {
+            const sourcePanel = document.querySelector('.lab-sources-wrap');
+            if (sourcePanel) sourcePanel.open = true;
+            if (media.matches) {
+                window.requestAnimationFrame(() => document.getElementById('lab-sources')?.scrollIntoView({block:'start'}));
+            }
+        }
+    };
+    const syncBreakpoint = () => {
+        document.documentElement.classList.toggle('lab-mobile-focused', media.matches);
+        for (const panel of disclosures) panel.open = !media.matches;
+        if (settings) settings.open = !media.matches;
+        showModule(active, false);
+    };
+    const posePicker = document.getElementById('labMobilePosePicker');
+    posePicker?.addEventListener('change', () => switchPose(posePicker.value));
+    picker.addEventListener('change', () => navigate(picker.value));
+    prev?.addEventListener('click', () => navigate(ids[Math.max(0, ids.indexOf(active) - 1)]));
+    next?.addEventListener('click', () => navigate(ids[Math.min(ids.length - 1, ids.indexOf(active) + 1)]));
+    window.addEventListener('hashchange', syncHash);
+    syncBreakpoint();
+    if (typeof media.addEventListener === 'function') {
+        media.addEventListener('change', syncBreakpoint);
+    } else if (typeof media.addListener === 'function') {
+        media.addListener(syncBreakpoint);
+    }
+    syncHash();
+}
+window.addEventListener('DOMContentLoaded', setupLabMobileExperience);
