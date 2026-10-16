@@ -215,3 +215,238 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 .source-audit thead th{background:var(--bg-subtle);color:var(--ink-900)}
 .source-audit tbody th{font-weight:650}
 .source-audit a{color:var(--clarisa-blue);text-decoration:underline;text-underline-offset:4px}
+
+
+/* Mobile-first Lab navigation and progressive disclosure.
+   Desktop keeps its original diagram-first layout and complete specifications. */
+.lab-mobile-back,
+.lab-mobile-picker,
+.lab-mobile-brand-label,
+.lab-mobile-intro,
+.lab-heading-short,
+.lab-section-hint,
+.lab-mobile-scroll-hint { display: none; }
+
+.lab-settings { margin-left: auto; min-width: 0; }
+.lab-settings > summary,
+.lab-mobile-disclosure > summary { display: none; }
+.lab-mobile-disclosure { min-width: 0; }
+.lab-facts > div { height: 100%; }
+
+@media (max-width: 767px) {
+  .lab-header { position: sticky; top: 0; z-index: 50; }
+  .lab-header-row {
+    display: grid;
+    grid-template-columns: 36px minmax(0,1fr) auto;
+    align-items: center;
+    gap: 8px 10px;
+    min-height: 0;
+    padding: 8px 0;
+  }
+  .lab-mobile-back {
+    display: grid;
+    grid-column: 1;
+    place-items: center;
+    height: 36px;
+    width: 36px;
+    border: 1px solid var(--rule-light);
+    font: 700 19px 'Plus Jakarta Sans', sans-serif;
+    text-decoration: none;
+  }
+  .lab-brand { grid-column: 2; flex: none; min-width: 0; }
+  .lab-brand > div:first-child { display: none; }
+  .lab-desktop-brand-label,
+  .lab-brand-text > div > span:not(.lab-mobile-brand-label) { display: none !important; }
+  .lab-mobile-brand-label {
+    display: inline;
+    font: 800 16px/1.3 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -.025em;
+  }
+  .lab-section-nav { display: none !important; }
+  .lab-local-nav { display: none; }
+  .lab-settings { grid-column: 3; position: relative; margin: 0; z-index: 55; }
+  .lab-settings > summary {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    justify-content: space-between;
+    list-style: none;
+    min-height: 36px;
+    padding: 0 .65rem;
+    border: 1px solid var(--rule-light);
+    cursor: pointer;
+    background: var(--bg-surface);
+    font: 600 12px 'Plus Jakarta Sans', sans-serif;
+  }
+  .lab-settings > summary::-webkit-details-marker { display: none; }
+  .lab-settings > .lab-controls {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    width: min(250px, calc(100vw - 32px));
+    margin: 0;
+    padding: .5rem;
+    border: 1px solid var(--rule-heavy);
+    background: var(--bg-surface);
+    box-shadow: 0 12px 25px rgba(0,0,0,.16);
+    flex-direction: column;
+    z-index: 60;
+  }
+  .lab-settings:not([open]) > .lab-controls { display: none; }
+  .lab-settings .lab-controls button {
+    min-height: 44px;
+    width: 100%;
+    justify-content: flex-start;
+    padding: .6rem .75rem;
+  }
+  .lab-mobile-picker {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(75px,auto) minmax(0,1fr);
+    align-items: center;
+    gap: .6rem;
+    padding-top: 7px;
+    border-top: 1px solid var(--rule-light);
+  }
+  .lab-mobile-picker label {
+    font: 600 12px 'Plus Jakarta Sans', sans-serif;
+    color: var(--ink-700);
+  }
+  .lab-mobile-picker select {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: .55rem 1.8rem .55rem .65rem;
+    border: 1px solid var(--rule-heavy);
+    border-radius: 0;
+    color: var(--ink-900);
+    background: var(--bg-surface);
+    font: 650 13px 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Opening screen: purpose first, details on demand. */
+  .lab-athlete-wordmarks, .lab-hero-description { display: none; }
+  .lab-main-heading {
+    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    overflow: visible;
+    white-space: normal;
+    margin: 0;
+    font: 800 clamp(23px, 6vw, 29px)/1.22 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -.035em;
+  }
+  .lab-mobile-intro {
+    display: block;
+    margin-top: .7rem;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-700);
+  }
+  section.tech-border-b > .max-w-\[1400px\] { padding-top: 1rem; padding-bottom: 1rem; }
+  section.tech-border-b .inline-flex.uppercase.tracking-widest { display: none; }
+  main#main-content { padding-top: 1rem; padding-bottom: 2.5rem; }
+  main#main-content > section { scroll-margin-top: 120px; }
+  main#main-content.space-y-16 > :not(:last-child) { margin-bottom: 2.5rem; }
+
+  .lab-mobile-disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .65rem;
+    list-style: none;
+    cursor: pointer;
+    background: var(--bg-subtle);
+    color: var(--ink-900);
+    border: 1px solid var(--rule-light);
+    padding: .85rem 1rem;
+    font: 700 13px/1.4 'Plus Jakarta Sans', sans-serif;
+  }
+  .lab-mobile-disclosure > summary::-webkit-details-marker { display: none; }
+  .lab-mobile-disclosure > summary::after {
+    content: '+';
+    flex: none;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .lab-mobile-disclosure[open] > summary::after { content: '−'; }
+  .lab-mobile-disclosure[open] > summary { border-bottom-color: var(--rule-heavy); }
+  .lab-facts { width: 100%; }
+  .lab-notice-wrap > summary {
+    border-left: 4px solid var(--imssu-orange);
+    background: var(--bg-surface);
+  }
+  .lab-notice-wrap .lab-notice { margin: 0; border-top: 0; }
+  .lab-facts > div { height: auto; }
+  .lab-mobile-disclosure:not(.lab-facts):not(.lab-notice-wrap) { width: 100%; }
+  .lab-mobile-disclosure:not(.lab-facts):not(.lab-notice-wrap) > div { margin-top: .75rem; }
+
+  /* Friendly task names replace the long technical headings on a small screen. */
+  main section[id^="sec-"] .tech-rule-heavy { gap: .65rem; }
+  main section[id^="sec-"] .tech-rule-heavy .font-mono-tech.uppercase.tracking-wider {
+    font-size: 10px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  main section[id^="sec-"] h2 { font-size: 23px; line-height: 1.23; margin-top: .35rem; }
+  .lab-heading-long { display: none; }
+  .lab-heading-short { display: inline; }
+  .lab-section-hint {
+    display: block;
+    margin: .5rem 0 0;
+    max-width: 55ch;
+    color: var(--ink-700);
+    font: 400 14px/1.6 'Plus Jakarta Sans', sans-serif;
+  }
+  main .tech-sheet > div,
+  main .tech-sheet > details > div { min-width: 0; }
+  .lab-biomech-stage { height: clamp(290px, 100vw, 390px); }
+  #sec-biomech .callout-node { min-width: 32px; min-height: 32px; touch-action: manipulation; }
+  #sec-biomech .inline-flex.border { gap: 0; }
+  #sec-biomech .inline-flex.border button { line-height: 1.3; padding: .65rem .35rem; }
+  #xrayToggleBtn { min-height: 44px; }
+  #sec-biomech #dossierRef { overflow-wrap: anywhere; }
+  #sec-biomech #dossierMetrics > * { min-width: 0; }
+  #sec-biomech .lab-mobile-disclosure > div,
+  #sec-optics .lab-mobile-disclosure > div { margin-top: 1rem; }
+
+  #sec-trigger .grid.grid-cols-4.gap-1\.5 {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 6px;
+  }
+  #triggerOscCanvas { height: 180px; }
+  #tactileTriggerBtn { min-height: 58px; line-height: 1.45; }
+  #sec-optics .relative.w-64 { width: min(64vw,256px); height: min(64vw,256px); }
+  #sec-imssu .grid.grid-cols-4.gap-2 {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  #sec-imssu [data-rack-animal] { display: none; }
+  #sec-imssu [data-rack-animal].is-current {
+    display: flex;
+    width: 100%;
+  }
+  #sec-imssu .steel-target-btn { min-width: 38px; min-height: 44px; touch-action: manipulation; }
+  #sec-imssu button[id^="rangeBtn-"] { min-height: 50px; }
+  .lab-hardware-scroll {
+    max-width: 100%;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .lab-mobile-scroll-hint {
+    display: block;
+    font: 600 12px/1.4 'Plus Jakarta Sans', sans-serif;
+    padding: 0 0 .75rem;
+    color: var(--ink-700);
+  }
+  #sec-hardware #hardwareBlueprintSvg { min-width: 640px; }
+  #sec-hardware .lab-mobile-disclosure button { min-height: 44px; align-items: center; }
+  .lab-mobile-disclosure:focus-within > summary,
+  .lab-settings:focus-within > summary,
+  .lab-mobile-picker select:focus-visible,
+  .lab-mobile-back:focus-visible,
+  .lab-hardware-scroll:focus-visible { outline: 2px solid var(--clarisa-blue); outline-offset: 2px; }
+}
