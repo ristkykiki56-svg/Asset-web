@@ -320,6 +320,7 @@ let sfxActive = false;
             ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
                 const b = document.getElementById(`poseTab-${k}`);
                 if (!b) return;
+                b.setAttribute('aria-pressed', String(k === poseKey));
                 b.className = k === poseKey
                     ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
                     : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
@@ -449,6 +450,7 @@ let sfxActive = false;
             ['A', 'B', 'C'].forEach(v => {
                 const btn = document.getElementById(`btnVec-${v}`);
                 const path = document.getElementById(`svgVec${v}`);
+                btn.setAttribute('aria-pressed', String(v === vec));
                 if (v === vec) {
                     btn.className = v === 'B'
                         ? 'py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition'
@@ -1054,6 +1056,14 @@ let sfxActive = false;
             if (!item) return;
             const componentSelect = document.getElementById('labHardwarePicker');
             if (componentSelect) componentSelect.value = key;
+            document.querySelectorAll('#hardwareBlueprintSvg [data-hw-key]').forEach(node => {
+                node.classList.toggle('is-highlighted', node.getAttribute('data-hw-key') === key);
+            });
+            document.querySelectorAll('#sec-hardware button[onclick^="inspectHardware("]').forEach(button => {
+                const selected = button.getAttribute('onclick') === `inspectHardware('${key}')`;
+                button.setAttribute('aria-pressed', String(selected));
+                button.classList.toggle('is-current', selected);
+            });
             document.getElementById('blueprintActiveLabel').textContent = `INSPEKSI: ${item.title.toUpperCase()}`;
             document.getElementById('hwSpecCode').textContent = item.code;
             document.getElementById('hwSpecTitle').textContent = item.title;
@@ -1105,6 +1115,7 @@ let sfxActive = false;
 
         window.addEventListener('DOMContentLoaded', function () {
             setupTriggerInput();
+            selectFingerVector('B');
             setupOcularVisibility();
             renderBiomechIndexTable();
             selectBiomechCallout('spine');
@@ -1113,6 +1124,7 @@ let sfxActive = false;
             updateOpticalSim();
             buildSilhouetteRack();
             selectRangeAnimal('ram');
+            inspectHardware('cheekpiece');
         });
 
 /* Mobile lesson navigation. Original five experiments and their calculations remain intact. */
