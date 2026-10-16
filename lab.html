@@ -41,7 +41,7 @@
                 </div>
 
                 <!-- Center: Direct Section Index -->
-                <nav class="lab-section-nav flex items-center divide-x divide-[var(--rule-light)] border border-[var(--rule-light)] font-mono-tech text-[11px]" aria-label="Bagian laboratorium">
+                <nav class="lab-section-nav flex items-center divide-x divide-[var(--rule-light)] border border-[var(--rule-light)] font-mono-tech text-[11px]" aria-label="Bagian laboratorium" data-lab-desktop-nav>
                     <a href="#sec-biomech" class="px-3 py-1.5 hover:bg-[var(--bg-subtle)] transition">01. Postur</a>
                     <a href="#sec-trigger" class="px-3 py-1.5 hover:bg-[var(--bg-subtle)] transition">02. Pelatuk</a>
                     <a href="#sec-optics" class="px-3 py-1.5 hover:bg-[var(--bg-subtle)] transition">03. Optik</a>
@@ -83,7 +83,7 @@
                     </div>
 
                     <!-- Athlete names retained from the supplied prototype, not represented as official branding -->
-                    <h1 class="lab-sr-only lab-main-heading">Shooting Lab</h1><p class="lab-mobile-byline">Clarisa Azalia <span aria-hidden="true">·</span> Aurellia Cassandra</p><p class="lab-mobile-intro">Pilih materi, lihat gambarnya, lalu coba kontrol interaktif. Semua simulasi bersifat ilustratif.</p>
+                    <h1 class="lab-sr-only lab-main-heading">Shooting Lab</h1><p class="lab-desktop-purpose">Pelajari konsep lewat ilustrasi interaktif—bukan hasil ukur atlet atau panduan setelan senapan.</p><p class="lab-mobile-byline">Clarisa Azalia <span aria-hidden="true">·</span> Aurellia Cassandra</p><p class="lab-mobile-intro">Pilih materi, lihat gambarnya, lalu coba kontrol interaktif. Semua simulasi bersifat ilustratif.</p>
                     <div class="lab-athlete-wordmarks flex flex-wrap items-baseline gap-x-6 gap-y-1 pt-1">
                         <div class="flex items-baseline gap-2">
                             <span class="font-signature italic font-bold text-4xl sm:text-6xl tracking-tight text-[#B37B24]">Clarisa</span>
@@ -101,6 +101,7 @@
                     </p>
                 </div>
 
+                <div class="lab-intro-provenance" aria-label="Status informasi"><span>ATURAN: IMSSU 2025</span><span>ILUSTRASI: BUKAN DATA TERUKUR</span><a href="#lab-sources">Periksa sumber ↗</a></div>
                 <!-- Right: Poster Specification Key-Value Matrix -->
                 <details class="lab-mobile-disclosure lab-facts lg:col-span-4" data-lab-mobile-collapse open><summary>Fakta aturan dan batas model <span aria-hidden="true">⌄</span></summary>
 <div class="lg:col-span-4 border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 font-mono-tech text-xs">
@@ -150,7 +151,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Analisis 4 Sudut Pandang Atlet &amp; Alur Beban Pasif (Skeletal Support)</span><span class="lab-heading-short">Postur tubuh</span>
 </h2>
-<p class="lab-section-hint">Pilih sudut pandang, lalu sentuh angka pada gambar untuk membaca penjelasannya.</p>
+<p class="lab-section-hint">Pilih sudut pandang dan titik anatomi. Sorotan pada gambar akan mengikuti pilihanmu.</p>
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
@@ -171,6 +172,8 @@
                             4. Samping Kanan
                         </button>
                     </div>
+                    <label class="lab-callout-label" for="labCalloutPicker">Bagian yang ingin dipelajari</label>
+                    <select id="labCalloutPicker" class="lab-callout-select" aria-label="Pilih titik anatomi untuk dijelaskan"></select>
                     <button onclick="toggleXraySkeleton()" id="xrayToggleBtn" aria-pressed="true" class="px-3 py-2 border border-[#0055B8] text-[var(--clarisa-blue)] font-bold hover:bg-[#0055B8] hover:text-white transition">
                         [X-RAY KERANGKA: AKTIF]
                     </button>
@@ -185,6 +188,7 @@
                         <span class="text-[var(--ink-500)]">SKEMA TIDAK BERSKALA // PILIH PIN [01–10]</span>
                     </div>
 
+                    <p class="lab-diagram-context">Titik, sudut, dan distribusi beban merupakan <strong>visualisasi contoh</strong>, bukan pengukuran postur.</p>
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
@@ -197,18 +201,18 @@
                             <!-- Millimeter Vertical Scale Ruler (Left Edge) -->
                             <g stroke="var(--rule-light)" stroke-width="1" class="font-mono-tech" font-size="8" fill="var(--ink-500)">
                                 <line x1="18" y1="20" x2="18" y2="500"/>
-                                <line x1="14" y1="60" x2="22" y2="60"/><text x="25" y="63">1600mm</text>
-                                <line x1="14" y1="160" x2="22" y2="160"/><text x="25" y="163">1300mm</text>
-                                <line x1="14" y1="260" x2="22" y2="260"/><text x="25" y="263">1000mm</text>
-                                <line x1="14" y1="360" x2="22" y2="360"/><text x="25" y="363">500mm</text>
-                                <line x1="14" y1="485" x2="22" y2="485"/><text x="25" y="488">0mm (LANTAI)</text>
+                                <line x1="14" y1="60" x2="22" y2="60"/><text x="25" y="63">SKEMA</text>
+                                <line x1="14" y1="160" x2="22" y2="160"/><text x="25" y="163">—</text>
+                                <line x1="14" y1="260" x2="22" y2="260"/><text x="25" y="263">—</text>
+                                <line x1="14" y1="360" x2="22" y2="360"/><text x="25" y="363">—</text>
+                                <line x1="14" y1="485" x2="22" y2="485"/><text x="25" y="488">LANTAI</text>
                             </g>
 
                             <!-- Center of Gravity Vertical Plumb Line (Garis Pusat Beban) -->
                             <g id="svgCogPlumbGroup" transform="translate(230, 0)">
                                 <line x1="0" y1="18" x2="0" y2="495" stroke="#FF4800" stroke-width="1.5" stroke-dasharray="6 4"/>
                                 <rect x="-68" y="12" width="136" height="18" fill="var(--ink-900)"/>
-                                <text x="0" y="24" text-anchor="middle" fill="var(--bg-surface)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">SUMBU GRAVITASI (CoG)</text>
+                                <text x="0" y="24" text-anchor="middle" fill="var(--bg-surface)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">SUMBU MODEL (ILUSTRASI)</text>
                             </g>
 
                             <!-- Ground Force Plate & 90° Target Line Protractor -->
@@ -217,10 +221,10 @@
                                 <text x="52" y="13" fill="var(--ink-700)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">&larr; ARAH SASARAN (SUDUT BERDIRI 90&deg;)</text>
                                 <!-- Left Foot Force Plate -->
                                 <rect x="145" y="20" width="64" height="16" fill="#0055B8"/>
-                                <text id="plateLeftText" x="177" y="50" text-anchor="middle" fill="#0055B8" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KIRI: 65%</text>
+                                <text id="plateLeftText" x="177" y="50" text-anchor="middle" fill="#0055B8" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KIRI · MODEL</text>
                                 <!-- Right Foot Force Plate -->
                                 <rect x="252" y="20" width="64" height="16" fill="#D11F26"/>
-                                <text id="plateRightText" x="284" y="50" text-anchor="middle" fill="#D11F26" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KANAN: 35%</text>
+                                <text id="plateRightText" x="284" y="50" text-anchor="middle" fill="#D11F26" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KANAN · MODEL</text>
                             </g>
 
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
@@ -324,10 +328,10 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Simulasi Tarikan Pemicu 90&deg; &amp; Osiloskop 4 Fase Pelepasan</span><span class="lab-heading-short">Pelatuk</span>
 </h2>
-<p class="lab-section-hint">Pilih arah gerakan jari. Coba tekan dan tahan tombol untuk melihat kurva ilustratif.</p>
+<p class="lab-section-hint">Bandingkan arah A, B, dan C pada diagram. Tekan tombol simulasi untuk melihat empat fase kurva contoh.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">VEKTOR B (GARIS LURUS) — BUKAN TOLERANSI RESMI</strong>
+                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">PERBANDINGAN ARAH GERAKAN—BUKAN STANDAR TARIKAN</strong>
                 </div>
             </div>
 
@@ -420,7 +424,7 @@
                                 [C] Terlalu Dalam
                             </button>
                             <button onclick="selectFingerVector('B')" id="btnVec-B" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
-                                [B] Tepat 90&deg; Lurus
+                                [B] Garis lurus (contoh)
                             </button>
                             <button onclick="selectFingerVector('A')" id="btnVec-A" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
                                 [A] Ujung Jari
@@ -430,7 +434,7 @@
                         <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>POSISI VERTIKAL JARI PADA TRIGGER SHOE:</span>
-                                <strong id="shoeHeightText">TENGAH (LUBANG #2 — OPTIMAL)</strong>
+                                <strong id="shoeHeightText">TENGAH (POSISI MODEL)</strong>
                             </div>
                             <input type="range" min="-22" max="22" value="0" oninput="adjustTriggerShoeContact(this.value)" class="mech-slider" aria-label="Posisi jari pada diagram pelatuk ilustrasi">
                         </div>
@@ -442,21 +446,21 @@
                 </div>
 
                 <!-- Right 6 Cols: Live Oscilloscope "KURVA TARIKAN PEMICU IDEAL" -->
-                <div class="lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-4">
-                    <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
+                <div class="lab-trigger-panel lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-4">
+                    <div class="lab-trigger-graph-heading flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
                         <span class="font-bold">FIG 2.2 — OSILOSKOP KURVA KONSEPTUAL (GAYA vs WAKTU)</span>
                         <span id="oscPhaseLabel" class="px-2 py-0.5 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold">FASE: SIAGA</span>
                     </div>
 
                     <!-- High-Contrast Technical Oscilloscope Canvas -->
-                    <div class="border border-[var(--rule-heavy)] bg-[#0E1116] p-3">
+                    <div class="lab-trigger-graph border border-[var(--rule-heavy)] bg-[#0E1116] p-3">
                         <canvas id="triggerOscCanvas" width="580" height="240" class="w-full h-[225px] block"></canvas>
 
                         <!-- 4 Poster Phases Strip -->
                         <div class="grid grid-cols-4 gap-1.5 pt-2 mt-2 border-t border-slate-800 font-mono-tech text-[10px] text-center">
                             <div id="oscStage-1" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-sky-400">1. PENARIKAN AWAL</div>
-                                <div>Take-Up (0–70 gf)</div>
+                                <div>Take-Up (kurva contoh)</div>
                             </div>
                             <div id="oscStage-2" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-amber-400">2. STABIL</div>
@@ -473,16 +477,17 @@
                         </div>
                     </div>
 
+                    <p class="lab-diagram-context lab-trigger-curve-context">Kurva ini menggambarkan urutan fase secara konseptual. Sumbu dan bentuk garis <strong>bukan rekaman gaya, waktu, atau performa atlet</strong>.</p>
                     <!-- Interactive Tactile Trigger Paddle -->
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row gap-2 font-mono-tech text-xs">
+                    <div class="lab-trigger-action space-y-3">
+                        <p class="lab-action-label">COBA SIMULASI · LANGKAH 02</p><div class="flex flex-col sm:flex-row gap-2 font-mono-tech text-xs">
                             <button id="tactileTriggerBtn"
                                 aria-label="Tahan untuk melihat kurva konseptual; dapat digunakan dengan mouse, sentuhan, atau keyboard"
                                 class="flex-1 py-4 px-5 bg-[#FF4800] hover:bg-[#e03f00] text-white font-bold uppercase tracking-wider border border-[var(--rule-heavy)] active:translate-y-0.5 transition select-none cursor-pointer">
-                                [TEKAN &amp; TAHAN] TARIK PELATUK SECARA HALUS (4 FASE)
+                                Tekan &amp; tahan untuk melihat kurva
                             </button>
                             <button onclick="runIdealCurvePlayback()" class="py-4 px-4 border border-[var(--rule-heavy)] bg-[var(--bg-paper)] hover:bg-[var(--bg-subtle)] font-bold uppercase transition">
-                                Putar Contoh Kurva
+                                Putar contoh otomatis
                             </button>
                         </div>
 
@@ -507,7 +512,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Simulator Penyelarasan Mata–Lensa &amp; Tekanan Sandaran Pipi (Cheekpiece)</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Lihat posisi mata pada lensa. Buka pengaturan jika ingin mengubah model.</p>
+<p class="lab-section-hint">Perhatikan lingkaran pada lensa. Buka kontrol di bawah gambar, ubah satu posisi, lalu bandingkan hasilnya.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
                     Reset Posisi Model Optik
@@ -560,19 +565,19 @@
 
                 <!-- Right 7 Cols: Precision Optical Sliders & Poster Guidelines -->
                 <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-5">
-                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah tampilan optik</summary>
+                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Coba ubah posisi mata · 4 kontrol model</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- 1. Eye Relief Distance -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>1. JARAK BACA MATA (EYE RELIEF):</span>
-                                <strong id="optEyeDistLabel" class="text-[var(--ok-green)]">85 mm (ACUAN MODEL)</strong>
+                                <strong id="optEyeDistLabel" class="text-[var(--ok-green)]">85 mm (CONTOH MODEL)</strong>
                             </div>
                             <input id="optEyeDist" type="range" min="45" max="125" value="85" oninput="updateOpticalSim()" class="mech-slider" aria-label="Jarak mata ke lensa ilustrasi, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
-                                <span>45mm (Terlalu Dekat)</span>
+                                <span>45 mm (lebih dekat)</span>
                                 <span>85mm</span>
-                                <span>125mm (Terlalu Jauh)</span>
+                                <span>125 mm (lebih jauh)</span>
                             </div>
                         </div>
 
@@ -603,7 +608,7 @@
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>4. TEKANAN PIPI PADA STOCK:</span>
-                                <strong id="optPressureLabel" class="text-[var(--ok-green)]">50% (RILEKS KONSISTEN)</strong>
+                                <strong id="optPressureLabel" class="text-[var(--ok-green)]">50% (CONTOH MODEL)</strong>
                             </div>
                             <input id="optPressure" type="range" min="10" max="100" value="50" oninput="updateOpticalSim()" class="mech-slider" aria-label="Tekanan sandaran pipi ilustrasi, persen">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
@@ -651,14 +656,14 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Simulasi Rak Target 20 Siluet, Perbandingan Reticle &amp; Kompensasi Elevasi</span><span class="lab-heading-short">Sasaran siluet</span>
 </h2>
-<p class="lab-section-hint">Pilih hewan dan sentuh sasaran untuk menjatuhkannya. Jarak yang ditampilkan berasal dari aturan IMSSU.</p>
+<p class="lab-section-hint">Pilih jenis siluet, lalu ketuk salah satu dari lima target. Jarak kompetisi mengacu pada aturan; jatuhnya target hanya animasi.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                        TARGET JATUH: <strong id="rackHitScore" class="text-[#FF4800]">00 / 20</strong>
+                        KELOMPOK INI: <strong id="rackGroupScore" aria-live="polite" class="text-[#FF4800]">0 / 5</strong> <span class="lab-rack-total">· TOTAL <strong id="rackHitScore">00 / 20</strong></span>
                     </div>
                     <button onclick="resetSilhouetteRack()" class="px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
-                        Tegakkan Semua Sasaran
+                        Reset 20 sasaran
                     </button>
                 </div>
             </div>
@@ -813,7 +818,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Skema Komponen Senapan &amp; Teleskop — Bukan Perangkat Atlet Terverifikasi</span><span class="lab-heading-short">Bagian peralatan</span>
 </h2>
-<p class="lab-section-hint">Geser diagram ke samping, lalu pilih bagian senapan untuk melihat keterangannya.</p>
+<p class="lab-section-hint">Pilih nama komponen untuk melihat penjelasannya. Pada mobile, gambar bisa digeser ke samping.</p>
                 </div>
 
                 <!-- Switch between Aurellia Red Feinwerkbau & Clarisa Blue Precision Rig -->
@@ -827,6 +832,9 @@
                 </div>
             </div>
 
+            <div class="lab-hardware-mobile-control"><label for="labHardwarePicker">Pilih komponen</label><select id="labHardwarePicker" aria-label="Pilih komponen pada diagram peralatan">
+              <option value="stock">01 · Popor (stock)</option><option value="cheekpiece">02 · Sandaran pipi</option><option value="grip">03 · Grip</option><option value="riser">04 · Penopang depan</option><option value="cylinder">05 · Tabung udara</option><option value="barrel">06 · Laras</option><option value="objective">07 · Lensa depan</option><option value="turrets">08 · Turret</option><option value="zoom">09 · Pembesaran</option><option value="ocular">10 · Lensa okuler</option>
+            </select></div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 8 Cols: Dual Technical Blueprint (Rifle + Detailed Scope Diagram from Bottom-Left of Poster) -->
                 <div class="lg:col-span-8 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5 drafting-bg">
@@ -979,7 +987,7 @@
                             Ketinggian, kemiringan, dan sudut sandaran pipi diatur mengikuti anatomi tulang pipi penembak. Prinsip utamanya adalah menyelaraskan komponen senapan terhadap tubuh, bukan memaksa leher membungkuk mencari teleskop.
                         </p>
                         <div id="hwSpecNote" class="p-3 bg-[var(--bg-surface)] border border-[var(--rule-light)] font-mono-tech text-[11px] text-[var(--clarisa-blue)]">
-                            CATATAN PEMBELAJARAN: Pejamkan mata saat meletakkan pipi. Saat mata dibuka, reticle harus langsung berada tepat di tengah tanpa menggeser kepala.
+                            BATAS MODEL: bentuk dan ukuran komponen hanya ilustratif. Setelan nyata mengikuti instruksi pabrikan, atlet, dan pelatih.
                         </div>
                     </div>
 
@@ -1034,7 +1042,7 @@
     <button type="button" id="labNextModule">Berikutnya →</button>
 </nav>
 <details class="lab-mobile-disclosure lab-sources-wrap" data-lab-mobile-collapse open>
-<summary>Sumber resmi dan batas simulasi</summary>
+<summary>Sumber resmi dan batas simulasi · baca penjelasan</summary>
 <section id="lab-sources" class="source-audit tech-sheet" aria-labelledby="sources-title">
           <p class="source-eyebrow">SUMBER, STATUS KLAIM &amp; BATAS SIMULASI</p>
           <h2 id="sources-title">Mana yang berasal dari aturan resmi?</h2>
