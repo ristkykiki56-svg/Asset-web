@@ -905,3 +905,35 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 }
 #sec-biomech .lab-parameter-heading > span {font-size:11px;max-width:100%;overflow-wrap:break-word}
 #sec-biomech .lab-parameter-heading > strong {font-size:12px;line-height:1.5}
+
+
+/* Consistent, accessible selection states for the diagram itself. */
+#sec-trigger #triggerVectorDiagram .trigger-vector-node.is-selected rect {
+  fill:var(--bg-surface);
+  stroke:var(--imssu-orange);
+  stroke-width:3;
+}
+#sec-trigger #triggerVectorDiagram .trigger-vector-node.is-selected text {
+  fill:var(--ink-900);
+}
+#sec-trigger #triggerVectorDiagram .trigger-vector-node:focus-visible rect {
+  stroke:var(--clarisa-blue);
+  stroke-width:3.5;
+}
+#sec-hardware #hardwareBlueprintSvg .hw-marker[aria-pressed="true"] .hw-marker-halo {
+  stroke:var(--imssu-orange);
+  stroke-width:3;
+}
+#sec-hardware #hardwareBlueprintSvg .hw-marker[aria-pressed="true"] .hw-marker-disc {
+  fill:var(--imssu-orange);
+}
+#sec-hardware #hardwareBlueprintSvg .hw-region {
+  cursor:pointer;
+}
+#sec-hardware #hardwareBlueprintSvg .hw-region[aria-hidden="true"] { outline:none; }
+@media(prefers-reduced-motion:reduce) {
+  #sec-trigger #triggerVectorDiagram .trigger-vector-node,
+  #sec-hardware #hardwareBlueprintSvg .hw-marker {
+    transition:none!important;
+  }
+}
