@@ -203,6 +203,26 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
     </g>`;
 }
 
+        // Anchor locations refer to illustrative SVG anatomy, not measured positions.
+        // Keeping coordinates in SVG units prevents responsive letterbox offsets.
+        function biomechAnchor(point, arch, hipLock) {
+            const upper = -arch * 1.1;
+            const elbow = Math.round((100 - hipLock) * .4);
+            const anchors = {
+                spine: [214 + upper * .35, 214],
+                head: [216 + upper, 80],
+                rightShoulder: [173 + upper * .45, 145],
+                leftArm: [273 + upper * .45, 157],
+                leftWrist: [251 + upper * .45, 190],
+                rightHand: [234 + upper * .45, 194],
+                elbowHip: [267 + upper * .45, 225 + elbow],
+                pelvis: [224 + arch * .65, 278],
+                leftLeg: [181, 416],
+                rightLeg: [283, 416]
+            };
+            return anchors[point.id] || [point.x * 4.6, point.y * 5.4];
+        }
+
         // Convert SVG units to container pixels, preserving correct alignment
         // across aspect ratios and CSS viewport scaling.
         function positionBiomechPins() {
@@ -260,66 +280,57 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             athleteLayer.innerHTML = figSvg;
             arrowsLayer.innerHTML = arrowsSvg;
 
-            // Render active technical leader line
+            // Leader and interactive numbers must refer to the same anchor.
             const activePt = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId);
-            if (activePt) {
-                const px = (activePt.x / 100) * 460;
-                const py = (activePt.y / 100) * 540;
+            if (activePt && activePt.pose === currentPose) {
+                const [px, py] = biomechAnchor(activePt, arch, hipLock);
+                const side = px > 270 ? -1 : 1;
+                const lineEnd = side > 0 ? 450 : 10;
+                const labelX = side > 0 ? 355 : 15;
+                const labelCenter = labelX + 45;
+                const labelY = Math.max(32, Math.min(494, py - 39));
                 leaderLayer.innerHTML = `
-                    <polyline points="${px},${py} ${px + 42},${py - 24} 445,${py - 24}" fill="none" stroke="#FF4800" stroke-width="1.8" marker-start="url(#leaderDot)"/>
-                    <rect x="355" y="${py - 42}" width="90" height="16" fill="#FF4800"/>
-                    <text x="400" y="${py - 31}" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TITIK #${activePt.num}</text>
+                    <polyline points="${px},${py} ${px + side * 35},${labelY + 8} ${lineEnd},${labelY + 8}" fill="none" stroke="#C85C35" stroke-width="1.8" pointer-events="none"/>
+                    <rect x="${labelX}" y="${labelY}" width="90" height="16" fill="#B95B37" pointer-events="none"/>
+                    <text x="${labelCenter}" y="${labelY + 11}" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="9" font-weight="bold" pointer-events="none">TITIK #${activePt.num}</text>
                 `;
+            } else {
+                leaderLayer.replaceChildren();
             }
 
-            // Render Numbered Callout Pins
-            pinsContainer.innerHTML = '';
+            // Reuse actual buttons across redraws. Replacing the whole container
+            // on every click/slider input used to destroy keyboard focus.
             POSTER_BIOMECH_DATA.forEach(pt => {
+                let btn = pinsContainer.querySelector('[data-biomech-id="' + pt.id + '"]');
+                if (!btn) {
+                    btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.dataset.biomechId = pt.id;
+                    btn.textContent = pt.num;
+                    btn.setAttribute('aria-label', `Titik ${pt.num}: ${pt.title}`);
+                    btn.addEventListener('click', () => selectBiomechCallout(pt.id));
+                    pinsContainer.appendChild(btn);
+                }
                 const isSelected = pt.id === activeBiomechId;
-                const btn = document.createElement('button');
                 btn.className = `callout-node pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 w-7 h-7 font-mono-tech text-[11px] font-bold flex items-center justify-center border ${
                     isSelected
                         ? 'bg-[#FF4800] text-white border-white ring-2 ring-[#FF4800] z-20 scale-110'
                         : 'bg-[var(--ink-900)] text-[var(--bg-surface)] border-[var(--bg-surface)] z-10'
                 }`;
                 btn.hidden = pt.pose !== currentPose;
-                btn.dataset.svgX = String(pt.x * 4.6);
-                btn.dataset.svgY = String(pt.y * 5.4);
-                btn.textContent = pt.num;
-                btn.setAttribute('aria-label', `Titik ${pt.num}: ${pt.title}`);
+                const [x, y] = biomechAnchor(pt, arch, hipLock);
+                btn.dataset.svgX = String(x);
+                btn.dataset.svgY = String(y);
                 btn.setAttribute('aria-pressed', String(isSelected));
-                btn.onclick = () => selectBiomechCallout(pt.id);
-                pinsContainer.appendChild(btn);
             });
             positionBiomechPins();
         }
 
         function switchPose(poseKey) {
-            currentPose = poseKey;
-            const mobilePose = document.getElementById('labMobilePosePicker');
-            if (mobilePose) mobilePose.value = poseKey;
-            playMechTick(820);
-            ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
-                const b = document.getElementById(`poseTab-${k}`);
-                if (!b) return;
-                b.setAttribute('aria-pressed', String(k === poseKey));
-                b.className = k === poseKey
-                    ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
-                    : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
-            });
-            const labels = {
-                back: 'FIG 1.1 — SKEMA PUNGGUNG (ILUSTRASI)',
-                front: 'FIG 1.2 — SKEMA TAMPAK DEPAN (ILUSTRASI)',
-                sideLeft: 'FIG 1.3 — SKEMA SAMPING KIRI (ILUSTRASI)',
-                sideRight: 'FIG 1.4 — SKEMA SAMPING KANAN (ILUSTRASI)'
-            };
-            document.getElementById('stagePoseTitle').textContent = labels[poseKey];
-            const chosen = POSTER_BIOMECH_DATA.find(item => item.id === activeBiomechId);
-            if (!chosen || chosen.pose !== poseKey) {
-                const first = POSTER_BIOMECH_DATA.find(item => item.pose === poseKey);
-                if (first) activeBiomechId = first.id;
-            }
-            selectBiomechCallout(activeBiomechId);
+            if (!['back', 'front', 'sideLeft', 'sideRight'].includes(poseKey)) return;
+            const chosen = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId && p.pose === poseKey);
+            const next = chosen || POSTER_BIOMECH_DATA.find(p => p.pose === poseKey);
+            if (next) selectBiomechCallout(next.id);
         }
 
         function toggleXraySkeleton() {
@@ -335,18 +346,31 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
         }
 
         function selectBiomechCallout(id) {
-            activeBiomechId = id;
-            playMechTick(880);
             const item = POSTER_BIOMECH_DATA.find(d => d.id === id);
             if (!item) return;
-            const calloutPicker = document.getElementById('labCalloutPicker');
-            if (calloutPicker) calloutPicker.value = item.id;
+            activeBiomechId = item.id;
+            currentPose = item.pose;
+            playMechTick(880);
 
-            if (item.pose !== currentPose) {
-                switchPose(item.pose);
-            } else {
-                renderBiomechViewport();
-            }
+            const mobilePose = document.getElementById('labMobilePosePicker');
+            if (mobilePose) mobilePose.value = currentPose;
+            ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
+                const button = document.getElementById(`poseTab-${k}`);
+                if (!button) return;
+                button.setAttribute('aria-pressed', String(k === currentPose));
+                button.className = k === currentPose
+                    ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
+                    : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
+            });
+            const viewLabels = {
+                back: 'FIG 1.1 — SKEMA PUNGGUNG (ILUSTRASI)',
+                front: 'FIG 1.2 — SKEMA TAMPAK DEPAN (ILUSTRASI)',
+                sideLeft: 'FIG 1.3 — SKEMA SAMPING KIRI (ILUSTRASI)',
+                sideRight: 'FIG 1.4 — SKEMA SAMPING KANAN (ILUSTRASI)'
+            };
+            document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
+            const picker = document.getElementById('labCalloutPicker');
+            if (picker) picker.value = item.id;
 
             document.getElementById('dossierCode').textContent = item.code;
             document.getElementById('dossierRef').textContent = item.ref;
@@ -361,7 +385,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                     </div>
                 `;
             }).join('');
-
+            renderBiomechViewport();
             renderBiomechIndexTable();
         }
 
