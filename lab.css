@@ -538,3 +538,158 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-figure-caption > span:first-child { flex: 1; min-width: 0; font-size: 11px; }
   .lab-mobile-pose-select:focus-visible { outline: 2px solid var(--clarisa-blue); outline-offset: 2px; }
 }
+
+
+/* Shooting Lab — clarity pass: one visual task, one explanation, one clear next action. */
+:root { scroll-padding-top: 110px; }
+.lab-desktop-purpose,.lab-intro-provenance,.lab-callout-label,.lab-callout-select,
+.lab-hardware-mobile-control,.lab-action-label { display:none; }
+.callout-node[hidden] { display:none!important; }
+.lab-section-nav a { position:relative; border-bottom:2px solid transparent; transition:background-color .15s ease,border-color .15s ease; }
+.lab-section-nav a.is-current,.lab-section-nav a[aria-current="location"] {
+  border-color:var(--imssu-orange);
+  background:var(--bg-subtle);
+  font-weight:800;
+}
+.lab-section-nav a:focus-visible {outline:2px solid var(--clarisa-blue)!important;outline-offset:1px}
+.lab-intro-provenance { display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin-top:.6rem }
+.lab-intro-provenance span,.lab-intro-provenance a {
+  display:inline-flex;align-items:center;min-height:30px;padding:.3rem .6rem;
+  border:1px solid var(--rule-light);font:650 11px/1.4 'Plus Jakarta Sans',sans-serif;
+  letter-spacing:.015em;color:var(--ink-700);
+}
+.lab-intro-provenance span:nth-child(2) { border-left:3px solid var(--imssu-orange); }
+.lab-intro-provenance a {text-decoration:underline;text-underline-offset:3px;color:var(--clarisa-blue)}
+.lab-desktop-purpose {display:block;font:400 15px/1.7 'Plus Jakarta Sans',sans-serif;color:var(--ink-700);max-width:68ch;margin:.6rem 0 0}
+.lab-diagram-context {
+  margin:.4rem 0 .9rem;max-width:70ch;color:var(--ink-700);
+  font:450 12px/1.65 'Plus Jakarta Sans',sans-serif;
+}
+.lab-action-label {
+  display:block;margin:0 0 .4rem;font:750 11px/1.3 'Plus Jakarta Sans',sans-serif;
+  letter-spacing:.06em;color:var(--ink-700);
+}
+.lab-trigger-curve-context { margin:.5rem 0; }
+.lab-trigger-panel { min-width:0; }
+.tech-sheet h3 { line-height:1.35; }
+#sec-biomech #dossierBody,#sec-hardware #hwSpecBody {font-size:14px;line-height:1.7}
+#sec-trigger .lab-trigger-action { margin-top:.5rem; }
+#sec-trigger .lab-trigger-action button {line-height:1.4;min-height:48px}
+#sec-trigger .lab-trigger-graph { min-width:0; }
+#sec-imssu .steel-target-btn:focus-visible {outline:2px solid var(--clarisa-blue)!important;outline-offset:3px}
+#sec-hardware #hwSpecNote {font:500 12px/1.65 'Plus Jakarta Sans',sans-serif;}
+.lab-hardware-scroll:focus-visible {outline:2px solid var(--clarisa-blue)!important;outline-offset:2px}
+@media(min-width:768px) {
+  .lab-local-nav + section.tech-border-b .max-w-\[1400px\] {padding-top:1.2rem;padding-bottom:1.2rem}
+  .lab-local-nav + section.tech-border-b .grid {display:block;}
+  .lab-local-nav + section.tech-border-b .lg\:col-span-8 {max-width:950px;}
+  .lab-main-heading {
+    display:block;position:static;clip:auto;overflow:visible;white-space:normal;
+    width:auto;height:auto;font:850 clamp(30px,3.1vw,42px)/1.13 'Plus Jakarta Sans',sans-serif;
+    letter-spacing:-.045em;margin:0
+  }
+  .lab-athlete-wordmarks,.lab-facts {display:none;}
+  .lab-mobile-byline {
+    display:block;margin-top:.45rem;font:650 12px/1.5 'Plus Jakarta Sans',sans-serif;
+    color:var(--ink-700)
+  }
+  .lab-hero-description {display:none;}
+  .lab-intro-provenance {display:flex;}
+  main#main-content {padding-top:1.4rem}
+  main#main-content.space-y-16 > :not(:last-child) {margin-bottom:2.9rem;}
+  main#main-content > section[id^="sec-"] {scroll-margin-top:112px}
+}
+@media(min-width:1200px) {
+  .lab-header-row {
+    display:grid!important;
+    grid-template-columns:minmax(200px,.95fr) minmax(445px,2.35fr) auto;
+    gap:.8rem;min-height:64px;padding:.45rem 0;align-items:center
+  }
+  .lab-brand {grid-column:1;flex:none!important;min-width:0;}
+  .lab-brand-text {max-width:100%}
+  .lab-desktop-brand-label {font-size:10px!important;letter-spacing:.01em!important}
+  .lab-brand-text p {font-size:10px}
+  .lab-section-nav {grid-column:2;order:0!important;width:100%!important;flex:none!important;overflow:visible;white-space:nowrap}
+  .lab-section-nav a {min-height:42px;flex:1 1 0!important;justify-content:center;padding:.4rem .25rem;font-size:11px}
+  .lab-settings {grid-column:3;justify-self:end;min-width:0;margin:0}
+  .lab-settings .lab-controls {margin:0;flex-wrap:nowrap;gap:.3rem}
+  .lab-settings .lab-controls button {min-height:42px;padding:.4rem .55rem;font-size:10px}
+  .lab-local-nav {padding-top:.45rem;padding-bottom:.45rem}
+}
+@media(min-width:768px) and (max-width:1199px) {
+  .lab-header-row {gap:.45rem 1rem}
+  .lab-brand {flex:1 1 230px}
+  .lab-settings {margin-left:auto}
+  .lab-section-nav {order:3;flex:1 0 100%;width:100%;display:flex;white-space:nowrap;overflow-x:auto}
+  .lab-section-nav a {flex:1 0 0;min-width:105px;min-height:42px;justify-content:center}
+}
+@media(max-width:767px) {
+  :root {scroll-padding-top:125px;}
+  .lab-intro-provenance {display:flex;gap:.4rem;margin-top:.5rem}
+  .lab-intro-provenance span,.lab-intro-provenance a {min-height:28px;padding:.25rem .45rem;font-size:10px;line-height:1.35}
+  .lab-desktop-purpose {display:none}
+  .lab-hero-description {display:none}
+  #main-content {padding-bottom:calc(116px + env(safe-area-inset-bottom))!important}
+  #main-content > section[id^="sec-"] {scroll-margin-top:126px}
+  main#main-content.space-y-16 > :not(:last-child){margin-bottom:1.3rem}
+  main section[id^="sec-"] h2 {font-size:24px;line-height:1.22}
+  .lab-section-hint {font-size:14px;line-height:1.6;margin-top:.45rem}
+  main .tech-sheet > div {padding:1rem}
+  .lab-diagram-context {font-size:12.5px;margin:.35rem 0 .6rem}
+  .lab-callout-label {
+    display:block;grid-column:1/-1;font:700 12px/1.4 'Plus Jakarta Sans',sans-serif;
+    color:var(--ink-700);margin-top:.3rem
+  }
+  .lab-callout-select {
+    display:block;grid-column:1/-1;width:100%;min-width:0;min-height:46px;
+    background:var(--bg-surface);color:var(--ink-900);border:1px solid var(--rule-heavy);
+    padding:.5rem .75rem;border-radius:0;font:650 13px/1.4 'Plus Jakarta Sans',sans-serif;
+  }
+  #sec-biomech .callout-node:not([aria-pressed="true"]){display:none!important}
+  #sec-biomech .callout-node[aria-pressed="true"]{
+    width:44px;height:44px;min-width:44px;min-height:44px;touch-action:manipulation;
+    font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.16);
+  }
+  #sec-biomech .lab-biomech-stage {height:clamp(330px,106vw,415px)}
+  #sec-biomech #dossierCode,#sec-hardware #hwSpecCode {font-size:11px;line-height:1.6}
+  .lab-trigger-panel {display:flex;flex-direction:column}
+  .lab-trigger-graph-heading {order:1}
+  .lab-trigger-graph {order:2}
+  .lab-trigger-curve-context {order:3}
+  .lab-trigger-action {order:0}
+  #sec-trigger .lab-trigger-action {margin-top:0;margin-bottom:.8rem}
+  #sec-trigger .lab-trigger-action button {min-height:52px}
+  #sec-trigger .lab-trigger-graph .grid.grid-cols-4.gap-1\.5 > div {font-size:11px;line-height:1.45}
+  #sec-trigger [class*="text-[10px]"],#sec-optics [class*="text-[10px]"],#sec-hardware [class*="text-[10px]"] {font-size:11px;line-height:1.5}
+  #sec-trigger #triggerOscCanvas {height:170px}
+  #sec-optics .lab-mobile-disclosure > summary {font-size:14px}
+  #sec-imssu .steel-target-btn {min-width:44px;min-height:48px;display:inline-flex;justify-content:center;align-items:center}
+  #sec-imssu #rackGroupScore {font-size:15px}
+  #sec-imssu .lab-rack-total {font-size:10px;opacity:.75}
+  #sec-imssu .lab-rack-total strong{white-space:nowrap}
+  #sec-imssu [data-rack-animal].is-current {max-width:100%}
+  .lab-hardware-mobile-control {display:grid;gap:.4rem;margin:.75rem 0 .6rem}
+  .lab-hardware-mobile-control label {font:700 12px/1.4 'Plus Jakarta Sans',sans-serif;color:var(--ink-700)}
+  .lab-hardware-mobile-control select {
+    background:var(--bg-surface);color:var(--ink-900);border:1px solid var(--rule-heavy);
+    min-height:46px;width:100%;padding:.55rem .75rem;border-radius:0;
+    font:650 13px/1.45 'Plus Jakarta Sans',sans-serif
+  }
+  .lab-hardware-scroll {position:relative}
+  .lab-hardware-scroll:after {content:"";display:block;height:2px;background:var(--rule-light)}
+  .lab-mobile-stepper {
+    position:fixed!important;left:0;right:0;bottom:0;z-index:46;
+    width:100%;max-width:none;padding:9px max(12px,env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-right));
+    margin:0;border:1px solid var(--rule-light);border-width:1px 0 0;
+    background:var(--bg-surface);box-shadow:0 -6px 20px rgba(0,0,0,.08);
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1.4fr);gap:.45rem
+  }
+  .lab-mobile-stepper button {min-height:44px;font-size:12px}
+  .lab-mobile-stepper #labModuleProgress {font-size:11px}
+  .lab-callout-select:focus-visible,.lab-hardware-mobile-control select:focus-visible {
+    outline:3px solid var(--imssu-orange)!important;outline-offset:2px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .lab-section-nav a,.lab-intro-provenance a,.callout-node {transition:none!important}
+}
