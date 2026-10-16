@@ -344,7 +344,7 @@ let sfxActive = false;
             showXraySkeleton = !showXraySkeleton;
             playMechTick(960);
             const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? '[X-RAY KERANGKA: AKTIF]' : '[X-RAY KERANGKA: NONAKTIF]';
+            btn.textContent = showXraySkeleton ? 'Kerangka: tampil' : 'Kerangka: sembunyi';
             btn.setAttribute('aria-pressed',String(showXraySkeleton));
             btn.className = showXraySkeleton
                 ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
