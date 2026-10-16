@@ -70,6 +70,54 @@ frame.addEventListener('load',()=>{
  if(!doc.getElementById('sec-biomech').classList.contains('is-active'))problems.push('initial module not active');
  if(doc.querySelector('.lab-notice-wrap').open)problems.push('notice should begin collapsed on mobile');
 
+
+ // Exercise every anatomy point across narrow and wide viewports, including
+ // genuine hit-testing of the button center and preservation of keyboard focus.
+ const anatomyPose={spine:'back',head:'front',rightShoulder:'front',leftArm:'front',
+   leftWrist:'sideLeft',rightHand:'sideLeft',elbowHip:'front',
+   pelvis:'sideRight',leftLeg:'front',rightLeg:'front'};
+ const allAnatomy=Array.from(anatomy?.options||[]);
+ if(allAnatomy.length!==10)problems.push('anatomy must expose exactly ten options');
+ else for(const width of [390,1024]) {
+   frame.style.width=width+'px';
+   for(const option of allAnatomy) {
+     w.selectBiomechCallout(option.value);
+     const pin=doc.querySelector('#biomechPinsOverlay [data-biomech-id="'+option.value+'"]');
+     if(!pin||pin.hidden) {problems.push('missing visible anatomy pin '+width+' '+option.value);continue;}
+     pin.scrollIntoView({block:'center'});
+     w.positionBiomechPins();
+     const rect=pin.getBoundingClientRect();
+     const hit=doc.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2);
+     if(hit!==pin && !pin.contains(hit))problems.push('anatomy pin obscured '+width+' '+option.value);
+     const previous=pin;
+     pin.focus();
+     pin.click();
+     if(doc.querySelector('#biomechPinsOverlay [data-biomech-id="'+option.value+'"]')!==previous)
+       problems.push('anatomy button remounted on click '+width+' '+option.value);
+     if(doc.activeElement!==pin)problems.push('anatomy keyboard focus lost '+width+' '+option.value);
+     if(pin.getAttribute('aria-pressed')!=='true')problems.push('anatomy pressed state '+width+' '+option.value);
+     if(anatomy.value!==option.value||doc.getElementById('labMobilePosePicker').value!==anatomyPose[option.value])
+       problems.push('anatomy pose or picker mismatch '+width+' '+option.value);
+     if(!doc.getElementById('dossierCode').textContent.includes('#'+option.textContent.slice(0,2)))
+       problems.push('anatomy dossier does not match pin '+width+' '+option.value);
+     const viewSvg=doc.getElementById('biomechDraftSvg');
+     const p=viewSvg.createSVGPoint();p.x=Number(pin.dataset.svgX);p.y=Number(pin.dataset.svgY);
+     const mapped=p.matrixTransform(viewSvg.getScreenCTM());
+     const box=pin.getBoundingClientRect();
+     if(Math.hypot(mapped.x-(box.left+box.width/2),mapped.y-(box.top+box.height/2))>3)
+       problems.push('anatomy position misaligned '+width+' '+option.value);
+   }
+   w.switchPose('front');
+   const visible=doc.querySelectorAll('#biomechPinsOverlay .callout-node:not([hidden])');
+   if(visible.length!==6)problems.push('front anatomy view should expose six pins '+width);
+   if(width===390){
+     const computed=w.getComputedStyle(visible[0]);
+     if(computed.display==='none')problems.push('mobile hides non-selected anatomy pins');
+   }
+ }
+ frame.style.width='390px';
+ w.selectBiomechCallout('head');
+
  const svg=doc.getElementById('biomechDraftSvg');
  const selected=doc.querySelector('#biomechPinsOverlay .callout-node[aria-pressed="true"]');
  w.positionBiomechPins();
