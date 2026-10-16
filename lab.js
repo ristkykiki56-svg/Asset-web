@@ -433,6 +433,11 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 const btn = document.getElementById(`btnVec-${v}`);
                 const path = document.getElementById(`svgVec${v}`);
                 btn.setAttribute('aria-pressed', String(v === vec));
+                const marker = document.querySelector('#triggerVectorDiagram [data-trigger-vector="' + v + '"]');
+                if (marker) {
+                    marker.setAttribute('aria-pressed', String(v === vec));
+                    marker.classList.toggle('is-selected', v === vec);
+                }
                 if (v === vec) {
                     btn.className = v === 'B'
                         ? 'py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition'
@@ -1083,7 +1088,9 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const componentSelect = document.getElementById('labHardwarePicker');
             if (componentSelect) componentSelect.value = key;
             document.querySelectorAll('#hardwareBlueprintSvg [data-hw-key]').forEach(node => {
-                node.classList.toggle('is-highlighted', node.getAttribute('data-hw-key') === key);
+                const selected = node.getAttribute('data-hw-key') === key;
+                node.classList.toggle('is-highlighted', selected);
+                if (node.classList.contains('hw-marker')) node.setAttribute('aria-pressed', String(selected));
             });
             document.querySelectorAll('#sec-hardware button[onclick^="inspectHardware("]').forEach(button => {
                 const selected = button.getAttribute('onclick') === `inspectHardware('${key}')`;
