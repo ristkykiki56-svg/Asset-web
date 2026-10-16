@@ -557,28 +557,37 @@
                             <span>POTONGAN SAMPING: MATA &rarr; LENSA OKULER &amp; CHEEKPIECE</span>
                             <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
                         </div>
-                        <svg viewBox="0 0 380 95" class="w-full h-20">
-                            <!-- Scope Tube & Ocular Bell (Left) -->
-                            <rect x="18" y="26" width="110" height="18" fill="#1E293B"/>
-                            <polygon points="128,22 158,18 158,52 128,48" fill="#0F172A"/>
-                            <!-- Optical Axis Centerline -->
-                            <line x1="10" y1="35" x2="365" y2="35" stroke="#0055B8" stroke-width="1.5" stroke-dasharray="4 3"/>
-
-                            <!-- Adjustable Wooden Cheekpiece Block -->
-                            <g id="svgSideCheekpiece" transform="translate(0, 0)">
-                                <path d="M210 56 L310 56 L300 78 L220 78 Z" fill="#B37B24" stroke="#111315" stroke-width="1.5"/>
-                                <text x="260" y="70" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="8" font-weight="bold">CHEEKPIECE</text>
-                            </g>
-
-                            <!-- Shooter Head & Eye Profile (Moves with Eye Relief & Cheek Height Sliders) -->
-                            <g id="svgShooterHeadSide" transform="translate(0, 0)">
-                                <!-- Head Silhouette -->
-                                <path d="M235 12 C218 12, 212 28, 215 44 C218 55, 232 60, 265 60 L285 60 L285 12 Z" fill="var(--bg-subtle)" stroke="var(--ink-900)" stroke-width="1.8"/>
-                                <!-- Eye Ball & Line of Sight -->
-                                <circle cx="222" cy="35" r="5" fill="#111315"/>
-                                <circle cx="220" cy="35" r="2" fill="#0055B8"/>
-                            </g>
-                        </svg>
+                        <svg id="opticalAlignmentIllustration" viewBox="0 0 380 114" class="w-full h-28" role="img" aria-labelledby="optSideTitle optSideDesc">
+<title id="optSideTitle">Perbandingan posisi ilustratif mata dan lensa</title><desc id="optSideDesc">Profil mata dan bagian luar okuler ditampilkan sebagai skema yang berubah dengan slider, bukan ukuran perangkat sesungguhnya.</desc>
+<defs>
+<linearGradient id="optSideMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8D9A9E"/><stop offset=".34" stop-color="#4A5861"/><stop offset="1" stop-color="#182831"/></linearGradient>
+<linearGradient id="optSideSkin" x1="0" y1="0" x2="1" y2=".7"><stop offset="0" stop-color="#E6C3A9"/><stop offset=".72" stop-color="#C79783"/><stop offset="1" stop-color="#A97B68"/></linearGradient>
+<linearGradient id="optSideWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C19A72"/><stop offset="1" stop-color="#775645"/></linearGradient>
+</defs>
+<path d="M8 83H370" stroke="#CBD0CD" stroke-width="1" stroke-dasharray="3 5"/>
+<path d="M8 41H369" stroke="#60858D" stroke-width="1.3" stroke-dasharray="5 4" opacity=".9"/>
+<g aria-hidden="true">
+ <rect x="16" y="32" width="119" height="18" rx="4" fill="url(#optSideMetal)" stroke="#283940" stroke-width="1.2"/>
+ <path d="M23 36H128" stroke="#C5D2D2" stroke-width="2" opacity=".45"/>
+ <path d="M133 28L153 25Q164 28 166 35V48Q162 55 153 55L133 52Z" fill="url(#optSideMetal)" stroke="#25323B" stroke-width="1.4"/>
+ <ellipse cx="164" cy="40" rx="4" ry="14" fill="#192A37" stroke="#667C80" stroke-width="1.4"/>
+</g>
+<g id="svgSideCheekpiece" transform="translate(0, 0)">
+ <path d="M214 82Q230 75 255 75H317Q321 75 320 81L313 99H224Z" fill="url(#optSideWood)" stroke="#67594C" stroke-width="1.7"/>
+ <path d="M225 83Q250 80 308 81" fill="none" stroke="#E2BE98" stroke-width="1.7" opacity=".6"/>
+ <path d="M234 100V108M300 100V108" stroke="#5C6566" stroke-width="3"/>
+</g>
+<g id="svgShooterHeadSide" transform="translate(0, 0)">
+ <path d="M242 12Q262 6 291 14Q313 24 319 48Q323 62 307 74Q296 82 276 81L251 80Q239 70 226 65Q213 61 211 53Q211 45 219 41L223 27Q227 16 242 12Z" fill="url(#optSideSkin)" stroke="#88665C" stroke-width="1.7"/>
+ <path d="M236 13Q266 0 297 20Q312 31 316 44Q287 34 265 32Q248 35 232 31Z" fill="#384044" stroke="#1D2629" stroke-width="1.4"/>
+ <path d="M219 47Q226 40 238 43" fill="none" stroke="#6B4D47" stroke-width="2"/>
+ <ellipse cx="224" cy="44" rx="4.3" ry="3.3" fill="#F2F3EE" stroke="#5D5756" stroke-width="1"/>
+ <circle cx="223" cy="44" r="2.2" fill="#283C43"/>
+ <path d="M214 55L222 57L231 54" fill="none" stroke="#9B6A5D" stroke-width="1.5"/>
+ <path d="M247 79L251 85H304L307 75" fill="#53616B" stroke="#45515A" stroke-width="2"/>
+</g>
+<text x="14" y="14" font-family="IBM Plex Mono" fill="#5A6665" font-size="8.6" letter-spacing=".5">OPTICAL STUDY / EXTERIOR VIEW</text>
+</svg>
                     </div>
                 </div>
 
