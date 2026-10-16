@@ -875,3 +875,16 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  #sec-imssu .silhouette-study {transition:none!important}
  #sec-biomech .biomech-editorial-figure {filter:none}
 }
+
+/* Screenshot QA: avoid unreadable diagram pseudo-metrics at small sizes. */
+#sec-biomech #biomechDraftSvg .biomech-ruler {opacity:.4}
+#sec-biomech #biomechDraftSvg .biomech-ruler text {display:none}
+#sec-biomech #biomechDraftSvg .biomech-ground text {display:none}
+#sec-biomech #biomechDraftSvg .biomech-ground rect {opacity:0}
+#sec-optics #opticalAlignmentIllustration #svgShooterHeadSide {filter:drop-shadow(0 1px 1px rgba(49,59,60,.1))}
+@media(max-width:767px){
+ #sec-biomech #biomechDraftSvg .biomech-ruler {display:none}
+ #sec-biomech #biomechDraftSvg .biomech-ground line {stroke:#8F9C98}
+ #sec-biomech #svgActiveLeaderLine rect {opacity:.9}
+ #sec-optics #opticalAlignmentIllustration {height:112px}
+}
