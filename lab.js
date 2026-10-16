@@ -203,6 +203,24 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
     </g>`;
 }
 
+        // Convert SVG units to container pixels, preserving correct alignment
+        // across aspect ratios and CSS viewport scaling.
+        function positionBiomechPins() {
+            const svg = document.getElementById('biomechDraftSvg');
+            const overlay = document.getElementById('biomechPinsOverlay');
+            const matrix = svg?.getScreenCTM?.();
+            if (!svg || !overlay || !matrix) return;
+            const bounds = overlay.getBoundingClientRect();
+            overlay.querySelectorAll('.callout-node').forEach(button => {
+                const point = svg.createSVGPoint();
+                point.x = Number(button.dataset.svgX);
+                point.y = Number(button.dataset.svgY);
+                const pixel = point.matrixTransform(matrix);
+                button.style.left = `${pixel.x - bounds.left}px`;
+                button.style.top = `${pixel.y - bounds.top}px`;
+            });
+        }
+
         function renderBiomechViewport() {
             const athleteLayer = document.getElementById('svgAthleteLayer');
             const arrowsLayer = document.getElementById('svgSpinalArrowsLayer');
@@ -231,7 +249,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                         <!-- Pelvic Iliac Crest Bar -->
                         <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(63, 157, 160, 0.08)"/>
                         <!-- Elbow-to-Hip Bone Lock Node -->
-                        <circle cx="${238 + pelvisShift}" cy="230" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
+                        <circle cx="${238 + pelvisShift}" cy="${230 + elbowShift}" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
                         <!-- Left & Right Femur Load Vectors -->
                         <line x1="${190 + pelvisShift}" y1="278" x2="177" y2="465"/>
                         <line x1="${238 + pelvisShift}" y1="278" x2="284" y2="465" stroke-opacity="0.5" stroke-dasharray="4 4"/>
@@ -265,14 +283,15 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                         : 'bg-[var(--ink-900)] text-[var(--bg-surface)] border-[var(--bg-surface)] z-10'
                 }`;
                 btn.hidden = pt.pose !== currentPose;
-                btn.style.left = `${pt.x}%`;
-                btn.style.top = `${pt.y}%`;
+                btn.dataset.svgX = String(pt.x * 4.6);
+                btn.dataset.svgY = String(pt.y * 5.4);
                 btn.textContent = pt.num;
                 btn.setAttribute('aria-label', `Titik ${pt.num}: ${pt.title}`);
                 btn.setAttribute('aria-pressed', String(isSelected));
                 btn.onclick = () => selectBiomechCallout(pt.id);
                 pinsContainer.appendChild(btn);
             });
+            positionBiomechPins();
         }
 
         function switchPose(poseKey) {
@@ -516,7 +535,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             ctx.fillStyle = '#94A3B8';
             ctx.font = 'bold 10px IBM Plex Mono';
             ctx.fillText('PROGRES (MODEL)', padL + 6, padT + 10);
-            ctx.fillText('WAKTU (ms) \u2192', padL + pw - 82, padT + ph + 22);
+            ctx.fillText('URUTAN MODEL →', padL + pw - 103, padT + ph + 22);
 
             // Reference Curve
             ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
@@ -1181,6 +1200,7 @@ function setupLabMobileExperience() {
             next.textContent = index < ids.length - 1 ? 'Berikutnya: ' + labels[index + 1] + ' →' : 'Selesai';
         }
         if (progress) progress.textContent = (index + 1) + ' dari ' + ids.length;
+        if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
         if (scroll && media.matches) {
             window.requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({block:'start', behavior:'auto'}));
         }
@@ -1209,6 +1229,11 @@ function setupLabMobileExperience() {
         if (settings) settings.open = !media.matches;
         showModule(active, false);
     };
+    const postureStage = document.querySelector('.lab-biomech-stage');
+    if (postureStage && typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(() => window.requestAnimationFrame(positionBiomechPins)).observe(postureStage);
+    }
+    window.addEventListener('resize', () => window.requestAnimationFrame(positionBiomechPins));
     const posePicker = document.getElementById('labMobilePosePicker');
     posePicker?.addEventListener('change', () => switchPose(posePicker.value));
     picker.addEventListener('change', () => navigate(picker.value));
