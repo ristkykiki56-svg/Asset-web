@@ -36,7 +36,7 @@ test('nine sliders and thirteen unique SVG keyboard controls remain accessible',
 });
 test('pointer cancellation, keyboard input, pose sync, and RAF throttling are implemented',()=>{
  for(const key of ['pointerdown','pointerup','pointercancel','lostpointercapture','keydown','keyup'])assert.ok(js.includes(key),key);
- assert.match(js,/if \(!chosen \|\| chosen\.pose !== poseKey\)/);
+ assert.match(js,/const chosen = POSTER_BIOMECH_DATA\.find\(p => p\.id === activeBiomechId && p\.pose === poseKey\)/);
  assert.match(js,/setupOcularVisibility/);
  assert.match(js,/const reducedMotion = window\.matchMedia/);
  assert.match(js,/cancelAnimationFrame\(ballisticReq\)/);
@@ -126,7 +126,7 @@ test('guided anatomy selection and equipment inspection preserve accessible clic
  assert.match(js,/anatomySelect\.addEventListener\('change'/);
  assert.match(js,/hardwareSelect\?\.addEventListener\('change'/);
  assert.match(js,/btn\.hidden = pt\.pose !== currentPose/);
- assert.match(js,/calloutPicker\.value = item\.id/);
+ assert.match(js,/if \(picker\) picker\.value = item\.id/);
  assert.match(js,/node\.classList\.toggle\('is-highlighted'/);
  assert.match(css,/\.callout-node\[hidden\]/);
  assert.match(css,/\.callout-node\[aria-pressed="true"\]/);
@@ -217,4 +217,18 @@ test('interactive diagram markers expose a single keyboard path and truthful pre
  assert.equal((html.match(/data-trigger-vector="[ABC]" aria-pressed=/g)||[]).length,3);
  assert.match(js,/marker\.setAttribute\('aria-pressed', String\(v === vec\)\)/);
  assert.match(js,/if \(node\.classList\.contains\('hw-marker'\)\) node\.setAttribute\('aria-pressed', String\(selected\)\)/);
+});
+
+
+test('anatomy selection keeps ten stable click controls and viewpoint-aware anchor coordinates',()=>{
+ assert.match(js,/function biomechAnchor\(point, arch, hipLock\)/);
+ assert.match(js,/const anchors = \{/);
+ assert.match(js,/btn\.dataset\.biomechId = pt\.id/);
+ assert.match(js,/pinsContainer\.querySelector\('\[data-biomech-id=/);
+ assert.match(js,/btn\.addEventListener\('click', \(\) => selectBiomechCallout\(pt\.id\)\)/);
+ assert.doesNotMatch(js,/pinsContainer\.innerHTML = ''/);
+ assert.match(js,/currentPose = item\.pose/);
+ assert.match(js,/leaderLayer\.replaceChildren\(\)/);
+ assert.match(css,/#sec-biomech \.callout-node:not\(\[hidden\]\)\{display:flex!important/);
+ assert.doesNotMatch(css,/\.callout-node:not\(\[aria-pressed="true"\]\)\{display:none/);
 });
