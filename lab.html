@@ -270,7 +270,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>LENGKUNGAN PUNGGUNG (ARCH):</span>
+                                    <span>LENGKUNGAN FIGUR (MODEL):</span>
                                     <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0° (MODEL)</strong>
                                 </div>
                                 <input id="archSlider" type="range" min="-4" max="22" step="1" value="12" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Lengkungan punggung model, derajat">
@@ -278,10 +278,10 @@
 
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>KUNCI SIKU KIRI DI PINGGUL:</span>
+                                    <span>POSISI SIKU RELATIF KE PINGGUL (MODEL):</span>
                                     <strong id="hipLockReadout" class="text-[var(--ok-green)]">100 / 100 (MODEL)</strong>
                                 </div>
-                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Indeks ilustrasi tumpuan siku kiri, bukan persentase beban tubuh">
+                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Variasi posisi siku kiri pada model visual, bukan pengukuran atau nilai ideal">
                             </div>
                         </div>
 </details>
@@ -467,7 +467,7 @@
                 <!-- Right 6 Cols: Live Oscilloscope "KURVA TARIKAN PEMICU IDEAL" -->
                 <div class="lab-trigger-panel lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-4">
                     <div class="lab-trigger-graph-heading flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                        <span class="font-bold">FIG 2.2 — OSILOSKOP KURVA KONSEPTUAL (GAYA vs WAKTU)</span>
+                        <span class="font-bold">FIG 2.2 — KURVA TAHAPAN ILUSTRATIF (BUKAN GAYA/WAKTU UKUR)</span>
                         <span id="oscPhaseLabel" class="px-2 py-0.5 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold">FASE: SIAGA</span>
                     </div>
 
