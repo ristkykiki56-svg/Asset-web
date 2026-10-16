@@ -896,3 +896,12 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  #sec-biomech > .grid.tech-sheet > div:nth-child(2) {gap:1.2rem!important}
  #sec-optics > .grid.tech-sheet > div:nth-child(2) {gap:1.2rem!important}
 }
+
+
+/* Keep illustrative slider labels and live values legible at narrow desktop widths. */
+#sec-biomech .lab-parameter-heading {
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:.32rem;line-height:1.5;
+}
+#sec-biomech .lab-parameter-heading > span {font-size:11px;max-width:100%;overflow-wrap:break-word}
+#sec-biomech .lab-parameter-heading > strong {font-size:12px;line-height:1.5}
