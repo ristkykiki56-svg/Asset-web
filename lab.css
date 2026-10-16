@@ -713,3 +713,24 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-sources-wrap > section {margin-top:.65rem}
   #sec-biomech .lab-diagram-context {margin-top:.5rem}
 }
+
+/* Selected illustration parts are identifiable without relying only on color. */
+#hardwareBlueprintSvg [data-hw-key] {transition:filter .14s ease,opacity .14s ease}
+#hardwareBlueprintSvg [data-hw-key].is-highlighted {filter:drop-shadow(0 0 4px var(--imssu-orange));}
+#sec-hardware button[aria-pressed="true"] {
+  border-left:3px solid var(--imssu-orange)!important;
+  background:var(--bg-subtle)!important;font-weight:800;
+}
+#sec-trigger button[aria-pressed="true"] {outline-offset:1px}
+#sec-biomech #dossierTitle,#sec-hardware #hwSpecTitle {text-wrap:pretty}
+#sec-biomech select,#sec-hardware select {color-scheme:light}
+html.cad-dark #sec-biomech select,html.cad-dark #sec-hardware select {color-scheme:dark}
+@media(max-width:767px) {
+  #sec-hardware #hwSpecTitle {font-size:18px}
+  #sec-hardware #hwSpecBody {font-size:14px}
+  #sec-hardware .lab-mobile-scroll-hint {font-size:12px}
+  #sec-trigger .lab-action-label {font-size:11px}
+}
+@media(prefers-reduced-motion:reduce) {
+ #hardwareBlueprintSvg [data-hw-key] {transition:none!important}
+}
