@@ -28,6 +28,23 @@ frame.addEventListener('load',()=>{
    }
  }
  frame.style.width='390px';
+ if(w.getComputedStyle(doc.querySelector('.lab-mobile-stepper')).position!=='fixed')problems.push('mobile lesson dock is not persistent');
+ const anatomy=doc.getElementById('labCalloutPicker');
+ if(!anatomy || anatomy.options.length!==10)problems.push('anatomy selector missing ten items');
+ else {
+   anatomy.value='head';
+   anatomy.dispatchEvent(new Event('change',{bubbles:true}));
+   if(!doc.getElementById('dossierTitle').textContent.includes('Kepala'))problems.push('anatomy description not changed');
+   if(!doc.getElementById('stagePoseTitle').textContent.includes('DEPAN'))problems.push('anatomy viewpoint not synchronized');
+ }
+ const hardware=doc.getElementById('labHardwarePicker');
+ if(!hardware || hardware.options.length!==10)problems.push('equipment picker missing ten components');
+ else {
+   hardware.value='ocular';hardware.dispatchEvent(new Event('change',{bubbles:true}));
+   if(!doc.getElementById('hwSpecTitle').textContent.includes('Okuler'))problems.push('equipment explanation not updated');
+   if(!doc.querySelector('[data-hw-key="ocular"].is-highlighted'))problems.push('equipment part not highlighted');
+ }
+
  const picker=doc.getElementById('labMobileModuleSelect');
  if(!picker || picker.options.length!==5) problems.push('mobile picker missing options');
  if(!doc.documentElement.classList.contains('lab-mobile-focused'))problems.push('mobile focus mode missing');
@@ -54,7 +71,24 @@ frame.addEventListener('load',()=>{
  first.click();
  if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');
  if(!doc.getElementById('rackHitScore').textContent.includes('01'))problems.push('target count feedback');
+ if(doc.getElementById('rackGroupScore').textContent.trim()!=='1 / 5')problems.push('active group count mismatch');
+ w.selectRangeAnimal('ram');
+ if(doc.getElementById('rackGroupScore').textContent.trim()!=='0 / 5')problems.push('new group count should be zero');
+ w.selectRangeAnimal('chicken');
+ w.resetSilhouetteRack();
+ if(doc.getElementById('rackGroupScore').textContent.trim()!=='0 / 5')problems.push('reset group count not zero');
  if(!doc.querySelector('[data-rack-animal="chicken"]').classList.contains('is-current'))problems.push('active target group mismatch');
+ w.selectFingerVector('A');
+ if(doc.getElementById('btnVec-A').getAttribute('aria-pressed')!=='true'||doc.getElementById('btnVec-B').getAttribute('aria-pressed')!=='false')problems.push('vector selection status incorrect');
+ w.selectFingerVector('B');
+ const eye=doc.getElementById('optEyeDist');
+ eye.value='120';eye.dispatchEvent(new Event('input',{bubbles:true}));
+ if(!doc.getElementById('opticsLockBadge').textContent.includes('BAYANGAN'))problems.push('optical explanation not updated');
+ w.calibratePerfectOptics();
+ if(!doc.getElementById('opticsLockBadge').textContent.includes('LINGKARAN'))problems.push('optical reset did not restore example');
+ w.location.hash='#sec-trigger';
+ w.dispatchEvent(new HashChangeEvent('hashchange'));
+ if(!doc.getElementById('sec-trigger').classList.contains('is-active'))problems.push('direct #sec-trigger navigation broken');
  doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true}));
  if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='true') problems.push('keyboard trigger down');
  doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keyup',{key:' ',bubbles:true}));
