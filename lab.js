@@ -1175,14 +1175,15 @@ function setupLabMobileExperience() {
         } else if (hash === 'lab-sources') {
             const sourcePanel = document.querySelector('.lab-sources-wrap');
             if (sourcePanel) sourcePanel.open = true;
-            if (media.matches) {
-                window.requestAnimationFrame(() => document.getElementById('lab-sources')?.scrollIntoView({block:'start'}));
-            }
+            window.requestAnimationFrame(() => document.getElementById('lab-sources')?.scrollIntoView({block:'start'}));
         }
     };
     const syncBreakpoint = () => {
         document.documentElement.classList.toggle('lab-mobile-focused', media.matches);
-        for (const panel of disclosures) panel.open = !media.matches;
+        for (const panel of disclosures) {
+            const compactReference = panel.matches('.lab-notice-wrap,.lab-sources-wrap,.lab-facts');
+            panel.open = !media.matches && !compactReference;
+        }
         if (settings) settings.open = !media.matches;
         showModule(active, false);
     };
