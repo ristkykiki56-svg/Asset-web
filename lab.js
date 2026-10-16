@@ -155,12 +155,13 @@ let sfxActive = false;
         let activeBiomechId = 'spine';
         let showXraySkeleton = true;
 
-function buildEditorialPostureIllustration(pose, arch) {
+function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
     // Generic sports-kit figure, deliberately NOT a replica or biomechanical measurement.
     const side = pose === "sideLeft" || pose === "sideRight";
     const blue = pose === "front" || pose === "back";
     const u = -arch * 1.1;
     const p = arch * .65;
+    const armShift = Math.round((100 - hipLock) * .4); // visual-only, not biomechanics
     const kit = blue ? "url(#biomechBlueKit)" : "url(#biomechRedKit)";
     const skin = "url(#biomechSkin)";
     const torsoX = side ? 177 : 170;
@@ -180,9 +181,9 @@ function buildEditorialPostureIllustration(pose, arch) {
          <path d="M180 134Q212 122 258 134" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3"/>
          <path d="M187 165L190 261M252 158L257 261" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3"/>`;
     const arms = side
-      ? `<path d="M246 141Q267 175 242 219Q265 212 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+      ? `<path d="M246 141Q267 175 242 ${219 + armShift}Q265 ${212 + armShift} 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
          <path d="M250 142Q267 169 253 188" fill="none" stroke="${kit}" stroke-width="24" stroke-linecap="round"/>`
-      : `<path d="M170 143Q147 183 163 224M269 143Q286 172 269 229" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
+      : `<path d="M170 143Q147 183 163 ${224 + armShift}M269 143Q286 172 269 ${229 + armShift}" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
          <path d="M168 143L157 167M269 143L277 166" stroke="${kit}" stroke-width="25" stroke-linecap="round"/>`;
     const equipment = side
       ? `<g opacity=".82"><path d="M${direction===1?233:50} 119H${direction===1?392:200}" stroke="#4C6167" stroke-width="7" stroke-linecap="round"/><path d="M${direction===1?254:70} 105H${direction===1?363:173}" stroke="#202D34" stroke-width="9" stroke-linecap="round"/></g>`
@@ -213,11 +214,12 @@ function buildEditorialPostureIllustration(pose, arch) {
 
             const upperShift = -arch * 1.1;
             const pelvisShift = arch * 0.65;
+            const elbowShift = Math.round((100 - hipLock) * .4);
 
             let figSvg = '';
             let arrowsSvg = '';
 
-            figSvg = buildEditorialPostureIllustration(currentPose, arch);
+            figSvg = buildEditorialPostureIllustration(currentPose, arch, hipLock);
             arrowsSvg = '';
 
             // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
