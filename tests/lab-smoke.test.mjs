@@ -98,7 +98,7 @@ test('mobile disclosure markup preserves balanced major HTML containers',()=>{
 test('desktop and mobile field guide preserve clear navigation and all five experiments',()=>{
  assert.match(html,/data-lab-desktop-nav/);
  assert.match(html,/class="lab-intro-provenance"/);
- assert.match(html,/href="#lab-sources">Periksa sumber/);
+ assert.match(html,/href="#lab-sources">Sumber/);
  assert.match(css,/min-width:1200px/);
  assert.match(css,/\.lab-section-nav a\.is-current/);
  assert.match(css,/\.lab-mobile-stepper/);
@@ -113,8 +113,8 @@ test('educational model avoids unsupported ideal-settings and explains recorded 
  assert.doesNotMatch(html,/85 mm \(IDEAL\)/);
  assert.match(html,/INDEKS GERAKAN MODEL:/);
  assert.match(html,/bukan rekaman gaya, waktu, atau performa atlet/);
- assert.match(html,/ATURAN: IMSSU 2025/);
- assert.match(html,/ILUSTRASI: BUKAN DATA TERUKUR/);
+ assert.match(html,/ATURAN · IMSSU 2025/);
+ assert.match(html,/MODEL · BUKAN DATA UKUR/);
  assert.doesNotMatch(js,/KESALAHAN VEKTOR [AC]/);
  assert.doesNotMatch(js,/LUBANG #2 — OPTIMAL/);
 });
