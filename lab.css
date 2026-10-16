@@ -734,3 +734,19 @@ html.cad-dark #sec-biomech select,html.cad-dark #sec-hardware select {color-sche
 @media(prefers-reduced-motion:reduce) {
  #hardwareBlueprintSvg [data-hw-key] {transition:none!important}
 }
+
+/* Final screenshot-driven spacing: keep the drawing within the first mobile screen. */
+.lab-notice-wrap > summary span[aria-hidden="true"] {display:none}
+@media(max-width:767px) {
+  .lab-intro-provenance {gap:.3rem .35rem}
+  .lab-intro-provenance span,.lab-intro-provenance a {font-size:10px;letter-spacing:0;padding:.25rem .4rem}
+  .lab-pose-controls {row-gap:.35rem}
+  .lab-mobile-pose-label {grid-column:1/-1;grid-row:1}
+  .lab-mobile-pose-select {grid-column:1;grid-row:2}
+  #xrayToggleBtn {
+    grid-column:2;grid-row:2;min-height:44px;
+    align-self:stretch;white-space:nowrap;padding:.45rem .6rem;font-size:11px;letter-spacing:0
+  }
+  .lab-callout-label {grid-column:1/-1;grid-row:3;margin-top:.35rem}
+  .lab-callout-select {grid-column:1/-1;grid-row:4}
+}
