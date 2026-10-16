@@ -43,6 +43,14 @@ frame.addEventListener('load',()=>{
    hardware.value='ocular';hardware.dispatchEvent(new Event('change',{bubbles:true}));
    if(!doc.getElementById('hwSpecTitle').textContent.includes('Okuler'))problems.push('equipment explanation not updated');
    if(!doc.querySelector('[data-hw-key="ocular"].is-highlighted'))problems.push('equipment part not highlighted');
+ const marker=doc.querySelector('#hardwareBlueprintSvg .hw-marker[data-hw-key="ocular"]');
+ if(marker?.getAttribute('aria-pressed')!=='true')problems.push('selected SVG hardware marker aria-pressed missing');
+ if(doc.querySelectorAll('#hardwareBlueprintSvg .hw-region[tabindex]').length)problems.push('duplicate keyboard stops for hardware regions');
+ const stockMarker=doc.querySelector('#hardwareBlueprintSvg .hw-marker[data-hw-key="stock"]');
+ stockMarker?.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+ if(stockMarker?.getAttribute('aria-pressed')!=='true'||marker?.getAttribute('aria-pressed')!=='false')problems.push('SVG hardware keyboard selection not synchronized');
+ hardware.value='ocular';hardware.dispatchEvent(new Event('change',{bubbles:true}));
+
  if(doc.querySelectorAll('#hardwareBlueprintSvg .hw-marker').length!==10) problems.push('equipment numbered hotspots not 10');
  if(doc.querySelectorAll('#hardwareBlueprintSvg .hw-region').length!==5) problems.push('equipment interactive exterior groups not 5');
  if(doc.getElementById('blueprintActiveLabel').textContent!=='DIPILIH: Lensa okuler')problems.push('equipment selected header not synchronized');
@@ -115,6 +123,10 @@ frame.addEventListener('load',()=>{
  w.resetSilhouetteRack();
  if(doc.getElementById('rackGroupScore').textContent.trim()!=='0 / 5')problems.push('reset group count not zero');
  if(!doc.querySelector('[data-rack-animal="chicken"]').classList.contains('is-current'))problems.push('active target group mismatch');
+
+ const triggerSvg=doc.querySelector('#triggerVectorDiagram [data-trigger-vector="C"]');
+ triggerSvg?.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
+ if(triggerSvg?.getAttribute('aria-pressed')!=='true'||doc.getElementById('btnVec-C').getAttribute('aria-pressed')!=='true')problems.push('SVG trigger vector keyboard state not synchronized');
  w.selectFingerVector('A');
  if(doc.getElementById('btnVec-A').getAttribute('aria-pressed')!=='true'||doc.getElementById('btnVec-B').getAttribute('aria-pressed')!=='false')problems.push('vector selection status incorrect');
  w.selectFingerVector('B');
