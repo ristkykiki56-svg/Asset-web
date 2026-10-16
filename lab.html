@@ -217,7 +217,7 @@
                             </defs>
 
                             <!-- Illustrative grid, not a millimeter scale -->
-                            <g stroke="var(--rule-light)" stroke-width="1" class="font-mono-tech" font-size="8" fill="var(--ink-500)">
+                            <g class="biomech-ruler" stroke="var(--rule-light)" stroke-width="1" font-size="8" fill="var(--ink-500)">
                                 <line x1="18" y1="20" x2="18" y2="500"/>
                                 <line x1="14" y1="60" x2="22" y2="60"/><text x="25" y="63">SKEMA</text>
                                 <line x1="14" y1="160" x2="22" y2="160"/><text x="25" y="163">—</text>
@@ -234,7 +234,7 @@
                             </g>
 
                             <!-- Ground Force Plate & 90° Target Line Protractor -->
-                            <g transform="translate(0, 475)">
+                            <g class="biomech-ground" transform="translate(0, 475)">
                                 <line x1="45" y1="20" x2="425" y2="20" stroke="var(--ink-900)" stroke-width="1.5"/>
                                 <text x="52" y="13" fill="var(--ink-700)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">&larr; ARAH SASARAN (SUDUT BERDIRI 90&deg;)</text>
                                 <!-- Left Foot Force Plate -->
@@ -395,7 +395,7 @@
 </g>
 </svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>DEVIASI MONCONG:</span>
+                                <span>POLA GARIS MODEL:</span>
                                 <strong id="vecDeviationReadout" class="text-[var(--ok-green)]">0.0 mm (NOL)</strong>
                             </div>
                         </div>
@@ -578,13 +578,13 @@
  <path d="M234 100V108M300 100V108" stroke="#5C6566" stroke-width="3"/>
 </g>
 <g id="svgShooterHeadSide" transform="translate(0, 0)">
- <path d="M242 12Q262 6 291 14Q313 24 319 48Q323 62 307 74Q296 82 276 81L251 80Q239 70 226 65Q213 61 211 53Q211 45 219 41L223 27Q227 16 242 12Z" fill="url(#optSideSkin)" stroke="#88665C" stroke-width="1.7"/>
- <path d="M236 13Q266 0 297 20Q312 31 316 44Q287 34 265 32Q248 35 232 31Z" fill="#384044" stroke="#1D2629" stroke-width="1.4"/>
+ <path d="M246 13Q274 7 292 21Q305 33 305 50Q305 66 294 71L290 82L297 101H265L260 79Q238 75 228 64L218 60Q214 57 219 54L228 48Q222 36 231 24Q236 17 246 13Z" fill="url(#optSideSkin)" stroke="#88665C" stroke-width="1.7"/>
+ <path d="M243 13Q269 1 292 19Q301 28 306 43Q281 30 262 28Q244 28 229 35Q231 21 243 13Z" fill="#384044" stroke="#1D2629" stroke-width="1.4"/>
  <path d="M219 47Q226 40 238 43" fill="none" stroke="#6B4D47" stroke-width="2"/>
  <ellipse cx="224" cy="44" rx="4.3" ry="3.3" fill="#F2F3EE" stroke="#5D5756" stroke-width="1"/>
  <circle cx="223" cy="44" r="2.2" fill="#283C43"/>
  <path d="M214 55L222 57L231 54" fill="none" stroke="#9B6A5D" stroke-width="1.5"/>
- <path d="M247 79L251 85H304L307 75" fill="#53616B" stroke="#45515A" stroke-width="2"/>
+ <path d="M259 79L264 102H300L291 76" fill="#53616B" stroke="#45515A" stroke-width="2"/>
 </g>
 <text x="14" y="14" font-family="IBM Plex Mono" fill="#5A6665" font-size="8.6" letter-spacing=".5">OPTICAL STUDY / EXTERIOR VIEW</text>
 </svg>
