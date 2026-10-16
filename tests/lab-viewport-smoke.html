@@ -45,6 +45,11 @@ frame.addEventListener('load',()=>{
  if(!doc.getElementById('dossierRef').textContent.includes('SKEMA EDUKATIF'))problems.push('pose/dossier provenance label missing');
  w.switchPose('front');
  if(!doc.getElementById('stagePoseTitle').textContent.includes('DEPAN'))problems.push('pose not changed');
+ if(doc.getElementById('labMobilePosePicker').value!=='front')problems.push('compact pose selector out of sync');
+ const compactPose=doc.getElementById('labMobilePosePicker');
+ compactPose.value='sideLeft';
+ compactPose.dispatchEvent(new Event('change',{bubbles:true}));
+ if(!doc.getElementById('stagePoseTitle').textContent.includes('KIRI'))problems.push('compact pose selection did not update drawing');
  const first=doc.getElementById('target-chicken-0');
  first.click();
  if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');
