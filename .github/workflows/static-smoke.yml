@@ -36,6 +36,8 @@ jobs:
             /tmp/twinshooter-qa/lab-hardware-mobile.png
             /tmp/twinshooter-qa/lab-posture-desktop.png
             /tmp/twinshooter-qa/lab-posture-mobile.png
+            /tmp/twinshooter-qa/lab-anatomy-front-desktop.png
+            /tmp/twinshooter-qa/lab-anatomy-front-mobile.png
             /tmp/twinshooter-qa/lab-trigger-desktop.png
             /tmp/twinshooter-qa/lab-trigger-mobile.png
             /tmp/twinshooter-qa/lab-optics-desktop.png
