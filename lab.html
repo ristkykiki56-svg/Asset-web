@@ -839,129 +839,190 @@
                 <!-- Left 8 Cols: Dual Technical Blueprint (Rifle + Detailed Scope Diagram from Bottom-Left of Poster) -->
                 <div class="lg:col-span-8 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5 drafting-bg">
                     <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                        <span class="font-bold">FIG 5.1 — GAMBAR KERJA SENAPAN &amp; TELESKOP (KLIK PIN NOMOR [1–10])</span>
-                        <span id="blueprintActiveLabel" class="text-[var(--aurellia-red)] font-bold">INSPEKSI: #02 CHEEK PIECE</span>
+                        <span class="font-bold">FIG 5.1 — PETA KOMPONEN PERALATAN</span>
+                        <span id="blueprintActiveLabel" class="text-[var(--aurellia-red)] font-bold" aria-live="polite">DIPILIH: SANDARAN PIPI</span>
                     </div>
 
                     <!-- Technical Blueprint SVG -->
                     <div class="lab-hardware-scroll border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 overflow-x-auto" tabindex="0" role="region" aria-label="Diagram senapan, geser horizontal untuk melihat bagian lainnya">
-                        <p class="lab-mobile-scroll-hint" aria-hidden="true">Geser gambar ke samping untuk melihat seluruh bagian →</p><svg id="hardwareBlueprintSvg" viewBox="0 0 880 390" class="w-full h-auto min-w-[640px] select-none">
-                            <!-- Dimension Lines (Panjang Senapan & Laras) -->
-                            <g stroke="var(--ink-500)" stroke-width="1" font-family="IBM Plex Mono" font-size="9" fill="var(--ink-500)">
-                                <line x1="48" y1="365" x2="830" y2="365"/>
-                                <line x1="48" y1="358" x2="48" y2="372"/>
-                                <line x1="830" y1="358" x2="830" y2="372"/>
-                                <text x="439" y="378" text-anchor="middle">GAMBAR KOMPONEN SKEMATIS — TIDAK BERSKALA</text>
-                            </g>
-
-                            <!-- SECTION A: Detailed Rifle Scope Cutaway (Top — recreating bottom-left of poster) -->
-                            <g transform="translate(40, 12)">
-                                <text x="0" y="12" fill="var(--ink-500)" font-family="IBM Plex Mono" font-size="9" font-weight="bold">DETAIL ANATOMI TELESKOP (LENSA OBJEKTIF &rarr; TURRET &rarr; LENSA OKULER)</text>
-                                <!-- Objective Bell & Parallax Ring (Left) -->
-                                <polygon points="30,32 125,22 125,78 30,68" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
-                                <rect x="125" y="24" width="32" height="52" fill="#0F172A" stroke="#FF4800" stroke-width="1.5"/>
-                                <!-- Main Scope Tube -->
-                                <rect x="157" y="34" width="290" height="32" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
-                                <!-- Saddle & Elevation / Windage Turrets -->
-                                <rect x="275" y="10" width="38" height="24" fill="#0F172A" stroke="#0055B8" stroke-width="1.5"/>
-                                <circle cx="294" cy="50" r="14" fill="#0F172A" stroke="#0055B8" stroke-width="1.5"/>
-                                <!-- Magnification Zoom Ring -->
-                                <rect x="447" y="30" width="36" height="40" fill="#0F172A" stroke="#B37B24" stroke-width="1.5"/>
-                                <!-- Ocular Bell & Fast Focus Diopter -->
-                                <polygon points="483,32 565,24 565,76 483,68" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
-
-                                <!-- Scope Interactive Callout Nodes (7, 8, 9, 10) -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-label="Pilih objective" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
-                                    <circle cx="80" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="80" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">7</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-label="Pilih turrets" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
-                                    <circle cx="294" cy="22" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="294" y="26" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">8</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-label="Pilih zoom" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
-                                    <circle cx="465" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="465" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">9</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-label="Pilih ocular" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
-                                    <circle cx="545" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="545" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">10</text>
-                                </g>
-                            </g>
-
-                            <!-- SECTION B: Full Match Air Rifle Profile (Bottom-Right of Poster) -->
-                            <g transform="translate(0, 65)">
-                                <!-- Center of Balance Fulcrum Triangle -->
-                                <g id="svgCobFulcrum" transform="translate(420, 248)">
-                                    <polygon points="0,0 -11,22 11,22" fill="#FF4800"/>
-                                    <text x="0" y="34" text-anchor="middle" fill="#FF4800" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TITIK BERAT (CoB)</text>
-                                </g>
-
-                                <!-- 1. Buttplate & Rear Stock Carrier -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
-                                    <rect x="48" y="135" width="18" height="125" fill="#111315"/>
-                                    <rect id="rigRearBlock" x="66" y="160" width="40" height="46" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
-                                    <circle cx="86" cy="183" r="9" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                </g>
-
-                                <!-- 2. Adjustable Cheek Piece -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
-                                    <path d="M108 152 L222 152 L212 120 L120 120 Z" fill="#B37B24" stroke="#111315" stroke-width="1.8"/>
-                                    <text id="rigCheekName" x="165" y="141" text-anchor="middle" fill="#FFFFFF" font-family="Cormorant Garamond" font-style="italic" font-size="15" font-weight="bold">Aurellia</text>
-                                </g>
-
-                                <!-- 3. Chassis, Grip & Trigger Blade -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
-                                    <path id="rigMainChassis" d="M106 162 L585 162 L600 186 L312 186 L284 250 L242 250 L252 192 L106 192 Z" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
-                                    <!-- Laminated Wood Grip & Fore-End Block -->
-                                    <path d="M245 186 L286 186 L276 254 L235 254 Z" fill="#B37B24" stroke="#111315" stroke-width="1.5"/>
-                                    <path d="M358 186 L558 186 L548 216 L366 216 Z" fill="#B37B24" stroke="#111315" stroke-width="1.5"/>
-                                    <!-- Trigger Guard & Blue Shoe -->
-                                    <path d="M286 188 Q306 220 332 212" fill="none" stroke="#111315" stroke-width="3"/>
-                                    <line x1="308" y1="186" x2="308" y2="208" stroke="#0055B8" stroke-width="4.5"/>
-                                </g>
-
-                                <!-- 5. 200 Bar Air Cylinder -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
-                                    <rect x="445" y="164" width="300" height="20" fill="#CBD5E1" stroke="#111315" stroke-width="1.5"/>
-                                    <rect x="745" y="164" width="24" height="20" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
-                                    <text x="595" y="177" text-anchor="middle" fill="#111315" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TABUNG UDARA (PCP) — SKEMA</text>
-                                </g>
-
-                                <!-- 6. Match Barrel & Riser Rail -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
-                                    <rect x="300" y="138" width="525" height="16" fill="#E2E8F0" stroke="#111315" stroke-width="1.5"/>
-                                    <rect id="rigMuzzleCap" x="802" y="136" width="28" height="20" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
-                                    <rect x="330" y="114" width="165" height="24" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
-                                </g>
-
-                                <!-- Numbered Callout Pins on Rifle (1 to 6) -->
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
-                                    <circle cx="66" cy="183" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="66" y="187" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">1</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
-                                    <circle cx="165" cy="118" r="11" fill="#FF4800" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="165" y="122" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">2</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
-                                    <circle cx="308" cy="218" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="308" y="222" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">3</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="riser" aria-label="Pilih riser" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
-                                    <circle cx="412" cy="126" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="412" y="130" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">4</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
-                                    <circle cx="620" cy="174" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="620" y="178" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">5</text>
-                                </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
-                                    <circle cx="760" cy="146" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
-                                    <text x="760" y="150" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">6</text>
-                                </g>
-                            </g>
-                        </svg>
+                        <p class="lab-mobile-scroll-hint">Geser gambar untuk melihat sisi lainnya → · atau pilih melalui daftar komponen</p>
+<svg id="hardwareBlueprintSvg" viewBox="0 0 880 390" class="hw-illustration w-full h-auto min-w-[640px] select-none" role="group" aria-labelledby="hwArtTitle hwArtDesc">
+ <title id="hwArtTitle">Ilustrasi interaktif komponen luar peralatan air rifle</title>
+ <desc id="hwArtDesc">Diagram edukatif dua tampilan, bagian luar teleskop di atas dan profil senapan olahraga di bawah. Sepuluh nomor dapat dipilih untuk membaca penjelasan. Ini bukan spesifikasi atau model senapan atlet yang telah diverifikasi.</desc>
+ <defs>
+  <linearGradient id="hwGraphite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#526061"/><stop offset=".36" stop-color="#293336"/><stop offset=".7" stop-color="#232C30"/><stop offset="1" stop-color="#11191D"/></linearGradient>
+  <linearGradient id="hwTube" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#738083"/><stop offset=".19" stop-color="#424C51"/><stop offset=".63" stop-color="#222C31"/><stop offset="1" stop-color="#11181D"/></linearGradient>
+  <linearGradient id="hwRing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AAB2B1"/><stop offset=".29" stop-color="#3C484C"/><stop offset=".68" stop-color="#263035"/><stop offset="1" stop-color="#6D7775"/></linearGradient>
+  <linearGradient id="hwSteel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D5D9D4"/><stop offset=".27" stop-color="#A3ADAE"/><stop offset=".62" stop-color="#829294"/><stop offset="1" stop-color="#D8DAD2"/></linearGradient>
+  <linearGradient id="hwWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D4B18A"/><stop offset=".3" stop-color="#AB805D"/><stop offset=".68" stop-color="#806047"/><stop offset="1" stop-color="#644A3C"/></linearGradient>
+  <linearGradient id="hwGrip" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C49B75"/><stop offset=".42" stop-color="#9B7355"/><stop offset="1" stop-color="#584B42"/></linearGradient>
+  <linearGradient id="hwRubber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#151B20"/><stop offset=".45" stop-color="#596265"/><stop offset="1" stop-color="#1C2629"/></linearGradient>
+  <radialGradient id="hwLens"><stop offset="0" stop-color="#7B9B9E"/><stop offset=".44" stop-color="#314951"/><stop offset="1" stop-color="#111C27"/></radialGradient>
+ </defs>
+ <g class="hw-paper-guides" fill="none" stroke="#C8C7BE" opacity=".65">
+  <path d="M22 26H860M22 142H860M22 367H860" stroke-width=".8"/>
+  <path d="M22 21V31M860 21V31M22 137V147M860 137V147M22 362V372M860 362V372" stroke-width="1.2"/>
+ </g>
+ <g class="hw-scope-section" transform="translate(44,16)">
+  <text x="0" y="12" class="hw-figure-mono" fill="#67706D" font-size="10" letter-spacing="1.15">01 / TAMPILAN LUAR OPTIK</text>
+  <path d="M20 113H766" stroke="#C9C6BD" stroke-width="1"/>
+  <path d="M25 38Q30 34 40 34H129L152 42V77L129 85H40Q30 85 25 80Z" fill="url(#hwGraphite)" stroke="#32383A" stroke-width="1.6"/>
+  <path d="M29 40H129L143 44H32Z" fill="#A9ADB0" opacity=".35"/>
+  <ellipse cx="28" cy="59.5" rx="7" ry="24" fill="#17262C" stroke="#4A5358" stroke-width="2"/>
+  <ellipse cx="27" cy="59.5" rx="3.5" ry="19" fill="url(#hwLens)" opacity=".95"/>
+  <path d="M138 38H166V80H138Z" fill="url(#hwRing)" stroke="#33383A" stroke-width="1.5"/>
+  <path d="M144 39V79M152 39V79M160 39V79" stroke="#A7ADAA" stroke-width="1.5" opacity=".65"/>
+  <rect x="166" y="45" width="350" height="30" rx="5" fill="url(#hwTube)" stroke="#363E40" stroke-width="1.6"/>
+  <path d="M171 50H511" stroke="#D0D5D4" opacity=".42" stroke-width="2"/>
+  <path d="M171 71H511" stroke="#080F16" opacity=".4" stroke-width="2"/>
+  <rect x="288" y="38" width="48" height="44" rx="7" fill="#30383C" stroke="#1D252A" stroke-width="1.4"/>
+  <path d="M292 42H332" stroke="#7B8486" stroke-width="2"/>
+  <rect x="303" y="22" width="19" height="20" rx="3" fill="url(#hwRing)" stroke="#343D40" stroke-width="1.5"/>
+  <rect x="297" y="16" width="31" height="10" rx="2" fill="#283238" stroke="#515B60" stroke-width="1.2"/>
+  <path d="M301 18V24M306 18V24M311 18V24M316 18V24M321 18V24" stroke="#A6ABAC" stroke-width="1"/>
+  <circle cx="337" cy="60" r="10" fill="#3A4449" stroke="#242E35" stroke-width="2"/>
+  <circle cx="337" cy="60" r="5" fill="#11191E"/>
+  <rect x="507" y="39" width="43" height="42" rx="5" fill="url(#hwRing)" stroke="#333A3F" stroke-width="1.5"/>
+  <path d="M514 42V78M521 42V78M529 42V78M536 42V78M543 42V78" stroke="#A6ADAB" stroke-width="1.4" opacity=".55"/>
+  <path d="M550 43L574 35H652Q660 35 662 43V76Q660 84 652 84H574L550 76Z" fill="url(#hwGraphite)" stroke="#30383A" stroke-width="1.6"/>
+  <path d="M575 41H650" stroke="#B1B8B7" stroke-width="2" opacity=".43"/>
+  <rect x="649" y="36" width="13" height="48" rx="4" fill="#2B3439" stroke="#424A50" stroke-width="1.5"/>
+  <ellipse cx="662" cy="60" rx="5" ry="22" fill="url(#hwLens)" stroke="#313C43" stroke-width="1.5"/>
+  <text x="704" y="53" class="hw-figure-mono" fill="#555E5D" font-size="9.5">DETAIL</text>
+  <text x="704" y="67" fill="#222A2D" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">OPTIK</text>
+  <text x="704" y="81" fill="#69716E" font-size="9" font-family="IBM Plex Mono, monospace">MODEL EKSTERIOR</text>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-label="Pilih lensa depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
+  <title>7. lensa depan</title>
+  <rect class="hw-hitbox" x="69" y="70" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="92" cy="93" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="92" cy="93" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="92" y="97" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">07</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-label="Pilih turret" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
+  <title>8. turret</title>
+  <rect class="hw-hitbox" x="324" y="3" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="347" cy="26" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="347" cy="26" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="347" y="30" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">08</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-label="Pilih pembesaran" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
+  <title>9. pembesaran</title>
+  <rect class="hw-hitbox" x="507" y="71" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="530" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="530" cy="94" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="530" y="98" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">09</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-label="Pilih lensa okuler" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
+  <title>10. lensa okuler</title>
+  <rect class="hw-hitbox" x="617" y="71" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="640" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="640" cy="94" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="640" y="98" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">10</text>
+ </g>
+</g>
+ <g transform="translate(0,65)" class="hw-rifle-section">
+  <text x="42" y="107" class="hw-figure-mono" fill="#67706D" font-size="10" letter-spacing="1.15">02 / PROFIL LUAR PERALATAN</text>
+  <path d="M50 293H828" stroke="#C9C6BD" stroke-width="1"/>
+  <ellipse cx="426" cy="287" rx="353" ry="10" fill="#243039" opacity=".075"/>
+  <g class="hw-region cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih popor" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+ <path d="M54 160Q47 161 46 172V235Q48 252 60 255L70 250Q67 233 69 217V175Z" fill="url(#hwRubber)" stroke="#31393B" stroke-width="2"/>
+ <path d="M48 172Q60 177 60 197V228Q59 241 49 248" stroke="#869294" stroke-width="1.5" fill="none" opacity=".72"/>
+ <path id="rigRearBlock" d="M72 184L111 175L128 192L112 226L77 231Q71 210 72 184Z" fill="#D11F26" stroke="#273236" stroke-width="2"/>
+ <path d="M80 187L108 182L118 195L104 215L84 222Z" fill="#F6EFEA" opacity=".14"/>
+ <rect x="118" y="195" width="38" height="8" rx="3" fill="#40494B"/>
+ <circle cx="122" cy="199" r="3.5" fill="#C3C8C4"/>
+</g>
+  <g class="hw-region cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih sandaran pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+ <path d="M146 169Q154 140 177 137L246 138Q259 141 260 154L254 164L214 180L152 180Z" fill="url(#hwWood)" stroke="#34403E" stroke-width="2.2"/>
+ <path d="M155 159Q173 145 199 146L246 146" fill="none" stroke="#E6C399" stroke-width="2.3" opacity=".87"/>
+ <path d="M157 174L219 173L247 163" stroke="#655543" stroke-width="2" fill="none" opacity=".75"/>
+ <path d="M172 180V194M231 178V195" stroke="#45535A" stroke-width="5" stroke-linecap="round"/>
+ <text id="rigCheekName" x="203" y="162" text-anchor="middle" fill="#F5F3E8" font-family="Cormorant Garamond, serif" font-style="italic" font-size="15" font-weight="700">Aurellia</text>
+</g>
+  <g class="hw-region cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih badan dan grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+ <path id="rigMainChassis" d="M121 190L207 185L248 177L313 179L361 175L593 178L611 196L578 213L362 212L335 228L312 247L286 257L254 250L259 220L220 221L199 209L135 217Q123 217 121 207Z" fill="#D11F26" stroke="#30373A" stroke-width="2.5"/>
+ <path d="M138 191L211 188L263 182L583 181" fill="none" stroke="#FFFFFF" stroke-width="2.4" opacity=".4" stroke-linecap="round"/>
+ <path d="M160 212L243 215L254 224L260 244" fill="none" stroke="#10191A" stroke-width="2" opacity=".45"/>
+ <path d="M278 214Q307 214 317 228L311 260Q306 277 296 281L275 280Q268 277 268 262L263 230Z" fill="url(#hwGrip)" stroke="#34403D" stroke-width="2"/>
+ <path d="M274 232Q288 228 299 238M272 243Q287 238 300 249M273 254Q286 249 298 259" stroke="#F7E6CA" opacity=".37" stroke-width="1.8" fill="none"/>
+ <path d="M314 211Q334 220 339 239L320 245Q321 223 304 222" stroke="#3B4649" stroke-width="2.5" fill="none"/>
+ <path d="M321 213L321 236" stroke="#606F73" stroke-width="5" stroke-linecap="round"/>
+ <circle cx="191" cy="200" r="4.5" fill="#2A3031" stroke="#BDC2C0" stroke-width="1"/>
+ <circle cx="349" cy="194" r="3.3" fill="#252B2F" stroke="#DDD9CE" stroke-width="1"/>
+</g>
+  <!-- Simple fore-end support illustration, intentionally non-dimensional. -->
+  <path d="M385 210L536 211L548 221L539 230L388 229L378 219Z" fill="url(#hwWood)" stroke="#39413F" stroke-width="2"/>
+  <path d="M393 215H531" stroke="#E7CEAB" stroke-width="2" opacity=".6"/>
+  <path d="M389 207V211M529 207V211" stroke="#697475" stroke-width="4" stroke-linecap="round"/>
+  <g class="hw-region cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih tabung udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+ <path d="M457 215Q450 216 450 224V236Q452 245 461 246H750Q761 245 763 235V225Q761 216 751 215Z" fill="url(#hwSteel)" stroke="#394547" stroke-width="1.6"/>
+ <path d="M463 219H750" stroke="#F8FFFF" stroke-width="1.4" opacity=".8"/>
+ <path d="M467 242H747" stroke="#647477" stroke-width="1.7" opacity=".55"/>
+ <path d="M492 216V245M718 216V245" stroke="#697678" stroke-width="1.5" opacity=".65"/>
+ <rect x="751" y="216" width="26" height="29" rx="6" fill="#3F4C50" stroke="#293437" stroke-width="1.3"/>
+ <path d="M756 221H773" stroke="#A7B2B1" stroke-width="2"/>
+ <text x="622" y="234" fill="#4E5B60" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle" letter-spacing=".9">ILLUSTRATIVE CYLINDER</text>
+</g>
+  <g class="hw-region cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+ <rect x="337" y="167" width="462" height="12" rx="5" fill="url(#hwGraphite)" stroke="#384446" stroke-width="1.7"/>
+ <path d="M346 170H787" stroke="#BDC4C3" stroke-width="1.6" opacity=".62"/>
+ <path d="M338 177H797" stroke="#131B20" stroke-width="1.8" opacity=".48"/>
+ <path d="M376 177V189M561 177V189M733 177V189" stroke="#435255" stroke-width="4" stroke-linecap="round"/>
+ <rect id="rigMuzzleCap" x="795" y="164" width="29" height="17" rx="3.5" fill="#D11F26" stroke="#28383D" stroke-width="1.5"/>
+ <path d="M803 167V179M810 167V179" stroke="#FFEFE7" opacity=".42" stroke-width="1"/>
+</g>
+  <path d="M133 225L194 224M362 229H388" stroke="#545D5C" stroke-width="2" stroke-dasharray="3 5" opacity=".55"/>
+  <g id="svgCobFulcrum" transform="translate(420,248)" class="hw-balance-indicator">
+   <path d="M0 0L-10 16H10Z" fill="#E35F2E" stroke="#FFFFFF" stroke-width="1.3"/>
+   <text x="0" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="700" fill="#B65431">TITIK MODEL</text>
+  </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih popor" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+  <title>1. popor</title>
+  <rect class="hw-hitbox" x="55" y="219" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="78" cy="242" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="78" cy="242" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="78" y="246" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">01</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih sandaran pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+  <title>2. sandaran pipi</title>
+  <rect class="hw-hitbox" x="187" y="101" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="210" cy="124" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="210" cy="124" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="210" y="128" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">02</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+  <title>3. grip</title>
+  <rect class="hw-hitbox" x="288" y="249" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="311" cy="272" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="311" cy="272" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="311" y="276" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">03</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="riser" aria-label="Pilih penopang depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
+  <title>4. penopang depan</title>
+  <rect class="hw-hitbox" x="413" y="169" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="436" cy="192" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="436" cy="192" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="436" y="196" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">04</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih tabung udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+  <title>5. tabung udara</title>
+  <rect class="hw-hitbox" x="587" y="246" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="610" cy="269" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="610" cy="269" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="610" y="273" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">05</text>
+ </g>
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+  <title>6. laras</title>
+  <rect class="hw-hitbox" x="732" y="130" width="46" height="46" rx="23" fill="transparent"/>
+  <circle class="hw-marker-halo" cx="755" cy="153" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
+  <circle class="hw-marker-disc" cx="755" cy="153" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
+  <text class="hw-marker-number" x="755" y="157" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">06</text>
+ </g>
+ </g>
+ <g aria-hidden="true" fill="#747A73" font-size="9" font-family="IBM Plex Mono, monospace" letter-spacing=".3">
+  <text x="24" y="384">ILUSTRASI EKSTERIOR · BUKAN SKALA, DIMENSI, ATAU PERALATAN ATLET TERVERIFIKASI</text>
+ </g>
+</svg>
                     </div>
 
                     <!-- Center of Balance (Berat & Keseimbangan Senapan) Interactive Bar -->
@@ -984,7 +1045,7 @@
                             Cheek Piece (Sandaran Pipi Presisi)
                         </h3>
                         <p id="hwSpecBody" class="text-xs sm:text-sm text-[var(--ink-700)] leading-relaxed">
-                            Ketinggian, kemiringan, dan sudut sandaran pipi diatur mengikuti anatomi tulang pipi penembak. Prinsip utamanya adalah menyelaraskan komponen senapan terhadap tubuh, bukan memaksa leher membungkuk mencari teleskop.
+                            Sandaran pipi merupakan bagian tempat kepala bertumpu saat melihat melalui optik. Ilustrasi hanya menunjukkan letak komponen, bukan setelan atlet tertentu.
                         </p>
                         <div id="hwSpecNote" class="p-3 bg-[var(--bg-surface)] border border-[var(--rule-light)] font-mono-tech text-[11px] text-[var(--clarisa-blue)]">
                             BATAS MODEL: bentuk dan ukuran komponen hanya ilustratif. Setelan nyata mengikuti instruksi pabrikan, atlet, dan pelatih.

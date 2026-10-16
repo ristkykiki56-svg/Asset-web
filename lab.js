@@ -991,61 +991,61 @@ let sfxActive = false;
             stock: {
                 code: 'KOMPONEN #01 // STOCK, BERAT & PANJANG POPOR',
                 title: 'Stock (Popor), Buttplate & Panjang Popor',
-                body: 'Panjang popor diatur menyesuaikan panjang lengan bawah penembak. Tinggi serta sudut buttplate diatur agar kontak dengan lekukan bahu kanan selalu konsisten dan kepala tetap tegak alami saat membidik.',
+                body: 'Popor adalah struktur luar yang menopang bagian-bagian utama peralatan. Ilustrasi ini memperlihatkan posisi umumnya, bukan ukuran atau bentuk perangkat atlet.',
                 note: 'Diagram hanya menandai komponen buttplate, bukan panduan pengaturannya.'
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // PENYELARASAN KEPALA',
                 title: 'Cheek Piece (Sandaran Pipi Presisi)',
-                body: 'Ketinggian, kemiringan, dan sudut sandaran pipi diatur mengikuti anatomi tulang pipi penembak. Prinsip utamanya adalah menyelaraskan komponen senapan terhadap tubuh, bukan memaksa leher membungkuk mencari teleskop.',
-                note: 'CATATAN ILUSTRASI: Saat mata dibuka, reticle harus langsung berada tepat di tengah lensa.'
+                body: 'Sandaran pipi merupakan area tempat kepala bertumpu saat melihat melalui optik. Letak dan bentuknya pada gambar merupakan contoh visual, bukan setelan atlet tertentu.',
+                note: 'SKEMA: perangkat, posisi kepala, dan hubungan antarbagian tidak direkonstruksi dari pengukuran atlet.'
             },
             grip: {
                 code: 'KOMPONEN #03 // GRIP & TRIGGER',
                 title: 'Grip Anatomis & Bilah Pemicu (Trigger Shoe)',
-                body: 'Pistol grip menopang tangan kanan secara ergonomis sehingga jari telunjuk dapat mencapai trigger shoe secara bebas dan membentuk sudut tarikan 90° lurus ke belakang tanpa bergesekan dengan kayu popor.',
+                body: 'Grip adalah bagian pegangan di bawah badan peralatan. Gambar menampilkan bentuk luarnya untuk mengenali letak komponen, bukan contoh posisi jari yang wajib diikuti.',
                 note: 'SKEMA: garis gaya pada gambar tidak menetapkan sudut toleransi atau tekanan alat nyata.'
             },
             riser: {
                 code: 'KOMPONEN #04 // PENYELARASAN KOMPONEN SENAPAN',
                 title: 'Peninggi Teleskop (Scope Riser) & Fore-End',
-                body: 'Peninggi rel teleskop dan balok penopang bawah (fore-end) diselaraskan agar tinggi senapan pas di atas tangan kiri tanpa memaksa bahu terangkat atau kepala menunduk.',
+                body: 'Bagian penopang depan berada di bawah badan peralatan. Pada ilustrasi, komponen ini digunakan untuk menunjukkan susunan luar secara sederhana.',
                 note: 'SKEMA: posisi komponen relatif terhadap tubuh hanya gambaran konseptual.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
                 title: 'Tabung Udara Bertekanan (PCP) — Skema',
-                body: 'Menyimpan udara bertekanan dengan sistem regulator presisi agar setiap tembakan menghasilkan kecepatan lontar peluru (muzzle velocity) yang konsisten dari sasaran pertama hingga terakhir.',
+                body: 'Tabung udara merupakan bagian luar pada sebagian sistem senapan angin olahraga. Bentuk ilustratifnya membantu mengenali komponen, bukan menunjukkan spesifikasi tekanan atau performa.',
                 note: 'Informasi tekanan harus mengikuti label dan manual senapan yang benar-benar digunakan.'
             },
             barrel: {
                 code: 'KOMPONEN #06 // PANJANG SENAPAN & LARAS',
                 title: 'Laras Match Presisi & Muzzle Shroud',
-                body: 'Laras berulir presisi tinggi mengarahkan dan menstabilkan putaran peluru diabolo 4.5mm. Kebersihan alur laras sangat menentukan ketajaman pengelompokan tembakan (grouping) hingga jarak 41m.',
+                body: 'Laras merupakan bagian memanjang di bagian depan peralatan. Diagram ini hanya memperlihatkan bentuk luar dan hubungannya dengan komponen lain.',
                 note: 'Perawatan dan pembersihan mengikuti petunjuk pabrikan senapan yang benar-benar digunakan.'
             },
             objective: {
                 code: 'KOMPONEN #07 // LENSA OBJEKTIF & PARALAKS',
                 title: 'Lensa Objektif & Cincin Fokus Paralaks (AO)',
-                body: 'Bagian depan teleskop yang mengumpulkan cahaya sekaligus dilengkapi pengatur fokus jarak (Adjustable Objective / Parallax) untuk menghilangkan kesalahan paralaks pada jarak 18m, 27m, 33m, dan 41m.',
+                body: 'Lensa objektif berada di ujung depan teleskop dan menerima cahaya dari arah objek yang diamati. Susunan dalam optik tidak ditampilkan pada diagram.',
                 note: 'SKEMA: kebutuhan fokus bergantung jenis dan rancangan perangkat optik yang dipakai.'
             },
             turrets: {
                 code: 'KOMPONEN #08 // TURRET ELEVASI & WINDAGE',
                 title: 'Turret Elevasi (Atas) & Turret Windage (Samping)',
-                body: 'Knop mekanis presisi dalam satuan klik (MOA / MRAD) untuk menggeser titik kena peluru secara vertikal (mengikuti jarak hewan 18m–41m) maupun horizontal (melawan bias angin samping).',
+                body: 'Turret merupakan bagian kontrol pada tubuh teleskop. Diagram menunjukkan lokasi luarnya tanpa menjelaskan pengaturan perangkat tertentu.',
                 note: 'Halaman ini tidak menghitung klik elevasi senapan atau optik nyata.'
             },
             zoom: {
                 code: 'KOMPONEN #09 // PEMBESARAN OPTIK',
                 title: 'Cincin Pengatur Pembesaran (Zoom Ring)',
-                body: 'Mengatur tingkat pembesaran bayangan sasaran. Pembesaran tinggi memperjelas detail siluet, namun juga memperbesar tampilan goyangan alami tubuh di dalam reticle.',
+                body: 'Cincin pembesaran dapat ditemukan pada sebagian model teleskop. Gambar menunjukkan bentuk dan lokasi umum, bukan pembesaran yang digunakan atlet.',
                 note: 'SKEMA: pembesaran ditampilkan sebagai konsep; nilai optimalnya tidak dihitung halaman ini.'
             },
             ocular: {
                 code: 'KOMPONEN #10 // LENSA OKULER & FOKUS RETICLE',
                 title: 'Lensa Okuler & Pengatur Dioptri Mata',
-                body: 'Lensa paling belakang tempat mata penembak membidik. Dilengkapi cincin fokus reticle (diopter adjustment) agar garis palang reticle tampak hitam tajam tanpa membuat mata cepat lelah.',
+                body: 'Lensa okuler berada di ujung belakang teleskop, dekat posisi mata pengguna. Diagram ini menampilkan bentuk eksterior saja.',
                 note: 'SKEMA: pengaturan fokus mengikuti manual dan karakteristik optik yang benar-benar dipakai.'
             }
         };
@@ -1064,7 +1064,8 @@ let sfxActive = false;
                 button.setAttribute('aria-pressed', String(selected));
                 button.classList.toggle('is-current', selected);
             });
-            document.getElementById('blueprintActiveLabel').textContent = `INSPEKSI: ${item.title.toUpperCase()}`;
+            const shortNames = {stock:'Popor',cheekpiece:'Sandaran pipi',grip:'Grip',riser:'Penopang depan',cylinder:'Tabung udara',barrel:'Laras',objective:'Lensa depan',turrets:'Turret',zoom:'Pembesaran',ocular:'Lensa okuler'};
+            document.getElementById('blueprintActiveLabel').textContent = 'DIPILIH: ' + shortNames[key];
             document.getElementById('hwSpecCode').textContent = item.code;
             document.getElementById('hwSpecTitle').textContent = item.title;
             document.getElementById('hwSpecBody').textContent = item.body;
@@ -1080,6 +1081,8 @@ let sfxActive = false;
             const bA = document.getElementById('rigSwitch-aurellia');
             const bC = document.getElementById('rigSwitch-clarisa');
 
+            bC.setAttribute('aria-pressed', String(athlete === 'clarisa'));
+            bA.setAttribute('aria-pressed', String(athlete !== 'clarisa'));
             if (athlete === 'clarisa') {
                 chassis.setAttribute('fill', '#0055B8');
                 rear.setAttribute('fill', '#0055B8');

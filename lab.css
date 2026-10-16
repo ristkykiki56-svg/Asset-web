@@ -750,3 +750,61 @@ html.cad-dark #sec-biomech select,html.cad-dark #sec-hardware select {color-sche
   .lab-callout-label {grid-column:1/-1;grid-row:3;margin-top:.35rem}
   .lab-callout-select {grid-column:1/-1;grid-row:4}
 }
+
+
+/* Equipment illustration v2 — exterior material study, no internal mechanisms. */
+#hardwareBlueprintSvg.hw-illustration {display:block;isolation:isolate;overflow:visible}
+#hardwareBlueprintSvg .hw-marker {cursor:pointer;outline:none}
+#hardwareBlueprintSvg .hw-marker-halo,
+#hardwareBlueprintSvg .hw-marker-disc {transition:fill .16s ease,stroke .16s ease,stroke-width .16s ease}
+#hardwareBlueprintSvg .hw-marker-number {pointer-events:none;user-select:none}
+#hardwareBlueprintSvg .hw-hitbox {pointer-events:all}
+#hardwareBlueprintSvg .hw-region {cursor:pointer;transition:filter .16s ease}
+#hardwareBlueprintSvg .hw-marker:hover .hw-marker-halo,
+#hardwareBlueprintSvg .hw-marker:focus-visible .hw-marker-halo {
+  stroke:var(--clarisa-blue);stroke-width:3
+}
+#hardwareBlueprintSvg .hw-marker:hover .hw-marker-disc,
+#hardwareBlueprintSvg .hw-marker:focus-visible .hw-marker-disc {
+  fill:var(--clarisa-blue)
+}
+#hardwareBlueprintSvg .hw-marker.is-highlighted .hw-marker-halo {
+  stroke:var(--imssu-orange);stroke-width:3.2;fill:var(--bg-surface)
+}
+#hardwareBlueprintSvg .hw-marker.is-highlighted .hw-marker-disc {
+  fill:var(--imssu-orange);stroke:#FFFFFF;stroke-width:1.8
+}
+#hardwareBlueprintSvg .hw-marker.is-highlighted .hw-marker-number {font-weight:800}
+#hardwareBlueprintSvg .hw-region.is-highlighted {filter:drop-shadow(0 2px 2px rgba(255,72,0,.35))}
+#hardwareBlueprintSvg .hw-region:focus-visible {filter:drop-shadow(0 0 3px var(--clarisa-blue))}
+#hardwareBlueprintSvg .hw-marker:focus-visible {filter:drop-shadow(0 0 3px var(--clarisa-blue))}
+#hardwareBlueprintSvg .hw-paper-guides {pointer-events:none}
+#hardwareBlueprintSvg .hw-balance-indicator {pointer-events:none}
+#sec-hardware .lab-hardware-scroll {
+  background-color:#F8F7F3;
+  border:1px solid var(--rule-light);
+  padding:clamp(12px,1.8vw,22px);
+  outline-offset:2px;
+}
+#sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {
+  color:#50575A;
+  padding-bottom:.5rem
+}
+#sec-hardware .lab-hardware-scroll::after {background:transparent}
+#sec-hardware #blueprintActiveLabel {
+  max-width:38ch;text-align:right;line-height:1.45;overflow-wrap:anywhere
+}
+#sec-hardware #hwSpecBody {font-size:14px;line-height:1.75}
+html.cad-dark #sec-hardware .lab-hardware-scroll {background:#E9E9E3}
+html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {color:#394348}
+@media(max-width:767px){
+ #sec-hardware .lab-hardware-scroll {padding:10px}
+ #hardwareBlueprintSvg.hw-illustration {min-width:680px}
+ #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {font-size:12px}
+ #sec-hardware #blueprintActiveLabel {max-width:15ch;font-size:10px}
+ #sec-hardware .lab-hardware-scroll:focus-visible {outline:3px solid var(--clarisa-blue)}
+}
+@media(prefers-reduced-motion:reduce) {
+ #hardwareBlueprintSvg .hw-marker-halo,#hardwareBlueprintSvg .hw-marker-disc,
+ #hardwareBlueprintSvg .hw-region {transition:none!important}
+}
