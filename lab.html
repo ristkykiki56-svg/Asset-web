@@ -159,16 +159,16 @@
                     <label class="lab-mobile-pose-label" for="labMobilePosePicker">Sudut pandang</label>
                     <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Punggung</option><option value="front">Depan</option><option value="sideLeft">Samping kiri</option><option value="sideRight">Samping kanan</option></select>
                     <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                        <button onclick="switchPose('back')" id="poseTab-back" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
+                        <button onclick="switchPose('back')" id="poseTab-back" aria-pressed="true" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
                             1. Skema Punggung
                         </button>
-                        <button onclick="switchPose('front')" id="poseTab-front" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
+                        <button onclick="switchPose('front')" id="poseTab-front" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
                             2. Skema Depan
                         </button>
-                        <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
+                        <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
                             3. Samping Kiri
                         </button>
-                        <button onclick="switchPose('sideRight')" id="poseTab-sideRight" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
+                        <button onclick="switchPose('sideRight')" id="poseTab-sideRight" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
                             4. Samping Kanan
                         </button>
                     </div>
@@ -411,7 +411,7 @@
                                 <text x="148" y="148" fill="#FF4800" font-family="IBM Plex Mono" font-size="8" font-weight="bold">BANTALAN JARI</text>
                             </svg>
                             <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>BEBAN LEPAS (SEAR):</span>
+                                <span>INDEKS GERAKAN MODEL:</span>
                                 <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">50 / 100 (MODEL)</strong>
                             </div>
                         </div>
@@ -420,13 +420,13 @@
                     <!-- Vector Selector Buttons & Vertical Shoe Contact Slider -->
                     <div class="space-y-3 pt-1">
                         <div class="grid grid-cols-3 gap-2 font-mono-tech text-xs">
-                            <button onclick="selectFingerVector('C')" id="btnVec-C" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
+                            <button onclick="selectFingerVector('C')" id="btnVec-C" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
                                 [C] Terlalu Dalam
                             </button>
-                            <button onclick="selectFingerVector('B')" id="btnVec-B" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
+                            <button onclick="selectFingerVector('B')" id="btnVec-B" aria-pressed="true" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
                                 [B] Garis lurus (contoh)
                             </button>
-                            <button onclick="selectFingerVector('A')" id="btnVec-A" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
+                            <button onclick="selectFingerVector('A')" id="btnVec-A" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
                                 [A] Ujung Jari
                             </button>
                         </div>
@@ -871,19 +871,19 @@
                                 <polygon points="483,32 565,24 565,76 483,68" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
 
                                 <!-- Scope Interactive Callout Nodes (7, 8, 9, 10) -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih objective" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-label="Pilih objective" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
                                     <circle cx="80" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="80" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">7</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih turrets" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-label="Pilih turrets" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
                                     <circle cx="294" cy="22" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="294" y="26" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">8</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih zoom" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-label="Pilih zoom" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
                                     <circle cx="465" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="465" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">9</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih ocular" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-label="Pilih ocular" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
                                     <circle cx="545" cy="50" r="11" fill="#0E7C47" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="545" y="54" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">10</text>
                                 </g>
@@ -898,20 +898,20 @@
                                 </g>
 
                                 <!-- 1. Buttplate & Rear Stock Carrier -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
                                     <rect x="48" y="135" width="18" height="125" fill="#111315"/>
                                     <rect id="rigRearBlock" x="66" y="160" width="40" height="46" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
                                     <circle cx="86" cy="183" r="9" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                 </g>
 
                                 <!-- 2. Adjustable Cheek Piece -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
                                     <path d="M108 152 L222 152 L212 120 L120 120 Z" fill="#B37B24" stroke="#111315" stroke-width="1.8"/>
                                     <text id="rigCheekName" x="165" y="141" text-anchor="middle" fill="#FFFFFF" font-family="Cormorant Garamond" font-style="italic" font-size="15" font-weight="bold">Aurellia</text>
                                 </g>
 
                                 <!-- 3. Chassis, Grip & Trigger Blade -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
                                     <path id="rigMainChassis" d="M106 162 L585 162 L600 186 L312 186 L284 250 L242 250 L252 192 L106 192 Z" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
                                     <!-- Laminated Wood Grip & Fore-End Block -->
                                     <path d="M245 186 L286 186 L276 254 L235 254 Z" fill="#B37B24" stroke="#111315" stroke-width="1.5"/>
@@ -922,41 +922,41 @@
                                 </g>
 
                                 <!-- 5. 200 Bar Air Cylinder -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
                                     <rect x="445" y="164" width="300" height="20" fill="#CBD5E1" stroke="#111315" stroke-width="1.5"/>
                                     <rect x="745" y="164" width="24" height="20" fill="#0055B8" stroke="#111315" stroke-width="1.5"/>
                                     <text x="595" y="177" text-anchor="middle" fill="#111315" font-family="IBM Plex Mono" font-size="9" font-weight="bold">TABUNG UDARA (PCP) — SKEMA</text>
                                 </g>
 
                                 <!-- 6. Match Barrel & Riser Rail -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
                                     <rect x="300" y="138" width="525" height="16" fill="#E2E8F0" stroke="#111315" stroke-width="1.5"/>
                                     <rect id="rigMuzzleCap" x="802" y="136" width="28" height="20" fill="#D11F26" stroke="#111315" stroke-width="1.5"/>
                                     <rect x="330" y="114" width="165" height="24" fill="#1E293B" stroke="#111315" stroke-width="1.5"/>
                                 </g>
 
                                 <!-- Numbered Callout Pins on Rifle (1 to 6) -->
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="stock" aria-label="Pilih stock" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
                                     <circle cx="66" cy="183" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="66" y="187" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">1</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cheekpiece" aria-label="Pilih cheekpiece" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
                                     <circle cx="165" cy="118" r="11" fill="#FF4800" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="165" y="122" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">2</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="grip" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
                                     <circle cx="308" cy="218" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="308" y="222" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">3</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih riser" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="riser" aria-label="Pilih riser" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
                                     <circle cx="412" cy="126" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="412" y="130" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">4</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="cylinder" aria-label="Pilih cylinder" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
                                     <circle cx="620" cy="174" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="620" y="178" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">5</text>
                                 </g>
-                                <g class="cursor-pointer" tabindex="0" role="button" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+                                <g class="cursor-pointer" tabindex="0" role="button" data-hw-key="barrel" aria-label="Pilih barrel" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
                                     <circle cx="760" cy="146" r="11" fill="#111315" stroke="#FFFFFF" stroke-width="1.5"/>
                                     <text x="760" y="150" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono" font-size="10" font-weight="bold">6</text>
                                 </g>
