@@ -174,7 +174,7 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.match(html,/id="biomechRedKit"/);
  assert.match(html,/id="svgAthleteLayer"/);
  assert.match(html,/id="svgCogPlumbGroup"/);
- assert.match(js,/figSvg = buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
  assert.match(html,/id="triggerMechanismDiagram"/);
  for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','svgSideCheekpiece','svgShooterHeadSide']){
