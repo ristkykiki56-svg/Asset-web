@@ -990,3 +990,5 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  #sec-biomech .ts-pose-art-choices button{flex:1 1 0}
  #sec-biomech .ts-pose-art-switch{min-height:40px}
 }
+
+#sec-biomech .ts-pose-art-note{width:100%;font-size:11px;line-height:1.55;color:var(--ink-500);margin:0}
