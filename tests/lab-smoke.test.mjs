@@ -254,7 +254,6 @@ test('review-only blue/red static posture adapter keeps existing SVG fallback',(
 
 
 test('posture review is complete only when all six valid WebP images are present',()=>{
- const {existsSync,readFileSync,statSync}=requireCompatFs();
  const base=new URL('../assets/posture/',import.meta.url);
  const names=['blue-front','blue-side','blue-back','red-front','red-side','red-back'];
  const present=names.filter(name=>existsSync(new URL(name+'.webp',base)));
@@ -268,4 +267,3 @@ test('posture review is complete only when all six valid WebP images are present
    assert.equal(data.subarray(8,12).toString(),'WEBP',name+' has an invalid WebP header');
  }
 });
-function requireCompatFs(){return {existsSync,readFileSync,statSync};}
