@@ -206,6 +206,8 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
         // Anchor locations refer to illustrative SVG anatomy, not measured positions.
         // Keeping coordinates in SVG units prevents responsive letterbox offsets.
         function biomechAnchor(point, arch, hipLock) {
+            const spriteAnchor = window.tsPosturePoseArt?.anchor(point, currentPose);
+            if (spriteAnchor) return spriteAnchor;
             const upper = -arch * 1.1;
             const elbow = Math.round((100 - hipLock) * .4);
             const anchors = {
@@ -257,11 +259,11 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             let figSvg = '';
             let arrowsSvg = '';
 
-            figSvg = buildEditorialPostureIllustration(currentPose, arch, hipLock);
+            figSvg = window.tsPosturePoseArt?.figure(currentPose) || buildEditorialPostureIllustration(currentPose, arch, hipLock);
             arrowsSvg = '';
 
             // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
-            if (showXraySkeleton) {
+            if (showXraySkeleton && !window.tsPosturePoseArt?.isActive()) {
                 figSvg += `
                     <g stroke="#3F9DA0" stroke-width="2.1" fill="none" opacity="0.9">
                         <!-- Spinal Column Curve -->
