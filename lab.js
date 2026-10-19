@@ -72,7 +72,7 @@ let sfxActive = false;
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
                 code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Lengkungan Punggung & Tahanan Beban Pasif',
                 desc: 'Garis tubuh dan tumpuan pada gambar adalah skema dua dimensi. Diagram memperlihatkan bagaimana perubahan satu parameter menggeser bentuk SVG, bukan menunjukkan distribusi gaya yang telah diukur.',
                 metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
@@ -80,7 +80,7 @@ let sfxActive = false;
             {
                 id: 'head', num: '02', pose: 'front', x: 50, y: 16,
                 code: 'TITIK ANATOMI #02 // POSISI KEPALA',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Posisi Kepala Tegak & Pandangan Lurus',
                 desc: 'Ilustrasi posisi kepala dan garis pandang. Bentuk serta jarak pada gambar tidak mengacu pada pengukuran Clarisa atau Aurellia.',
                 metrics: ['FOKUS: posisi kepala', 'ACUAN: skema visual', 'UKURAN: bukan data atlet']
@@ -88,7 +88,7 @@ let sfxActive = false;
             {
                 id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
                 code: 'TITIK ANATOMI #03 // BAHU KANAN',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Bahu Kanan & Sandaran Buttplate',
                 desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
                 metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
@@ -96,7 +96,7 @@ let sfxActive = false;
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
                 code: 'TITIK ANATOMI #04 // BAHU KIRI & LENGAN KIRI',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Bahu Kiri & Segitiga Penopang Lengan Kiri',
                 desc: 'Ilustrasi posisi lengan penopang sebagai komponen postur berdiri. Tidak dapat digunakan untuk menyimpulkan persentase kerja otot.',
                 metrics: ['LENGAN: ilustrasi', 'POSISI: contoh', 'AKTIVITAS OTOT: tidak diukur']
@@ -104,7 +104,7 @@ let sfxActive = false;
             {
                 id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
                 code: 'TITIK ANATOMI #05 // TANGAN & PERGELANGAN KIRI',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Tangan dan Pergelangan Tangan Kiri',
                 desc: 'Variasi posisi pergelangan ditampilkan secara konseptual. Posisi latihan nyata harus disesuaikan secara langsung oleh pelatih dan atlet.',
                 metrics: ['FUNGSI: dukungan posisi', 'VARIASI: anatomi atlet', 'ACUAN: bukan ukuran tunggal']
@@ -112,7 +112,7 @@ let sfxActive = false;
             {
                 id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
                 code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Tangan Kanan, Grip & Jari Pelatuk',
                 desc: 'Diagram menunjukkan letak grip, telunjuk, dan pelatuk dalam satu contoh posisi. Sudut dan tekanan tangan tidak diukur dan bukan rekomendasi untuk semua atlet.',
                 metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: skema arah']
@@ -120,7 +120,7 @@ let sfxActive = false;
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
                 code: 'TITIK ANATOMI #07 // SIKU KIRI & PINGGUL',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kunci Siku Kiri pada Tulang Pinggul',
                 desc: 'Diagram menampilkan letak siku terhadap pinggul. Klaim tentang pengurangan goyangan dalam persen tidak didukung pengukuran pada simulator.',
                 metrics: ['KONTAK: ilustrasi', 'EFEK: belum terukur', 'ANGKA REDUKSI: tidak tersedia']
@@ -128,7 +128,7 @@ let sfxActive = false;
             {
                 id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
                 code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Penyelarasan Badan, Bahu & Pinggul',
                 desc: 'Ilustrasi menampilkan hubungan badan, bahu, dan pinggul dari satu sudut. Gambar tidak menunjukkan sudut ideal atau pedoman teknik yang terverifikasi.',
                 metrics: ['PINGGUL: contoh visual', 'TORSO: contoh orientasi', 'PUNTIRAN: tidak diukur']
@@ -136,7 +136,7 @@ let sfxActive = false;
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
                 code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kiri — Skema Penopang Berdiri',
                 desc: 'Kaki kiri merupakan salah satu titik tumpu postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
                 metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
@@ -144,7 +144,7 @@ let sfxActive = false;
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
                 code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
-                ref: 'SKEMA EDUKATIF — SUMBER POSTER TIDAK TERSEDIA',
+                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kanan — Skema Penopang Berdiri',
                 desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
                 metrics: ['DISTRIBUSI: tidak diukur', 'SUDUT: hanya ilustrasi', 'ATURAN: posisi berdiri']
