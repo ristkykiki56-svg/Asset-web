@@ -232,3 +232,22 @@ test('anatomy selection keeps ten stable click controls and viewpoint-aware anch
  assert.match(css,/#sec-biomech \.callout-node:not\(\[hidden\]\)\{display:flex!important/);
  assert.doesNotMatch(css,/\.callout-node:not\(\[aria-pressed="true"\]\)\{display:none/);
 });
+
+
+test('review-only blue/red static posture adapter keeps existing SVG fallback',()=>{
+ const adapter=readFileSync(new URL('../posture-art.js',import.meta.url),'utf8');
+ assert.match(html,/id="postureArtControls"/);
+ assert.match(html,/id="postureArtMode"/);
+ assert.match(html,/data-pose-color="blue"/);
+ assert.match(html,/data-pose-color="red"/);
+ assert.match(html,/defer src="\/posture-art.js"/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration/);
+ assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
+ assert.match(adapter,/Promise\.all\(variants\.flatMap/);
+ assert.match(adapter,/state\.ready=false;state\.active=false/);
+ assert.match(adapter,/skema SVG tetap digunakan/);
+ assert.match(adapter,/aria-pressed/);
+ assert.match(css,/ts-pose-art-controls/);
+ assert.match(css,/ts-pose-art-active \.ts-scheme-only/);
+ assert.equal((html.match(/id="postureArtMode"/g)||[]).length,1);
+});
