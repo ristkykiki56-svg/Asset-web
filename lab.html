@@ -567,6 +567,7 @@
                             <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
                         </div>
                         <div class="optical-side-pan" tabindex="0" aria-label="Ilustrasi optik dapat digeser ke samping pada layar kecil">
+                        <canvas id="opticalAlignmentArtwork" hidden role="img" aria-label="Ilustrasi asli teleskop dan sosok generik; bagian kepala bergeser mengikuti slider, sedangkan teleskop dan senapan tetap diam"></canvas>
                         <svg id="opticalAlignmentIllustration" viewBox="0 0 835 282" class="w-full h-auto block" role="img" aria-labelledby="optSideTitle optSideDesc">
 <title id="optSideTitle">Studi ilustratif jarak mata dan lensa okuler</title>
 <desc id="optSideDesc">Karakter generik tampak samping; hanya bagian kepala yang berubah posisi mengikuti dua slider. Teleskop dan badan senapan tetap diam. Bentuk dan jarak hanyalah contoh visual.</desc>
@@ -651,7 +652,8 @@
 </g>
 </svg>
                         </div>
-                        <p class="optical-side-hint">Teleskop dan senapan tetap diam. Geser gambar jika perlu; perubahan posisi hanya pada kepala ilustrasi.</p>
+                        <p class="optical-side-hint">Teleskop dan senapan tetap diam. Geser gambar jika perlu; perubahan posisi hanya pada kepala ilustrasi.
+                        <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
                     </div>
                 </div>
 
@@ -1229,5 +1231,6 @@
     </footer>
     <script defer src="/lab.js"></script>
     <script defer src="/posture-art.js"></script>
+    <script defer src="/optics-poster-artwork.js"></script>
 </body>
 </html>
