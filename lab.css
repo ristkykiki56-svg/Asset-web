@@ -998,3 +998,9 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 #sec-biomech.ts-pose-art-active #biomechDraftSvg .biomech-ground,
 #sec-biomech.ts-pose-art-active #biomechDraftSvg #svgCogPlumbGroup{display:none}
 #sec-biomech.ts-pose-art-active .lab-biomech-stage{background-image:linear-gradient(180deg,rgba(248,248,245,.16),rgba(238,240,236,.14))}
+
+/* Keep successful preload announcements accessible without repeating interface copy. */
+#sec-biomech #postureArtStatus[data-error="false"]{
+  position:absolute;width:1px;height:1px;overflow:hidden;white-space:nowrap;
+  clip-path:inset(50%);pointer-events:none
+}
