@@ -45,4 +45,17 @@ jobs:
             /tmp/twinshooter-qa/lab-silhouette-desktop.png
             /tmp/twinshooter-qa/lab-silhouette-mobile.png
             /tmp/twinshooter-qa/lab-viewport-result.html
+            /tmp/twinshooter-qa/posture-blue-front-desktop.png
+            /tmp/twinshooter-qa/posture-blue-front-mobile.png
+            /tmp/twinshooter-qa/posture-blue-sideLeft-desktop.png
+            /tmp/twinshooter-qa/posture-blue-sideLeft-mobile.png
+            /tmp/twinshooter-qa/posture-blue-back-desktop.png
+            /tmp/twinshooter-qa/posture-blue-back-mobile.png
+            /tmp/twinshooter-qa/posture-red-front-desktop.png
+            /tmp/twinshooter-qa/posture-red-front-mobile.png
+            /tmp/twinshooter-qa/posture-red-sideLeft-desktop.png
+            /tmp/twinshooter-qa/posture-red-sideLeft-mobile.png
+            /tmp/twinshooter-qa/posture-red-back-desktop.png
+            /tmp/twinshooter-qa/posture-red-back-mobile.png
+            /tmp/twinshooter-qa/posture-sprite-result.html
           if-no-files-found: ignore
