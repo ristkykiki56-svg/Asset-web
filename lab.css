@@ -1086,3 +1086,17 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
     #sec-optics .optical-side-pan{direction:rtl}
     #sec-optics #opticalAlignmentIllustration{direction:ltr}
 }
+
+/* Direct optical artwork: use source WebP pixels; SVG remains fallback only. */
+#sec-optics #opticalAlignmentArtwork{
+ display:block;width:100%;height:auto;max-width:none;aspect-ratio:1983/793;
+ border:1px solid var(--rule-light);background:#fafafa;
+}
+#sec-optics #opticalAlignmentArtwork[hidden]{display:none!important}
+#sec-optics #opticalAlignmentIllustration[hidden]{display:none!important}
+#sec-optics.optics-poster-ready .optical-side-pan{background:#fafafa}
+#sec-optics.optics-poster-ready .optical-side-pan>canvas{box-shadow:none}
+#sec-optics.optics-poster-ready .optical-side-pan{scrollbar-width:thin}
+@media(max-width:767px){
+ #sec-optics #opticalAlignmentArtwork{width:650px;min-width:650px;max-width:none;height:auto}
+}
