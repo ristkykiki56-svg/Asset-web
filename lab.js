@@ -725,13 +725,15 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm`;
             document.getElementById('optPressureLabel').textContent =
-                press > 72 ? `${press}% (NILAI TINGGI MODEL)` : press < 25 ? `${press}% (NILAI RENDAH MODEL)` : `${press}% (NILAI TENGAH MODEL)`;
+                press > 72 ? `${press}% (PERUBAHAN BESAR)` : press < 25 ? `${press}% (PERUBAHAN KECIL)` : `${press}% (PERUBAHAN SEDANG)`;
 
-            // Move side-profile SVG head & cheekpiece
-            const dx = (dist - 85) * 0.9;
-            const dy = -comb * 0.85;
-            document.getElementById('svgShooterHeadSide').setAttribute('transform', `translate(${dx}, ${dy})`);
-            document.getElementById('svgSideCheekpiece').setAttribute('transform', `translate(0, ${dy})`);
+            // The camera is fixed; only the illustrative head moves in this side view.
+            // Increasing the eye-distance slider increases the gap from the fixed ocular lens.
+            // Lateral movement is perpendicular to this side view and updates only the lens canvas.
+            const dx = (dist - 85) * 0.6;
+            const dy = -7 - comb * 0.85;
+            document.getElementById('svgShooterHeadSide').setAttribute(
+                'transform', 'translate(' + dx.toFixed(2) + ', ' + dy.toFixed(2) + ')');
 
             const err = Math.hypot(dist - 85, comb * 1.5, lat * 1.5);
             const badge = document.getElementById('opticsLockBadge');
@@ -765,13 +767,13 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
         function renderOcularLoop(timestamp = performance.now(), force = false) {
             ocularReq = null;
             if (!force && (!ocularVisible || document.hidden)) return;
-            if (!reducedMotion.matches && timestamp - ocularLast < 32) {scheduleOcularFrame(); return;}
+            if (!force && timestamp - ocularLast < 32) return;
             ocularLast = timestamp;
             const canvas = document.getElementById('ocularLensCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height, cx = w / 2, cy = h / 2;
-            if (!reducedMotion.matches) ocularTick += 0.05;
+            // No idle motion: only changes to the controls update the optical sketch.
 
             const dist = parseFloat(document.getElementById('optEyeDist').value);
             const comb = parseFloat(document.getElementById('optCheekHeight').value);
@@ -868,7 +870,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             ctx.fillStyle = grad;
             ctx.beginPath(); ctx.arc(cx, cy, 148, 0, Math.PI * 2); ctx.fill();
 
-            if (!reducedMotion.matches) scheduleOcularFrame();
+            // No continuous idle frame; await the next user input.
         }
 
         // Distinctive editorial silhouette studies, not competition target templates.
@@ -1255,7 +1257,18 @@ function setupLabMobileExperience() {
         }
         if (progress) progress.textContent = (index + 1) + ' dari ' + ids.length;
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
-        if (id === 'sec-optics') renderOcularLoop(performance.now(), true);
+        if (id === 'sec-optics') {
+            renderOcularLoop(performance.now(), true);
+            if (media.matches) requestAnimationFrame(() => {
+                const pan = document.querySelector('#sec-optics .optical-side-pan');
+                // Start with the eye and ocular visible on narrow screens.
+                // Preserve the visitor's manual scroll position after first opening.
+                if (pan && pan.dataset.initialized !== 'true') {
+                    pan.scrollLeft = pan.scrollWidth - pan.clientWidth;
+                    pan.dataset.initialized = 'true';
+                }
+            });
+        }
         if (id === 'sec-hardware' && media.matches) {
             // Initial selection may be made while the lesson is still hidden.
             // Center it when the diagram becomes visible.

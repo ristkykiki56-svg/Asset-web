@@ -1054,3 +1054,35 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 @media(prefers-reduced-motion:reduce){
   #sec-imssu [data-rack-animal]{transition:none}
 }
+
+
+/* Optical study V2 — editorial scope and generic head, separate static layers. */
+#sec-optics .optical-side-pan{
+    width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;
+    scrollbar-color:var(--ink-500) var(--bg-subtle)
+}
+#sec-optics #opticalAlignmentIllustration{
+    display:block;width:100%;max-width:none;height:auto;aspect-ratio:835/282;
+    background:#F9FAF7;border:1px solid var(--rule-light)
+}
+#sec-optics .optical-side-hint{
+    color:var(--ink-500);font-size:11px;line-height:1.6;margin-top:8px
+}
+#sec-optics .optical-side-pan:focus-visible{
+    outline:2px solid var(--clarisa-blue);outline-offset:2px
+}
+@media(max-width:767px){
+    #sec-optics #opticalAlignmentIllustration{
+        width:540px;min-width:540px;height:auto
+    }
+    #sec-optics .optical-side-hint{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+    #sec-optics #svgShooterHeadSide{transition:none}
+}
+
+/* Show the eye and ocular first on narrow views, while allowing objective inspection. */
+@media(max-width:767px){
+    #sec-optics .optical-side-pan{direction:rtl}
+    #sec-optics #opticalAlignmentIllustration{direction:ltr}
+}
