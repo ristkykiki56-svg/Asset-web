@@ -195,6 +195,31 @@ frame.addEventListener('load',async ()=>{
  const eyeCanvas=doc.getElementById('ocularLensCanvas');
  const opticalPixel=eyeCanvas.getContext('2d').getImageData(150,150,1,1).data;
  if(opticalPixel[3]===0)problems.push('optical canvas is blank before viewport activation');
+ const artwork=doc.getElementById('opticalAlignmentArtwork');
+ for(let attempts=0;attempts<50&&!w.OpticsPosterArt?.isReady();attempts++){
+   await new Promise(resolve=>w.setTimeout(resolve,60));
+ }
+ if(!w.OpticsPosterArt?.isReady())problems.push('direct WebP optics artwork failed to load');
+ else {
+   if(artwork.hidden||!doc.getElementById('opticalAlignmentIllustration').hidden)
+     problems.push('direct optics artwork not active or SVG still visible');
+   const artCtx=artwork.getContext('2d');
+   const scopeBefore=artCtx.getImageData(320,140,1,1).data.join(',');
+   const headBefore=artCtx.getImageData(670,130,70,80).data;
+   const hash=(pixels)=>{let sum=0;for(let i=0;i<pixels.length;i+=7)sum=(sum+pixels[i])%1000000007;return sum};
+   const baselineHash=hash(headBefore);
+   doc.getElementById('optEyeDist').value='120';
+   doc.getElementById('optEyeDist').dispatchEvent(new Event('input',{bubbles:true}));
+   await new Promise(resolve=>w.setTimeout(resolve,420));
+   const scopeAfter=artCtx.getImageData(320,140,1,1).data.join(',');
+   const alteredHash=hash(artCtx.getImageData(670,130,70,80).data);
+   if(scopeBefore!==scopeAfter)problems.push('direct optics artwork moved telescope pixels');
+   if(baselineHash===alteredHash)problems.push('direct optics artwork head did not move');
+   w.calibratePerfectOptics();
+   await new Promise(resolve=>w.setTimeout(resolve,500));
+   const resetHash=hash(artCtx.getImageData(670,130,70,80).data);
+   if(resetHash!==baselineHash)problems.push('direct optics artwork reset failed');
+ }
  const eye=doc.getElementById('optEyeDist');
  const animatedHead=doc.getElementById('svgShooterHeadSide');
  const fixedScope=doc.getElementById('opticFixedScope');
