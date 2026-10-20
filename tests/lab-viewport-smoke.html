@@ -231,6 +231,40 @@ frame.addEventListener('load',async ()=>{
      if(!doc.querySelector('#svgAthleteLayer image[href$="red-back.webp"]'))problems.push('red back view missing');
      doc.querySelector('[data-pose-color="blue"]')?.click();
      if(!doc.querySelector('#svgAthleteLayer image[href$="blue-back.webp"]'))problems.push('blue sprite variant missing');
+
+     // Validate real alpha masks: visible hotspot centers must not point into empty image background.
+     // Coordinates here are display-only, not biomechanical measurements.
+     for(const variant of ['blue','red']){
+       doc.querySelector('[data-pose-color="'+variant+'"]').click();
+       for(const pose of ['back','front','sideLeft','sideRight']){
+         w.switchPose(pose);
+         const sourcePose=pose.startsWith('side')?'side':pose;
+         const imgEl=doc.querySelector('#svgAthleteLayer image[href$="'+variant+'-'+sourcePose+'.webp"]');
+         if(!imgEl){problems.push('sprite alpha QA missing '+variant+' '+pose);continue;}
+         const srcImg=new w.Image();
+         await new Promise(resolve=>{srcImg.onload=resolve;srcImg.onerror=resolve;srcImg.src=imgEl.getAttribute('href')});
+         if(!srcImg.naturalWidth){problems.push('sprite alpha QA could not decode '+variant+' '+pose);continue;}
+         const testCanvas=doc.createElement('canvas');testCanvas.width=srcImg.naturalWidth;testCanvas.height=srcImg.naturalHeight;
+         const context=testCanvas.getContext('2d',{willReadFrequently:true});
+         context.drawImage(srcImg,0,0);
+         const boxX=Number(imgEl.getAttribute('x')),boxY=Number(imgEl.getAttribute('y'));
+         const boxW=Number(imgEl.getAttribute('width')),boxH=Number(imgEl.getAttribute('height'));
+         const scale=Math.min(boxW/srcImg.naturalWidth,boxH/srcImg.naturalHeight);
+         const offsetX=boxX+(boxW-srcImg.naturalWidth*scale)/2;
+         const offsetY=boxY+(boxH-srcImg.naturalHeight*scale)/2;
+         for(const pin of doc.querySelectorAll('#biomechPinsOverlay .callout-node:not([hidden])')){
+           const px=Number(pin.dataset.svgX),py=Number(pin.dataset.svgY);
+           const originalX=pose==='sideRight'?460-px:px;
+           const ix=Math.round((originalX-offsetX)/scale),iy=Math.round((py-offsetY)/scale);
+           if(ix<0||iy<0||ix>=srcImg.naturalWidth||iy>=srcImg.naturalHeight){
+             problems.push('hotspot outside sprite '+variant+' '+pose+' #'+pin.textContent);
+           }else if(context.getImageData(ix,iy,1,1).data[3]<65){
+             problems.push('hotspot on transparent area '+variant+' '+pose+' #'+pin.textContent);
+           }
+         }
+       }
+     }
+     doc.querySelector('[data-pose-color="blue"]').click();
      artMode.checked=false;artMode.dispatchEvent(new Event('change',{bubbles:true}));
      if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure'))problems.push('manual SVG fallback unavailable');
      artMode.checked=true;artMode.dispatchEvent(new Event('change',{bubbles:true}));
