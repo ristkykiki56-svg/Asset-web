@@ -1132,3 +1132,11 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 @media(prefers-reduced-motion:reduce){
  #sec-optics #opticHeadArt{transition:none!important}
 }
+
+/* The status is announced to screen readers, never repeated beneath the artwork. */
+#sec-optics #opticsArtworkStatus{
+ position:absolute!important;width:1px!important;height:1px!important;
+ padding:0!important;margin:-1px!important;border:0!important;
+ overflow:hidden!important;white-space:nowrap!important;
+ clip-path:inset(50%)!important;
+}
