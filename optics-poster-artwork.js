@@ -1,77 +1,68 @@
-/* Shooting Lab Optics: render the approved artwork directly, without redrawing
- * the telescope or face as SVG. This is a conceptual visualization only.
- * No automatic idle, facial, or breathing animation. */
+/* Shooting Lab Optics: intact raster artwork in two real WebP layers.
+ * One immovable telescope/rifle/background, one alpha-matted generic head.
+ * No pixel warping, procedural face redraw, automatic idle or breathing motion.
+ * Visual model only: travel is NOT athlete measurement or scope calibration. */
 (()=>{
 'use strict';
-const canvas=document.getElementById('opticalAlignmentArtwork');
+const stage=document.getElementById('opticalAlignmentArtwork');
+const base=document.getElementById('opticStaticArt');
+const head=document.getElementById('opticHeadArt');
 const fallback=document.getElementById('opticalAlignmentIllustration');
-const announcement=document.getElementById('opticsArtworkStatus');
-if(!canvas||!fallback)return;
-const ctx=canvas.getContext('2d',{willReadFrequently:true});
-if(!ctx)return;
-const image=new Image();
-const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-let source=null,buffer=null,ready=false,cx=0,cy=0,tx=0,ty=0,scheduled=0;
-const smooth=(v,a,b)=>{const t=Math.min(1,Math.max(0,(v-a)/(b-a)));return t*t*(3-2*t)};
-function render(dx,dy){
+const announcer=document.getElementById('opticsArtworkStatus');
+if(!stage||!base||!head||!fallback)return;
+
+let ready=false;
+const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+function announce(s){if(announcer)announcer.textContent=s}
+function placement(dist=85,height=0){
+ // Limit translation to preserve collar/head continuity. Pixel coordinates are
+ // illustrative, and deliberately much smaller than equipment travel in mm.
+ return {
+   x:clamp((Number(dist)-85)*.18,-6.5,6.5),
+   y:clamp(-Number(height)*.10,-2.5,2.5)
+ };
+}
+function apply({dist=85,height=0}={},immediate=false){
  if(!ready)return;
- if(Math.abs(dx)<.015&&Math.abs(dy)<.015){ctx.putImageData(source,0,0);return}
- const w=canvas.width,h=canvas.height,src=source.data,dst=buffer.data;
- // Only the head region of the *source pixels* is gently remapped. The scope,
- // mount, barrel and main rifle chassis always retain their original positions.
- // Feathering the transformation avoids visible seams at hair and neck edges.
- for(let y=0;y<h;y++){
-  const verticalWeight=1-smooth(y/h,.63,.91);
-  for(let x=0;x<w;x++){
-   const strength=smooth(x/w,.59,.73)*verticalWeight;
-   const sx=Math.max(0,Math.min(w-1,x-dx*strength));
-   const sy=Math.max(0,Math.min(h-1,y-dy*strength));
-   const x0=Math.floor(sx),x1=Math.min(w-1,x0+1),y0=Math.floor(sy),y1=Math.min(h-1,y0+1);
-   const u=sx-x0,v=sy-y0,a=(y0*w+x0)*4,b=(y0*w+x1)*4,c=(y1*w+x0)*4,e=(y1*w+x1)*4,i=(y*w+x)*4;
-   for(let k=0;k<3;k++)dst[i+k]=(src[a+k]*(1-u)+src[b+k]*u)*(1-v)+(src[c+k]*(1-u)+src[e+k]*u)*v;
-   dst[i+3]=255;
-  }
- }
- ctx.putImageData(buffer,0,0);
-}
-function tick(){
- scheduled=0;
- if(!ready)return;
- if(reduced.matches){cx=tx;cy=ty}
- else {cx+=(tx-cx)*.34;cy+=(ty-cy)*.34}
- render(cx,cy);
- if(Math.abs(tx-cx)>.08||Math.abs(ty-cy)>.08)scheduled=requestAnimationFrame(tick);
- else if(!reduced.matches){cx=tx;cy=ty;render(cx,cy)}
-}
-function update({dist=85,height=0}={}){
- // Values expressed as illustration pixels, not millimetres of body travel.
- tx=Math.max(-20,Math.min(20,(Number(dist)-85)*.5));
- ty=Math.max(-9,Math.min(9,-Number(height)*.36));
- if(ready&&!scheduled)scheduled=requestAnimationFrame(tick);
-}
-function renderImmediately({dist=85,height=0}={}){
- update({dist,height});
- if(scheduled)cancelAnimationFrame(scheduled);
- scheduled=0;cx=tx;cy=ty;render(cx,cy);
+ const p=placement(dist,height);
+ const ratio=stage.clientWidth/(base.naturalWidth||1320);
+ const x=p.x*ratio,y=p.y*ratio;
+ head.style.transition=immediate||prefersReduced.matches?'none':'transform 150ms ease-out';
+ head.style.transform='translate3d('+x.toFixed(3)+'px,'+y.toFixed(3)+'px,0)';
+ stage.dataset.headX=p.x.toFixed(3);
+ stage.dataset.headY=p.y.toFixed(3);
 }
 window.OpticsPosterArt={
- update,renderImmediately,isReady:()=>ready,getCanvas:()=>canvas
+ update:(v)=>apply(v),
+ renderImmediately:(v)=>apply(v,true),
+ isReady:()=>ready,
+ getHead:()=>head,
+ getStatic:()=>base
 };
-image.onload=()=>{
- try{
-  if(image.naturalWidth<600)throw Error('incomplete artwork');
-  canvas.width=Math.min(960,image.naturalWidth);
-  canvas.height=Math.round(image.naturalHeight*canvas.width/image.naturalWidth);
-  ctx.drawImage(image,0,0,canvas.width,canvas.height);
-  source=ctx.getImageData(0,0,canvas.width,canvas.height);
-  buffer=ctx.createImageData(canvas.width,canvas.height);
-  ready=true;canvas.hidden=false;fallback.hidden=true;
-  document.getElementById('sec-optics')?.classList.add('optics-poster-ready');
-  if(announcement)announcement.textContent='Ilustrasi gambar aktif. Hanya kepala bergerak mengikuti slider.';
-  update({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value});
- }catch(err){if(announcement)announcement.textContent='Skema cadangan sedang digunakan.'}
-};
-image.onerror=()=>{if(announcement)announcement.textContent='Aset belum tersedia. Skema SVG cadangan tetap ditampilkan.'};
-image.decoding='async';
-image.src='/assets/optics/optic-artwork.webp';
+function maybeReady(){
+ if(ready)return;
+ if(!base.complete||!head.complete)return;
+ if(base.naturalWidth<600||head.naturalWidth<600
+    ||base.naturalWidth!==head.naturalWidth||base.naturalHeight!==head.naturalHeight)return;
+ ready=true;
+ stage.hidden=false;
+ fallback.hidden=true;
+ document.getElementById('sec-optics')?.classList.add('optics-poster-ready');
+ announce('Ilustrasi dua layer aktif. Kepala bergerak terbatas sesuai slider; teleskop tetap diam.');
+ apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
+}
+function fail(){
+ ready=false;stage.hidden=true;fallback.hidden=false;
+ announce('Ilustrasi gambar tidak tersedia. Skema SVG cadangan ditampilkan.');
+}
+for(const im of [base,head]){
+ im.addEventListener('load',maybeReady);
+ im.addEventListener('error',fail);
+}
+if(base.complete&&head.complete)maybeReady();
+window.addEventListener('resize',()=>{
+ if(!ready)return;
+ apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
+},{passive:true});
 })();
