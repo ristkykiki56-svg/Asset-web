@@ -41,7 +41,8 @@ frame.addEventListener('load',async()=>{
   const expected=color+'-'+(pose==='sideRight'?'side':'sideLeft'===pose?'side':pose)+'.webp';
   const img=doc.querySelector('#svgAthleteLayer image[href$="'+expected+'"]');
   if(!img)throw Error('Wrong/missing sprite '+expected);
-  await new Promise(resolve=>win.requestAnimationFrame(()=>win.requestAnimationFrame(resolve)));
+  // Rendering and SVG updates are synchronous; record readiness without an iframe RAF gate.
+  win.positionBiomechPins();
   win.scrollTo(0,0);
   document.body.dataset.sprite=expected;
   document.body.dataset.pose=pose;
