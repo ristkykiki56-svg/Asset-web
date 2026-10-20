@@ -355,7 +355,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Memahami pergerakan pelatuk lewat diagram</span><span class="lab-heading-short">Pelatuk</span>
 </h2>
-<p class="lab-section-hint">Bandingkan arah A, B, dan C pada diagram. Tekan tombol simulasi untuk melihat empat fase kurva contoh.</p>
+<p class="lab-section-hint">Pilih A, B, atau C untuk membandingkan arah gerak pada diagram. Tombol di sebelahnya memperlihatkan empat fase kurva contoh, bukan gaya pelatuk yang terukur.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                     MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">PERBANDINGAN ARAH GERAKAN—BUKAN STANDAR TARIKAN</strong>
@@ -540,7 +540,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mata, lensa, dan posisi sandaran pipi</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Perhatikan lingkaran pada lensa. Buka kontrol di bawah gambar, ubah satu posisi, lalu bandingkan hasilnya.</p>
+<p class="lab-section-hint">Perhatikan tampilan dalam lensa. Buka kontrol di bawah gambar, geser satu parameter, lalu amati perubahannya. Ini ilustrasi optik, bukan prediksi ketepatan bidikan.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
                     Reset Posisi Model Optik
@@ -557,7 +557,7 @@
 
                     <!-- Ocular Reticle Canvas -->
                     <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center my-1">
-                        <canvas id="ocularLensCanvas" width="300" height="300" class="w-full h-full rounded-full border-4 border-[#111315] shadow-md"></canvas>
+                        <canvas id="ocularLensCanvas" width="300" height="300" role="img" aria-label="Ilustrasi pandangan melalui lensa optik; perubahan bayangan mengikuti parameter contoh, bukan kondisi optik senapan asli" class="w-full h-full rounded-full border-4 border-[#111315] shadow-md"></canvas>
                     </div>
 
                     <!-- Live Side-Profile Head & Cheekpiece Alignment Diagram (Recreating the Poster's 4 Head-on-Scope Inset Photos) -->
@@ -693,7 +693,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal sasaran siluet dan jaraknya</span><span class="lab-heading-short">Sasaran siluet</span>
 </h2>
-<p class="lab-section-hint">Pilih jenis siluet, lalu ketuk salah satu dari lima target. Jarak kompetisi mengacu pada aturan; jatuhnya target hanya animasi.</p>
+<p class="lab-section-hint">Pilih jenis siluet dan ketuk target untuk melihatnya berganti keadaan. Angka jarak mengacu pada materi aturan; ikon jatuh dan kurva lintasan hanya ilustrasi.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
@@ -709,7 +709,7 @@
                 <!-- Left 6 Cols: The Iconic 4-Tier Black Steel Pyramid Stand with 20 Orange Targets -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between space-y-4 drafting-bg">
                     <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                        <span class="font-bold">FIG 4.1 — RAK SASARAN SILUET IMSSU (KLIK TARGET UNTUK MENEMBAK)</span>
+                        <span class="font-bold">FIG 4.1 — EMPAT KELOMPOK SASARAN (KETUK SILUET UNTUK MENGUBAH STATUS)</span>
                         <span id="activeRangeBadge" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">DOMBA // 41 METER</span>
                     </div>
 
@@ -855,7 +855,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal bagian senapan dan teleskop</span><span class="lab-heading-short">Bagian peralatan</span>
 </h2>
-<p class="lab-section-hint">Pilih nama komponen untuk melihat penjelasannya. Pada mobile, gambar bisa digeser ke samping.</p>
+<p class="lab-section-hint">Pilih komponen untuk membaca fungsinya. Pada ponsel, diagram akan bergeser menuju bagian yang dipilih; kamu juga bisa menggesernya sendiri.</p>
                 </div>
 
                 <!-- Switch between Aurellia Red Feinwerkbau & Clarisa Blue Precision Rig -->
@@ -882,7 +882,7 @@
 
                     <!-- Technical Blueprint SVG -->
                     <div class="lab-hardware-scroll border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 overflow-x-auto" tabindex="0" role="region" aria-label="Diagram senapan, geser horizontal untuk melihat bagian lainnya">
-                        <p class="lab-mobile-scroll-hint">Geser gambar untuk melihat sisi lainnya → · atau pilih melalui daftar komponen</p>
+                        <p class="lab-mobile-scroll-hint">Pilih komponen melalui daftar agar gambar bergeser otomatis. Kamu juga bisa menggeser diagram →</p>
 <svg id="hardwareBlueprintSvg" viewBox="0 0 880 390" class="hw-illustration w-full h-auto min-w-[640px] select-none" role="group" aria-labelledby="hwArtTitle hwArtDesc">
  <title id="hwArtTitle">Ilustrasi interaktif komponen luar peralatan air rifle</title>
  <desc id="hwArtDesc">Diagram edukatif dua tampilan, bagian luar teleskop di atas dan profil senapan olahraga di bawah. Sepuluh nomor dapat dipilih untuk membaca penjelasan. Ini bukan spesifikasi atau model senapan atlet yang telah diverifikasi.</desc>
