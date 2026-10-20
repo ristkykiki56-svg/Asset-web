@@ -190,11 +190,28 @@ frame.addEventListener('load',async ()=>{
  w.selectFingerVector('A');
  if(doc.getElementById('btnVec-A').getAttribute('aria-pressed')!=='true'||doc.getElementById('btnVec-B').getAttribute('aria-pressed')!=='false')problems.push('vector selection status incorrect');
  w.selectFingerVector('B');
+ // A hidden mobile lesson must still paint the optical illustration, rather
+ // than showing a blank canvas before the IntersectionObserver fires.
+ const eyeCanvas=doc.getElementById('ocularLensCanvas');
+ const opticalPixel=eyeCanvas.getContext('2d').getImageData(150,150,1,1).data;
+ if(opticalPixel[3]===0)problems.push('optical canvas is blank before viewport activation');
  const eye=doc.getElementById('optEyeDist');
  eye.value='120';eye.dispatchEvent(new Event('input',{bubbles:true}));
  if(!doc.getElementById('opticsLockBadge').textContent.includes('BAYANGAN'))problems.push('optical explanation not updated');
  w.calibratePerfectOptics();
  if(!doc.getElementById('opticsLockBadge').textContent.includes('LINGKARAN'))problems.push('optical reset did not restore example');
+ if(picker){
+   picker.value='sec-hardware';
+   picker.dispatchEvent(new Event('change',{bubbles:true}));
+   if(!doc.getElementById('sec-hardware').classList.contains('is-active'))problems.push('hardware lesson not activated');
+   hardware.value='ocular';hardware.dispatchEvent(new Event('change',{bubbles:true}));
+   await new Promise(resolve=>w.requestAnimationFrame(()=>w.requestAnimationFrame(resolve)));
+   const equipmentScroller=doc.querySelector('#sec-hardware .lab-hardware-scroll');
+   if(equipmentScroller && equipmentScroller.scrollWidth>equipmentScroller.clientWidth
+       && equipmentScroller.scrollLeft<8){
+     problems.push('hardware picker did not pan diagram to selected right-side marker');
+   }
+ }
  w.location.hash='#sec-trigger';
  w.dispatchEvent(new HashChangeEvent('hashchange'));
  if(!doc.getElementById('sec-trigger').classList.contains('is-active'))problems.push('direct #sec-trigger navigation broken');
