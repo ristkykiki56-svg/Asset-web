@@ -14,10 +14,11 @@
     side:{x:101,y:28,w:253,h:472},
     back:{x:142,y:28,w:176,h:472}
   };
-  // Approximate visual anchor fractions: not anatomical measurements.
+  // Approximate visual anchor fractions checked against both WebP alpha masks.
+  // Subject-left is screen-right in front view; these are not anatomical measurements.
   const anchors = {
-    front:{spine:[.50,.43],head:[.51,.13],rightShoulder:[.31,.27],leftArm:[.68,.28],leftWrist:[.69,.38],rightHand:[.33,.39],elbowHip:[.69,.45],pelvis:[.50,.51],leftLeg:[.35,.77],rightLeg:[.69,.77]},
-    side:{spine:[.42,.43],head:[.37,.13],rightShoulder:[.45,.27],leftArm:[.57,.27],leftWrist:[.70,.39],rightHand:[.57,.34],elbowHip:[.48,.47],pelvis:[.46,.52],leftLeg:[.40,.76],rightLeg:[.51,.76]},
+    front:{spine:[.50,.43],head:[.51,.13],rightShoulder:[.31,.27],leftArm:[.68,.28],leftWrist:[.65,.30],rightHand:[.33,.39],elbowHip:[.64,.45],pelvis:[.50,.51],leftLeg:[.64,.77],rightLeg:[.31,.77]},
+    side:{spine:[.42,.43],head:[.37,.13],rightShoulder:[.45,.27],leftArm:[.57,.27],leftWrist:[.55,.23],rightHand:[.50,.23],elbowHip:[.48,.47],pelvis:[.46,.52],leftLeg:[.40,.76],rightLeg:[.51,.76]},
     back:{spine:[.50,.42],head:[.50,.14],rightShoulder:[.69,.28],leftArm:[.31,.29],leftWrist:[.22,.39],rightHand:[.72,.39],elbowHip:[.36,.46],pelvis:[.50,.52],leftLeg:[.35,.76],rightLeg:[.69,.76]}
   };
   const viewOf = p => p==='front'?'front':p==='back'?'back':'side';
@@ -89,7 +90,7 @@
     Promise.all(variants.flatMap(v=>views.map(p=>preload(url(v,p))))).then(()=>{
       state.ready=true;
       state.active=true;
-      status('Enam aset tersedia · pilih warna dan sudut pandang.');
+      status('Pilih warna dan sudut pandang.');
       refresh();
     }).catch(()=>{
       state.ready=false;state.active=false;
