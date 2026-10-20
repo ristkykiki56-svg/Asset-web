@@ -26,7 +26,11 @@ function placement(dist=85,height=0){
 function apply({dist=85,height=0}={},immediate=false){
  if(!ready)return;
  const p=placement(dist,height);
- const ratio=stage.clientWidth/(base.naturalWidth||1320);
+ // Hidden mobile lessons report clientWidth=0. Calculate the display scale
+ // using the known CSS mobile canvas width until the lesson is opened.
+ const displayWidth=stage.clientWidth || (window.matchMedia('(max-width: 767px)').matches
+   ? 650 : Math.min(1320,Math.max(320,window.innerWidth-32)));
+ const ratio=displayWidth/(base.naturalWidth||1320);
  const x=p.x*ratio,y=p.y*ratio;
  head.style.transition=immediate||prefersReduced.matches?'none':'transform 150ms ease-out';
  head.style.transform='translate3d('+x.toFixed(3)+'px,'+y.toFixed(3)+'px,0)';
