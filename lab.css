@@ -1080,3 +1080,9 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 @media(prefers-reduced-motion:reduce){
     #sec-optics #svgShooterHeadSide{transition:none}
 }
+
+/* Show the eye and ocular first on narrow views, while allowing objective inspection. */
+@media(max-width:767px){
+    #sec-optics .optical-side-pan{direction:rtl}
+    #sec-optics #opticalAlignmentIllustration{direction:ltr}
+}
