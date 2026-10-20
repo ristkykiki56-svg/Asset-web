@@ -56,8 +56,9 @@ window.OpticsPosterArt={
 image.onload=()=>{
  try{
   if(image.naturalWidth<600)throw Error('incomplete artwork');
-  canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
-  ctx.drawImage(image,0,0);
+  canvas.width=Math.min(960,image.naturalWidth);
+  canvas.height=Math.round(image.naturalHeight*canvas.width/image.naturalWidth);
+  ctx.drawImage(image,0,0,canvas.width,canvas.height);
   source=ctx.getImageData(0,0,canvas.width,canvas.height);
   buffer=ctx.createImageData(canvas.width,canvas.height);
   ready=true;canvas.hidden=false;fallback.hidden=true;
