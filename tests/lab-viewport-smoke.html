@@ -131,12 +131,24 @@ frame.addEventListener('load',async ()=>{
      problems.push('posture hotspot position not aligned with SVG');
  }
  const elbowControl=doc.getElementById('hipLockSlider');
+ // The elbow slider belongs to the legacy SVG example, not the static character art.
+ // Temporarily return to SVG so the original interaction remains regression-tested.
+ const spriteModeForSvg=doc.getElementById('postureArtMode');
+ const restoreSprite=Boolean(spriteModeForSvg?.checked && !spriteModeForSvg.disabled);
+ if(restoreSprite) {
+   spriteModeForSvg.checked=false;
+   spriteModeForSvg.dispatchEvent(new Event('change',{bubbles:true}));
+ }
  const beforeArm=doc.querySelector('#svgAthleteLayer .biomech-editorial-figure')?.innerHTML;
  elbowControl.value='20';elbowControl.dispatchEvent(new Event('input',{bubbles:true}));
  const afterArm=doc.querySelector('#svgAthleteLayer .biomech-editorial-figure')?.innerHTML;
  if(beforeArm===afterArm)problems.push('elbow control did not change illustrated figure');
  w.resetPostureParameters();
  if(doc.getElementById('hipLockSlider').value!=='100')problems.push('posture reset did not restore elbow value');
+ if(restoreSprite) {
+   spriteModeForSvg.checked=true;
+   spriteModeForSvg.dispatchEvent(new Event('change',{bubbles:true}));
+ }
 
  if(picker){
    picker.value='sec-optics';
