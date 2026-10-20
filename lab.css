@@ -1062,7 +1062,7 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
     scrollbar-color:var(--ink-500) var(--bg-subtle)
 }
 #sec-optics #opticalAlignmentIllustration{
-    display:block;width:100%;max-width:none;height:auto;aspect-ratio:800/282;
+    display:block;width:100%;max-width:none;height:auto;aspect-ratio:835/282;
     background:#F9FAF7;border:1px solid var(--rule-light)
 }
 #sec-optics .optical-side-hint{
