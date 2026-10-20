@@ -196,29 +196,37 @@ frame.addEventListener('load',async ()=>{
  const opticalPixel=eyeCanvas.getContext('2d').getImageData(150,150,1,1).data;
  if(opticalPixel[3]===0)problems.push('optical canvas is blank before viewport activation');
  const artwork=doc.getElementById('opticalAlignmentArtwork');
- for(let attempts=0;attempts<8&&!w.OpticsPosterArt?.isReady();attempts++){
+ const staticArt=doc.getElementById('opticStaticArt');
+ const headArt=doc.getElementById('opticHeadArt');
+ for(let attempts=0;attempts<30&&!w.OpticsPosterArt?.isReady();attempts++)
    await new Promise(resolve=>w.setTimeout(resolve,40));
- }
- if(!w.OpticsPosterArt?.isReady())problems.push('direct WebP optics artwork failed to load');
+ if(!w.OpticsPosterArt?.isReady())problems.push('layered WebP optics artwork failed to load');
  else {
    if(artwork.hidden||!doc.getElementById('opticalAlignmentIllustration').hidden)
-     problems.push('direct optics artwork not active or SVG still visible');
-   const artCtx=artwork.getContext('2d');
-   const scopeBefore=artCtx.getImageData(320,140,1,1).data.join(',');
-   const headBefore=artCtx.getImageData(670,130,70,80).data;
-   const hash=(pixels)=>{let sum=0;for(let i=0;i<pixels.length;i+=7)sum=(sum+pixels[i])%1000000007;return sum};
-   const baselineHash=hash(headBefore);
+     problems.push('layered artwork not active or SVG still visible');
+   if(!staticArt.complete||!staticArt.naturalWidth||!headArt.complete||!headArt.naturalWidth)
+     problems.push('base or transparent head asset failed to load');
+   if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
+     problems.push('image layers do not share dimensions');
+   const staticBefore=staticArt.style.transform;
+   const staticSrc=staticArt.currentSrc;
+   const headBefore=headArt.style.transform;
    doc.getElementById('optEyeDist').value='120';
    doc.getElementById('optEyeDist').dispatchEvent(new Event('input',{bubbles:true}));
    w.OpticsPosterArt.renderImmediately({dist:120,height:0});
-   const scopeAfter=artCtx.getImageData(320,140,1,1).data.join(',');
-   const alteredHash=hash(artCtx.getImageData(670,130,70,80).data);
-   if(scopeBefore!==scopeAfter)problems.push('direct optics artwork moved telescope pixels');
-   if(baselineHash===alteredHash)problems.push('direct optics artwork head did not move');
+   const headAfter=headArt.style.transform;
+   if(headAfter===headBefore||artwork.dataset.headX==='0.000')
+     problems.push('head image did not translate for distance');
+   if(staticBefore!==staticArt.style.transform||staticSrc!==staticArt.currentSrc)
+     problems.push('static image changed when head moved');
+   const shiftedX=artwork.dataset.headX;
+   w.OpticsPosterArt.renderImmediately({dist:120,height:12});
+   if(artwork.dataset.headX!==shiftedX||artwork.dataset.headY==='0.000')
+     problems.push('head height should move only on y axis');
    w.calibratePerfectOptics();
    w.OpticsPosterArt.renderImmediately({dist:85,height:0});
-   const resetHash=hash(artCtx.getImageData(670,130,70,80).data);
-   if(resetHash!==baselineHash)problems.push('direct optics artwork reset failed');
+   if(artwork.dataset.headX!=='0.000'||artwork.dataset.headY!=='0.000')
+     problems.push('layered artwork reset failed');
  }
  const eye=doc.getElementById('optEyeDist');
  const animatedHead=doc.getElementById('svgShooterHeadSide');
