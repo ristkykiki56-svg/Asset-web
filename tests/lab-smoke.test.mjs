@@ -283,3 +283,22 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
   assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);
   assert.match(css, /\.optical-side-pan/);
 });
+
+test('original WebP optics illustration and image-motion adapter are preserved',()=>{
+ const src=readFileSync(new URL('../assets/optics/optic-artwork.webp',import.meta.url));
+ const adapter=readFileSync(new URL('../optics-poster-artwork.js',import.meta.url),'utf8');
+ assert.ok(src.byteLength>20000,'final artwork must not be replaced with low resolution placeholder');
+ assert.equal(src.subarray(0,4).toString(),'RIFF');
+ assert.equal(src.subarray(8,12).toString(),'WEBP');
+ assert.match(html,/id="opticalAlignmentArtwork"/);
+ assert.match(html,/id="opticsArtworkStatus"/);
+ assert.match(html,/defer src="\/optics-poster-artwork.js"/);
+ assert.match(js,/OpticsPosterArt\?\.update\(\{dist, height: comb\}\)/);
+ assert.match(adapter,/getImageData/);
+ assert.match(adapter,/putImageData/);
+ assert.match(adapter,/\.src='\/assets\/optics\/optic-artwork.webp'/);
+ assert.match(adapter,/image\.onerror/);
+ assert.match(adapter,/fallback\.hidden=true/);
+ assert.match(css,/opticalAlignmentArtwork/);
+ assert.doesNotMatch(adapter,/setInterval\(/);
+});
