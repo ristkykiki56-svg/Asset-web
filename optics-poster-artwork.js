@@ -52,12 +52,16 @@ function maybeReady(){
  ready=true;
  stage.hidden=false;
  fallback.hidden=true;
+ fallback.setAttribute('hidden','');
+ fallback.style.setProperty('display','none','important');
  document.getElementById('sec-optics')?.classList.add('optics-poster-ready');
  announce('Ilustrasi dua layer aktif. Kepala bergerak terbatas sesuai slider; teleskop tetap diam.');
  apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
 }
 function fail(){
  ready=false;stage.hidden=true;fallback.hidden=false;
+ fallback.removeAttribute('hidden');
+ fallback.style.removeProperty('display');
  announce('Ilustrasi gambar tidak tersedia. Skema SVG cadangan ditampilkan.');
 }
 for(const im of [base,head]){
