@@ -195,6 +195,43 @@ frame.addEventListener('load',async ()=>{
  const eyeCanvas=doc.getElementById('ocularLensCanvas');
  const opticalPixel=eyeCanvas.getContext('2d').getImageData(150,150,1,1).data;
  if(opticalPixel[3]===0)problems.push('optical canvas is blank before viewport activation');
+ const artwork=doc.getElementById('opticalAlignmentArtwork');
+ const staticArt=doc.getElementById('opticStaticArt');
+ const headArt=doc.getElementById('opticHeadArt');
+ for(let attempts=0;attempts<30&&!w.OpticsPosterArt?.isReady();attempts++)
+   await new Promise(resolve=>w.setTimeout(resolve,40));
+ if(!w.OpticsPosterArt?.isReady())problems.push('layered WebP optics artwork failed to load');
+ else {
+   const svgFallback=doc.getElementById('opticalAlignmentIllustration');
+   if(artwork.hidden||!svgFallback.hidden||w.getComputedStyle(svgFallback).display!=='none')
+     problems.push('layered artwork not active or SVG is visibly duplicated');
+   if(!staticArt.complete||!staticArt.naturalWidth||!headArt.complete||!headArt.naturalWidth)
+     problems.push('base or transparent head asset failed to load');
+   if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
+     problems.push('image layers do not share dimensions');
+   // Earlier optics assertions leave eye distance at 120. Restore a known neutral baseline.
+   w.calibratePerfectOptics();
+   w.OpticsPosterArt.renderImmediately({dist:85,height:0});
+   const staticBefore=staticArt.style.transform;
+   const staticSrc=staticArt.currentSrc;
+   const headBefore=headArt.style.transform;
+   doc.getElementById('optEyeDist').value='120';
+   doc.getElementById('optEyeDist').dispatchEvent(new Event('input',{bubbles:true}));
+   w.OpticsPosterArt.renderImmediately({dist:120,height:0});
+   const headAfter=headArt.style.transform;
+   if(headAfter===headBefore||artwork.dataset.headX==='0.000')
+     problems.push('head image did not translate for distance');
+   if(staticBefore!==staticArt.style.transform||staticSrc!==staticArt.currentSrc)
+     problems.push('static image changed when head moved');
+   const shiftedX=artwork.dataset.headX;
+   w.OpticsPosterArt.renderImmediately({dist:120,height:12});
+   if(artwork.dataset.headX!==shiftedX||artwork.dataset.headY==='0.000')
+     problems.push('head height should move only on y axis');
+   w.calibratePerfectOptics();
+   w.OpticsPosterArt.renderImmediately({dist:85,height:0});
+   if(artwork.dataset.headX!=='0.000'||artwork.dataset.headY!=='0.000')
+     problems.push('layered artwork reset failed');
+ }
  const eye=doc.getElementById('optEyeDist');
  const animatedHead=doc.getElementById('svgShooterHeadSide');
  const fixedScope=doc.getElementById('opticFixedScope');
