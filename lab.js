@@ -753,6 +753,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             // become visible after the IntersectionObserver's first notification.
             // Waiting for visibility alone previously left an empty canvas.
             renderOcularLoop(performance.now(), true);
+            window.OpticsPosterArt?.update({dist, height: comb});
         }
 
         function calibratePerfectOptics() {
