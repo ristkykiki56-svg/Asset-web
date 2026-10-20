@@ -196,9 +196,27 @@ frame.addEventListener('load',async ()=>{
  const opticalPixel=eyeCanvas.getContext('2d').getImageData(150,150,1,1).data;
  if(opticalPixel[3]===0)problems.push('optical canvas is blank before viewport activation');
  const eye=doc.getElementById('optEyeDist');
+ const animatedHead=doc.getElementById('svgShooterHeadSide');
+ const fixedScope=doc.getElementById('opticFixedScope');
+ const fixedRifle=doc.getElementById('optStaticRifle');
+ const initialHeadTransform=animatedHead?.getAttribute('transform');
+ const scopeMarkup=fixedScope?.innerHTML;
+ const rifleMarkup=fixedRifle?.innerHTML;
+ const initialScopeTransform=fixedScope?.getAttribute('transform');
+ const initialRifleTransform=fixedRifle?.getAttribute('transform');
  eye.value='120';eye.dispatchEvent(new Event('input',{bubbles:true}));
+ if(animatedHead?.getAttribute('transform')===initialHeadTransform)problems.push('optics head did not move with distance slider');
+ const raisedHead=animatedHead?.getAttribute('transform');
+ const headHeightSlider=doc.getElementById('optCheekHeight');
+ headHeightSlider.value='12';headHeightSlider.dispatchEvent(new Event('input',{bubbles:true}));
+ if(animatedHead?.getAttribute('transform')===raisedHead)problems.push('optics head did not move with height slider');
+ if(fixedScope?.getAttribute('transform')!==initialScopeTransform||fixedScope?.innerHTML!==scopeMarkup)problems.push('optics scope moved when head moved');
+ if(fixedRifle?.getAttribute('transform')!==initialRifleTransform||fixedRifle?.innerHTML!==rifleMarkup)problems.push('optics rifle moved when head moved');
+ if(doc.getElementById('svgSideCheekpiece'))problems.push('old cheekpiece still shown in optics');
+ if(!doc.querySelector('#sec-optics .optical-side-pan'))problems.push('no compact optics inspection region');
  if(!doc.getElementById('opticsLockBadge').textContent.includes('BAYANGAN'))problems.push('optical explanation not updated');
  w.calibratePerfectOptics();
+ if(animatedHead?.getAttribute('transform')!==initialHeadTransform)problems.push('optics head reset did not restore original position');
  if(!doc.getElementById('opticsLockBadge').textContent.includes('LINGKARAN'))problems.push('optical reset did not restore example');
  if(picker){
    picker.value='sec-hardware';
