@@ -7,7 +7,7 @@
 <script>
 const frame=document.getElementById('lab');
 const output=document.getElementById('result');
-frame.addEventListener('load',()=>{
+frame.addEventListener('load',async ()=>{
  const problems=[];
  try {
  const w=frame.contentWindow;
@@ -155,7 +155,7 @@ frame.addEventListener('load',()=>{
  compactPose.value='sideLeft';
  compactPose.dispatchEvent(new Event('change',{bubbles:true}));
  if(!doc.getElementById('stagePoseTitle').textContent.includes('KIRI'))problems.push('compact pose selection did not update drawing');
- if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure'))problems.push('editorial posture art absent');
+ if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure')&&!doc.querySelector('#svgAthleteLayer image[href*="/assets/posture/"]'))problems.push('posture figure absent');
  if(!doc.getElementById('biomechRedKit'))problems.push('posture illustration gradients absent');
  if(!doc.getElementById('triggerVectorDiagram')||!doc.getElementById('triggerMechanismDiagram'))problems.push('trigger illustration absent');
  if(!doc.getElementById('opticalAlignmentIllustration'))problems.push('optics side study absent');
@@ -190,9 +190,47 @@ frame.addEventListener('load',()=>{
  if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='true') problems.push('keyboard trigger down');
  doc.getElementById('tactileTriggerBtn').dispatchEvent(new KeyboardEvent('keyup',{key:' ',bubbles:true}));
  if(doc.getElementById('tactileTriggerBtn').getAttribute('aria-pressed')!=='false') problems.push('keyboard trigger up');
+
+ // Check actual image readiness when present. Fallback success alone is not image QA.
+ const spriteFiles=['blue-front','blue-side','blue-back','red-front','red-side','red-back'];
+ const spriteFound=await Promise.all(spriteFiles.map(name=>new Promise(resolve=>{
+   const image=new w.Image();image.onload=()=>resolve(image.naturalWidth>=120);
+   image.onerror=()=>resolve(false);image.src='/assets/posture/'+name+'.webp';
+ })));
+ const countPresent=spriteFound.filter(Boolean).length;
+ if(countPresent!==0 && countPresent!==6)problems.push('partial blue/red sprite asset set');
+ const artStatus=doc.getElementById('postureArtStatus');
+ const artMode=doc.getElementById('postureArtMode');
+ if(!artStatus||!artMode||!w.tsPosturePoseArt)problems.push('posture sprite adapter controls unavailable');
+ else{
+   for(let tries=0;tries<40&&artStatus.textContent.includes('Memeriksa');tries++)
+     await new Promise(resolve=>setTimeout(resolve,50));
+   if(countPresent===6){
+     if(artMode.disabled||!w.tsPosturePoseArt.isActive())problems.push('complete sprite set not activated');
+     const red=doc.querySelector('[data-pose-color="red"]');
+     red?.click();
+     if(red?.getAttribute('aria-pressed')!=='true')problems.push('red sprite selection ARIA missing');
+     w.switchPose('front');
+     if(!doc.querySelector('#svgAthleteLayer image[href$="red-front.webp"]'))problems.push('red front view not displayed');
+     w.switchPose('sideRight');
+     if(!doc.querySelector('#svgAthleteLayer image[href$="red-side.webp"]'))problems.push('red side image missing');
+     if(!doc.querySelector('#svgAthleteLayer g[transform="translate(460 0) scale(-1 1)"]'))problems.push('right-side mirror absent');
+     w.switchPose('back');
+     if(!doc.querySelector('#svgAthleteLayer image[href$="red-back.webp"]'))problems.push('red back view missing');
+     doc.querySelector('[data-pose-color="blue"]')?.click();
+     if(!doc.querySelector('#svgAthleteLayer image[href$="blue-back.webp"]'))problems.push('blue sprite variant missing');
+     artMode.checked=false;artMode.dispatchEvent(new Event('change',{bubbles:true}));
+     if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure'))problems.push('manual SVG fallback unavailable');
+     artMode.checked=true;artMode.dispatchEvent(new Event('change',{bubbles:true}));
+     if(!w.tsPosturePoseArt.isActive())problems.push('sprite mode cannot be re-enabled');
+   }else{
+     if(!artMode.disabled||w.tsPosturePoseArt.isActive())problems.push('incomplete asset set incorrectly enabled');
+     if(!doc.querySelector('#svgAthleteLayer .biomech-editorial-figure'))problems.push('missing image must preserve SVG fallback');
+   }
+ }
  }catch(e){problems.push('exception: '+String(e.message||e));}
  output.dataset.status=problems.length?'fail':'pass';
- output.textContent=problems.length?problems.join('; '):'PASS: 320-1440px, labels, controls, pose sync, keyboard, static CSS';
+ output.textContent=problems.length?problems.join('; '):'PASS: responsive UI, poster interactions, static sprite readiness and SVG fallback';
 },{once:true});
 </script>
 </body></html>
