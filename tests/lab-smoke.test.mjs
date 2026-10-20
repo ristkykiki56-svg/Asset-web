@@ -275,7 +275,7 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
   assert.match(html, /id="optStaticRifle"/);
   assert.match(html, /id="svgShooterHeadSide"/);
   assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
-  assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 800 282"/);
+  assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 835 282"/);
   assert.match(html, /TINGGI POSISI MATA/);
   assert.match(html, /KESTABILAN PANDANGAN/);
   assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
