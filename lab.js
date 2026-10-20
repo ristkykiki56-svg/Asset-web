@@ -1257,7 +1257,18 @@ function setupLabMobileExperience() {
         }
         if (progress) progress.textContent = (index + 1) + ' dari ' + ids.length;
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
-        if (id === 'sec-optics') renderOcularLoop(performance.now(), true);
+        if (id === 'sec-optics') {
+            renderOcularLoop(performance.now(), true);
+            if (media.matches) requestAnimationFrame(() => {
+                const pan = document.querySelector('#sec-optics .optical-side-pan');
+                // Start with the eye and ocular visible on narrow screens.
+                // Preserve the visitor's manual scroll position after first opening.
+                if (pan && pan.dataset.initialized !== 'true') {
+                    pan.scrollLeft = pan.scrollWidth - pan.clientWidth;
+                    pan.dataset.initialized = 'true';
+                }
+            });
+        }
         if (id === 'sec-hardware' && media.matches) {
             // Initial selection may be made while the lesson is still hidden.
             // Center it when the diagram becomes visible.
