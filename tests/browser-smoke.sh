@@ -105,3 +105,27 @@ for size in desktop mobile; do
   test -s "/tmp/twinshooter-qa/lab-anatomy-front-${size}.png"
 done
 echo 'Captured front-view anatomy visual QA for desktop/mobile'
+
+# Complete screenshot matrix: two illustrated uniforms, three distinct views, two viewports.
+# The standing artwork intentionally has no idle animation.
+for color in blue red; do
+  for pose in front sideLeft back; do
+    for size in desktop mobile; do
+      if [[ "$size" == desktop ]]; then dimensions="1440,1060"; else dimensions="390,900"; fi
+      artifact="/tmp/twinshooter-qa/posture-${color}-${pose}-${size}.png"
+      "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+        --hide-scrollbars --window-size="$dimensions" --virtual-time-budget=3500 \
+        --screenshot="$artifact" \
+        "http://127.0.0.1:$PORT/tests/lab-posture-sprite-qa.html?color=${color}&pose=${pose}" \
+        >/dev/null 2>/dev/null
+      test -s "$artifact"
+    done
+  done
+done
+# One DOM-level check prevents a screenshot of an error banner from passing as image QA.
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --window-size=1440,1050 --virtual-time-budget=3500 --dump-dom \
+  "http://127.0.0.1:$PORT/tests/lab-posture-sprite-qa.html?color=red&pose=sideLeft" \
+  >/tmp/twinshooter-qa/posture-sprite-result.html 2>/dev/null
+grep -Fq 'data-snapshot="ready"' /tmp/twinshooter-qa/posture-sprite-result.html
+echo 'Captured 12 real sprite viewports with DOM readiness verification'

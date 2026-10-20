@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync, existsSync, statSync} from 'node:fs';
 const html=readFileSync(new URL('../lab.html',import.meta.url),'utf8');
 const js=readFileSync(new URL('../lab.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../lab.css',import.meta.url),'utf8');
@@ -174,7 +174,7 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.match(html,/id="biomechRedKit"/);
  assert.match(html,/id="svgAthleteLayer"/);
  assert.match(html,/id="svgCogPlumbGroup"/);
- assert.match(js,/figSvg = buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
  assert.match(html,/id="triggerMechanismDiagram"/);
  for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','svgSideCheekpiece','svgShooterHeadSide']){
@@ -231,4 +231,39 @@ test('anatomy selection keeps ten stable click controls and viewpoint-aware anch
  assert.match(js,/leaderLayer\.replaceChildren\(\)/);
  assert.match(css,/#sec-biomech \.callout-node:not\(\[hidden\]\)\{display:flex!important/);
  assert.doesNotMatch(css,/\.callout-node:not\(\[aria-pressed="true"\]\)\{display:none/);
+});
+
+
+test('review-only blue/red static posture adapter keeps existing SVG fallback',()=>{
+ const adapter=readFileSync(new URL('../posture-art.js',import.meta.url),'utf8');
+ assert.match(html,/id="postureArtControls"/);
+ assert.match(html,/id="postureArtMode"/);
+ assert.match(html,/data-pose-color="blue"/);
+ assert.match(html,/data-pose-color="red"/);
+ assert.match(html,/defer src="\/posture-art.js"/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration/);
+ assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
+ assert.match(adapter,/Promise\.all\(variants\.flatMap/);
+ assert.match(adapter,/state\.ready=false;state\.active=false/);
+ assert.match(adapter,/skema SVG tetap digunakan/);
+ assert.match(adapter,/aria-pressed/);
+ assert.match(css,/ts-pose-art-controls/);
+ assert.match(css,/ts-pose-art-active \.ts-scheme-only/);
+ assert.equal((html.match(/id="postureArtMode"/g)||[]).length,1);
+});
+
+
+test('posture review is complete only when all six valid WebP images are present',()=>{
+ const base=new URL('../assets/posture/',import.meta.url);
+ const names=['blue-front','blue-side','blue-back','red-front','red-side','red-back'];
+ const present=names.filter(name=>existsSync(new URL(name+'.webp',base)));
+ if(present.length!==0)assert.deepEqual(present,names,'posture assets must be added as a complete set');
+ if(process.env.REQUIRE_POSTURE_ASSETS==='1')assert.equal(present.length,6,'merge gate: assets are missing');
+ for(const name of present){
+   const location=new URL(name+'.webp',base);
+   assert.ok(statSync(location).size>=1000,name+' should not be a placeholder');
+   const data=readFileSync(location);
+   assert.equal(data.subarray(0,4).toString(),'RIFF',name+' is not a RIFF/WebP asset');
+   assert.equal(data.subarray(8,12).toString(),'WEBP',name+' has an invalid WebP header');
+ }
 });

@@ -955,3 +955,52 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 @media(max-width:767px){
  #sec-biomech #biomechPinsOverlay .callout-node[aria-pressed="true"] {width:44px;height:44px}
 }
+
+
+/* Posture artwork review: static character views with SVG fallback. */
+#sec-biomech .ts-pose-art-controls{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:10px 18px;margin-bottom:16px;padding:12px 14px;background:var(--bg-surface);
+  border:1px solid var(--rule-light);border-left:3px solid var(--clarisa-blue)
+}
+#sec-biomech .ts-pose-art-choices{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#sec-biomech .ts-pose-art-label{font-size:12px;font-weight:800;margin-right:7px}
+#sec-biomech .ts-pose-art-choices button{
+  min-height:42px;padding:8px 12px;background:var(--bg-paper);border:1px solid var(--rule-light);
+  color:var(--ink-900);font-size:12px;font-weight:700;cursor:pointer
+}
+#sec-biomech .ts-pose-art-choices button[aria-pressed="true"]{
+  border-color:var(--clarisa-blue);background:var(--clarisa-blue);color:white
+}
+#sec-biomech .ts-pose-art-choices [data-pose-color="red"][aria-pressed="true"]{
+  border-color:var(--aurellia-red);background:var(--aurellia-red)
+}
+#sec-biomech .ts-pose-art-choices button:disabled{opacity:.44;cursor:not-allowed}
+#sec-biomech .ts-pose-art-switch{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;cursor:pointer}
+#sec-biomech .ts-pose-art-switch input{width:18px;height:18px;accent-color:var(--clarisa-blue)}
+#sec-biomech #postureArtStatus{font-size:11px;line-height:1.5;color:var(--ink-500);flex-basis:100%;margin:0}
+#sec-biomech #postureArtStatus[data-error="true"]{color:var(--ink-700)}
+#sec-biomech.ts-pose-art-active .ts-scheme-only{display:none}
+#sec-biomech .ts-pose-art-choices button:focus-visible,
+#sec-biomech .ts-pose-art-switch input:focus-visible{outline:3px solid var(--clarisa-blue);outline-offset:3px}
+@media(max-width:767px){
+ #sec-biomech .ts-pose-art-controls{padding:10px 12px;gap:10px}
+ #sec-biomech .ts-pose-art-choices{width:100%}
+ #sec-biomech .ts-pose-art-label{width:100%}
+ #sec-biomech .ts-pose-art-choices button{flex:1 1 0}
+ #sec-biomech .ts-pose-art-switch{min-height:40px}
+}
+
+#sec-biomech .ts-pose-art-note{width:100%;font-size:11px;line-height:1.55;color:var(--ink-500);margin:0}
+
+/* Static illustrated figures are not force-plate or center-of-gravity measurements. */
+#sec-biomech.ts-pose-art-active #biomechDraftSvg .biomech-ruler,
+#sec-biomech.ts-pose-art-active #biomechDraftSvg .biomech-ground,
+#sec-biomech.ts-pose-art-active #biomechDraftSvg #svgCogPlumbGroup{display:none}
+#sec-biomech.ts-pose-art-active .lab-biomech-stage{background-image:linear-gradient(180deg,rgba(248,248,245,.16),rgba(238,240,236,.14))}
+
+/* Keep successful preload announcements accessible without repeating interface copy. */
+#sec-biomech #postureArtStatus[data-error="false"]{
+  position:absolute;width:1px;height:1px;overflow:hidden;white-space:nowrap;
+  clip-path:inset(50%);pointer-events:none
+}
