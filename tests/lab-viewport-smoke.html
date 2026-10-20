@@ -202,8 +202,9 @@ frame.addEventListener('load',async ()=>{
    await new Promise(resolve=>w.setTimeout(resolve,40));
  if(!w.OpticsPosterArt?.isReady())problems.push('layered WebP optics artwork failed to load');
  else {
-   if(artwork.hidden||!doc.getElementById('opticalAlignmentIllustration').hidden)
-     problems.push('layered artwork not active or SVG still visible');
+   const svgFallback=doc.getElementById('opticalAlignmentIllustration');
+   if(artwork.hidden||!svgFallback.hidden||w.getComputedStyle(svgFallback).display!=='none')
+     problems.push('layered artwork not active or SVG is visibly duplicated');
    if(!staticArt.complete||!staticArt.naturalWidth||!headArt.complete||!headArt.naturalWidth)
      problems.push('base or transparent head asset failed to load');
    if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
