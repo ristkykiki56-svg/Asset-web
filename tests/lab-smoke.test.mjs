@@ -284,21 +284,25 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
   assert.match(css, /\.optical-side-pan/);
 });
 
-test('original WebP optics illustration and image-motion adapter are preserved',()=>{
- const src=readFileSync(new URL('../assets/optics/optic-artwork.webp',import.meta.url));
+test('optics maintains authentic independent WebP layers without a pixel warp',()=>{
+ const layers=['optic-static.webp','optic-head.webp'];
+ for(const filename of layers){
+  const data=readFileSync(new URL('../assets/optics/'+filename,import.meta.url));
+  assert.ok(data.byteLength>20000,filename+' unexpectedly small');
+  assert.equal(data.subarray(0,4).toString(),'RIFF');
+  assert.equal(data.subarray(8,12).toString(),'WEBP');
+ }
  const adapter=readFileSync(new URL('../optics-poster-artwork.js',import.meta.url),'utf8');
- assert.ok(src.byteLength>20000,'final artwork must not be replaced with low resolution placeholder');
- assert.equal(src.subarray(0,4).toString(),'RIFF');
- assert.equal(src.subarray(8,12).toString(),'WEBP');
  assert.match(html,/id="opticalAlignmentArtwork"/);
- assert.match(html,/id="opticsArtworkStatus"/);
+ assert.match(html,/id="opticStaticArt"/);
+ assert.match(html,/id="opticHeadArt"/);
  assert.match(html,/defer src="\/optics-poster-artwork.js"/);
  assert.match(js,/OpticsPosterArt\?\.update\(\{dist, height: comb\}\)/);
- assert.match(adapter,/getImageData/);
- assert.match(adapter,/putImageData/);
- assert.match(adapter,/\.src='\/assets\/optics\/optic-artwork.webp'/);
- assert.match(adapter,/image\.onerror/);
+ assert.match(adapter,/head\.style\.transform/);
+ assert.match(adapter,/translate3d/);
  assert.match(adapter,/fallback\.hidden=true/);
- assert.match(css,/opticalAlignmentArtwork/);
- assert.doesNotMatch(adapter,/setInterval\(/);
+ assert.match(adapter,/addEventListener\('error',fail\)/);
+ assert.doesNotMatch(adapter,/getImageData|putImageData|createImageData|ImageData|setInterval\(/);
+ assert.match(css,/#sec-optics #opticHeadArt/);
+ assert.match(css,/prefers-reduced-motion:reduce/);
 });
