@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Posture sprite isolated visual QA</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#F3F1EA}
+iframe{width:100%;height:100%;border:0;display:block}
+#qa-error{position:fixed;top:12px;left:12px;right:12px;color:#fff;background:#980b19;padding:12px;font:14px system-ui;display:none;z-index:99}
+</style></head><body>
+<div id="qa-error"></div><iframe id="lab" title="Posture artwork QA" src="/lab.html"></iframe>
+<script>
+const params=new URL(location.href).searchParams;
+const color=params.get('color')==='red'?'red':'blue';
+const pose=['back','front','sideLeft','sideRight'].includes(params.get('pose'))?params.get('pose'):'front';
+const frame=document.getElementById('lab');
+function failure(msg){document.body.dataset.snapshot='error';const out=document.getElementById('qa-error');out.style.display='block';out.textContent=msg;}
+frame.addEventListener('load',async()=>{
+ try{
+  const doc=frame.contentDocument,win=frame.contentWindow;
+  const main=doc.getElementById('main-content');
+  const section=doc.getElementById('sec-biomech');
+  if(!main||!section)throw Error('Lab posture section unavailable');
+  for(const selector of ['.lab-header','.lab-local-nav','body > section.tech-border-b','.lab-notice-wrap','.lab-sources-wrap','.lab-mobile-stepper','footer']){
+    doc.querySelectorAll(selector).forEach(el=>el.style.setProperty('display','none','important'));
+  }
+  main.querySelectorAll('section[id^="sec-"]').forEach(el=>{
+   if(el!==section)el.style.setProperty('display','none','important');
+  });
+  section.style.setProperty('display','block','important');
+  section.style.margin='0';
+  main.classList.remove('space-y-16');
+  main.style.padding='14px 14px 20px';
+  main.style.margin='0 auto';
+  const switcher=doc.getElementById('postureArtMode');
+  if(!switcher)throw Error('No sprite mode control');
+  for(let tries=0;tries<60 && switcher.disabled;tries++){
+    await new Promise(resolve=>win.setTimeout(resolve,50));
+  }
+  if(switcher.disabled)throw Error('Sprite mode disabled, assets have not loaded');
+  doc.querySelector('[data-pose-color="'+color+'"]').click();
+  win.switchPose(pose);
+  const expected=color+'-'+(pose==='sideRight'?'side':'sideLeft'===pose?'side':pose)+'.webp';
+  const img=doc.querySelector('#svgAthleteLayer image[href$="'+expected+'"]');
+  if(!img)throw Error('Wrong/missing sprite '+expected);
+  await new Promise(resolve=>win.requestAnimationFrame(()=>win.requestAnimationFrame(resolve)));
+  win.scrollTo(0,0);
+  document.body.dataset.sprite=expected;
+  document.body.dataset.pose=pose;
+  document.body.dataset.snapshot='ready';
+ }catch(e){failure(String(e?.message||e));}
+},{once:true});
+</script></body></html>
