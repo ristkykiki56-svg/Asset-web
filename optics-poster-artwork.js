@@ -49,9 +49,13 @@ function update({dist=85,height=0}={}){
  ty=Math.max(-9,Math.min(9,-Number(height)*.36));
  if(ready&&!scheduled)scheduled=requestAnimationFrame(tick);
 }
+function renderImmediately({dist=85,height=0}={}){
+ update({dist,height});
+ if(scheduled)cancelAnimationFrame(scheduled);
+ scheduled=0;cx=tx;cy=ty;render(cx,cy);
+}
 window.OpticsPosterArt={
- update,isReady:()=>ready,
- getCanvas:()=>canvas
+ update,renderImmediately,isReady:()=>ready,getCanvas:()=>canvas
 };
 image.onload=()=>{
  try{
