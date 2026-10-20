@@ -747,7 +747,10 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 mini.textContent = 'DEVIASI SUMBU MATA';
                 mini.className = 'text-[var(--aurellia-red)] font-bold';
             }
-            if (reducedMotion.matches && ocularVisible) scheduleOcularFrame();
+            // Always paint a static optical view immediately; on mobile this module can
+            // become visible after the IntersectionObserver's first notification.
+            // Waiting for visibility alone previously left an empty canvas.
+            renderOcularLoop(performance.now(), true);
         }
 
         function calibratePerfectOptics() {
@@ -759,9 +762,9 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             updateOpticalSim();
         }
 
-        function renderOcularLoop(timestamp = performance.now()) {
+        function renderOcularLoop(timestamp = performance.now(), force = false) {
             ocularReq = null;
-            if (!ocularVisible || document.hidden) return;
+            if (!force && (!ocularVisible || document.hidden)) return;
             if (!reducedMotion.matches && timestamp - ocularLast < 32) {scheduleOcularFrame(); return;}
             ocularLast = timestamp;
             const canvas = document.getElementById('ocularLensCanvas');
@@ -1129,6 +1132,24 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             document.getElementById('hwSpecTitle').textContent = item.title;
             document.getElementById('hwSpecBody').textContent = item.body;
             document.getElementById('hwSpecNote').textContent = item.note;
+
+            // On narrow screens the full diagram is wider than its viewport.
+            // Center the selected marker so the component picker feels connected
+            // to the diagram, without auto-scrolling the entire page.
+            const scroller = document.querySelector('#sec-hardware .lab-hardware-scroll');
+            if (scroller && window.matchMedia('(max-width: 767px)').matches) {
+                requestAnimationFrame(() => {
+                    const marker = [...document.querySelectorAll('#hardwareBlueprintSvg .hw-marker[data-hw-key]')]
+                        .find(node => node.getAttribute('data-hw-key') === key);
+                    if (!marker || scroller.scrollWidth <= scroller.clientWidth) return;
+                    const markerRect = marker.getBoundingClientRect();
+                    const scrollRect = scroller.getBoundingClientRect();
+                    if (!markerRect.width) return;
+                    const centerOffset = markerRect.left + markerRect.width / 2
+                        - (scrollRect.left + scrollRect.width / 2);
+                    scroller.scrollLeft += centerOffset;
+                });
+            }
         }
 
         function switchRifleRig(athlete) {
