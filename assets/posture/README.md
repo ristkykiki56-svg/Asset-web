@@ -1,37 +1,35 @@
-# Shooting Lab: gambar postur statis (review)
+# Shooting Lab: karakter postur ilustratif
 
-Folder ini menampung enam gambar WebP transparan untuk modul **Postur Tubuh**. Karakter dibuat dalam gaya animasi yang terinspirasi warna kostum pada poster Clarisa dan Aurellia. Ilustrasi **bukan** potret wajah kedua atlet, bukan data pengukuran, dan tidak dijadikan pedoman posisi menembak.
+Enam sprite WebP di folder ini merupakan **karakter animasi generik** untuk materi Postur Tubuh Shooting Lab. Varian biru dan merah dipakai sebagai pembeda visual saja. **Bukan foto, rekonstruksi wajah, identitas biometrik, data anatomi terukur, atau dokumentasi posisi atlet.**
 
-## Berkas wajib
+## Keputusan visual
 
-- `blue-front.webp`
-- `blue-side.webp`
-- `blue-back.webp`
-- `red-front.webp`
-- `red-side.webp`
-- `red-back.webp`
+Pada 20 Oktober 2026 pemilik proyek menyetujui penggunaan karakter stylized/non-likeness sebagaimana terlihat pada matriks preview PR #12. Karakter sengaja **tidak dibuat menyerupai wajah dan pakaian asli atlet** untuk mengurangi risiko penyalahgunaan likeness. Pose **statis**: tidak ada ekspresi wajah, gerakan bernapas, animasi idle, atau animasi hidup. Interaksi hanya pergantian sudut pandang dan sorotan penanda edukatif.
 
-Sumber siap di paket `twinshooter-posture-assets-integration-review-v3.zip`, folder `assets/posture/`. **Jangan** commit berkas kontak QA, sprite sheet berlabel, atau gambar yang masih berisi teks anotasi ke dalam folder ini. Jangan menambahkan sebagian saja.
+## Berkas produksi
 
-### Cara memasukkan aset
+- `blue-front.webp`, `blue-side.webp`, `blue-back.webp`
+- `red-front.webp`, `red-side.webp`, `red-back.webp`
 
-Ekstrak ZIP, salin enam WebP dari `assets/posture/` ke lokasi folder ini, commit pada branch `feature/posture-static-variants-review`, lalu jalankan CI. Metode unggah lewat antarmuka GitHub atau `git add assets/posture/*.webp` dapat dipakai. README tidak menggantikan keenam gambar.
+Semua enam berkas sudah disimpan di repositori. Jangan menyisipkan sheet anotasi, gambar dari foto wajah asli, atau file berlabel teks bawaan.
 
-Verifikasi semua file:
+## Perilaku aplikasi
+
+- `posture-art.js` memilih sprite dengan warna biru/merah dan sudut depan/samping/belakang.
+- Tampak samping kanan adalah **cerminan ilustrasi kiri**, bukan pose kanan yang didokumentasikan.
+- Sepuluh hotspot mengikuti posisi gambar sebagai **perkiraan visual**, bukan pengukuran tubuh.
+- Bila berkas tidak dapat dimuat, aplikasi beralih ke diagram SVG lama tanpa merusak pembelajaran.
+- Slider siku dan lengkungan merupakan contoh visual di mode SVG lama, bukan mekanisme yang menggerakkan karakter statis.
+
+## Validasi
+
 ```bash
 REQUIRE_POSTURE_ASSETS=1 node --test tests/lab-smoke.test.mjs
+bash tests/browser-smoke.sh
 ```
 
-Jika satu berkas gagal dimuat, adaptor `posture-art.js` mempertahankan SVG lama agar modul Postur tetap berfungsi. Empat sudut pandang UI lama tetap tersedia; tampak samping kanan merupakan cerminan gambar samping untuk **ilustrasi saja**, bukan foto pose atlet dari kanan.
+Pengujian PR #12 melalui GitHub Actions run **39450877831** berhasil, termasuk pergantian enam gambar, anotasi dan fallback SVG di desktop/mobile. QA tambahan mengecek penanda pada area piksel gambar yang tidak transparan, serta menghasilkan screenshot 12 kombinasi warna/sudut/viewport.
 
-## QA wajib sebelum merge
+### Batasan yang tetap berlaku
 
-1. Pastikan enam varian termuat dengan benar tanpa fragmen terpisah, garis sisa, atau crop senapan/sepatu.
-2. Uji semua tombol Biru/Merah dan sudut depan/samping kiri/samping kanan/belakang di desktop dan mobile 320, 390, 768, 1440 px.
-3. Uji semua sepuluh penanda anatomi: sorotan harus berada pada bagian yang dijelaskan (perkiraan visual), serta selektor dan teks sesuai.
-4. Periksa mode Garis postur, keyboard focus, status `aria-pressed`, dan kembali ke skema SVG.
-5. Matikan jaringan atau hilangkan satu gambar secara sementara: fallback SVG harus bekerja tanpa error uncaught.
-6. Pastikan modul Pelatuk, Optik, Siluet, Peralatan, homepage, dan rules tidak berubah atau regresi.
-7. Periksa bahwa kata-kata di UI tidak menyiratkan wajah atau data atlet yang terukur.
-
-CI tanpa WebP hanya menguji **fallback**. CI PASS tidak berarti pemeriksaan keenam gambar selesai. Jangan merge sampai QA gambar nyata dinyatakan lulus.
+Karakter dirender dari ilustrasi, bukan dari foto atlet. Detail minor dari sumber generatif dapat terlihat ketika gambar diperbesar; kualitas aset dapat diperbaiki terpisah tanpa perlu mengganti wajah dengan wajah asli. Jangan menafsirkan gambar, posisi hotspot, atau pencerminan sudut samping sebagai aturan IMSSU maupun rekomendasi teknik personal yang terukur.
