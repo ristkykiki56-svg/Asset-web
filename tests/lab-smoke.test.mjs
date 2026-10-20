@@ -177,7 +177,7 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
  assert.match(html,/id="triggerMechanismDiagram"/);
- for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','svgSideCheekpiece','svgShooterHeadSide']){
+ for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
   assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
  assert.match(html,/id="opticalAlignmentIllustration"/);
@@ -266,4 +266,20 @@ test('posture review is complete only when all six valid WebP images are present
    assert.equal(data.subarray(0,4).toString(),'RIFF',name+' is not a RIFF/WebP asset');
    assert.equal(data.subarray(8,12).toString(),'WEBP',name+' has an invalid WebP header');
  }
+});
+
+
+test('optics study uses a fixed detailed scope and only a slider-driven head',()=>{
+  assert.match(html, /id="opticalAlignmentIllustration"/);
+  assert.match(html, /id="opticFixedScope"/);
+  assert.match(html, /id="optStaticRifle"/);
+  assert.match(html, /id="svgShooterHeadSide"/);
+  assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
+  assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 800 282"/);
+  assert.match(html, /TINGGI POSISI MATA/);
+  assert.match(html, /KESTABILAN PANDANGAN/);
+  assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
+  assert.match(js, /const dy = -7 - comb \* 0\.85/);
+  assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);
+  assert.match(css, /\.optical-side-pan/);
 });
