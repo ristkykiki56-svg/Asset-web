@@ -1255,6 +1255,13 @@ function setupLabMobileExperience() {
         }
         if (progress) progress.textContent = (index + 1) + ' dari ' + ids.length;
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
+        if (id === 'sec-optics') renderOcularLoop(performance.now(), true);
+        if (id === 'sec-hardware' && media.matches) {
+            // Initial selection may be made while the lesson is still hidden.
+            // Center it when the diagram becomes visible.
+            const current = document.getElementById('labHardwarePicker')?.value || 'cheekpiece';
+            requestAnimationFrame(() => inspectHardware(current));
+        }
         if (scroll && media.matches) {
             window.requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({block:'start', behavior:'auto'}));
         }
