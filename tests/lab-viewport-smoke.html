@@ -208,6 +208,9 @@ frame.addEventListener('load',async ()=>{
      problems.push('base or transparent head asset failed to load');
    if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
      problems.push('image layers do not share dimensions');
+   // Earlier optics assertions leave eye distance at 120. Restore a known neutral baseline.
+   w.calibratePerfectOptics();
+   w.OpticsPosterArt.renderImmediately({dist:85,height:0});
    const staticBefore=staticArt.style.transform;
    const staticSrc=staticArt.currentSrc;
    const headBefore=headArt.style.transform;
