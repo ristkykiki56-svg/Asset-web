@@ -78,19 +78,19 @@
       const btn=e.target.closest('[data-pose-color]');
       if(!btn||!state.ready)return;
       state.color=btn.dataset.poseColor;state.active=true;
-      status('Karakter '+(state.color==='blue'?'biru':'merah')+' ditampilkan. Figur tetap diam saat parameter model diubah.');
+      status('Karakter '+(state.color==='blue'?'biru':'merah')+' ditampilkan tanpa gerakan. Slider tersedia pada mode skema SVG.');
       refresh();
     });
     mode.addEventListener('change',()=>{
       state.active=state.ready && mode.checked;
-      status(state.active?'Karakter WebP statis. Garis dan titik hanya anotasi visual.':'Skema SVG aktif sebagai tampilan alternatif.');
+      status(state.active?'Karakter WebP statis. Matikan opsi gambar untuk membuka kontrol skema.':'Skema SVG aktif. Slider model tersedia di bawah gambar.');
       refresh();
     });
     syncControls();
     Promise.all(variants.flatMap(v=>views.map(p=>preload(url(v,p))))).then(()=>{
       state.ready=true;
       state.active=true;
-      status('Pilih karakter dan sudut pandang. Slider hanya mengubah indikator model.');
+      status('Pilih karakter dan sudut pandang. Matikan opsi gambar untuk menggunakan slider skema.');
       refresh();
     }).catch(()=>{
       state.ready=false;state.active=false;
