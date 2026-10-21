@@ -30,8 +30,6 @@ jobs:
             /tmp/twinshooter-qa/desktop.png
             /tmp/twinshooter-qa/mobile.png
             /tmp/twinshooter-qa/viewport-result.html
-            /tmp/twinshooter-qa/rules-viewport-result.html
-            /tmp/twinshooter-qa/rules-chrome.log
             /tmp/twinshooter-qa/rules-rules-desktop.png
             /tmp/twinshooter-qa/rules-rules-mobile.png
             /tmp/twinshooter-qa/rules-minutes-desktop.png
