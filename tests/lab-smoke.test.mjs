@@ -152,6 +152,9 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.match(svg,/radialGradient id="hwLens"/);
  assert.match(svg,/class="hw-scope-section"/);
  assert.match(svg,/class="hw-rifle-section"/);
+ assert.match(svg,/id="hwRedRifleRaster"/);
+ assert.match(svg,/aurellia-red-poster\\.webp/);
+ assert.doesNotMatch(html,/id="rigSwitch-clarisa"/);
  assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
  assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
  for (const id of ['svgCobFulcrum','rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
@@ -161,6 +164,7 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
    assert.match(svg,new RegExp('data-hw-key="'+key+'"'),key);
  }
  assert.match(css,/Equipment illustration v2/);
+ assert.match(css,/hw-raster-ready/);
  assert.match(css,/\.hw-marker\.is-highlighted/);
  assert.match(js,/document\.getElementById\('labHardwarePicker'\)/);
  assert.match(js,/document\.getElementById\('blueprintActiveLabel'\)/);
