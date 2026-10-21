@@ -1155,37 +1155,9 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             }
         }
 
-        function switchRifleRig(athlete) {
-            playMechTick(780);
-            const chassis = document.getElementById('rigMainChassis');
-            const rear = document.getElementById('rigRearBlock');
-            const muzzle = document.getElementById('rigMuzzleCap');
-            const sig = document.getElementById('rigCheekName');
-            const bA = document.getElementById('rigSwitch-aurellia');
-            const bC = document.getElementById('rigSwitch-clarisa');
-
-            bC.setAttribute('aria-pressed', String(athlete === 'clarisa'));
-            bA.setAttribute('aria-pressed', String(athlete !== 'clarisa'));
-            if (athlete === 'clarisa') {
-                chassis.setAttribute('fill', '#0055B8');
-                rear.setAttribute('fill', '#0055B8');
-                muzzle.setAttribute('fill', '#0055B8');
-                sig.textContent = 'Clarisa';
-                bC.className = 'px-3.5 py-2 font-bold bg-[#0055B8] text-white transition';
-                bA.className = 'px-3.5 py-2 font-bold hover:bg-[var(--bg-subtle)] transition';
-            } else {
-                chassis.setAttribute('fill', '#D11F26');
-                rear.setAttribute('fill', '#D11F26');
-                muzzle.setAttribute('fill', '#D11F26');
-                sig.textContent = 'Aurellia';
-                bA.className = 'px-3.5 py-2 font-bold bg-[#D11F26] text-white transition';
-                bC.className = 'px-3.5 py-2 font-bold hover:bg-[var(--bg-subtle)] transition';
-            }
-        }
-
         function adjustRifleBalancePoint(val) {
             const x = parseFloat(val);
-            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 248)`);
+            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 413)`);
             const fb = document.getElementById('cobFeedbackText');
             if (x >= 402 && x <= 438) {
                 fb.textContent = 'TITIK TENGAH PADA DIAGRAM';
