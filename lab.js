@@ -135,7 +135,7 @@ let sfxActive = false;
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
+                code: 'TITIK ANATOMI #09 // KAKI KIRI',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kiri — Skema Penopang Berdiri',
                 desc: 'Kaki kiri ditandai sebagai salah satu bagian penopang postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
