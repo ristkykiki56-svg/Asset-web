@@ -7,12 +7,12 @@
 .rules-back{color:#1b262c;text-decoration:none;display:inline-flex;align-items:center;gap:12px;min-height:44px;font-weight:750;font-size:14px}
 .rules-back:hover{text-decoration:underline;text-underline-offset:4px}
 .rules-masthead-label,.rules-eyebrow,.rules-format{font-size:11px;letter-spacing:.12em;font-weight:760;color:#57656b}
-.rules-intro{display:flex;align-items:end;justify-content:space-between;gap:12px 28px;padding:13px 0 11px}
+.rules-intro{display:flex;align-items:end;justify-content:space-between;gap:12px 28px;padding:8px 0 8px}
 .rules-eyebrow{margin:0 0 9px}
 .rules-intro h1{margin:0;font-size:clamp(24px,3vw,32px);font-weight:790;line-height:1.1;letter-spacing:-.035em}
 .rules-lead{max-width:400px;color:#48555b;line-height:1.45;font-size:13px;margin:0 0 2px}
 .rules-documents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px}
-.rules-document{display:flex;gap:11px;align-items:center;text-decoration:none;min-width:0;min-height:68px;padding:10px 14px;border:1px solid #d3d7d7;border-radius:4px;background:#fff;color:#1c282d;transition:border-color .15s,box-shadow .15s}
+.rules-document{display:flex;gap:11px;align-items:center;text-decoration:none;min-width:0;min-height:60px;padding:7px 14px;border:1px solid #d3d7d7;border-radius:4px;background:#fff;color:#1c282d;transition:border-color .15s,box-shadow .15s}
 .rules-document:hover{border-color:#707e81;box-shadow:0 2px 12px rgba(21,28,33,.06)}
 .rules-document.is-selected{border-color:#252e34;box-shadow:inset 0 3px #252e34}
 .rules-doc-number{font:700 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;opacity:.65}
@@ -21,7 +21,7 @@
 .rules-doc-copy small{color:#68767c;font-size:11px;line-height:1.4}
 .rules-doc-arrow{font-size:17px;opacity:.65}
 .rules-reading{background:#fff;border:1px solid #d2d5d5;padding:12px 14px 16px;border-radius:4px}
-.rules-reading-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding-bottom:9px}
+.rules-reading-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding-bottom:6px}
 .rules-reading-head h2{font-size:clamp(16px,2vw,19px);line-height:1.2;margin:0;letter-spacing:-.025em}
 .rules-reading-head p:last-child{font-size:11px;color:#58656b;margin:3px 0 0}
 .rules-format{border:1px solid #bdc6c6;padding:6px 8px;white-space:nowrap;border-radius:2px}
@@ -66,10 +66,10 @@
  .rules-shell{width:min(100% - 16px,1320px);padding-top:6px}
  .rules-masthead{padding-bottom:9px}
  .rules-masthead-label{font-size:9px;letter-spacing:.06em}
- .rules-intro{display:block;padding:12px 2px 9px}
+ .rules-intro{display:block;padding:9px 2px 7px}
  .rules-lead{font-size:12px;line-height:1.4;margin:4px 0 0}
  .rules-documents{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:9px}
- .rules-document{min-height:77px;padding:9px 7px;gap:6px;align-items:flex-start}
+ .rules-document{min-height:69px;padding:8px 7px;gap:6px;align-items:flex-start}
  .rules-doc-copy strong{font-size:12px;line-height:1.25}
  .rules-reading{padding:9px 7px}
  .rules-reading-head{align-items:center}
@@ -87,7 +87,9 @@
 }
 @media(prefers-reduced-motion:reduce){.rules-document{transition:none}}
 /* Compact secondary controls stay available without pushing the document down. */
-.rules-search-disclosure,.rules-context-disclosure{border-bottom:1px solid #e7e9e9;color:#43535a;font-size:12px}
+.rules-secondary-controls{display:grid;grid-template-columns:max-content max-content;align-items:start;column-gap:21px;max-width:100%;margin:0 0 8px;border-bottom:1px solid #e7e9e9}
+.rules-secondary-controls > details[open]{grid-column:1/-1}
+.rules-search-disclosure,.rules-context-disclosure{color:#43535a;font-size:12px}
 .rules-search-disclosure summary,.rules-context-disclosure summary{cursor:pointer;width:fit-content;min-height:29px;display:list-item;list-style:disclosure-closed inside;padding:6px 2px;font-size:12px;font-weight:670}
 .rules-search-disclosure[open] summary,.rules-context-disclosure[open] summary{list-style:disclosure-open inside}
 .rules-search-disclosure summary:hover,.rules-context-disclosure summary:hover{color:#162d38}
