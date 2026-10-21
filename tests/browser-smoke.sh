@@ -41,6 +41,29 @@ test -s /tmp/twinshooter-qa/desktop.png
 test -s /tmp/twinshooter-qa/mobile.png
 echo 'Captured desktop/mobile homepage screenshots'
 
+# Rules PDF.js: verify both original documents, mobile responsiveness, zoom, search.
+"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+  --window-size=1500,1000 --virtual-time-budget=75000 --dump-dom \
+  "http://127.0.0.1:$PORT/tests/rules-viewport-smoke.html" \
+  >/tmp/twinshooter-qa/rules-viewport-result.html 2>/tmp/twinshooter-qa/rules-chrome.log
+if ! grep -Fq 'data-status="pass"' /tmp/twinshooter-qa/rules-viewport-result.html; then
+  grep -E 'RULES ERROR|data-status="fail"' /tmp/twinshooter-qa/rules-viewport-result.html || true
+  echo 'Rules two-document PDF.js browser QA failed' >&2
+  exit 1
+fi
+echo 'Rules PDF.js page/search/zoom responsive QA PASS'
+for document in rules minutes; do
+  for size in desktop mobile; do
+    if [[ "$size" == desktop ]]; then dimensions="1440,1060"; else dimensions="390,900"; fi
+    "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+      --hide-scrollbars --window-size="$dimensions" --virtual-time-budget=6500 \
+      --screenshot="/tmp/twinshooter-qa/rules-${document}-${size}.png" \
+      "http://127.0.0.1:$PORT/tests/rules-visual-qa.html?doc=${document}" \
+      >/dev/null 2>/dev/null
+    test -s "/tmp/twinshooter-qa/rules-${document}-${size}.png"
+  done
+done
+
 # Lab route, viewport and interaction checks (production CSS, no Tailwind Play CDN).
 "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
   --window-size=1500,1000 --virtual-time-budget=8000 --dump-dom \
