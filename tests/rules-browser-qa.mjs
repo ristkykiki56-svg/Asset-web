@@ -61,6 +61,10 @@ async function openDoc(doc,width,height,screenshot){
  assert(state.overflow<=3,'Horizontal body overflow '+JSON.stringify(state));
  assert(state.pdfTop<(width<=430?620:450),'PDF pushed too far below navigation: '+JSON.stringify(state));
  assert(state.pdfHeight>=(width<=430?350:500),'PDF reading area too short: '+JSON.stringify(state));
+ const viewportGoal=width<=720 ? Math.max(520,Math.min(height-140,1050)) : Math.max(760,Math.min(height-75,1700));
+ const expectedHeight=Math.min(state.canvasHeight+(width<=720?12:16),viewportGoal);
+ assert(state.pdfHeight>=expectedHeight-5,'PDF viewport is shorter than intended: '+JSON.stringify({state,expectedHeight}));
+ if(width>=1000)assert(state.pdfHeight>=900,'Desktop PDF reader must dominate viewport: '+JSON.stringify(state));
  if(width<=430)assert(state.pdfHeight<=state.canvasHeight+28,'Mobile PDF leaves avoidable empty area: '+JSON.stringify(state));
  assert(state.canvasWidth>=state.pdfWidth*0.84,'PDF does not fill available width: '+JSON.stringify(state));
  assert(!state.searchOpen&&!state.noteOpen,'Secondary panels must start collapsed');
