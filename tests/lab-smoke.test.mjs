@@ -152,6 +152,9 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.match(svg,/radialGradient id="hwLens"/);
  assert.match(svg,/class="hw-scope-section"/);
  assert.match(svg,/class="hw-rifle-section"/);
+ assert.match(svg,/id="hwRedRifleRaster"/);
+ assert.ok(svg.includes('aurellia-red-poster.webp'));
+ assert.doesNotMatch(html,/id="rigSwitch-clarisa"/);
  assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
  assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
  for (const id of ['svgCobFulcrum','rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
@@ -161,6 +164,7 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
    assert.match(svg,new RegExp('data-hw-key="'+key+'"'),key);
  }
  assert.match(css,/Equipment illustration v2/);
+ assert.match(css,/hw-raster-ready/);
  assert.match(css,/\.hw-marker\.is-highlighted/);
  assert.match(js,/document\.getElementById\('labHardwarePicker'\)/);
  assert.match(js,/document\.getElementById\('blueprintActiveLabel'\)/);
@@ -210,7 +214,7 @@ test('diagram labels do not misrepresent conceptual plots as measured data',()=>
 
 test('interactive diagram markers expose a single keyboard path and truthful pressed state',()=>{
  const hardware=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0]||'';
- assert.equal((hardware.match(/class="hw-marker cursor-pointer" tabindex="0" role="button"/g)||[]).length,10);
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer"(?: transform="[^"]+")? tabindex="0" role="button"/g)||[]).length,10);
  assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
  assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
  assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);

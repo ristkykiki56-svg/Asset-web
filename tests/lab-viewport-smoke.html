@@ -54,11 +54,10 @@ frame.addEventListener('load',async ()=>{
  if(doc.querySelectorAll('#hardwareBlueprintSvg .hw-marker').length!==10) problems.push('equipment numbered hotspots not 10');
  if(doc.querySelectorAll('#hardwareBlueprintSvg .hw-region').length!==5) problems.push('equipment interactive exterior groups not 5');
  if(doc.getElementById('blueprintActiveLabel').textContent!=='DIPILIH: Lensa okuler')problems.push('equipment selected header not synchronized');
- w.switchRifleRig('clarisa');
- if(doc.getElementById('rigMainChassis').getAttribute('fill')!=='#0055B8')problems.push('equipment blue illustration variant failed');
- if(doc.getElementById('rigSwitch-clarisa').getAttribute('aria-pressed')!=='true')problems.push('equipment variant aria state failed');
- w.switchRifleRig('aurellia');
- if(doc.getElementById('rigRearBlock').getAttribute('fill')!=='#D11F26')problems.push('equipment red illustration variant failed');
+ const posterRifle=doc.getElementById('hwRedRifleRaster');
+ if(!posterRifle||posterRifle.getAttribute('href')!=='/assets/hardware/aurellia-red-poster.webp')problems.push('poster-derived red rifle missing');
+ if(doc.querySelector('#sec-hardware #rigSwitch-clarisa'))problems.push('obsolete blue rig toggle still shown');
+ if(!doc.getElementById('hardwareBlueprintSvg').classList.contains('hw-raster-ready'))problems.push('poster raster failed and SVG fallback is shown');
  w.adjustRifleBalancePoint(470);
  if(!doc.getElementById('svgCobFulcrum').getAttribute('transform').includes('470'))problems.push('equipment balance diagram wiring failed');
 
