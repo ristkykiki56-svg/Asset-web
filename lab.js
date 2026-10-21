@@ -74,7 +74,7 @@ let sfxActive = false;
                 code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Lengkungan Punggung & Tahanan Beban Pasif',
-                desc: 'Garis tubuh dan tumpuan pada gambar adalah skema dua dimensi. Pada mode karakter WebP, figur tetap diam saat slider digeser. Slider hanya mengubah angka, garis acuan, dan indikator pada model; tidak ada distribusi gaya yang diukur.',
+                desc: 'Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan pada mode tersebut. Pada mode skema SVG, slider mengubah bentuk figur dan indikator contoh; tidak ada gaya atau distribusi beban yang diukur.',
                 metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
             },
             {
