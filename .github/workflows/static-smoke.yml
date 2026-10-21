@@ -44,6 +44,10 @@ jobs:
             /tmp/twinshooter-qa/lab-optics-mobile.png
             /tmp/twinshooter-qa/lab-optics-detail-close.png
             /tmp/twinshooter-qa/lab-optics-detail-far.png
+            assets/optics/optic-head.webp
+            assets/optics/optic-static.webp
+            assets/optics/optic-foreground.webp
+            assets/optics/optic-artwork.webp
             /tmp/twinshooter-qa/lab-silhouette-desktop.png
             /tmp/twinshooter-qa/lab-silhouette-mobile.png
             /tmp/twinshooter-qa/lab-viewport-result.html
