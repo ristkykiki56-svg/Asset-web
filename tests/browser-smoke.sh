@@ -94,10 +94,12 @@ done
 echo 'Captured focused desktop/mobile screenshots for four Lab illustrations'
 
 # Verify the reported problem in the magnified mobile optical image at both extremes.
-for state in close far; do
-  if [[ "$state" == close ]]; then distance=45; height=-20; else distance=125; height=20; fi
+for state in neutral close far; do
+  if [[ "$state" == neutral ]]; then distance=85; height=0
+  elif [[ "$state" == close ]]; then distance=45; height=-20
+  else distance=125; height=20; fi
   "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
-    --hide-scrollbars --window-size=390,900 --virtual-time-budget=2800 \
+    --hide-scrollbars --window-size=390,900 --virtual-time-budget=5500 \
     --screenshot="/tmp/twinshooter-qa/lab-optics-detail-${state}.png" \
     "http://127.0.0.1:$PORT/tests/lab-four-visual-qa.html?lesson=optics&detail=1&dist=${distance}&height=${height}" \
     >/dev/null 2>/dev/null
