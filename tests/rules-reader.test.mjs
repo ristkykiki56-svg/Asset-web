@@ -42,7 +42,10 @@ test('Rules: document and page navigation, zoom, search, direct file actions', (
   assert.match(script,/history\[replace \? 'replaceState' : 'pushState'\]/);
   assert.match(css,/@media\(max-width:720px\)/);
   assert.match(html,/lang="id"/);
-  assert.match(html,/Risalah rapat dan lampiran/);
+  assert.match(html,/45 halaman · Risalah rapat/);
+  assert.match(script,/Risalah rapat 13 Juli 2026/);
+  assert.match(html,/id="rulesSearchDisclosure"/);
+  assert.match(html,/id="rulesContextDisclosure"/);
   assert.match(html,/Buka PDF asli/);
 });
 

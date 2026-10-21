@@ -46,12 +46,24 @@ async function openDoc(doc,width,height,screenshot){
   page:document.getElementById('pageNumber').value,
   canvas:document.getElementById('pdfCanvas').width,
   current:document.querySelector('.rules-document.is-selected')?.dataset.document,
-  overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
+  overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+  pdfTop:document.getElementById('pdfViewport').getBoundingClientRect().top + window.scrollY,
+  pdfHeight:document.getElementById('pdfViewport').getBoundingClientRect().height,
+  pdfWidth:document.getElementById('pdfViewport').getBoundingClientRect().width,
+  canvasWidth:parseInt(document.getElementById('pdfCanvas').style.width,10),
+  canvasHeight:parseInt(document.getElementById('pdfCanvas').style.height,10),
+  searchOpen:document.getElementById('rulesSearchDisclosure').open,
+  noteOpen:document.getElementById('rulesContextDisclosure').open
  }));
  assert(state.canvas>100&&state.page==='1','Invalid rendered canvas: '+JSON.stringify(state));
  assert(Number(state.total)===(doc==='rules'?110:45),'Incorrect PDF page count '+JSON.stringify(state));
  assert(state.current===doc,'Wrong active document '+JSON.stringify(state));
  assert(state.overflow<=3,'Horizontal body overflow '+JSON.stringify(state));
+ assert(state.pdfTop<(width<=430?620:450),'PDF pushed too far below navigation: '+JSON.stringify(state));
+ assert(state.pdfHeight>=(width<=430?350:500),'PDF reading area too short: '+JSON.stringify(state));
+ if(width<=430)assert(state.pdfHeight<=state.canvasHeight+28,'Mobile PDF leaves avoidable empty area: '+JSON.stringify(state));
+ assert(state.canvasWidth>=state.pdfWidth*0.84,'PDF does not fill available width: '+JSON.stringify(state));
+ assert(!state.searchOpen&&!state.noteOpen,'Secondary panels must start collapsed');
 }
 try {
  await openDoc('rules',1440,1060,true);
@@ -84,6 +96,9 @@ try {
  assert((await page.$eval('#pdfPageText',x=>x.textContent.length))>100,'Last rules page text unavailable');
  await openDoc('minutes',1440,1060,true);
  await openDoc('minutes',390,900,true);
+ // Expand the secondary search panel; it should not occupy the initial reading space.
+ await page.click('#rulesSearchDisclosure > summary');
+ assert(await page.$eval('#rulesSearchDisclosure',e=>e.open),'Search panel failed to open');
  // Search text in the original document: results lead to a page, not word highlighting.
  await page.$eval('#pdfSearchInput',x=>{x.value='General Assembly';x.dispatchEvent(new Event('input',{bubbles:true}))});
  await page.click('#pdfSearchButton');
@@ -96,7 +111,7 @@ try {
  assert((await page.$eval('#openPdf',e=>e.getAttribute('href')))==='/assets/documents/imssu-oga-minutes-2026.pdf','Minutes direct PDF link broken');
  await page.click('#docChoiceRules');
  await waitRendered('rules',1);
- console.log('PASS: 110 and 45 pages, search, zoom, page 64 landscape, fallback links, mobile/desktop responsive');
+ console.log('PASS: compact Rules layout, dominant PDF area, 110/45 pages, search, zoom, page 64 landscape, mobile/desktop');
 } finally {
  await browser.close();
 }

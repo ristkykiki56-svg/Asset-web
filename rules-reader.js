@@ -161,6 +161,7 @@ async function renderPage() {
     canvas.style.height = Math.round(display.height) + 'px';
     ui.container.style.width = Math.round(display.width) + 'px';
     ui.container.style.height = Math.round(display.height) + 'px';
+    ui.viewport.style.setProperty('--pdf-page-height', Math.round(display.height) + 'px');
     const task = page.render({
       canvasContext: ctx,
       viewport: display,
@@ -219,6 +220,7 @@ async function loadDocument(key, requestedPage = 1, {record = true} = {}) {
   ui.pageText.textContent = '';
   ui.container.style.width = '';
   ui.container.style.height = '';
+  ui.viewport.style.removeProperty('--pdf-page-height');
   updateZoomLabel();
   showDocumentHeader(key);
   setControls(false);

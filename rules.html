@@ -33,27 +33,27 @@
       <span class="rules-masthead-label">ARSIP DOKUMEN / IMSSU</span>
     </header>
     <section class="rules-intro" aria-labelledby="page-title">
-      <p class="rules-eyebrow">REFERENSI PERATURAN DAN RAPAT</p>
-      <h1 id="page-title">Dokumen IMSSU</h1>
-      <p class="rules-lead">Buka dokumen lengkap tanpa meninggalkan halaman. Tata letak, tabel, gambar, dan lampiran tetap mengikuti PDF aslinya.</p>
+      <div>
+        <p class="rules-eyebrow">REFERENSI PERATURAN DAN RAPAT</p>
+        <h1 id="page-title">Dokumen IMSSU</h1>
+      </div>
+      <p class="rules-lead">Pilih dokumen untuk membaca seluruh halaman PDF asli.</p>
     </section>
 
     <section class="rules-documents" aria-label="Pilih dokumen">
       <a id="docChoiceRules" class="rules-document is-selected" href="/rules?doc=rules" data-document="rules" aria-current="true">
         <span class="rules-doc-number" aria-hidden="true">01</span>
         <span class="rules-doc-copy">
-          <strong>IMSSU Sporting Rules 2025</strong>
-          <span>Bahasa Inggris dan terjemahan Indonesia</span>
-          <small>110 halaman · Peraturan pertandingan</small>
+          <strong>Sporting Rules 2025</strong>
+          <small>110 halaman · Inggris dan Indonesia</small>
         </span>
         <span class="rules-doc-arrow" aria-hidden="true">↗</span>
       </a>
       <a id="docChoiceMinutes" class="rules-document" href="/rules?doc=minutes" data-document="minutes">
         <span class="rules-doc-number" aria-hidden="true">02</span>
         <span class="rules-doc-copy">
-          <strong>IMSSU General Assembly 2026</strong>
-          <span>Risalah rapat dan lampiran</span>
-          <small>45 halaman · 13 Juli 2026</small>
+          <strong>General Assembly 2026</strong>
+          <small>45 halaman · Risalah rapat</small>
         </span>
         <span class="rules-doc-arrow" aria-hidden="true">↗</span>
       </a>
@@ -62,14 +62,10 @@
     <section class="rules-reading" aria-labelledby="viewer-title">
       <div class="rules-reading-head">
         <div>
-          <p class="rules-eyebrow">PEMBACA PDF</p>
           <h2 id="viewer-title">IMSSU Sporting Rules 2025</h2>
           <p id="viewer-description">110 halaman · Bahasa Inggris dan terjemahan Indonesia</p>
         </div>
         <span class="rules-format">PDF ASLI</span>
-      </div>
-      <div class="rules-note" id="document-context">
-        <strong>Peraturan 2025.</strong> Dokumen ini memuat peraturan dan bagian terjemahannya. Untuk ketentuan resmi, periksa redaksi asli dan perkembangan keputusan IMSSU berikutnya.
       </div>
       <div class="rules-toolbar" aria-label="Navigasi PDF">
         <div class="rules-toolgroup" aria-label="Pindah halaman">
@@ -89,16 +85,27 @@
           <button id="fullscreen" type="button" class="rules-tool-word" aria-label="Layar penuh" disabled>Layar penuh</button>
         </div>
       </div>
-      <form id="pdfSearchForm" class="rules-search" role="search" aria-label="Cari dalam PDF">
-        <label for="pdfSearchInput">Cari dalam dokumen</label>
-        <div class="rules-search-controls">
-          <input id="pdfSearchInput" type="search" placeholder="Masukkan kata atau frasa" autocomplete="off">
-          <button type="submit" id="pdfSearchButton" disabled>Cari</button>
-          <button type="button" id="searchPrevious" aria-label="Hasil sebelumnya" disabled>‹</button>
-          <button type="button" id="searchNext" aria-label="Hasil berikutnya" disabled>›</button>
+      <div class="rules-secondary-controls" aria-label="Alat baca tambahan">
+        <details class="rules-search-disclosure" id="rulesSearchDisclosure">
+          <summary>Cari di PDF</summary>
+          <form id="pdfSearchForm" class="rules-search" role="search" aria-label="Cari dalam PDF">
+          <label for="pdfSearchInput">Cari dalam dokumen</label>
+          <div class="rules-search-controls">
+            <input id="pdfSearchInput" type="search" placeholder="Masukkan kata atau frasa" autocomplete="off">
+            <button type="submit" id="pdfSearchButton" disabled>Cari</button>
+            <button type="button" id="searchPrevious" aria-label="Hasil sebelumnya" disabled>‹</button>
+            <button type="button" id="searchNext" aria-label="Hasil berikutnya" disabled>›</button>
+          </div>
+          <p id="searchStatus" class="rules-inline-status" aria-live="polite">Pencarian menemukan halaman yang memuat teks, bukan menandai setiap kata.</p>
+          </form>
+        </details>
+        <details class="rules-context-disclosure" id="rulesContextDisclosure">
+          <summary>Info dokumen</summary>
+          <div class="rules-note" id="document-context">
+            <strong>Peraturan 2025.</strong> Dokumen ini memuat peraturan dan bagian terjemahannya. Untuk ketentuan resmi, periksa redaksi asli dan perkembangan keputusan IMSSU berikutnya.
+          </div>
+        </details>
         </div>
-        <p id="searchStatus" class="rules-inline-status" aria-live="polite">Pencarian menemukan halaman yang memuat teks, bukan menandai setiap kata.</p>
-      </form>
       <div id="pdfViewerShell" class="rules-viewer-shell">
         <div class="rules-viewer-status" id="pdfLoading" role="status" aria-live="polite">Memuat dokumen…</div>
         <div id="pdfError" class="rules-viewer-error" hidden role="alert">
