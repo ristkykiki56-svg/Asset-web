@@ -79,6 +79,9 @@ try {
  await waitRendered('rules',64);
  const landscape=await page.$eval('#pdfCanvas',c=>({w:parseInt(c.style.width,10),h:parseInt(c.style.height,10)}));
  assert(landscape.w>landscape.h,'Landscape PDF page not preserved: '+JSON.stringify(landscape));
+ await page.$eval('#pageNumber',x=>{x.value='110';x.dispatchEvent(new Event('change',{bubbles:true}))});
+ await waitRendered('rules',110);
+ assert((await page.$eval('#pdfPageText',x=>x.textContent.length))>100,'Last rules page text unavailable');
  await openDoc('minutes',1440,1060,true);
  await openDoc('minutes',390,900,true);
  // Search text in the original document: results lead to a page, not word highlighting.
@@ -87,6 +90,9 @@ try {
  await page.waitForFunction(()=>/halaman ditemukan|Tidak ada halaman|belum berhasil/.test(document.getElementById('searchStatus').textContent),{timeout:60000});
  const searchText=await page.$eval('#searchStatus',e=>e.textContent);
  assert(searchText.includes('halaman ditemukan'),'Minutes search failed: '+searchText);
+ await page.$eval('#pageNumber',x=>{x.value='45';x.dispatchEvent(new Event('change',{bubbles:true}))});
+ await waitRendered('minutes',45);
+ assert((await page.$eval('#pdfPageText',x=>x.textContent.length))>30,'Last minutes page text unavailable');
  assert((await page.$eval('#openPdf',e=>e.getAttribute('href')))==='/assets/documents/imssu-oga-minutes-2026.pdf','Minutes direct PDF link broken');
  await page.click('#docChoiceRules');
  await waitRendered('rules',1);
