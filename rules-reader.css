@@ -46,10 +46,10 @@
 .rules-search-controls button{padding:0 12px;font-size:13px}
 .rules-search-controls #searchPrevious,.rules-search-controls #searchNext{font-size:19px}
 .rules-inline-status{color:#637178;font-size:12px;line-height:1.5;min-height:17px;margin:0}
-.rules-viewer-shell{background:#d8dcde;border:1px solid #c8cdd0;border-radius:3px;min-height:550px;padding:8px;position:relative}
+.rules-viewer-shell{background:#d8dcde;border:1px solid #c8cdd0;border-radius:3px;min-height:0;padding:8px;position:relative}
 .rules-viewer-status,.rules-viewer-error{background:#fff;max-width:680px;margin:12px auto 0;padding:13px 15px;font-size:14px;color:#2f3a3f;line-height:1.6;text-align:center}
 .rules-viewer-error p{margin:5px 0 0}
-.rules-pdf-viewport{width:100%;height:clamp(570px,calc(100dvh - 285px),1250px);max-height:none;min-height:0;overflow:auto;overscroll-behavior:contain;outline-offset:4px;scrollbar-gutter:stable}
+.rules-pdf-viewport{width:100%;height:min(calc(var(--pdf-page-height, 9999px) + 16px),clamp(570px,calc(100dvh - 285px),1250px));max-height:none;min-height:0;overflow:auto;overscroll-behavior:contain;outline-offset:4px;scrollbar-gutter:stable}
 .rules-page-container{min-height:280px;width:max-content;min-width:0;max-width:none;margin:0 auto}
 .rules-page-container canvas{display:block;background:#fff;box-shadow:0 5px 22px rgba(25,31,36,.17);width:auto;height:auto}
 .rules-viewer-help{font-size:12px;color:#637178;line-height:1.55;margin:9px 1px 13px}
@@ -80,8 +80,8 @@
  .rules-toolgroup-end{margin-left:0}
  .rules-toolbar button,.rules-search button{min-width:36px;min-height:38px}
  .rules-toolbar input{height:38px;width:51px}
- .rules-pdf-viewport{height:clamp(500px,calc(100dvh - 270px),900px);max-height:none;min-height:0;scrollbar-gutter:auto}
- .rules-viewer-shell{padding:4px;min-height:510px}
+ .rules-pdf-viewport{height:min(calc(var(--pdf-page-height, 9999px) + 12px),clamp(500px,calc(100dvh - 270px),900px));max-height:none;min-height:0;scrollbar-gutter:auto}
+ .rules-viewer-shell{padding:4px;min-height:0}
  .rules-footer{display:block}
  .rules-footer a{display:inline-block;margin-top:10px}
 }
