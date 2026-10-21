@@ -27,12 +27,14 @@ test('copy gate: five lesson introductions and equipment descriptions are plain,
 });
 
 test('copy gate: posture WebP remains static and labels do not imply measured biomechanics', () => {
-  assert.match(html, /Karakter WebP bukan potret atlet dan tidak bergerak mengikuti slider/);
-  assert.match(html, /Slider mengubah garis acuan dan angka model/);
-  assert.match(js, /figur tetap diam saat slider digeser/);
+  assert.match(html, /Mode karakter menggunakan WebP statis/);
+  assert.match(html, /Matikan opsi gambar karakter untuk membuka skema SVG beserta slider model/);
+  assert.match(html, /Kontrol ini disembunyikan pada mode karakter WebP/);
+  assert.match(js, /Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan/);
   assert.doesNotMatch(js, /menggeser bentuk SVG/);
   assert.doesNotMatch(js, /KAKI KANAN \(90°\)/);
-  assert.match(posture, /Figur tetap diam saat parameter model diubah/);
+  assert.match(posture, /Slider tersedia pada mode skema SVG/);
+  assert.match(css, /#sec-biomech\.ts-pose-art-active \.ts-scheme-only\{display:none\}/);
 });
 
 test('copy gate: optics describes both the moving-head and lens-only controls', () => {
