@@ -232,6 +232,37 @@ frame.addEventListener('load',async ()=>{
    if(artwork.dataset.headX!=='0.000'||artwork.dataset.headY!=='0.000')
      problems.push('layered artwork reset failed');
  }
+ // A complete mobile illustration must fit inside its frame by default.
+ // Zoom is opt-in and must be reversible without permanently cropping the scene.
+ if(picker){
+   picker.value='sec-optics';
+   picker.dispatchEvent(new Event('change',{bubbles:true}));
+   if(!doc.getElementById('sec-optics').classList.contains('is-active'))
+     problems.push('optics lesson did not activate on mobile');
+   const pan=doc.querySelector('#sec-optics .optical-side-pan');
+   const zoom=doc.getElementById('opticsDetailToggle');
+   for(const width of [320,360,390,430]){
+     frame.style.width=width+'px';
+     const ar=artwork.getBoundingClientRect();
+     const pr=pan.getBoundingClientRect();
+     if(ar.width>pr.width+1.5 || ar.left<pr.left-1.5 || ar.right>pr.right+1.5)
+       problems.push('optics default illustration cropped at '+width+'px');
+     if(pan.classList.contains('is-detail-zoom')||pan.scrollLeft>2)
+       problems.push('optics unexpectedly opened in detail mode '+width+'px');
+   }
+   frame.style.width='390px';
+   zoom.click();
+   if(zoom.getAttribute('aria-pressed')!=='true'||!pan.classList.contains('is-detail-zoom')
+     ||pan.scrollWidth<=pan.clientWidth+80)
+     problems.push('optics detail zoom not activated');
+   if(pan.scrollLeft<10)
+     problems.push('optics detail zoom did not reveal eye and ocular');
+   zoom.click();
+   if(zoom.getAttribute('aria-pressed')!=='false'||pan.classList.contains('is-detail-zoom')
+     ||artwork.getBoundingClientRect().width>pan.getBoundingClientRect().width+1.5
+     ||pan.scrollLeft>2)
+     problems.push('optics did not restore full uncropped view after detail zoom');
+ }
  const eye=doc.getElementById('optEyeDist');
  const animatedHead=doc.getElementById('svgShooterHeadSide');
  const fixedScope=doc.getElementById('opticFixedScope');

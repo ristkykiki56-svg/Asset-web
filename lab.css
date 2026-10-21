@@ -1140,3 +1140,54 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  overflow:hidden!important;white-space:nowrap!important;
  clip-path:inset(50%)!important;
 }
+
+/* The entire optical illustration is visible first; detail zoom is always optional. */
+#sec-optics .optical-detail-toggle{display:none}
+@media(max-width:767px){
+ #sec-optics .optical-side-pan{
+   direction:ltr;
+   overflow-x:hidden;
+   overscroll-behavior-x:contain;
+   width:100%;
+ }
+ #sec-optics #opticalAlignmentArtwork,
+ #sec-optics #opticalAlignmentIllustration{
+   display:block;
+   width:100%;
+   min-width:0;
+   max-width:100%;
+ }
+ #sec-optics .optical-side-pan.is-detail-zoom{overflow-x:auto}
+ #sec-optics .optical-side-pan.is-detail-zoom #opticalAlignmentArtwork{
+   width:650px;
+   min-width:650px;
+   max-width:none;
+ }
+ #sec-optics .optical-side-pan.is-detail-zoom #opticalAlignmentIllustration{
+   width:540px;
+   min-width:540px;
+   max-width:none;
+ }
+ #sec-optics .optical-detail-toggle{
+   display:inline-flex;
+   min-height:44px;
+   justify-content:center;
+   align-items:center;
+   margin-top:10px;
+   padding:8px 14px;
+   font:600 12px 'Plus Jakarta Sans',sans-serif;
+   border:1px solid var(--rule-heavy);
+   background:var(--bg-surface);
+   color:var(--ink-900);
+   border-radius:3px;
+   cursor:pointer;
+ }
+ #sec-optics .optical-detail-toggle[aria-pressed="true"]{
+   background:var(--ink-900);
+   color:var(--bg-surface);
+ }
+ #sec-optics .optical-detail-toggle:focus-visible{
+   outline:3px solid var(--clarisa-blue);
+   outline-offset:3px;
+ }
+}
