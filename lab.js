@@ -1157,7 +1157,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 
         function adjustRifleBalancePoint(val) {
             const x = parseFloat(val);
-            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 413)`);
+            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 364)`);
             const fb = document.getElementById('cobFeedbackText');
             if (x >= 402 && x <= 438) {
                 fb.textContent = 'TITIK TENGAH PADA DIAGRAM';
