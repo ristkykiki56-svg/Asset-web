@@ -222,6 +222,25 @@ frame.addEventListener('load',async ()=>{
    let coveredPixels=0;
    for(let i=3;i<fixedOcular.length;i+=4)if(fixedOcular[i]>180)coveredPixels++;
    if(coveredPixels<4000)problems.push('fixed scope foreground missing opaque equipment pixels');
+   // Regression for the photographed white sliver at the RIGHT edge of the
+   // ocular: composited pixels in the metal core cannot depend on head motion.
+   const scopeCanvas=doc.createElement('canvas');
+   scopeCanvas.width=staticArt.naturalWidth;
+   scopeCanvas.height=staticArt.naturalHeight;
+   const scopeCtx=scopeCanvas.getContext('2d',{willReadFrequently:true});
+   function ocularAt(dx,dy){
+     scopeCtx.clearRect(0,0,scopeCanvas.width,scopeCanvas.height);
+     scopeCtx.drawImage(staticArt,0,0);
+     scopeCtx.drawImage(headArt,dx,dy);
+     scopeCtx.drawImage(frontArt,0,0);
+     return scopeCtx.getImageData(770,165,33,74).data;
+   }
+   const nearRim=ocularAt(-4,-1),farRim=ocularAt(4,1),neutralRim=ocularAt(0,0);
+   let rimDrift=0;
+   for(let i=0;i<nearRim.length;i++){
+     if(Math.abs(nearRim[i]-farRim[i])>2||Math.abs(nearRim[i]-neutralRim[i])>2)rimDrift++;
+   }
+   if(rimDrift)problems.push('scope ocular rim still moves with head slider: '+rimDrift+' channels');
    // Earlier optics assertions leave eye distance at 120. Restore a known neutral baseline.
    w.calibratePerfectOptics();
    w.OpticsPosterArt.renderImmediately({dist:85,height:0});
