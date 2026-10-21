@@ -1,0 +1,53 @@
+name: Temporary original-PDF and PDFjs bundle import
+
+on:
+  push:
+    branches: [feat/rules-dual-pdfjs-reader-20261021]
+
+permissions:
+  contents: write
+
+jobs:
+  import-original-pdfs:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Download exact user-provided PDF documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/documents
+          curl --fail --location --retry 3 --connect-timeout 20 \
+            'https://d2ol7oe51mr4n9.cloudfront.net/user_3K4pbhySSAk6qPsInxf3UjkMmzd/6daf13a0-7bf2-4f6c-898d-578455e800a6.pdf' \
+            --output assets/documents/imssu-sporting-rules-2025-bilingual.pdf
+          curl --fail --location --retry 3 --connect-timeout 20 \
+            'https://d2ol7oe51mr4n9.cloudfront.net/user_3K4pbhySSAk6qPsInxf3UjkMmzd/86a8a977-22a1-428e-99d1-0a3ee03d9fe0.pdf' \
+            --output assets/documents/imssu-oga-minutes-2026.pdf
+          echo '11fa89e5bae8c36870f0c53af6e1ab8aee602c58db720702bd51ffc77e401460  assets/documents/imssu-sporting-rules-2025-bilingual.pdf' | sha256sum --check
+          echo '68ebb0264d4cdfe323e39ba88f886d6e71640071136aca5e48be0d6670772a7c  assets/documents/imssu-oga-minutes-2026.pdf' | sha256sum --check
+          file assets/documents/*.pdf
+      - name: Vendor pinned Mozilla PDF.js runtime and worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pdfjs-package assets/pdfjs
+          npm pack pdfjs-dist@4.10.38 --pack-destination /tmp/pdfjs-package --silent
+          tar -xzf /tmp/pdfjs-package/pdfjs-dist-4.10.38.tgz -C /tmp/pdfjs-package
+          cp /tmp/pdfjs-package/package/build/pdf.min.mjs assets/pdfjs/pdf.min.mjs
+          cp /tmp/pdfjs-package/package/build/pdf.worker.min.mjs assets/pdfjs/pdf.worker.min.mjs
+          test -s assets/pdfjs/pdf.min.mjs
+          test -s assets/pdfjs/pdf.worker.min.mjs
+      - name: Commit original PDF bytes and PDFjs build to feature branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/documents/*.pdf assets/pdfjs/*.mjs
+          git diff --cached --quiet && { echo 'No document changes'; exit 1; }
+          git commit -m 'feat(rules): include unchanged source PDFs and pinned PDF.js runtime'
+          git fetch origin feat/rules-dual-pdfjs-reader-20261021
+          git rebase origin/feat/rules-dual-pdfjs-reader-20261021
+          git push origin HEAD:feat/rules-dual-pdfjs-reader-20261021
