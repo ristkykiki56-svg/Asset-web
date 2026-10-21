@@ -9,6 +9,8 @@ const base=document.getElementById('opticStaticArt');
 const head=document.getElementById('opticHeadArt');
 const fallback=document.getElementById('opticalAlignmentIllustration');
 const announcer=document.getElementById('opticsArtworkStatus');
+const zoomButton=document.getElementById('opticsDetailToggle');
+const view=stage.closest('.optical-side-pan');
 if(!stage||!base||!head||!fallback)return;
 
 let ready=false;
@@ -44,6 +46,20 @@ window.OpticsPosterArt={
  getHead:()=>head,
  getStatic:()=>base
 };
+// Default view contains the whole illustration. Detail mode is a deliberate
+// user action; switching modes must never permanently hide the objective lens.
+if(view&&zoomButton){
+ zoomButton.addEventListener('click',()=>{
+   const zoom=view.classList.toggle('is-detail-zoom');
+   zoomButton.setAttribute('aria-pressed',String(zoom));
+   zoomButton.textContent=zoom?'Tampilkan seluruh gambar':'Perbesar detail gambar';
+   view.scrollLeft=zoom ? Math.max(0,view.scrollWidth-view.clientWidth) : 0;
+   apply({
+     dist:document.getElementById('optEyeDist')?.value,
+     height:document.getElementById('optCheekHeight')?.value
+   },true);
+ });
+}
 function maybeReady(){
  if(ready)return;
  if(!base.complete||!head.complete)return;
