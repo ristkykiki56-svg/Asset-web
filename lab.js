@@ -74,7 +74,7 @@ let sfxActive = false;
                 code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Lengkungan Punggung & Tahanan Beban Pasif',
-                desc: 'Garis tubuh dan tumpuan pada gambar adalah skema dua dimensi. Diagram memperlihatkan bagaimana perubahan satu parameter menggeser bentuk SVG, bukan menunjukkan distribusi gaya yang telah diukur.',
+                desc: 'Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan pada mode tersebut. Pada mode skema SVG, slider mengubah bentuk figur dan indikator contoh; tidak ada gaya atau distribusi beban yang diukur.',
                 metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
             },
             {
@@ -91,7 +91,7 @@ let sfxActive = false;
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Bahu Kanan & Sandaran Buttplate',
                 desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
-                metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
+                metrics: ['BAGIAN: bahu kanan', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
@@ -135,15 +135,15 @@ let sfxActive = false;
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                code: 'TITIK ANATOMI #09 // KAKI KIRI (PENOPANG UTAMA)',
+                code: 'TITIK ANATOMI #09 // KAKI KIRI',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kiri — Skema Penopang Berdiri',
-                desc: 'Kaki kiri merupakan salah satu titik tumpu postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
+                desc: 'Kaki kiri ditandai sebagai salah satu bagian penopang postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
                 metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
+                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kanan — Skema Penopang Berdiri',
                 desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
@@ -365,10 +365,10 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                     : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
             });
             const viewLabels = {
-                back: 'FIG 1.1 — SKEMA PUNGGUNG (ILUSTRASI)',
-                front: 'FIG 1.2 — SKEMA TAMPAK DEPAN (ILUSTRASI)',
-                sideLeft: 'FIG 1.3 — SKEMA SAMPING KIRI (ILUSTRASI)',
-                sideRight: 'FIG 1.4 — SKEMA SAMPING KANAN (ILUSTRASI)'
+                back: 'FIG 1.1 — TAMPAK PUNGGUNG (ILUSTRASI)',
+                front: 'FIG 1.2 — TAMPAK DEPAN (ILUSTRASI)',
+                sideLeft: 'FIG 1.3 — TAMPAK SAMPING KIRI (ILUSTRASI)',
+                sideRight: 'FIG 1.4 — TAMPAK SAMPING KANAN (ILUSTRASI)'
             };
             document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
             const picker = document.getElementById('labCalloutPicker');
@@ -600,7 +600,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                     ctx.fillStyle = '#10B981';
                     ctx.beginPath(); ctx.arc(bx, by, 6, 0, Math.PI * 2); ctx.fill();
                     ctx.fillStyle = '#FFFFFF';
-                    ctx.fillText('SEAR BREAK (LEPAS)', bx - 48, by - 12);
+                    ctx.fillText('PELEPASAN (MODEL)', bx - 48, by - 12);
                 }
             }
 
@@ -635,7 +635,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 if (oscProgress < 0.28) lbl.textContent = 'FASE 1: PENARIKAN AWAL';
                 else if (oscProgress < 0.58) lbl.textContent = 'FASE 2: STABIL DI TITIK TAHANAN';
                 else if (oscProgress < 0.67) {
-                    lbl.textContent = 'FASE 3: PELEPASAN PELURU!';
+                    lbl.textContent = 'FASE 3: PELEPASAN PEMICU (MODEL)';
                     if (!oscShotFired) {
                         oscShotFired = true;
                         playSteelImpactSound();
@@ -722,8 +722,8 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const press = parseFloat(document.getElementById('optPressure').value);
 
             document.getElementById('optEyeDistLabel').textContent = `${dist} mm (CONTOH MODEL)`;
-            document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm`;
-            document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm`;
+            document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm (MODEL)`;
+            document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm (MODEL)`;
             document.getElementById('optPressureLabel').textContent =
                 press > 72 ? `${press}% (PERUBAHAN BESAR)` : press < 25 ? `${press}% (PERUBAHAN KECIL)` : `${press}% (PERUBAHAN SEDANG)`;
 
@@ -741,12 +741,12 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             if (err < 7) {
                 badge.textContent = 'SIMULASI LINGKARAN TERLIHAT';
                 badge.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                mini.textContent = 'SUMBU OPTIK SEJAJAR';
+                mini.textContent = 'LINGKARAN PENUH (MODEL)';
                 mini.className = 'text-[var(--ok-green)] font-bold';
             } else {
                 badge.textContent = 'SIMULASI BAYANGAN TEPI';
                 badge.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                mini.textContent = 'DEVIASI SUMBU MATA';
+                mini.textContent = 'BAYANGAN TEPI (MODEL)';
                 mini.className = 'text-[var(--aurellia-red)] font-bold';
             }
             // Always paint a static optical view immediately; on mobile this module can
@@ -885,6 +885,14 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
         const SILHOUETTE_NAMES = Object.freeze({
             chicken: 'Ayam', pig: 'Babi', turkey: 'Kalkun', ram: 'Domba'
         });
+        // Raster remains primary. These simple contours appear only if a
+        // poster WebP fails to load, so a target remains recognizable.
+        const SILHOUETTE_FALLBACK_PATHS = Object.freeze({
+            chicken: 'M13 24Q9 19 10 12L15 14L16 7L21 14Q26 12 30 15Q33 10 37 10Q44 12 43 19L39 23L36 30L31 32L30 39H25L24 31H20L19 39H14L16 27Z',
+            pig: 'M9 19Q11 12 22 11H41Q47 8 52 14L56 15L57 21L53 24L50 28L46 29L45 38H39L38 30H23L21 38H15L16 28Q9 27 9 19Z',
+            turkey: 'M11 24Q10 16 15 12L14 8Q21 9 25 17L28 13L33 16Q34 9 39 8Q45 8 45 13L42 21L46 25Q46 31 37 33L33 37L34 47H28L27 37L23 34Q13 34 11 24Z',
+            ram: 'M10 25L17 16L34 15L40 17Q43 8 49 8Q58 8 57 16Q56 24 50 23Q47 23 46 19L43 28L40 44H34L34 33H21L20 44H14L14 30Z'
+        });
 
         const RANGE_SPECS = {
             chicken: { label: 'AYAM (CHICKEN)', dist: 18 },
@@ -925,8 +933,17 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                     fallback.hidden = true;
                     image.addEventListener('error', () => {
                         image.hidden = true;
+                        const ns = 'http://www.w3.org/2000/svg';
+                        const outline = document.createElementNS(ns, 'svg');
+                        outline.setAttribute('viewBox', '0 0 66 54');
+                        outline.setAttribute('aria-hidden', 'true');
+                        const shape = document.createElementNS(ns, 'path');
+                        shape.setAttribute('d', SILHOUETTE_FALLBACK_PATHS[animal]);
+                        shape.setAttribute('fill', '#D95020');
+                        outline.appendChild(shape);
+                        fallback.prepend(outline);
                         fallback.hidden = false;
-                    });
+                    }, {once:true});
                     btn.append(image, fallback);
                     btn.onclick = () => hitSteelTarget(animal, i);
                     container.appendChild(btn);
@@ -1063,66 +1080,68 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
         }
 
+        // Text is indexed to the current poster-derived rifle and the
+        // separate, schematic scope illustration. No measured specifications.
         const HARDWARE_SPECS = {
             stock: {
-                code: 'KOMPONEN #01 // STOCK, BERAT & PANJANG POPOR',
-                title: 'Stock (Popor), Buttplate & Panjang Popor',
-                body: 'Popor adalah struktur luar yang menopang bagian-bagian utama peralatan. Ilustrasi ini memperlihatkan posisi umumnya, bukan ukuran atau bentuk perangkat atlet.',
-                note: 'Diagram hanya menandai komponen buttplate, bukan panduan pengaturannya.'
+                code: 'KOMPONEN #01 // POPOR',
+                title: 'Popor dan Bantalan Bahu',
+                body: 'Titik 01 menunjukkan bagian belakang senapan pada gambar poster, termasuk area popor dan bantalan bahu.',
+                note: 'Foto poster digunakan untuk mengenali letak bagian. Panjang popor dan setelannya tidak diukur.'
             },
             cheekpiece: {
-                code: 'KOMPONEN #02 // PENYELARASAN KEPALA',
-                title: 'Cheek Piece (Sandaran Pipi Presisi)',
-                body: 'Sandaran pipi merupakan area tempat kepala bertumpu saat melihat melalui optik. Letak dan bentuknya pada gambar merupakan contoh visual, bukan setelan atlet tertentu.',
-                note: 'SKEMA: perangkat, posisi kepala, dan hubungan antarbagian tidak direkonstruksi dari pengukuran atlet.'
+                code: 'KOMPONEN #02 // SANDARAN PIPI',
+                title: 'Sandaran Pipi (Cheekpiece)',
+                body: 'Titik 02 menandai sandaran pipi di bagian atas popor senapan merah. Bagian ini menjadi tempat pipi bertumpu ketika menggunakan optik.',
+                note: 'Tinggi dan bentuk pada foto bukan acuan pengaturan untuk setiap atlet.'
             },
             grip: {
-                code: 'KOMPONEN #03 // GRIP & TRIGGER',
-                title: 'Grip Anatomis & Bilah Pemicu (Trigger Shoe)',
-                body: 'Grip adalah bagian pegangan di bawah badan peralatan. Gambar menampilkan bentuk luarnya untuk mengenali letak komponen, bukan contoh posisi jari yang wajib diikuti.',
-                note: 'SKEMA: garis gaya pada gambar tidak menetapkan sudut toleransi atau tekanan alat nyata.'
+                code: 'KOMPONEN #03 // PEGANGAN',
+                title: 'Pegangan dan Area Pelatuk',
+                body: 'Titik 03 berada di area pegangan tangan dan pelatuk. Foto menunjukkan letak luarnya, bukan posisi jari saat menembak.',
+                note: 'Bentuk pegangan terlihat pada poster; ukuran dan tekanan jari tidak tersedia.'
             },
             riser: {
-                code: 'KOMPONEN #04 // PENYELARASAN KOMPONEN SENAPAN',
-                title: 'Peninggi Teleskop (Scope Riser) & Fore-End',
-                body: 'Bagian penopang depan berada di bawah badan peralatan. Pada ilustrasi, komponen ini digunakan untuk menunjukkan susunan luar secara sederhana.',
-                note: 'SKEMA: posisi komponen relatif terhadap tubuh hanya gambaran konseptual.'
+                code: 'KOMPONEN #04 // BADAN DEPAN',
+                title: 'Bagian Depan Badan Senapan (Fore-End)',
+                body: 'Titik 04 menunjukkan bagian depan badan senapan yang tampak pada gambar merah, di belakang area tabung dan laras.',
+                note: 'Titik ini tidak menunjukkan peninggi teleskop. Diagram tidak digunakan untuk menentukan ukuran atau penyetelan komponen.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
-                title: 'Tabung Udara Bertekanan (PCP) — Skema',
-                body: 'Tabung udara merupakan bagian luar pada sebagian sistem senapan angin olahraga. Bentuk ilustratifnya membantu mengenali komponen, bukan menunjukkan spesifikasi tekanan atau performa.',
-                note: 'Informasi tekanan harus mengikuti label dan manual senapan yang benar-benar digunakan.'
+                title: 'Area Tabung Udara',
+                body: 'Titik 05 menunjukkan area tabung udara di bawah bagian depan senapan pada gambar poster.',
+                note: 'Tekanan, kapasitas, dan jenis tabung tidak dapat ditentukan dari gambar ini.'
             },
             barrel: {
-                code: 'KOMPONEN #06 // PANJANG SENAPAN & LARAS',
-                title: 'Laras Match Presisi & Muzzle Shroud',
-                body: 'Laras merupakan bagian memanjang di bagian depan peralatan. Diagram ini hanya memperlihatkan bentuk luar dan hubungannya dengan komponen lain.',
-                note: 'Perawatan dan pembersihan mengikuti petunjuk pabrikan senapan yang benar-benar digunakan.'
+                code: 'KOMPONEN #06 // LARAS',
+                title: 'Laras dan Bagian Ujung Depan',
+                body: 'Titik 06 mengarah ke bagian depan senapan. Gambar menunjukkan letak luarnya tanpa rincian struktur laras.',
+                note: 'Panjang, kaliber, dan komponen internal tidak diverifikasi melalui foto poster.'
             },
             objective: {
-                code: 'KOMPONEN #07 // LENSA OBJEKTIF & PARALAKS',
-                title: 'Lensa Objektif & Cincin Fokus Paralaks (AO)',
-                body: 'Lensa objektif berada di ujung depan teleskop dan menerima cahaya dari arah objek yang diamati. Susunan dalam optik tidak ditampilkan pada diagram.',
-                note: 'SKEMA: kebutuhan fokus bergantung jenis dan rancangan perangkat optik yang dipakai.'
+                code: 'KOMPONEN #07 // OBJEKTIF',
+                title: 'Lensa Objektif Teleskop',
+                body: 'Titik 07 berada pada bagian depan teleskop di diagram atas. Lensa objektif menerima cahaya dari arah objek yang diamati.',
+                note: 'Diagram atas adalah ilustrasi optik terpisah, bukan foto teleskop yang terpasang pada senapan merah.'
             },
             turrets: {
-                code: 'KOMPONEN #08 // TURRET ELEVASI & WINDAGE',
-                title: 'Turret Elevasi (Atas) & Turret Windage (Samping)',
-                body: 'Turret merupakan bagian kontrol pada tubuh teleskop. Diagram menunjukkan lokasi luarnya tanpa menjelaskan pengaturan perangkat tertentu.',
-                note: 'Halaman ini tidak menghitung klik elevasi senapan atau optik nyata.'
+                code: 'KOMPONEN #08 // TURRET',
+                title: 'Turret Elevasi dan Windage',
+                body: 'Titik 08 menunjukkan lokasi kontrol turret pada ilustrasi teleskop. Bentuk dan posisi kontrol berbeda menurut model perangkat.',
+                note: 'Jumlah klik, rentang pengaturan, dan spesifikasi perangkat asli tidak disajikan.'
             },
             zoom: {
-                code: 'KOMPONEN #09 // PEMBESARAN OPTIK',
-                title: 'Cincin Pengatur Pembesaran (Zoom Ring)',
-                body: 'Cincin pembesaran dapat ditemukan pada sebagian model teleskop. Gambar menunjukkan bentuk dan lokasi umum, bukan pembesaran yang digunakan atlet.',
-                note: 'SKEMA: pembesaran ditampilkan sebagai konsep; nilai optimalnya tidak dihitung halaman ini.'
+                code: 'KOMPONEN #09 // CINCIN PEMBESARAN',
+                title: 'Cincin Pembesaran Teleskop',
+                body: 'Titik 09 menandai cincin pembesaran pada ilustrasi optik. Tidak semua teleskop memiliki bentuk pengatur yang sama.',
+                note: 'Gambar tidak menunjukkan tingkat pembesaran atau pengaturan yang dipakai atlet.'
             },
             ocular: {
-                code: 'KOMPONEN #10 // LENSA OKULER & FOKUS RETICLE',
-                title: 'Lensa Okuler & Pengatur Dioptri Mata',
-                body: 'Lensa okuler berada di ujung belakang teleskop, dekat posisi mata pengguna. Diagram ini menampilkan bentuk eksterior saja.',
-                note: 'SKEMA: pengaturan fokus mengikuti manual dan karakteristik optik yang benar-benar dipakai.'
+                code: 'KOMPONEN #10 // OKULER',
+                title: 'Lensa Okuler dan Area Dioptri',
+                body: 'Titik 10 berada pada ujung teleskop yang menghadap mata dalam ilustrasi tampak luar.',
+                note: 'Ilustrasi tidak memperlihatkan pengaturan dioptri maupun jarak mata hasil pengukuran.'
             }
         };
 
@@ -1173,13 +1192,13 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 364)`);
             const fb = document.getElementById('cobFeedbackText');
             if (x >= 402 && x <= 438) {
-                fb.textContent = 'TITIK TENGAH PADA DIAGRAM';
+                fb.textContent = 'PENANDA DI TENGAH DIAGRAM';
                 fb.className = 'text-[var(--ok-green)]';
             } else if (x < 402) {
-                fb.textContent = 'TITIK BERGESER KE BELAKANG (SKEMA)';
+                fb.textContent = 'PENANDA BERGESER KE BELAKANG';
                 fb.className = 'text-[var(--aurellia-red)]';
             } else {
-                fb.textContent = 'TITIK BERGESER KE DEPAN (SKEMA)';
+                fb.textContent = 'PENANDA BERGESER KE DEPAN';
                 fb.className = 'text-[var(--aurellia-red)]';
             }
         }
