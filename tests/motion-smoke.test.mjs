@@ -47,8 +47,8 @@ test('filter remains immediate and accessible', () => {
 });
 
 test('IMSSU rules remain accessible and functional', () => {
-  assert.match(rules, /id="pdfViewer"/);
+  assert.match(rules, /id="pdfCanvas"/);
   assert.match(rules, /id="zoomIn"/);
   assert.match(rules, /id="zoomOut"/);
-  assert.match(rules, /drive\.google\.com/);
+  assert.match(rules, /assets\/documents\/imssu-oga-minutes-2026\.pdf/);
 });
