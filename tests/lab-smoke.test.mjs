@@ -15,7 +15,7 @@ test('lab lives at its own static /lab route; homepage stays an athlete profile'
  assert.match(home,/href="\/lab">Laboratorium<\/a>/);
  assert.match(home,/<h1 id="hero-title">Clarisa Azalia/);
  assert.equal((home.match(/<article class="achievement /g)||[]).length,25);
- assert.match(rules,/IMSSU Air Rifle/);
+ assert.match(rules,/Dokumen IMSSU/);
 });
 test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.doesNotMatch(html,/cdn\.tailwindcss\.com/);
