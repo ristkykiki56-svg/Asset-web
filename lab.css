@@ -851,7 +851,8 @@ html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {colo
 }
 #sec-imssu .silhouette-raster {object-fit:contain;pointer-events:none;user-select:none}
 #sec-imssu .silhouette-raster[hidden],#sec-imssu .silhouette-fallback[hidden] {display:none!important}
-#sec-imssu .silhouette-fallback {font:700 10px/1.2 'Plus Jakarta Sans',sans-serif;color:#D95020;text-align:center;max-width:48px;overflow-wrap:anywhere}
+#sec-imssu .silhouette-fallback {font:700 10px/1.2 'Plus Jakarta Sans',sans-serif;color:#D95020;text-align:center;max-width:52px;overflow-wrap:anywhere}
+#sec-imssu .silhouette-fallback svg {display:block;width:43px;height:33px;margin:0 auto 2px;pointer-events:none}
 #sec-imssu .steel-target-btn[aria-pressed="true"] {opacity:.55}
 #sec-imssu [data-rack-animal] > div:nth-child(2) {
   background:#293338!important;border-color:#293338!important;border-radius:2px;
