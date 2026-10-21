@@ -18,11 +18,11 @@ const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 function announce(s){if(announcer)announcer.textContent=s}
 function placement(dist=85,height=0){
- // Limit translation to preserve collar/head continuity. Pixel coordinates are
+ // Use restrained movement to keep the extracted neck/collar seam intact. Pixel coordinates are
  // illustrative, and deliberately much smaller than equipment travel in mm.
  return {
-   x:clamp((Number(dist)-85)*.18,-6.5,6.5),
-   y:clamp(-Number(height)*.10,-2.5,2.5)
+   x:clamp((Number(dist)-85)*.11,-4,4),
+   y:clamp(-Number(height)*.055,-1.1,1.1)
  };
 }
 function apply({dist=85,height=0}={},immediate=false){
