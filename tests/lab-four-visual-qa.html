@@ -48,6 +48,13 @@ frame.addEventListener('load',()=>{
      win.scrollTo(0,0);document.body.dataset.snapshot='ready';
     }));
    }).catch(()=>{document.body.dataset.snapshot='error';document.body.dataset.reason='optics image decode failed'});
+  } else if(id==='sec-imssu'){
+   const images=[...doc.querySelectorAll('#sec-imssu .silhouette-raster')];
+   Promise.all(images.map(im=>im.decode())).then(()=>{
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      win.scrollTo(0,0);document.body.dataset.snapshot='ready';
+    }));
+   }).catch(()=>{document.body.dataset.snapshot='error';document.body.dataset.reason='silhouette raster decode failed'});
   } else requestAnimationFrame(()=>{win.scrollTo(0,0);document.body.dataset.snapshot='ready'});
  } catch(e){document.body.dataset.snapshot='error';document.body.dataset.reason=e.message}
 },{once:true});

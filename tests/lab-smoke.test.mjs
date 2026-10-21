@@ -185,8 +185,18 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
   assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
  assert.match(html,/id="opticalAlignmentIllustration"/);
- assert.match(js,/const SILHOUETTE_PATHS =/);
- assert.match(js,/class="silhouette-study"/);
+ assert.match(js,/const SILHOUETTE_RASTERS =/);
+ assert.match(js,/className = 'silhouette-raster'/);
+ assert.doesNotMatch(js,/const SILHOUETTE_PATHS =/);
+ assert.doesNotMatch(js,/<svg data-target-animal/);
+ for(const animal of ['chicken','pig','turkey','ram']){
+  const path=new URL('../assets/silhouettes/'+animal+'.webp',import.meta.url);
+  assert.ok(existsSync(path),animal+' WebP missing');
+  const bytes=readFileSync(path);
+  assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  assert.ok(bytes.length<45000,animal+' WebP too large');
+ }
  assert.match(css,/Four-module visual refinement/);
  assert.doesNotMatch(js,/id="targetSteel-/);
  assert.match(html,/role="group" aria-labelledby="triggerVectorTitle/);

@@ -170,7 +170,14 @@ frame.addEventListener('load',async ()=>{
  if(!doc.getElementById('biomechRedKit'))problems.push('posture illustration gradients absent');
  if(!doc.getElementById('triggerVectorDiagram')||!doc.getElementById('triggerMechanismDiagram'))problems.push('trigger illustration absent');
  if(!doc.getElementById('opticalAlignmentIllustration'))problems.push('optics side study absent');
- if(!doc.querySelector('.silhouette-study'))problems.push('silhouette vector studies absent');
+ const silhouettes=[...doc.querySelectorAll('#sec-imssu .silhouette-raster')];
+ if(silhouettes.length!==20)problems.push('poster target image count not 20');
+ if(new Set(silhouettes.map(im=>im.dataset.targetAnimal)).size!==4)problems.push('poster silhouettes missing animal type');
+ for(const im of silhouettes){
+   if(!im.complete||!im.naturalWidth||!im.naturalHeight)problems.push('silhouette WebP image not loaded: '+im.dataset.targetAnimal);
+   if(im.naturalWidth && (im.naturalWidth!==232||im.naturalHeight!==176))problems.push('poster silhouette raster dimensions incorrect');
+ }
+ if(doc.querySelector('#sec-imssu .steel-target-btn svg'))problems.push('legacy target SVG remains');
  const first=doc.getElementById('target-chicken-0');
  first.click();
  if(first.getAttribute('aria-pressed')!=='true')problems.push('target press ARIA');
