@@ -49,10 +49,10 @@
 .rules-viewer-shell{background:#d8dcde;border:1px solid #c8cdd0;border-radius:3px;min-height:0;padding:8px;position:relative}
 .rules-viewer-status,.rules-viewer-error{background:#fff;max-width:680px;margin:12px auto 0;padding:13px 15px;font-size:14px;color:#2f3a3f;line-height:1.6;text-align:center}
 .rules-viewer-error p{margin:5px 0 0}
-.rules-pdf-viewport{width:100%;height:min(calc(var(--pdf-page-height, 9999px) + 16px),clamp(570px,calc(100dvh - 285px),1250px));max-height:none;min-height:0;overflow:auto;overscroll-behavior:contain;outline-offset:4px;scrollbar-gutter:stable}
+.rules-pdf-viewport{width:100%;height:min(calc(var(--pdf-page-height, 9999px) + 16px),clamp(760px,calc(100dvh - 75px),1700px));max-height:none;min-height:0;overflow:auto;overscroll-behavior:contain;outline-offset:4px;scrollbar-gutter:stable}
 .rules-page-container{min-height:280px;width:max-content;min-width:0;max-width:none;margin:0 auto}
 .rules-page-container canvas{display:block;background:#fff;box-shadow:0 5px 22px rgba(25,31,36,.17);width:auto;height:auto}
-.rules-viewer-help{font-size:12px;color:#637178;line-height:1.55;margin:9px 1px 13px}
+.rules-viewer-help{font-size:11px;color:#637178;line-height:1.45;margin:7px 1px 9px}
 .rules-file-actions{display:flex;gap:9px;flex-wrap:wrap}
 .rules-file-actions a{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:0 16px;border-radius:3px;border:1px solid #253239;font-size:13px;font-weight:730;color:#fff;background:#26343b;text-decoration:none}
 .rules-file-actions a+ a{background:#fff;color:#26343b}
@@ -80,7 +80,7 @@
  .rules-toolgroup-end{margin-left:0}
  .rules-toolbar button,.rules-search button{min-width:36px;min-height:38px}
  .rules-toolbar input{height:38px;width:51px}
- .rules-pdf-viewport{height:min(calc(var(--pdf-page-height, 9999px) + 12px),clamp(500px,calc(100dvh - 270px),900px));max-height:none;min-height:0;scrollbar-gutter:auto}
+ .rules-pdf-viewport{height:min(calc(var(--pdf-page-height, 9999px) + 12px),clamp(520px,calc(100dvh - 140px),1050px));max-height:none;min-height:0;scrollbar-gutter:auto}
  .rules-viewer-shell{padding:4px;min-height:0}
  .rules-footer{display:block}
  .rules-footer a{display:inline-block;margin-top:10px}
