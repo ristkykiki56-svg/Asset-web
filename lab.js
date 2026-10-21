@@ -885,6 +885,14 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
         const SILHOUETTE_NAMES = Object.freeze({
             chicken: 'Ayam', pig: 'Babi', turkey: 'Kalkun', ram: 'Domba'
         });
+        // Raster remains primary. These simple contours appear only if a
+        // poster WebP fails to load, so a target remains recognizable.
+        const SILHOUETTE_FALLBACK_PATHS = Object.freeze({
+            chicken: 'M13 24Q9 19 10 12L15 14L16 7L21 14Q26 12 30 15Q33 10 37 10Q44 12 43 19L39 23L36 30L31 32L30 39H25L24 31H20L19 39H14L16 27Z',
+            pig: 'M9 19Q11 12 22 11H41Q47 8 52 14L56 15L57 21L53 24L50 28L46 29L45 38H39L38 30H23L21 38H15L16 28Q9 27 9 19Z',
+            turkey: 'M11 24Q10 16 15 12L14 8Q21 9 25 17L28 13L33 16Q34 9 39 8Q45 8 45 13L42 21L46 25Q46 31 37 33L33 37L34 47H28L27 37L23 34Q13 34 11 24Z',
+            ram: 'M10 25L17 16L34 15L40 17Q43 8 49 8Q58 8 57 16Q56 24 50 23Q47 23 46 19L43 28L40 44H34L34 33H21L20 44H14L14 30Z'
+        });
 
         const RANGE_SPECS = {
             chicken: { label: 'AYAM (CHICKEN)', dist: 18 },
@@ -925,8 +933,17 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                     fallback.hidden = true;
                     image.addEventListener('error', () => {
                         image.hidden = true;
+                        const ns = 'http://www.w3.org/2000/svg';
+                        const outline = document.createElementNS(ns, 'svg');
+                        outline.setAttribute('viewBox', '0 0 66 54');
+                        outline.setAttribute('aria-hidden', 'true');
+                        const shape = document.createElementNS(ns, 'path');
+                        shape.setAttribute('d', SILHOUETTE_FALLBACK_PATHS[animal]);
+                        shape.setAttribute('fill', '#D95020');
+                        outline.appendChild(shape);
+                        fallback.prepend(outline);
                         fallback.hidden = false;
-                    });
+                    }, {once:true});
                     btn.append(image, fallback);
                     btn.onclick = () => hitSteelTarget(animal, i);
                     container.appendChild(btn);
