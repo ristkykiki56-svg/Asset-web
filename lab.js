@@ -1260,15 +1260,12 @@ function setupLabMobileExperience() {
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
         if (id === 'sec-optics') {
             renderOcularLoop(performance.now(), true);
-            if (media.matches) requestAnimationFrame(() => {
-                const pan = document.querySelector('#sec-optics .optical-side-pan');
-                // Start with the eye and ocular visible on narrow screens.
-                // Preserve the visitor's manual scroll position after first opening.
-                if (pan && pan.dataset.initialized !== 'true') {
-                    pan.scrollLeft = pan.scrollWidth - pan.clientWidth;
-                    pan.dataset.initialized = 'true';
-                }
-            });
+            // When the lesson was hidden, its width was zero. Re-apply head position
+            // after it becomes visible, using the true mobile fitted artwork size.
+            requestAnimationFrame(() => window.OpticsPosterArt?.renderImmediately({
+                dist: document.getElementById('optEyeDist')?.value,
+                height: document.getElementById('optCheekHeight')?.value
+            }));
         }
         if (id === 'sec-hardware' && media.matches) {
             // Initial selection may be made while the lesson is still hidden.
