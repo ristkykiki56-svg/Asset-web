@@ -1192,3 +1192,11 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
    outline-offset:3px;
  }
 }
+
+/* Poster-derived red rifle: SVG draws interaction markers and acts only as the fallback.
+ * When the WebP loads, the legacy red rifle drawing is hidden; scope diagram is untouched. */
+#hardwareBlueprintSvg .hw-rifle-section > image { image-rendering:auto; }
+#hardwareBlueprintSvg.hw-raster-ready .hw-rifle-section > .hw-region,
+#hardwareBlueprintSvg.hw-raster-ready .hw-rifle-section > path,
+#hardwareBlueprintSvg.hw-raster-ready .hw-rifle-section > ellipse { opacity:0; }
+#hardwareBlueprintSvg.hw-raster-ready .hw-rifle-section > .hw-region { pointer-events:none; }
