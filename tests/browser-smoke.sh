@@ -41,6 +41,9 @@ test -s /tmp/twinshooter-qa/desktop.png
 test -s /tmp/twinshooter-qa/mobile.png
 echo 'Captured desktop/mobile homepage screenshots'
 
+# PDF.js needs real-time worker rendering, not virtual-time-budget polling.
+npm install --no-save --no-package-lock --ignore-scripts puppeteer-core@24.17.0 --silent
+PORT="$PORT" CHROME="$CHROME" node tests/rules-browser-qa.mjs
 # Lab route, viewport and interaction checks (production CSS, no Tailwind Play CDN).
 "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
   --window-size=1500,1000 --virtual-time-budget=8000 --dump-dom \

@@ -47,8 +47,10 @@ test('filter remains immediate and accessible', () => {
 });
 
 test('IMSSU rules remain accessible and functional', () => {
-  assert.match(rules, /id="pdfViewer"/);
+  assert.match(rules, /id="pdfCanvas"/);
   assert.match(rules, /id="zoomIn"/);
   assert.match(rules, /id="zoomOut"/);
-  assert.match(rules, /drive\.google\.com/);
+  assert.match(rules, /data-document="minutes"/);
+  const reader=readFileSync(new URL('../rules-reader.js',import.meta.url),'utf8');
+  assert.ok(reader.includes('imssu-oga-minutes-2026.pdf'));
 });

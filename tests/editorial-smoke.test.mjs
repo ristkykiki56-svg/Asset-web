@@ -47,6 +47,6 @@ test('lightweight motion, responsive behavior, and rules remain intact', () => {
   assert.match(css, /@media\(max-width:900px\)/);
   assert.match(css, /\.journey\.motion-pending\.motion-active::after/);
   assert.match(html, /observer\.disconnect\(\)/);
-  assert.match(rules, /id="pdfViewer"/);
-  assert.match(rules, /drive\.google\.com\/file\/d\/1KOkHDMheZ7-PYl_6c6C7Iz4fCdDQvkWl/);
+  assert.match(rules, /id="pdfCanvas"/);
+  assert.match(rules, /assets\/documents\/imssu-sporting-rules-2025-bilingual\.pdf/);
 });
