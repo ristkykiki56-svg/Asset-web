@@ -33,6 +33,7 @@ test('copy gate: posture WebP remains static and labels do not imply measured bi
   assert.match(js, /Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan/);
   assert.doesNotMatch(js, /menggeser bentuk SVG/);
   assert.doesNotMatch(js, /KAKI KANAN \(90°\)/);
+  assert.doesNotMatch(js, /KAKI KIRI \(PENOPANG UTAMA\)/);
   assert.match(posture, /Slider tersedia pada mode skema SVG/);
   assert.match(css, /#sec-biomech\.ts-pose-art-active \.ts-scheme-only\{display:none\}/);
 });
