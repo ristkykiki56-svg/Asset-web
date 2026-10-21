@@ -24,6 +24,15 @@ frame.addEventListener('load',()=>{
   main.classList.remove('space-y-16');main.style.padding='14px 14px 20px';main.style.margin='0 auto';
   const pose=new URL(location.href).searchParams.get('pose');
   if(id==='sec-biomech' && ['back','front','sideLeft','sideRight'].includes(pose))win.switchPose(pose);
+  if(id==='sec-optics'){
+   const params=new URL(location.href).searchParams;
+   if(params.has('dist')||params.has('height')){
+    if(params.has('dist'))doc.getElementById('optEyeDist').value=params.get('dist');
+    if(params.has('height'))doc.getElementById('optCheekHeight').value=params.get('height');
+    win.updateOpticalSim();
+   }
+   if(params.get('detail')==='1')doc.getElementById('opticsDetailToggle').click();
+  }
   win.scrollTo(0,0);
   requestAnimationFrame(()=>{win.scrollTo(0,0);document.body.dataset.snapshot='ready'});
  } catch(e){document.body.dataset.snapshot='error';document.body.dataset.reason=e.message}
