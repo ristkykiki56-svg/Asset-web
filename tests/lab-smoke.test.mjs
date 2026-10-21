@@ -214,7 +214,7 @@ test('diagram labels do not misrepresent conceptual plots as measured data',()=>
 
 test('interactive diagram markers expose a single keyboard path and truthful pressed state',()=>{
  const hardware=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0]||'';
- assert.equal((hardware.match(/class="hw-marker cursor-pointer" tabindex="0" role="button"/g)||[]).length,10);
+ assert.equal((hardware.match(/class="hw-marker cursor-pointer"(?: transform="[^"]+")? tabindex="0" role="button"/g)||[]).length,10);
  assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
  assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
  assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);
