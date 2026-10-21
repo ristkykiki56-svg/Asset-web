@@ -241,6 +241,9 @@ frame.addEventListener('load',async ()=>{
      problems.push('optics lesson did not activate on mobile');
    const pan=doc.querySelector('#sec-optics .optical-side-pan');
    const zoom=doc.getElementById('opticsDetailToggle');
+   if(pan.id!=='opticalSidePan'||zoom.getAttribute('aria-controls')!=='opticalSidePan'
+      ||pan.tabIndex!==-1||pan.hasAttribute('aria-label'))
+     problems.push('optics full-fit keyboard/ARIA state is misleading');
    for(const width of [320,360,390,430]){
      frame.style.width=width+'px';
      const ar=artwork.getBoundingClientRect();
@@ -253,14 +256,14 @@ frame.addEventListener('load',async ()=>{
    frame.style.width='390px';
    zoom.click();
    if(zoom.getAttribute('aria-pressed')!=='true'||!pan.classList.contains('is-detail-zoom')
-     ||pan.scrollWidth<=pan.clientWidth+80)
+     ||pan.scrollWidth<=pan.clientWidth+80||pan.tabIndex!==0||!pan.getAttribute('aria-label'))
      problems.push('optics detail zoom not activated');
    if(pan.scrollLeft<10)
      problems.push('optics detail zoom did not reveal eye and ocular');
    zoom.click();
    if(zoom.getAttribute('aria-pressed')!=='false'||pan.classList.contains('is-detail-zoom')
      ||artwork.getBoundingClientRect().width>pan.getBoundingClientRect().width+1.5
-     ||pan.scrollLeft>2)
+     ||pan.scrollLeft>2||pan.tabIndex!==-1||pan.hasAttribute('aria-label'))
      problems.push('optics did not restore full uncropped view after detail zoom');
  }
  const eye=doc.getElementById('optEyeDist');
