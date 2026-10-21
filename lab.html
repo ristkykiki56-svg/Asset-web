@@ -187,7 +187,7 @@
               </div>
               <label class="ts-pose-art-switch"><input id="postureArtMode" type="checkbox" disabled> Gunakan gambar karakter</label>
               <p id="postureArtStatus" aria-live="polite">Memeriksa ketersediaan aset ilustrasi…</p>
-              <p class="ts-pose-art-note">Karakter WebP bukan potret atlet dan tidak bergerak mengikuti slider. Garis dan titik adalah penanda ilustratif.</p>
+              <p class="ts-pose-art-note">Mode karakter menggunakan WebP statis. Matikan opsi gambar karakter untuk membuka skema SVG beserta slider model. Keduanya bukan rekonstruksi atlet.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
@@ -275,7 +275,7 @@
                             <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset parameter</button>
                         </div>
 
-                        <p class="lab-diagram-context">Slider mengubah garis acuan dan angka model. Gambar karakter WebP tetap diam; nilainya bukan pengukuran tubuh.</p>
+                        <p class="lab-diagram-context">Dalam mode skema SVG, slider mengubah bentuk figur serta indikator contoh. Kontrol ini disembunyikan pada mode karakter WebP. Semua nilainya bukan hasil pengukuran tubuh.</p>
                          <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah indikator model</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
