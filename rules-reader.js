@@ -41,6 +41,7 @@ const ui = {
   shell: el('pdfViewerShell'),
   container: el('pdfPageContainer'),
   canvas: el('pdfCanvas'),
+  pageText: el('pdfPageText'),
   loading: el('pdfLoading'),
   error: el('pdfError'),
   open: el('openPdf'),
@@ -170,6 +171,15 @@ async function renderPage() {
     if (currentRendering !== renderingId || localPdf !== pdf) return;
     renderTask = null;
     ui.canvas.setAttribute('aria-label', dataForCanvas(pageNumber));
+    // Provide page text for assistive reading without changing the PDF canvas.
+    try {
+      const textPage = await page.getTextContent();
+      if (currentRendering !== renderingId || localPdf !== pdf) return;
+      ui.pageText.textContent = textPage.items.map(item => item.str ?? '').join(' ').trim()
+        || 'Halaman ini tidak memiliki lapisan teks yang dapat dibaca. Buka PDF asli untuk melihat konten visual.';
+    } catch (_) {
+      ui.pageText.textContent = 'Teks halaman belum dapat diekstrak dari PDF.';
+    }
     ui.viewport.scrollTop = 0;
     ui.viewport.scrollLeft = 0;
     setLoading('');
@@ -206,6 +216,7 @@ async function loadDocument(key, requestedPage = 1, {record = true} = {}) {
   ui.searchStatus.textContent = 'Cari kata atau frasa. Hasil menunjukkan halaman yang memuat teks.';
   ui.canvas.width = 0;
   ui.canvas.height = 0;
+  ui.pageText.textContent = '';
   ui.container.style.width = '';
   ui.container.style.height = '';
   updateZoomLabel();
