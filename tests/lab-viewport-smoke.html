@@ -211,16 +211,17 @@ frame.addEventListener('load',async ()=>{
    if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight
        ||frontArt.naturalWidth!==staticArt.naturalWidth||frontArt.naturalHeight!==staticArt.naturalHeight)
      problems.push('image layers do not share dimensions');
-   // The moving WebP sprite must not include pixels from the fixed ocular scope.
+   // The foreground must be opaque over the real optical assembly so the
+   // original hair/face pixels cannot move visible scope or mount details.
    const maskCanvas=doc.createElement('canvas');
-   maskCanvas.width=headArt.naturalWidth;
-   maskCanvas.height=headArt.naturalHeight;
+   maskCanvas.width=frontArt.naturalWidth;
+   maskCanvas.height=frontArt.naturalHeight;
    const maskCtx=maskCanvas.getContext('2d',{willReadFrequently:true});
-   maskCtx.drawImage(headArt,0,0);
-   const ocularPixels=maskCtx.getImageData(770,100,46,140).data;
-   let contaminated=0;
-   for(let i=3;i<ocularPixels.length;i+=4)if(ocularPixels[i]>16)contaminated++;
-   if(contaminated)problems.push('head layer still contains fixed ocular pixels: '+contaminated);
+   maskCtx.drawImage(frontArt,0,0);
+   const fixedOcular=maskCtx.getImageData(730,150,80,100).data;
+   let coveredPixels=0;
+   for(let i=3;i<fixedOcular.length;i+=4)if(fixedOcular[i]>180)coveredPixels++;
+   if(coveredPixels<4000)problems.push('fixed scope foreground missing opaque equipment pixels');
    // Earlier optics assertions leave eye distance at 120. Restore a known neutral baseline.
    w.calibratePerfectOptics();
    w.OpticsPosterArt.renderImmediately({dist:85,height:0});
