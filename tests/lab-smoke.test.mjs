@@ -153,7 +153,7 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.match(svg,/class="hw-scope-section"/);
  assert.match(svg,/class="hw-rifle-section"/);
  assert.match(svg,/id="hwRedRifleRaster"/);
- assert.match(svg,/aurellia-red-poster\\.webp/);
+ assert.ok(svg.includes('aurellia-red-poster.webp'));
  assert.doesNotMatch(html,/id="rigSwitch-clarisa"/);
  assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
  assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
