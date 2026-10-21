@@ -58,7 +58,7 @@ try {
  await openDoc('rules',390,900,true);
  for(const width of [320,360,430,768,1100]){
    await page.setViewport({width,height:900,deviceScaleFactor:1});
-   await page.waitForTimeout(250);
+   await new Promise(resolve=>setTimeout(resolve,250));
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
    assert(overflow<=3,'Overflow at width '+width+': '+overflow);
  }
