@@ -85,25 +85,27 @@
           <button id="fullscreen" type="button" class="rules-tool-word" aria-label="Layar penuh" disabled>Layar penuh</button>
         </div>
       </div>
-      <details class="rules-search-disclosure" id="rulesSearchDisclosure">
-        <summary>Cari teks dalam dokumen</summary>
-        <form id="pdfSearchForm" class="rules-search" role="search" aria-label="Cari dalam PDF">
-        <label for="pdfSearchInput">Cari dalam dokumen</label>
-        <div class="rules-search-controls">
-          <input id="pdfSearchInput" type="search" placeholder="Masukkan kata atau frasa" autocomplete="off">
-          <button type="submit" id="pdfSearchButton" disabled>Cari</button>
-          <button type="button" id="searchPrevious" aria-label="Hasil sebelumnya" disabled>‹</button>
-          <button type="button" id="searchNext" aria-label="Hasil berikutnya" disabled>›</button>
+      <div class="rules-secondary-controls" aria-label="Alat baca tambahan">
+        <details class="rules-search-disclosure" id="rulesSearchDisclosure">
+          <summary>Cari teks dalam dokumen</summary>
+          <form id="pdfSearchForm" class="rules-search" role="search" aria-label="Cari dalam PDF">
+          <label for="pdfSearchInput">Cari dalam dokumen</label>
+          <div class="rules-search-controls">
+            <input id="pdfSearchInput" type="search" placeholder="Masukkan kata atau frasa" autocomplete="off">
+            <button type="submit" id="pdfSearchButton" disabled>Cari</button>
+            <button type="button" id="searchPrevious" aria-label="Hasil sebelumnya" disabled>‹</button>
+            <button type="button" id="searchNext" aria-label="Hasil berikutnya" disabled>›</button>
+          </div>
+          <p id="searchStatus" class="rules-inline-status" aria-live="polite">Pencarian menemukan halaman yang memuat teks, bukan menandai setiap kata.</p>
+          </form>
+        </details>
+        <details class="rules-context-disclosure" id="rulesContextDisclosure">
+          <summary>Catatan tentang dokumen</summary>
+          <div class="rules-note" id="document-context">
+            <strong>Peraturan 2025.</strong> Dokumen ini memuat peraturan dan bagian terjemahannya. Untuk ketentuan resmi, periksa redaksi asli dan perkembangan keputusan IMSSU berikutnya.
+          </div>
+        </details>
         </div>
-        <p id="searchStatus" class="rules-inline-status" aria-live="polite">Pencarian menemukan halaman yang memuat teks, bukan menandai setiap kata.</p>
-        </form>
-      </details>
-      <details class="rules-context-disclosure" id="rulesContextDisclosure">
-        <summary>Catatan tentang dokumen</summary>
-        <div class="rules-note" id="document-context">
-          <strong>Peraturan 2025.</strong> Dokumen ini memuat peraturan dan bagian terjemahannya. Untuk ketentuan resmi, periksa redaksi asli dan perkembangan keputusan IMSSU berikutnya.
-        </div>
-      </details>
       <div id="pdfViewerShell" class="rules-viewer-shell">
         <div class="rules-viewer-status" id="pdfLoading" role="status" aria-live="polite">Memuat dokumen…</div>
         <div id="pdfError" class="rules-viewer-error" hidden role="alert">
