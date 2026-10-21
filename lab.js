@@ -91,7 +91,7 @@ let sfxActive = false;
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Bahu Kanan & Sandaran Buttplate',
                 desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
-                metrics: ['OTOT BAHU: Rileks alami', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
+                metrics: ['BAGIAN: bahu kanan', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
@@ -143,7 +143,7 @@ let sfxActive = false;
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN (90°)',
+                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN',
                 ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
                 title: 'Kaki Kanan — Skema Penopang Berdiri',
                 desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
