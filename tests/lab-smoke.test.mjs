@@ -285,7 +285,7 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
 });
 
 test('optics maintains authentic independent WebP layers without a pixel warp',()=>{
- const layers=['optic-static.webp','optic-head.webp'];
+ const layers=['optic-static.webp','optic-head.webp','optic-foreground.webp'];
  for(const filename of layers){
   const data=readFileSync(new URL('../assets/optics/'+filename,import.meta.url));
   assert.ok(data.byteLength>20000,filename+' unexpectedly small');
@@ -296,6 +296,7 @@ test('optics maintains authentic independent WebP layers without a pixel warp',(
  assert.match(html,/id="opticalAlignmentArtwork"/);
  assert.match(html,/id="opticStaticArt"/);
  assert.match(html,/id="opticHeadArt"/);
+ assert.match(html,/id="opticForegroundArt"/);
  assert.match(html,/defer src="\/optics-poster-artwork.js"/);
  assert.match(js,/OpticsPosterArt\?\.update\(\{dist, height: comb\}\)/);
  assert.match(adapter,/head\.style\.transform/);
@@ -304,5 +305,6 @@ test('optics maintains authentic independent WebP layers without a pixel warp',(
  assert.match(adapter,/addEventListener\('error',fail\)/);
  assert.doesNotMatch(adapter,/getImageData|putImageData|createImageData|ImageData|setInterval\(/);
  assert.match(css,/#sec-optics #opticHeadArt/);
+ assert.match(css,/#sec-optics #opticForegroundArt\{z-index:2\}/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
