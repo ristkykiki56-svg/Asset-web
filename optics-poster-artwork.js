@@ -1,5 +1,5 @@
-/* Shooting Lab Optics: intact raster artwork in two real WebP layers.
- * One immovable telescope/rifle/background, one alpha-matted generic head.
+/* Shooting Lab Optics: static background, moving head, fixed foreground WebP.
+ * Rifle/scope foreground occludes the head at real equipment intersections.
  * No pixel warping, procedural face redraw, automatic idle or breathing motion.
  * Visual model only: travel is NOT athlete measurement or scope calibration. */
 (()=>{
@@ -7,22 +7,23 @@
 const stage=document.getElementById('opticalAlignmentArtwork');
 const base=document.getElementById('opticStaticArt');
 const head=document.getElementById('opticHeadArt');
+const foreground=document.getElementById('opticForegroundArt');
 const fallback=document.getElementById('opticalAlignmentIllustration');
 const announcer=document.getElementById('opticsArtworkStatus');
 const zoomButton=document.getElementById('opticsDetailToggle');
 const view=stage.closest('.optical-side-pan');
-if(!stage||!base||!head||!fallback)return;
+if(!stage||!base||!head||!foreground||!fallback)return;
 
 let ready=false;
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 function announce(s){if(announcer)announcer.textContent=s}
 function placement(dist=85,height=0){
- // Limit translation to preserve collar/head continuity. Pixel coordinates are
+ // Use restrained movement to keep the extracted neck/collar seam intact. Pixel coordinates are
  // illustrative, and deliberately much smaller than equipment travel in mm.
  return {
-   x:clamp((Number(dist)-85)*.18,-6.5,6.5),
-   y:clamp(-Number(height)*.10,-2.5,2.5)
+   x:clamp((Number(dist)-85)*.11,-4,4),
+   y:clamp(-Number(height)*.055,-1.1,1.1)
  };
 }
 function apply({dist=85,height=0}={},immediate=false){
@@ -44,7 +45,8 @@ window.OpticsPosterArt={
  renderImmediately:(v)=>apply(v,true),
  isReady:()=>ready,
  getHead:()=>head,
- getStatic:()=>base
+ getStatic:()=>base,
+ getForeground:()=>foreground
 };
 // Default view contains the whole illustration. Detail mode is a deliberate
 // user action; switching modes must never permanently hide the objective lens.
@@ -68,16 +70,17 @@ if(view&&zoomButton){
 }
 function maybeReady(){
  if(ready)return;
- if(!base.complete||!head.complete)return;
+ if(!base.complete||!head.complete||!foreground.complete)return;
  if(base.naturalWidth<600||head.naturalWidth<600
-    ||base.naturalWidth!==head.naturalWidth||base.naturalHeight!==head.naturalHeight)return;
+    ||base.naturalWidth!==head.naturalWidth||base.naturalHeight!==head.naturalHeight
+    ||foreground.naturalWidth!==base.naturalWidth||foreground.naturalHeight!==base.naturalHeight)return;
  ready=true;
  stage.hidden=false;
  fallback.hidden=true;
  fallback.setAttribute('hidden','');
  fallback.style.setProperty('display','none','important');
  document.getElementById('sec-optics')?.classList.add('optics-poster-ready');
- announce('Ilustrasi dua layer aktif. Kepala bergerak terbatas sesuai slider; teleskop tetap diam.');
+ announce('Ilustrasi berlapis aktif. Kepala bergerak terbatas sesuai slider; teleskop dan senapan tetap diam.');
  apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
 }
 function fail(){
@@ -86,11 +89,11 @@ function fail(){
  fallback.style.removeProperty('display');
  announce('Ilustrasi gambar tidak tersedia. Skema SVG cadangan ditampilkan.');
 }
-for(const im of [base,head]){
+for(const im of [base,head,foreground]){
  im.addEventListener('load',maybeReady);
  im.addEventListener('error',fail);
 }
-if(base.complete&&head.complete)maybeReady();
+if(base.complete&&head.complete&&foreground.complete)maybeReady();
 window.addEventListener('resize',()=>{
  if(!ready)return;
  apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
