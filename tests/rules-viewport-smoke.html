@@ -11,7 +11,7 @@
     const waitFor=(fn,limit=18000)=>new Promise((resolve,reject)=>{
       const started=Date.now();
       const poll=()=>{try{if(fn())return resolve();}catch(e){return reject(e)}
-        if(Date.now()-started>limit)return reject(new Error('Timeout: '+(frame.contentDocument?.documentElement.dataset.pdfRendered||'no state')));
+        if(Date.now()-started>limit)return reject(new Error('Timeout: '+(frame.contentDocument?.documentElement.dataset.pdfRendered||'no state')+'; ready='+frame.contentDocument?.readyState+'; load='+frame.contentDocument?.getElementById('pdfLoading')?.textContent+'; error='+frame.contentDocument?.getElementById('pdfError')?.hidden+'; canvas='+frame.contentDocument?.getElementById('pdfCanvas')?.width+'; scripts='+frame.contentDocument?.querySelectorAll('script')?.length));
         setTimeout(poll,90);
       };poll();
     });
@@ -21,7 +21,7 @@
         frame.addEventListener('error',()=>reject(Error('iframe load failed')),{once:true});
       });
       const doc=frame.contentDocument,win=frame.contentWindow;
-      await waitFor(()=>doc.documentElement.dataset.pdfRendered==='rules:1');
+      await waitFor(()=>doc.documentElement.dataset.pdfRendered==='rules:1',30000);
       const canvas=doc.getElementById('pdfCanvas');
       if(canvas.width<100||canvas.height<100)throw Error('Rules initial PDF rendered blank');
       if(doc.getElementById('pageTotal').textContent.trim()!=='110')throw Error('Rules count not 110');
