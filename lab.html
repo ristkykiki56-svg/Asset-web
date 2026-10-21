@@ -566,7 +566,7 @@
                             <span>POTONGAN SAMPING: MATA &rarr; LENSA OKULER</span>
                             <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
                         </div>
-                        <div class="optical-side-pan" tabindex="0" aria-label="Ilustrasi optik dapat digeser ke samping pada layar kecil">
+                        <div id="opticalSidePan" class="optical-side-pan" tabindex="-1">
                         <div id="opticalAlignmentArtwork" class="optics-layer-stage" hidden role="img" aria-label="Studi ilustrasi teleskop dan senapan statis; kepala karakter generik bergerak maju dan mundur mengikuti pengaturan jarak mata">
                           <img id="opticStaticArt" src="/assets/optics/optic-static.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
                           <img id="opticHeadArt" src="/assets/optics/optic-head.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
@@ -655,7 +655,7 @@
 </g>
 </svg>
                         </div>
-                        <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalAlignmentArtwork" aria-pressed="false">Perbesar detail gambar</button>
+                        <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalSidePan" aria-pressed="false">Perbesar detail gambar</button>
                         <p class="optical-side-hint">Seluruh gambar ditampilkan tanpa terpotong. Di ponsel, gunakan Perbesar detail gambar jika ingin memeriksa mata dan teleskop lebih dekat. Slider hanya menggeser kepala ilustrasi.
                         <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
                     </div>

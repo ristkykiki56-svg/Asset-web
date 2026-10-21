@@ -49,8 +49,14 @@ window.OpticsPosterArt={
 // Default view contains the whole illustration. Detail mode is a deliberate
 // user action; switching modes must never permanently hide the objective lens.
 if(view&&zoomButton){
+ // The full-fit scene cannot scroll. Keep it out of the Tab sequence until
+ // the user requests the horizontally inspectable detail view.
+ view.tabIndex=-1;
  zoomButton.addEventListener('click',()=>{
    const zoom=view.classList.toggle('is-detail-zoom');
+   view.tabIndex=zoom?0:-1;
+   if(zoom)view.setAttribute('aria-label','Detail ilustrasi optik, gunakan tombol panah untuk menggeser gambar');
+   else view.removeAttribute('aria-label');
    zoomButton.setAttribute('aria-pressed',String(zoom));
    zoomButton.textContent=zoom?'Tampilkan seluruh gambar':'Perbesar detail gambar';
    view.scrollLeft=zoom ? Math.max(0,view.scrollWidth-view.clientWidth) : 0;
