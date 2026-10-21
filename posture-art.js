@@ -78,19 +78,19 @@
       const btn=e.target.closest('[data-pose-color]');
       if(!btn||!state.ready)return;
       state.color=btn.dataset.poseColor;state.active=true;
-      status('Ilustrasi '+(state.color==='blue'?'biru':'merah')+' · skema visual, bukan foto atlet.');
+      status('Karakter '+(state.color==='blue'?'biru':'merah')+' ditampilkan. Figur tetap diam saat parameter model diubah.');
       refresh();
     });
     mode.addEventListener('change',()=>{
       state.active=state.ready && mode.checked;
-      status(state.active?'Ilustrasi statis · garis dan titik hanya anotasi visual.':'Skema SVG interaktif.');
+      status(state.active?'Karakter WebP statis. Garis dan titik hanya anotasi visual.':'Skema SVG aktif sebagai tampilan alternatif.');
       refresh();
     });
     syncControls();
     Promise.all(variants.flatMap(v=>views.map(p=>preload(url(v,p))))).then(()=>{
       state.ready=true;
       state.active=true;
-      status('Pilih warna dan sudut pandang.');
+      status('Pilih karakter dan sudut pandang. Slider hanya mengubah indikator model.');
       refresh();
     }).catch(()=>{
       state.ready=false;state.active=false;
