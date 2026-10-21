@@ -209,6 +209,16 @@ frame.addEventListener('load',async ()=>{
      problems.push('base or transparent head asset failed to load');
    if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
      problems.push('image layers do not share dimensions');
+   // The moving WebP sprite must not include pixels from the fixed ocular scope.
+   const maskCanvas=doc.createElement('canvas');
+   maskCanvas.width=headArt.naturalWidth;
+   maskCanvas.height=headArt.naturalHeight;
+   const maskCtx=maskCanvas.getContext('2d',{willReadFrequently:true});
+   maskCtx.drawImage(headArt,0,0);
+   const ocularPixels=maskCtx.getImageData(770,100,46,140).data;
+   let contaminated=0;
+   for(let i=3;i<ocularPixels.length;i+=4)if(ocularPixels[i]>16)contaminated++;
+   if(contaminated)problems.push('head layer still contains fixed ocular pixels: '+contaminated);
    // Earlier optics assertions leave eye distance at 120. Restore a known neutral baseline.
    w.calibratePerfectOptics();
    w.OpticsPosterArt.renderImmediately({dist:85,height:0});
