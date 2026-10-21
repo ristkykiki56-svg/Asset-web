@@ -189,6 +189,17 @@ frame.addEventListener('load',async ()=>{
  w.resetSilhouetteRack();
  if(doc.getElementById('rackGroupScore').textContent.trim()!=='0 / 5')problems.push('reset group count not zero');
  if(!doc.querySelector('[data-rack-animal="chicken"]').classList.contains('is-current'))problems.push('active target group mismatch');
+ // If a poster WebP fails, the button retains a recognizable animal shape.
+ const fallbackImage=first.querySelector('.silhouette-raster');
+ fallbackImage.dispatchEvent(new Event('error'));
+ const fallback=first.querySelector('.silhouette-fallback');
+ if(!fallback?.querySelector('svg path')||fallback.hidden)
+   problems.push('silhouette fallback has no animal outline');
+ first.click();
+ if(first.getAttribute('aria-pressed')!=='true')problems.push('fallback target is not interactive');
+ w.resetSilhouetteRack();
+ if(doc.getElementById('rackHitScore').textContent.trim()!=='00 / 20')
+   problems.push('reset after fallback did not clear count');
 
  const triggerSvg=doc.querySelector('#triggerVectorDiagram [data-trigger-vector="C"]');
  triggerSvg?.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));
