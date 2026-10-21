@@ -198,6 +198,7 @@ frame.addEventListener('load',async ()=>{
  const artwork=doc.getElementById('opticalAlignmentArtwork');
  const staticArt=doc.getElementById('opticStaticArt');
  const headArt=doc.getElementById('opticHeadArt');
+ const frontArt=doc.getElementById('opticForegroundArt');
  for(let attempts=0;attempts<30&&!w.OpticsPosterArt?.isReady();attempts++)
    await new Promise(resolve=>w.setTimeout(resolve,40));
  if(!w.OpticsPosterArt?.isReady())problems.push('layered WebP optics artwork failed to load');
@@ -205,9 +206,10 @@ frame.addEventListener('load',async ()=>{
    const svgFallback=doc.getElementById('opticalAlignmentIllustration');
    if(artwork.hidden||!svgFallback.hidden||w.getComputedStyle(svgFallback).display!=='none')
      problems.push('layered artwork not active or SVG is visibly duplicated');
-   if(!staticArt.complete||!staticArt.naturalWidth||!headArt.complete||!headArt.naturalWidth)
+   if(!staticArt.complete||!staticArt.naturalWidth||!headArt.complete||!headArt.naturalWidth||!frontArt.complete||!frontArt.naturalWidth)
      problems.push('base or transparent head asset failed to load');
-   if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight)
+   if(staticArt.naturalWidth!==headArt.naturalWidth||staticArt.naturalHeight!==headArt.naturalHeight
+       ||frontArt.naturalWidth!==staticArt.naturalWidth||frontArt.naturalHeight!==staticArt.naturalHeight)
      problems.push('image layers do not share dimensions');
    // The moving WebP sprite must not include pixels from the fixed ocular scope.
    const maskCanvas=doc.createElement('canvas');
@@ -224,6 +226,8 @@ frame.addEventListener('load',async ()=>{
    w.OpticsPosterArt.renderImmediately({dist:85,height:0});
    const staticBefore=staticArt.style.transform;
    const staticSrc=staticArt.currentSrc;
+   const frontBefore=frontArt.style.transform;
+   const frontSrc=frontArt.currentSrc;
    const headBefore=headArt.style.transform;
    doc.getElementById('optEyeDist').value='120';
    doc.getElementById('optEyeDist').dispatchEvent(new Event('input',{bubbles:true}));
@@ -231,7 +235,8 @@ frame.addEventListener('load',async ()=>{
    const headAfter=headArt.style.transform;
    if(headAfter===headBefore||artwork.dataset.headX==='0.000')
      problems.push('head image did not translate for distance');
-   if(staticBefore!==staticArt.style.transform||staticSrc!==staticArt.currentSrc)
+   if(staticBefore!==staticArt.style.transform||staticSrc!==staticArt.currentSrc
+       ||frontBefore!==frontArt.style.transform||frontSrc!==frontArt.currentSrc)
      problems.push('static image changed when head moved');
    const shiftedX=artwork.dataset.headX;
    w.OpticsPosterArt.renderImmediately({dist:120,height:12});
