@@ -21,7 +21,7 @@ jobs:
             -o /tmp/twinshooter-original-poster.png
           echo '539b42a3e18a07f6d9acaa44864d401aafe1795ee3d12fd7774f174d91652cd7  /tmp/twinshooter-original-poster.png' | sha256sum --check
       - name: Install extraction libraries
-        run: python3 -m pip install --user Pillow==11.3.0 numpy==2.3.3 opencv-python-headless==4.12.0.88
+        run: python3 -m pip install --user Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.12.0.88
       - name: Extract original red rifle into transparent WebP
         run: python3 scripts/extract-red-rifle-poster.py --poster /tmp/twinshooter-original-poster.png --output assets/hardware/aurellia-red-poster.webp
       - name: Commit generated WebP to feature branch only
@@ -31,4 +31,6 @@ jobs:
           git add assets/hardware/aurellia-red-poster.webp
           git diff --cached --quiet && { echo 'No image generated'; exit 1; }
           git commit -m 'feat(hardware): add poster-extracted red rifle WebP'
+          git fetch origin feat/hardware-red-poster-raster-20261021
+          git rebase origin/feat/hardware-red-poster-raster-20261021
           git push origin HEAD:feat/hardware-red-poster-raster-20261021
