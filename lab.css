@@ -1088,8 +1088,8 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
 }
 
 
-/* Two actual image layers: unchanged scope/receiver and cut-out generic head.
- * Only the head image is translated; no pixel shader or SVG raster redraw. */
+/* Three registered image layers: static scene, movable head, fixed equipment
+ * foreground. Only the head translates; no pixel distortion or redraw. */
 #sec-optics #opticalAlignmentArtwork{
   position:relative;
   display:block;
@@ -1121,6 +1121,7 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
   will-change:transform;
   transform:translate3d(0,0,0);
 }
+#sec-optics #opticForegroundArt{z-index:2}
 #sec-optics.optics-poster-ready .optical-side-pan{background:#FAFAFA}
 @media(max-width:767px){
  #sec-optics #opticalAlignmentArtwork{
