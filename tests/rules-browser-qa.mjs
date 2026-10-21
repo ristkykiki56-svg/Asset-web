@@ -51,6 +51,7 @@ async function openDoc(doc,width,height,screenshot){
   pdfHeight:document.getElementById('pdfViewport').getBoundingClientRect().height,
   pdfWidth:document.getElementById('pdfViewport').getBoundingClientRect().width,
   canvasWidth:parseInt(document.getElementById('pdfCanvas').style.width,10),
+  canvasHeight:parseInt(document.getElementById('pdfCanvas').style.height,10),
   searchOpen:document.getElementById('rulesSearchDisclosure').open,
   noteOpen:document.getElementById('rulesContextDisclosure').open
  }));
@@ -59,7 +60,8 @@ async function openDoc(doc,width,height,screenshot){
  assert(state.current===doc,'Wrong active document '+JSON.stringify(state));
  assert(state.overflow<=3,'Horizontal body overflow '+JSON.stringify(state));
  assert(state.pdfTop<(width<=430?620:450),'PDF pushed too far below navigation: '+JSON.stringify(state));
- assert(state.pdfHeight>=500,'PDF reading area too short: '+JSON.stringify(state));
+ assert(state.pdfHeight>=(width<=430?350:500),'PDF reading area too short: '+JSON.stringify(state));
+ if(width<=430)assert(state.pdfHeight<=state.canvasHeight+28,'Mobile PDF leaves avoidable empty area: '+JSON.stringify(state));
  assert(state.canvasWidth>=state.pdfWidth*0.84,'PDF does not fill available width: '+JSON.stringify(state));
  assert(!state.searchOpen&&!state.noteOpen,'Secondary panels must start collapsed');
 }
