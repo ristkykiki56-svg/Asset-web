@@ -840,16 +840,18 @@ html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {colo
   border-radius:4px 4px 0 0;cursor:pointer;touch-action:manipulation;
   min-height:47px;min-width:44px;padding:0 1px;
 }
-#sec-imssu .silhouette-study {
+#sec-imssu .silhouette-raster {
   display:block;width:clamp(40px,4vw,58px);height:46px;max-width:100%;
   filter:drop-shadow(0 1px 1px rgba(30,39,41,.18));
   transition:filter .2s ease;
 }
-#sec-imssu .steel-target-btn:hover .silhouette-study,
-#sec-imssu .steel-target-btn:focus-visible .silhouette-study {
+#sec-imssu .steel-target-btn:hover .silhouette-raster,
+#sec-imssu .steel-target-btn:focus-visible .silhouette-raster {
   filter:drop-shadow(0 0 3px rgba(224,104,56,.4));
 }
-#sec-imssu .silhouette-form {stroke:#273236;stroke-width:2.1}
+#sec-imssu .silhouette-raster {object-fit:contain;pointer-events:none;user-select:none}
+#sec-imssu .silhouette-raster[hidden],#sec-imssu .silhouette-fallback[hidden] {display:none!important}
+#sec-imssu .silhouette-fallback {font:700 10px/1.2 'Plus Jakarta Sans',sans-serif;color:#D95020;text-align:center;max-width:48px;overflow-wrap:anywhere}
 #sec-imssu .steel-target-btn[aria-pressed="true"] {opacity:.55}
 #sec-imssu [data-rack-animal] > div:nth-child(2) {
   background:#293338!important;border-color:#293338!important;border-radius:2px;
@@ -865,14 +867,14 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
  #sec-trigger #triggerVectorDiagram,#sec-trigger #triggerMechanismDiagram {height:180px}
  #sec-trigger .grid.grid-cols-3.gap-2 button {font-size:12px;min-height:48px}
  #sec-optics #opticalAlignmentIllustration {height:105px}
- #sec-imssu .silhouette-study {width:41px;height:42px}
+ #sec-imssu .silhouette-raster {width:41px;height:42px}
  #sec-imssu .steel-target-btn {min-height:48px;min-width:44px}
  #sec-imssu [data-rack-animal] {width:100%!important}
  #sec-imssu [data-rack-animal] > div:nth-child(2) {min-height:25px}
  #sec-imssu [data-rack-animal] > div:nth-child(2) span {font-size:11px}
 }
 @media(prefers-reduced-motion:reduce) {
- #sec-imssu .silhouette-study {transition:none!important}
+ #sec-imssu .silhouette-raster {transition:none!important}
  #sec-biomech .biomech-editorial-figure {filter:none}
 }
 
