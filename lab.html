@@ -151,7 +151,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Postur berdiri dan bagian penopang tubuh</span><span class="lab-heading-short">Postur tubuh</span>
 </h2>
-<p class="lab-section-hint">Pilih sudut pandang dan titik anatomi. Sorotan pada gambar akan mengikuti pilihanmu.</p>
+<p class="lab-section-hint">Pilih sudut pandang dan titik anatomi untuk melihat lokasinya. Saat sudut pandang berganti, titik yang dipilih menyesuaikan bagian yang terlihat.</p>
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
@@ -187,7 +187,7 @@
               </div>
               <label class="ts-pose-art-switch"><input id="postureArtMode" type="checkbox" disabled> Gunakan gambar karakter</label>
               <p id="postureArtStatus" aria-live="polite">Memeriksa ketersediaan aset ilustrasi…</p>
-              <p class="ts-pose-art-note">Karakter animasi bukan potret atlet. Titik pada gambar adalah penanda ilustratif.</p>
+              <p class="ts-pose-art-note">Karakter WebP bukan potret atlet dan tidak bergerak mengikuti slider. Garis dan titik adalah penanda ilustratif.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
@@ -197,7 +197,7 @@
                         <span class="text-[var(--ink-500)]">PIN SESUAI SUDUT PANDANG · 10 TITIK TOTAL</span>
                     </div>
 
-                    <p class="lab-diagram-context">Pilih angka pada gambar atau melalui daftar 10 titik. Posisi serta garis penunjuk merupakan <strong>ilustrasi, bukan pengukuran atlet</strong>.</p>
+                    <p class="lab-diagram-context">Pilih angka pada gambar atau dari daftar 10 titik. Penanda mengikuti sudut pandang, bukan titik anatomi hasil pengukuran.</p>
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
@@ -271,15 +271,16 @@
                     <!-- Bottom Mechanical Posture Sliders -->
                     <div class="ts-scheme-only pt-4 border-t border-[var(--rule-light)] space-y-3">
                         <div class="flex items-center justify-between font-mono-tech text-xs">
-                            <span class="font-bold uppercase">UBAH PARAMETER ILUSTRASI</span>
-                            <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset Ilustrasi</button>
+                            <span class="font-bold uppercase">UBAH INDIKATOR MODEL</span>
+                            <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset parameter</button>
                         </div>
 
-                        <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah parameter ilustrasi</summary>
+                        <p class="lab-diagram-context">Slider mengubah garis acuan dan angka model. Gambar karakter WebP tetap diam; nilainya bukan pengukuran tubuh.</p>
+                         <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah indikator model</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                                 <div class="lab-parameter-heading flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>LENGKUNGAN FIGUR (MODEL):</span>
+                                    <span>PARAMETER LENGKUNGAN (MODEL):</span>
                                     <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0° (MODEL)</strong>
                                 </div>
                                 <input id="archSlider" type="range" min="-4" max="22" step="1" value="12" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Lengkungan punggung model, derajat">
@@ -322,7 +323,7 @@
                         </h3>
 
                         <p id="dossierBody" class="text-sm text-[var(--ink-700)] leading-relaxed">
-                            Tubuh melengkung pada bagian punggung. Untuk mendapatkan posisi ini secara efektif dan nyaman: (1) Condongkan tubuh bagian atas menjauhi target, (2) Dorong pinggul ke depan ke arah sasaran, dan (3) Putar sedikit bahu. Dalam posisi ini tahanan beban terjadi secara pasif melalui struktur tulang, bukan otot, sehingga memperkecil getaran dan mencegah kelelahan.
+                            Garis tubuh dalam ilustrasi bukan pengukuran distribusi beban. Pada mode karakter WebP, slider hanya mengubah indikator dan garis model, bukan bentuk tubuh.
                         </p>
 
                         <div id="dossierMetrics" class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 font-mono-tech text-[11px]"></div>
@@ -355,7 +356,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Memahami pergerakan pelatuk lewat diagram</span><span class="lab-heading-short">Pelatuk</span>
 </h2>
-<p class="lab-section-hint">Pilih A, B, atau C untuk membandingkan arah gerak pada diagram. Tombol di sebelahnya memperlihatkan empat fase kurva contoh, bukan gaya pelatuk yang terukur.</p>
+<p class="lab-section-hint">Pilih A, B, atau C untuk membandingkan arah gerak. Tekan dan tahan tombol simulasi atau putar contoh untuk melihat empat fase. Grafik bukan rekaman tarikan pelatuk.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                     MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">PERBANDINGAN ARAH GERAKAN—BUKAN STANDAR TARIKAN</strong>
@@ -540,7 +541,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Jarak mata dan lensa teleskop</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Perhatikan tampilan dalam lensa. Buka kontrol di bawah gambar, geser satu parameter, lalu amati perubahannya. Ini ilustrasi optik, bukan prediksi ketepatan bidikan.</p>
+<p class="lab-section-hint">Ubah satu kontrol setiap kali. Jarak dan tinggi mata menggeser kepala pada gambar samping; posisi lateral dan intensitas hanya mengubah tampilan dalam lensa. Angka adalah parameter model.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
                     Reset Posisi Model Optik
@@ -567,7 +568,7 @@
                             <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
                         </div>
                         <div id="opticalSidePan" class="optical-side-pan" tabindex="-1">
-                        <div id="opticalAlignmentArtwork" class="optics-layer-stage" hidden role="img" aria-label="Studi ilustrasi teleskop dan senapan statis; kepala karakter generik bergerak maju dan mundur mengikuti pengaturan jarak mata">
+                        <div id="opticalAlignmentArtwork" class="optics-layer-stage" hidden role="img" aria-label="Gambar teleskop dan senapan tetap; kepala karakter bergeser sedikit mendatar dan vertikal mengikuti kontrol jarak dan tinggi mata">
                           <img id="opticStaticArt" src="/assets/optics/optic-static.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
                           <img id="opticHeadArt" src="/assets/optics/optic-head.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
                           <img id="opticForegroundArt" src="/assets/optics/optic-foreground.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
@@ -657,7 +658,7 @@
 </svg>
                         </div>
                         <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalSidePan" aria-pressed="false">Perbesar detail gambar</button>
-                        <p class="optical-side-hint">Seluruh gambar ditampilkan tanpa terpotong. Di ponsel, gunakan Perbesar detail gambar jika ingin memeriksa mata dan teleskop lebih dekat. Slider hanya menggeser kepala ilustrasi.
+                        <p class="optical-side-hint">Gambar awal ditampilkan utuh. Perbesar detail gambar untuk melihat bagian mata dan okuler. Dua kontrol posisi menggeser kepala; dua kontrol lainnya hanya mengubah tampilan dalam lensa.
                         <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
                     </div>
                 </div>
@@ -669,13 +670,13 @@
                         <!-- 1. Eye Relief Distance -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>1. JARAK BACA MATA (EYE RELIEF):</span>
+                                <span>1. JARAK MATA KE OKULER (MODEL):</span>
                                 <strong id="optEyeDistLabel" class="text-[var(--ok-green)]">85 mm (CONTOH MODEL)</strong>
                             </div>
                             <input id="optEyeDist" type="range" min="45" max="125" value="85" oninput="updateOpticalSim()" class="mech-slider" aria-label="Jarak mata ke lensa ilustrasi, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
                                 <span>45 mm (lebih dekat)</span>
-                                <span>85mm</span>
+                                <span>85 mm</span>
                                 <span>125 mm (lebih jauh)</span>
                             </div>
                         </div>
@@ -683,21 +684,21 @@
                         <!-- 2. Cheekpiece Height -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>2. TINGGI POSISI MATA:</span>
+                                <span>2. TINGGI POSISI MATA (MODEL):</span>
                                 <strong id="optCheekHeightLabel" class="text-[var(--ok-green)]">0.0 mm (SEJAJAR)</strong>
                             </div>
                             <input id="optCheekHeight" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Perubahan tinggi posisi kepala pada ilustrasi, bukan pengukuran, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
-                                <span>-20mm (Kerendahan)</span>
-                                <span>0mm</span>
-                                <span>+20mm (Ketinggian)</span>
+                                <span>-20 mm (lebih rendah)</span>
+                                <span>0 mm</span>
+                                <span>+20 mm (lebih tinggi)</span>
                             </div>
                         </div>
 
                         <!-- 3. Lateral Cant / Offset -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>3. GESER HORIZONTAL MATA:</span>
+                                <span>3. POSISI LATERAL MATA (LENSA):</span>
                                 <strong id="optLatLabel" class="text-[var(--ok-green)]">0.0 mm (TENGAH)</strong>
                             </div>
                             <input id="optLat" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Offset horizontal mata ilustrasi, milimeter">
@@ -706,7 +707,7 @@
                         <!-- 4. Cheek Pressure & Pulse Tremor -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>4. KESTABILAN PANDANGAN (SKEMA):</span>
+                                <span>4. INTENSITAS PERUBAHAN LENSA:</span>
                                 <strong id="optPressureLabel" class="text-[var(--ok-green)]">50% (CONTOH MODEL)</strong>
                             </div>
                             <input id="optPressure" type="range" min="10" max="100" value="50" oninput="updateOpticalSim()" class="mech-slider" aria-label="Intensitas perubahan visual pada model lensa, bukan ukuran tekanan sebenarnya">
@@ -726,16 +727,16 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[var(--ink-700)] leading-relaxed">
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // KEPALA TEGAK LURUS</strong>
-                                Arahkan kepala ke arah sasaran dengan mata melihat lurus ke depan melalui teleskop. Jangan memiringkan kepala secara ekstrem yang memicu ketegangan leher.
+                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // GAMBAR SAMPING</strong>
+                                Gambar samping menunjukkan hubungan kepala dan okuler. Perubahan posisinya hanya simulasi visual.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // POSISI KEPALA KONSISTEN</strong>
-                                Bandingkan tinggi dan jarak mata terhadap okuler melalui gambar. Model tidak menampilkan sandaran pipi atau mengukur tekanan pada popor.
+                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // DUA KONTROL POSISI</strong>
+                                Jarak dan tinggi mata mengubah posisi kepala ilustratif. Sandaran pipi tidak ditampilkan dan tekanan pada popor tidak dihitung.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // BEBAS BAYANGAN SABIT</strong>
-                                Pastikan posisi mata tepat di tengah dan pada jarak baca yang benar sehingga terlihat lingkaran penuh tanpa bayangan hitam di tepi lensa.
+                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // TAMPILAN DALAM LENSA</strong>
+                                Lingkaran dan bayangan tepi berubah sesuai parameter model. Gambar tidak menunjukkan kualitas atau setelan optik sebenarnya.
                             </div>
                         </div>
                     </div>
@@ -755,7 +756,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal sasaran siluet dan jaraknya</span><span class="lab-heading-short">Sasaran siluet</span>
 </h2>
-<p class="lab-section-hint">Pilih jenis siluet dan ketuk target untuk melihatnya berganti keadaan. Angka jarak mengacu pada materi aturan; ikon jatuh dan kurva lintasan hanya ilustrasi.</p>
+<p class="lab-section-hint">Pilih jenis sasaran, lalu ketuk siluet untuk menandainya jatuh atau berdiri kembali. Di ponsel, satu kelompok ditampilkan setiap kali. Jarak mengikuti materi aturan; gerakan dan kurva lintasan bersifat ilustratif.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
@@ -917,7 +918,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal bagian senapan dan teleskop</span><span class="lab-heading-short">Bagian peralatan</span>
 </h2>
-<p class="lab-section-hint">Pilih komponen untuk membaca fungsinya. Pada ponsel, diagram akan bergeser menuju bagian yang dipilih; kamu juga bisa menggesernya sendiri.</p>
+<p class="lab-section-hint">Pilih nomor 01–06 pada foto senapan merah atau 07–10 pada skema teleskop. Pada ponsel, diagram bergeser ke penanda yang dipilih.</p>
                 </div>
 
                 <span class="font-mono-tech text-[11px] text-[var(--ink-500)]">SENAPAN MERAH · GAMBAR DARI POSTER</span>
@@ -939,7 +940,7 @@
                         <p class="lab-mobile-scroll-hint">Pilih komponen melalui daftar agar gambar bergeser otomatis. Kamu juga bisa menggeser diagram →</p>
 <svg id="hardwareBlueprintSvg" viewBox="0 0 880 490" class="hw-illustration w-full h-auto min-w-[640px] select-none" role="group" aria-labelledby="hwArtTitle hwArtDesc">
  <title id="hwArtTitle">Ilustrasi interaktif komponen luar peralatan air rifle</title>
- <desc id="hwArtDesc">Diagram dua tampilan: ilustrasi teleskop di atas dan potongan gambar senapan merah dari poster referensi di bawah. Sepuluh nomor dapat dipilih untuk membaca penjelasan. Diagram bukan pengukuran teknis atau verifikasi model senapan.</desc>
+ <desc id="hwArtDesc">Bagian atas adalah skema teleskop yang terpisah dari foto senapan merah di bawah. Sepuluh nomor menunjukkan lokasi komponen; gambar bukan sumber ukuran atau setelan yang terverifikasi.</desc>
  <defs>
   <linearGradient id="hwGraphite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#526061"/><stop offset=".36" stop-color="#293336"/><stop offset=".7" stop-color="#232C30"/><stop offset="1" stop-color="#11191D"/></linearGradient>
   <linearGradient id="hwTube" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#738083"/><stop offset=".19" stop-color="#424C51"/><stop offset=".63" stop-color="#222C31"/><stop offset="1" stop-color="#11181D"/></linearGradient>
@@ -1120,10 +1121,11 @@
                     <!-- Center of Balance (Berat & Keseimbangan Senapan) Interactive Bar -->
                     <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
                         <div class="flex flex-wrap justify-between font-mono-tech text-[11px] mb-1.5">
-                            <span>DISTRIBUSI BERAT &amp; TITIK KESEIMBANGAN SENAPAN (CENTER OF BALANCE):</span>
-                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">POSISI TENGAH PADA MODEL</strong>
+                            <span>PINDAHKAN PENANDA POSISI PADA DIAGRAM:</span>
+                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">PENANDA DI TENGAH DIAGRAM</strong>
                         </div>
-                        <input type="range" min="350" max="490" value="420" oninput="adjustRifleBalancePoint(this.value)" class="mech-slider" aria-label="Titik keseimbangan model senapan">
+                        <input type="range" min="350" max="490" value="420" oninput="adjustRifleBalancePoint(this.value)" class="mech-slider" aria-label="Geser penanda pada diagram; bukan titik keseimbangan hasil pengukuran">
+                         <p class="lab-diagram-context">Penanda berpindah secara visual. Posisi tersebut tidak dihitung dari berat atau titik keseimbangan senapan pada foto.</p>
                     </div>
                 </div>
 
@@ -1140,7 +1142,7 @@
                             Sandaran pipi merupakan bagian tempat kepala bertumpu saat melihat melalui optik. Ilustrasi hanya menunjukkan letak komponen, bukan setelan atlet tertentu.
                         </p>
                         <div id="hwSpecNote" class="p-3 bg-[var(--bg-surface)] border border-[var(--rule-light)] font-mono-tech text-[11px] text-[var(--clarisa-blue)]">
-                            BATAS MODEL: bentuk dan ukuran komponen hanya ilustratif. Setelan nyata mengikuti instruksi pabrikan, atlet, dan pelatih.
+                            BATAS GAMBAR: foto senapan berasal dari poster; ukuran dan pengaturan komponen tidak diperiksa. Teleskop pada diagram atas merupakan skema terpisah.
                         </div>
                     </div>
 
@@ -1152,16 +1154,16 @@
                         <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Daftar 10 komponen</summary>
 <div class="grid grid-cols-1 gap-1">
                             <button onclick="inspectHardware('stock')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[01] Stock, Buttplate &amp; Panjang Popor</span><span>&rarr;</span>
+                                <span>[01] Popor dan Bantalan Bahu</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cheekpiece')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
                                 <span>[02] Cheek Piece (Sandaran Pipi)</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('grip')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[03] Grip Anatomis &amp; Trigger Shoe</span><span>&rarr;</span>
+                                <span>[03] Pegangan dan Area Pelatuk</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('riser')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[04] Penyelarasan Peninggi &amp; Fore-End</span><span>&rarr;</span>
+                                <span>[04] Bagian Depan Badan Senapan</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cylinder')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
                                 <span>[05] Tabung Udara Bertekanan (PCP)</span><span>&rarr;</span>
