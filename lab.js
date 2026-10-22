@@ -65,7 +65,6 @@ let sfxActive = false;
             playMechTick(760);
             renderBiomechViewport();
             drawOscilloscope(oscProgress);
-            renderTrajectoryGraph();
         }
 
         const POSTER_BIOMECH_DATA = [
@@ -702,8 +701,6 @@ let sfxActive = false;
 
         let selectedAnimal = 'ram';
         let downedSet = new Set();
-        let shotTraceProg = 1;
-        let ballisticReq = null;
 
         function buildSilhouetteRack() {
             ['ram', 'turkey', 'pig', 'chicken'].forEach(animal => {
@@ -767,7 +764,6 @@ let sfxActive = false;
                 el.setAttribute('aria-pressed','true');
             }
             updateRackCounters();
-            triggerBallisticTrace();
         }
 
         function resetSilhouetteRack() {
@@ -793,7 +789,6 @@ let sfxActive = false;
                 if (tier) tier.classList.toggle('is-current', k === animal);
             });
             updateRackCounters();
-            renderTrajectoryGraph();
         }
 
         function updateRackCounters() {
@@ -802,81 +797,6 @@ let sfxActive = false;
             document.getElementById('rackHitScore').textContent = `${String(total).padStart(2, '0')} / 20`;
             const active = document.getElementById('rackGroupScore');
             if (active) active.textContent = `${group} / 5`;
-        }
-
-        function triggerBallisticTrace() {
-            if (ballisticReq != null) cancelAnimationFrame(ballisticReq);
-            ballisticReq = null;
-            if (reducedMotion.matches) {shotTraceProg = 1;renderTrajectoryGraph();return;}
-            shotTraceProg = 0;
-            function step() {
-                shotTraceProg = Math.min(1, shotTraceProg + 0.045);
-                renderTrajectoryGraph();
-                if (shotTraceProg < 1) ballisticReq = requestAnimationFrame(step);
-                else ballisticReq = null;
-            }
-            ballisticReq = requestAnimationFrame(step);
-        }
-
-        function renderTrajectoryGraph() {
-            const canvas = document.getElementById('trajectoryCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width, h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
-
-            const wind = parseFloat(document.getElementById('windRangeInput').value);
-            document.getElementById('windValText').textContent = `${wind.toFixed(1)} / 8`;
-
-            const spec = RANGE_SPECS[selectedAnimal];
-            // No wind drift or turret click predictions: the input only changes the illustration.
-            document.getElementById('ballisticSpecLine').textContent =
-                `${spec.label} ${spec.dist}M // JARAK SESUAI ATURAN; LINTASAN SKEMATIS (BUKAN HITUNGAN)`;
-
-            const padL = 40, padR = 28, losY = 54;
-            const scaleX = (w - padL - padR) / 45;
-
-            // Line of Sight
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
-            ctx.setLineDash([4, 4]);
-            ctx.beginPath(); ctx.moveTo(padL, losY); ctx.lineTo(w - padR, losY); ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Distance Posts (18m, 27m, 33m, 41m)
-            [
-                { m: 18, t: '18m Ayam' },
-                { m: 27, t: '27m Babi' },
-                { m: 33, t: '33m Kalkun' },
-                { m: 41, t: '41m Domba' }
-            ].forEach(p => {
-                const x = padL + p.m * scaleX;
-                ctx.strokeStyle = p.m === spec.dist ? '#FF4800' : '#334155';
-                ctx.lineWidth = p.m === spec.dist ? 2 : 1;
-                ctx.beginPath(); ctx.moveTo(x, 18); ctx.lineTo(x, h - 22); ctx.stroke();
-                ctx.fillStyle = p.m === spec.dist ? '#FF4800' : '#94A3B8';
-                ctx.font = 'bold 10px IBM Plex Mono';
-                ctx.fillText(p.t, x - 26, h - 8);
-            });
-
-            function yCurve(m) {
-                const rel = (m - 20) / 21;
-                return losY - 6 + rel * rel * (40 + wind * 7); // illustrative curve only
-            }
-
-            const maxM = spec.dist * shotTraceProg;
-            ctx.strokeStyle = '#FF4800';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            for (let m = 0; m <= maxM; m += 0.5) {
-                const x = padL + m * scaleX;
-                const y = yCurve(m);
-                if (m === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-
-            const px = padL + maxM * scaleX, py = yCurve(maxM);
-            ctx.fillStyle = '#FFFFFF';
-            ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
         }
 
         // Text is indexed to the current poster-derived rifle and the
@@ -890,37 +810,37 @@ let sfxActive = false;
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // SANDARAN PIPI',
-                title: 'Sandaran Pipi (Cheekpiece)',
+                title: 'Sandaran Pipi',
                 body: 'Titik 02 menandai sandaran pipi di atas popor. Bagian ini menjadi tempat pipi bertumpu ketika mata menghadap teleskop.',
                 note: 'Letaknya lebih tinggi daripada grip. Gambar memperlihatkan komponen, bukan posisi kepala atlet.'
             },
             grip: {
                 code: 'KOMPONEN #03 // PEGANGAN',
-                title: 'Pegangan dan Area Pelatuk',
+                title: 'Pegangan dan Pelatuk',
                 body: 'Titik 03 menunjukkan grip atau pegangan tangan di belakang bilah pelatuk. Pada gambar, area ini berada di bawah bagian tengah senapan.',
                 note: 'Bilah pelatuk berada di depan grip. Untuk mempelajari tahapan pergerakan pelatuk, buka materi Pelatuk.'
             },
             riser: {
                 code: 'KOMPONEN #04 // BADAN DEPAN',
-                title: 'Bagian Depan Badan Senapan (Fore-End)',
+                title: 'Penopang Depan',
                 body: 'Titik 04 menunjukkan bagian bawah badan depan senapan, di depan grip. Bagian ini merupakan area tempat tangan penopang berada.',
                 note: 'Bandingkan dengan tabung udara nomor 05 di bagian depan senapan. Nomor 04 bukan pengatur teleskop.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
-                title: 'Area Tabung Udara',
+                title: 'Tabung Udara',
                 body: 'Titik 05 menunjukkan tabung udara di bawah laras. Tabung ini menyimpan udara bertekanan yang digunakan senapan angin.',
                 note: 'Tabung dan laras adalah bagian berbeda. Pada gambar, laras berada lebih tinggi dan memanjang ke arah ujung depan.'
             },
             barrel: {
                 code: 'KOMPONEN #06 // LARAS',
-                title: 'Laras dan Bagian Ujung Depan',
+                title: 'Laras',
                 body: 'Titik 06 menandai laras di bagian depan senapan. Laras merupakan jalur keluarnya pellet menuju mulut laras.',
                 note: 'Ikuti bagian yang memanjang dari badan senapan ke ujung paling depan. Bentuk luar tidak menunjukkan isi laras.'
             },
             objective: {
                 code: 'KOMPONEN #07 // OBJEKTIF',
-                title: 'Lensa Objektif Teleskop',
+                title: 'Lensa Objektif',
                 body: 'Titik 07 menandai lensa objektif di ujung depan teleskop. Lensa ini menerima cahaya dari objek yang dilihat.',
                 note: 'Pada ilustrasi, objektif berada di sisi kiri. Bandingkan dengan lensa okuler nomor 10 di sisi kanan, dekat mata.'
             },
@@ -932,13 +852,13 @@ let sfxActive = false;
             },
             zoom: {
                 code: 'KOMPONEN #09 // CINCIN PEMBESARAN',
-                title: 'Cincin Pembesaran Teleskop',
+                title: 'Cincin Pembesaran',
                 body: 'Titik 09 menandai cincin pembesaran di dekat ujung belakang teleskop. Cincin ini digunakan untuk mengubah pembesaran pada teleskop yang mendukungnya.',
                 note: 'Nomor ini hanya menyorot komponen; ukuran gambar sasaran tidak ikut diperbesar.'
             },
             ocular: {
                 code: 'KOMPONEN #10 // OKULER',
-                title: 'Lensa Okuler dan Area Dioptri',
+                title: 'Lensa Okuler',
                 body: 'Titik 10 menandai okuler, yaitu ujung teleskop yang menghadap mata. Bagian ini menjadi tempat pengguna melihat gambar dan garis bidik.',
                 note: 'Untuk mempelajari perubahan pandangan melalui lensa, buka materi Optik.'
             }
@@ -960,8 +880,7 @@ let sfxActive = false;
                 button.setAttribute('aria-pressed', String(selected));
                 button.classList.toggle('is-current', selected);
             });
-            const shortNames = {stock:'Popor',cheekpiece:'Sandaran pipi',grip:'Grip',riser:'Penopang depan',cylinder:'Tabung udara',barrel:'Laras',objective:'Lensa depan',turrets:'Turret',zoom:'Pembesaran',ocular:'Lensa okuler'};
-            document.getElementById('blueprintActiveLabel').textContent = 'DIPILIH: ' + shortNames[key];
+            document.getElementById('blueprintActiveLabel').textContent = 'DIPILIH: ' + item.title;
             document.getElementById('hwSpecCode').textContent = item.code;
             document.getElementById('hwSpecTitle').textContent = item.title;
             document.getElementById('hwSpecBody').textContent = item.body;
@@ -983,22 +902,6 @@ let sfxActive = false;
                         - (scrollRect.left + scrollRect.width / 2);
                     scroller.scrollLeft += centerOffset;
                 });
-            }
-        }
-
-        function adjustRifleBalancePoint(val) {
-            const x = parseFloat(val);
-            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 364)`);
-            const fb = document.getElementById('cobFeedbackText');
-            if (x >= 402 && x <= 438) {
-                fb.textContent = 'PENANDA DI TENGAH DIAGRAM';
-                fb.className = 'text-[var(--ok-green)]';
-            } else if (x < 402) {
-                fb.textContent = 'PENANDA BERGESER KE BELAKANG';
-                fb.className = 'text-[var(--aurellia-red)]';
-            } else {
-                fb.textContent = 'PENANDA BERGESER KE DEPAN';
-                fb.className = 'text-[var(--aurellia-red)]';
             }
         }
 

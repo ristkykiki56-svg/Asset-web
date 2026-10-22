@@ -49,11 +49,11 @@ test('copy gate: silhouette failure retains the animal silhouette and 20 buttons
   assert.match(js, /for \(let i = 0; i < 5; i\+\+\)/);
 });
 
-test('copy gate: hardware photo, separate scope diagram and marker-only slider are accurately named', () => {
+test('copy gate: hardware photo and separate scope diagram have component-specific copy', () => {
   assert.match(html, /foto senapan merah atau 07–10 pada skema teleskop/);
-  assert.match(html, /PENANDA POSISI PADA DIAGRAM/);
-  assert.match(html, /Posisi tersebut tidak dihitung dari berat/);
-  assert.match(js, /title: 'Bagian Depan Badan Senapan \(Fore-End\)'/);
+  assert.doesNotMatch(html, /PENANDA POSISI PADA DIAGRAM/);
+
+  assert.match(js, /title: 'Penopang Depan'/);
   assert.match(js, /Nomor 04 bukan pengatur teleskop/);
   assert.match(html, /Gambar senapan dan ilustrasi teleskop ditampilkan secara terpisah/);
   assert.doesNotMatch(html, /DISTRIBUSI BERAT &amp; TITIK KESEIMBANGAN SENAPAN/);

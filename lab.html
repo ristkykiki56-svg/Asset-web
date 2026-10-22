@@ -137,7 +137,7 @@
     <main id="main-content" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 space-y-16">
         <details class="lab-mobile-disclosure lab-notice-wrap" data-lab-mobile-collapse open><summary>Simulasi edukatif — lihat batas penggunaan <span aria-hidden="true">⌄</span></summary><aside class="lab-notice" role="note" aria-label="Batas penggunaan simulasi">
           <strong>SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR</strong>
-          <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, X-Ray, kurva pelatuk, optik, senapan, serta lintasan bukan rekonstruksi tersertifikasi atau hasil ukur. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
+          <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, kurva pelatuk, optik, dan senapan merupakan materi pembelajaran, bukan hasil pengukuran. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
         </aside></details>
 
         <!-- =====================================================================
@@ -453,12 +453,12 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[#FF4800] font-bold uppercase tracking-wider">
-                        BAGIAN 04 // ARENA SASARAN SILUET IMSSU 4 TINGKAT &amp; BALISTIK PELURU DIABOLO
+                        BAGIAN 04 // JENIS SASARAN SILUET DAN JARAKNYA
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal sasaran siluet dan jaraknya</span><span class="lab-heading-short">Sasaran siluet</span>
 </h2>
-<p id="silhouetteHelp" class="lab-section-hint">Pilih jenis sasaran, lalu ketuk siluet untuk menandainya jatuh atau berdiri kembali. Di ponsel, satu kelompok ditampilkan setiap kali. Jarak mengikuti materi aturan; gerakan dan kurva lintasan bersifat ilustratif.</p>
+<p id="silhouetteHelp" class="lab-section-hint">Pilih jenis sasaran, lalu ketuk siluet untuk menandainya jatuh atau berdiri kembali. Di ponsel, satu kelompok ditampilkan setiap kali. Setiap kelompok berisi lima sasaran. Hitungan menunjukkan sasaran yang kamu tandai jatuh, bukan hasil pembidikan yang dihitung.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
@@ -586,24 +586,7 @@
                         </div>
                     </div>
 
-                    <!-- Ballistic Drop & Elevation Click Solver Canvas -->
-                    <div class="border border-[var(--rule-heavy)] bg-[#0E1116] p-3 space-y-2">
-                        <div class="flex flex-wrap justify-between items-center font-mono-tech text-[11px] text-slate-200">
-                            <span>GRAFIK ILUSTRATIF (BUKAN PERHITUNGAN BALISTIK)</span>
-                            <span id="ballisticSpecLine" class="text-[#FF4800] font-bold">DOMBA 41M // JARAK RESMI · BENTUK LINTASAN ILUSTRASI</span>
-                        </div>
-                        <p id="trajectoryHelp" class="text-xs text-slate-200">Garis putus-putus mendatar menunjukkan arah pandang. Garis oranye memperlihatkan contoh lengkungan; kontrol di bawah mengubah seberapa melengkung garis itu. Putar ilustrasi untuk melihat titik bergerak sepanjang garis. Grafik ini bukan perhitungan lintasan pellet sebenarnya.</p>
-                        <canvas id="trajectoryCanvas" width="580" height="170" class="w-full h-[160px] block"></canvas>
-                        <div class="flex flex-col sm:flex-row items-center gap-3 pt-1">
-                            <div class="w-full sm:flex-1 flex items-center gap-3 font-mono-tech text-[11px] text-slate-300">
-                                <span class="shrink-0">LENGKUNGAN GARIS: <strong id="windValText" class="text-sky-400">2.0 / 8</strong></span>
-                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Lengkungan garis ilustrasi; bukan kecepatan angin">
-                            </div>
-                            <button onclick="triggerBallisticTrace()" class="w-full sm:w-auto px-4 py-2 bg-[#FF4800] text-white font-mono-tech text-xs font-bold uppercase hover:bg-[#e03f00] transition">
-                                Putar Ilustrasi
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
 </details>
             </div>
@@ -616,7 +599,7 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[#B37B24] font-bold uppercase tracking-wider">
-                        BAGIAN 05 // ANATOMI SENAPAN ANGIN MATCH, TITIK KESEIMBANGAN &amp; BEDAH TELESKOP
+                        BAGIAN 05 // BAGIAN SENAPAN DAN TELESKOP
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal bagian senapan dan teleskop</span><span class="lab-heading-short">Bagian peralatan</span>
@@ -628,7 +611,7 @@
             </div>
 
             <div class="lab-hardware-mobile-control"><label for="labHardwarePicker">Pilih komponen</label><select id="labHardwarePicker" aria-label="Pilih komponen pada diagram peralatan">
-              <option value="stock">01 · Popor (stock)</option><option value="cheekpiece">02 · Sandaran pipi</option><option value="grip">03 · Grip</option><option value="riser">04 · Penopang depan</option><option value="cylinder">05 · Tabung udara</option><option value="barrel">06 · Laras</option><option value="objective">07 · Lensa depan</option><option value="turrets">08 · Turret</option><option value="zoom">09 · Pembesaran</option><option value="ocular">10 · Lensa okuler</option>
+              <option value="stock">01 · Popor dan Bantalan Bahu</option><option value="cheekpiece">02 · Sandaran Pipi</option><option value="grip">03 · Pegangan dan Pelatuk</option><option value="riser">04 · Penopang Depan</option><option value="cylinder">05 · Tabung Udara</option><option value="barrel">06 · Laras</option><option value="objective">07 · Lensa Objektif</option><option value="turrets">08 · Turret Elevasi dan Windage</option><option value="zoom">09 · Cincin Pembesaran</option><option value="ocular">10 · Lensa Okuler</option>
             </select></div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 8 Cols: Dual Technical Blueprint (Rifle + Detailed Scope Diagram from Bottom-Left of Poster) -->
@@ -686,28 +669,28 @@
   <text x="704" y="53" class="hw-figure-mono" fill="#555E5D" font-size="9.5">DETAIL</text>
   <text x="704" y="67" fill="#222A2D" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">OPTIK</text>
   <text x="704" y="81" fill="#69716E" font-size="9" font-family="IBM Plex Mono, monospace">MODEL EKSTERIOR</text>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-pressed="false" aria-label="Pilih lensa depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-pressed="false" aria-label="Pilih Lensa Objektif" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
   <title>7. lensa depan</title>
   <rect class="hw-hitbox" x="69" y="70" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="92" cy="93" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="92" cy="93" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="92" y="97" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">07</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-pressed="false" aria-label="Pilih turret" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-pressed="false" aria-label="Pilih Turret Elevasi dan Windage" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
   <title>8. turret</title>
   <rect class="hw-hitbox" x="324" y="3" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="347" cy="26" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="347" cy="26" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="347" y="30" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">08</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-pressed="false" aria-label="Pilih pembesaran" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-pressed="false" aria-label="Pilih Cincin Pembesaran" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
   <title>9. pembesaran</title>
   <rect class="hw-hitbox" x="507" y="71" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="530" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="530" cy="94" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="530" y="98" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">09</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-pressed="false" aria-label="Pilih lensa okuler" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-pressed="false" aria-label="Pilih Lensa Okuler" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
   <title>10. lensa okuler</title>
   <rect class="hw-hitbox" x="617" y="71" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="640" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
@@ -768,46 +751,43 @@
 </g>
   <path d="M133 225L194 224M362 229H388" stroke="#545D5C" stroke-width="2" stroke-dasharray="3 5" opacity=".55"/>
   <image id="hwRedRifleRaster" href="/assets/hardware/aurellia-red-poster.webp" x="45" y="136" width="792" height="266" preserveAspectRatio="xMidYMid meet" pointer-events="none" aria-hidden="true" onload="this.ownerSVGElement.classList.add('hw-raster-ready')" onerror="this.ownerSVGElement.classList.remove('hw-raster-ready')"/>
-  <g id="svgCobFulcrum" transform="translate(420,364)" class="hw-balance-indicator">
-   <path d="M0 0L-10 16H10Z" fill="#E35F2E" stroke="#FFFFFF" stroke-width="1.3"/>
-   <text x="0" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="700" fill="#B65431">TITIK MODEL</text>
-  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(0,89)" tabindex="0" role="button" data-hw-key="stock" aria-pressed="false" aria-label="Pilih popor" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+
+  <g class="hw-marker cursor-pointer" transform="translate(0,89)" tabindex="0" role="button" data-hw-key="stock" aria-pressed="false" aria-label="Pilih Popor dan Bantalan Bahu" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
   <title>1. popor</title>
   <rect class="hw-hitbox" x="55" y="219" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="78" cy="242" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="78" cy="242" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="78" y="246" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">01</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(-32,108)" tabindex="0" role="button" data-hw-key="cheekpiece" aria-pressed="true" aria-label="Pilih sandaran pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+  <g class="hw-marker cursor-pointer" transform="translate(-32,108)" tabindex="0" role="button" data-hw-key="cheekpiece" aria-pressed="true" aria-label="Pilih Sandaran Pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
   <title>2. sandaran pipi</title>
   <rect class="hw-hitbox" x="187" y="101" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="210" cy="124" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="210" cy="124" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="210" y="128" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">02</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(-55,55)" tabindex="0" role="button" data-hw-key="grip" aria-pressed="false" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+  <g class="hw-marker cursor-pointer" transform="translate(-55,55)" tabindex="0" role="button" data-hw-key="grip" aria-pressed="false" aria-label="Pilih Pegangan dan Pelatuk" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
   <title>3. grip</title>
   <rect class="hw-hitbox" x="288" y="249" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="311" cy="272" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="311" cy="272" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="311" y="276" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">03</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(36,96)" tabindex="0" role="button" data-hw-key="riser" aria-pressed="false" aria-label="Pilih penopang depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
+  <g class="hw-marker cursor-pointer" transform="translate(36,96)" tabindex="0" role="button" data-hw-key="riser" aria-pressed="false" aria-label="Pilih Penopang Depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
   <title>4. penopang depan</title>
   <rect class="hw-hitbox" x="413" y="169" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="436" cy="192" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="436" cy="192" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="436" y="196" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">04</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(65,0)" tabindex="0" role="button" data-hw-key="cylinder" aria-pressed="false" aria-label="Pilih tabung udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+  <g class="hw-marker cursor-pointer" transform="translate(65,0)" tabindex="0" role="button" data-hw-key="cylinder" aria-pressed="false" aria-label="Pilih Tabung Udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
   <title>5. tabung udara</title>
   <rect class="hw-hitbox" x="587" y="246" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="610" cy="269" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="610" cy="269" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="610" y="273" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">05</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(30,83)" tabindex="0" role="button" data-hw-key="barrel" aria-pressed="false" aria-label="Pilih laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+  <g class="hw-marker cursor-pointer" transform="translate(30,83)" tabindex="0" role="button" data-hw-key="barrel" aria-pressed="false" aria-label="Pilih Laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
   <title>6. laras</title>
   <rect class="hw-hitbox" x="732" y="130" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="755" cy="153" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
@@ -821,15 +801,7 @@
 </svg>
                     </div>
 
-                    <!-- Center of Balance (Berat & Keseimbangan Senapan) Interactive Bar -->
-                    <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                        <div class="flex flex-wrap justify-between font-mono-tech text-[11px] mb-1.5">
-                            <span>PINDAHKAN PENANDA POSISI PADA DIAGRAM:</span>
-                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">PENANDA DI TENGAH DIAGRAM</strong>
-                        </div>
-                        <input type="range" min="350" max="490" value="420" oninput="adjustRifleBalancePoint(this.value)" class="mech-slider" aria-label="Geser penanda pada diagram; bukan titik keseimbangan hasil pengukuran">
-                         <p class="lab-diagram-context">Penanda berpindah secara visual. Posisi tersebut tidak dihitung dari berat atau titik keseimbangan senapan pada foto.</p>
-                    </div>
+
                 </div>
 
                 <!-- Right 4 Cols: Hardware Component Specification Sheet & 10-Part Index -->
@@ -839,7 +811,7 @@
                             KOMPONEN #02 // SANDARAN PIPI
                         </div>
                         <h3 id="hwSpecTitle" aria-live="polite" class="text-xl font-extrabold tracking-tight">
-                            Sandaran Pipi (Cheekpiece)
+                            Sandaran Pipi
                         </h3>
                         <p id="hwSpecBody" class="text-xs sm:text-sm text-[var(--ink-700)] leading-relaxed">
                             Nomor 02 menunjukkan sandaran pipi di atas popor. Bagian ini menjadi tempat pipi bertumpu ketika mata menghadap teleskop.
@@ -860,31 +832,31 @@
                                 <span>[01] Popor dan Bantalan Bahu</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cheekpiece')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[02] Cheek Piece (Sandaran Pipi)</span><span>&rarr;</span>
+                                <span>[02] Sandaran Pipi</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('grip')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[03] Pegangan dan Area Pelatuk</span><span>&rarr;</span>
+                                <span>[03] Pegangan dan Pelatuk</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('riser')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[04] Bagian Depan Badan Senapan</span><span>&rarr;</span>
+                                <span>[04] Penopang Depan</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cylinder')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[05] Tabung Udara Bertekanan (PCP)</span><span>&rarr;</span>
+                                <span>[05] Tabung Udara</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('barrel')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[06] Panjang Senapan &amp; Laras Match</span><span>&rarr;</span>
+                                <span>[06] Laras</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('objective')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[07] Lensa Objektif &amp; Fokus Paralaks</span><span>&rarr;</span>
+                                <span>[07] Lensa Objektif</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('turrets')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[08] Turret Elevasi &amp; Windage</span><span>&rarr;</span>
+                                <span>[08] Turret Elevasi dan Windage</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('zoom')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[09] Cincin Pembesaran (Zoom Ring)</span><span>&rarr;</span>
+                                <span>[09] Cincin Pembesaran</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('ocular')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[10] Lensa Okuler &amp; Fokus Reticle</span><span>&rarr;</span>
+                                <span>[10] Lensa Okuler</span><span>&rarr;</span>
                             </button>
                         </div>
 </details>
@@ -913,7 +885,6 @@
               <tr><th scope="row">Siluet airgun ukuran 1/10</th><td>Aturan resmi</td><td>Aturan mencantumkan skala target; gambar di halaman ini hanya membantu mengenali bentuk, bukan template produksi sasaran.</td></tr>
               <tr><th scope="row">Penjelasan Postur dan bagian peralatan</th><td>Materi poster</td><td>Diringkas dari poster pembelajaran Clarisa Azalia dan Aurellia Cassandra, versi 15. Foto postur asli poster dipakai bersama ringkasan pesan latihannya.</td></tr>
               <tr><th scope="row">Grafik pelatuk dan pandangan optik</th><td>Model demonstrasi</td><td>Angka dan perubahan gambar merupakan contoh interaktif, bukan hasil ukur atlet atau ketentuan teknik postur IMSSU.</td></tr>
-              <tr><th scope="row">Lintasan, pengaruh angin, titik nol, klik elevasi</th><td>Bukan kalkulator</td><td>Grafik hanya animasi bentuk; tidak menghitung koreksi tembakan atau karakteristik peralatan.</td></tr>
             </tbody>
           </table></div>
           <p class="source-links">Rujukan: <a href="https://imssu.org/wp-content/uploads/2025/04/IMSSU-Rules-English-2025.pdf" target="_blank" rel="noopener noreferrer">IMSSU Official Sporting Rules 2025 (PDF)</a> · <a href="https://imssu.net/documents/" target="_blank" rel="noopener noreferrer">Indeks dokumen IMSSU</a> · <a href="/rules">Halaman peraturan Twin Shooter</a>.</p>

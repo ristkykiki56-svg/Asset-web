@@ -12,8 +12,8 @@ test('lesson explanations do not expose implementation formats to readers',()=>{
 test('mobile lessons retain explanations beside every experiment',()=>{
  const source=read('lab-workspace.js');
  for(const id of ['triggerCurveHelp','opticsExplanation','silhouetteHelp'])assert.ok(source.includes("$('#"+id+"')"),id+' must be available on mobile');
- assert.match(read('lab.html'),/id="trajectoryHelp"/);
- assert.ok(source.includes("$('#trajectoryCanvas')?.parentElement"),'trajectory instructions move with their graph');
+ assert.doesNotMatch(read('lab.html'),/id="trajectoryCanvas"/);
+ assert.ok(source.includes("move($('#hwSpecBody'), hardware.panel)"),'component explanation is directly available');
 });
 
 test('all ten anatomy selections show standalone teaching and select the matching photo',()=>{

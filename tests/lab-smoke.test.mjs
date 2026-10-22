@@ -26,9 +26,9 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('five remaining sliders and ten unique SVG keyboard controls remain accessible',()=>{
+test('three remaining sliders and ten unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
- assert.equal(sliders.length,5);
+ assert.equal(sliders.length,3);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
  assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,10);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
@@ -39,7 +39,7 @@ test('pointer cancellation, keyboard input, pose sync, and RAF throttling are im
  assert.match(js,/currentPose = item\.pose/);
  assert.match(js,/setupOcularVisibility/);
  assert.match(js,/const reducedMotion = window\.matchMedia/);
- assert.match(js,/cancelAnimationFrame\(ballisticReq\)/);
+ assert.match(js,/cancelAnimationFrame\(oscReq\)/);
  assert.match(js,/let sfxActive = false/);
 });
 test('disclaimers separate illustration from rules and provenance',()=>{
@@ -57,8 +57,8 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
  assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
  assert.doesNotMatch(js,/ref: 'REF POSTER/);
- assert.match(js,/wind.toFixed\(1\)/);
- assert.match(js,/JARAK SESUAI ATURAN/);
+ assert.doesNotMatch(js,/windRangeInput/);
+ assert.match(js,/chicken: \{ label: 'AYAM \(CHICKEN\)', dist: 18 \}/);
  assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
  assert.match(html,/bukan template produksi sasaran/);
 });
@@ -137,7 +137,7 @@ test('active and total silhouette counts both update across selection and reset'
  assert.match(html,/id="rackHitScore"/);
  assert.match(js,/function updateRackCounters/);
  assert.match(js,/key\.startsWith\(selectedAnimal \+ '-'\)/);
- assert.match(js,/updateRackCounters\(\);\s+renderTrajectoryGraph/);
+ assert.doesNotMatch(js,/triggerBallisticTrace/);
 });
 
 
@@ -157,7 +157,7 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.doesNotMatch(html,/id="rigSwitch-clarisa"/);
  assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
  assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
- for (const id of ['svgCobFulcrum','rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
+ for (const id of ['rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
    assert.equal((svg.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
  for (const key of ['stock','cheekpiece','grip','riser','cylinder','barrel','objective','turrets','zoom','ocular']) {

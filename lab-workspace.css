@@ -158,3 +158,19 @@
  .lw-optics-lens{flex-direction:column;gap:6px}
  .lw-optics-lens #ocularLensCanvas{height:calc(100% - 24px)!important;max-height:320px;width:auto!important;max-width:100%;min-height:0;object-fit:contain}
 }
+
+@media(max-width:767px){
+ .lw-hardware-view #hardwareBlueprintSvg{height:calc(100% - 88px)!important}
+ .lw-hardware-leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+ .lw-hardware-leaders line{stroke-width:1.25}
+ .lw-hardware-pin{z-index:2}
+ .lw-hardware-pin:focus-visible{outline:3px solid var(--clarisa-blue);outline-offset:-3px;border-radius:4px}
+ #sec-hardware .lw-panel>#hwSpecTitle{font-size:15px;line-height:1.4;margin:8px 0 5px}
+ #sec-hardware .lw-panel>#hwSpecBody,#sec-hardware .lw-panel>#hwSpecNote{font:12px/1.65 'Plus Jakarta Sans',sans-serif;margin:6px 0;padding:0;border:0;color:var(--ink-700)}
+ #sec-hardware .lw-workbench{grid-template-rows:auto auto minmax(180px,1fr) auto auto}
+ #sec-imssu .lw-panel>#silhouetteHelp{font-size:12px;line-height:1.65;margin:8px 0}
+}
+
+@media(max-width:767px){
+ .lw-hardware-view .hw-scope-section>text,.lw-hardware-view .hw-rifle-section>text,.lw-hardware-view #hardwareBlueprintSvg>g[aria-hidden="true"]{display:none}
+}

@@ -1,6 +1,16 @@
 /* Reparent the live lesson controls on phones; comment anchors preserve desktop order. */
 (() => {
     'use strict';
+    function layoutHardwarePins(points, width, height) {
+        const ordered = points.slice().sort((a, b) => a.x - b.x);
+        return ordered.map((point, index) => {
+            const rail = index % 2;
+            const count = Math.ceil((ordered.length - rail) / 2);
+            const column = Math.floor(index / 2);
+            return {key:point.key, anchorX:point.x, anchorY:point.y,
+                x:(column + 1) * width / (count + 1), y:rail ? height - 24 : 24};
+        });
+    }
     window.addEventListener('DOMContentLoaded', () => {
         const media = window.matchMedia('(max-width: 767px)');
         const $ = selector => document.querySelector(selector);
@@ -204,10 +214,8 @@
                 silhouette.panel.append(readout);
                 move($('#rackGroupScore')?.parentElement, readout);
                 move($('button[onclick="resetSilhouetteRack()"]'), silhouette.panel);
-                move($('#silhouetteHelp'), details(silhouette.panel, 'Kelompok dan hitungan sasaran'));
-                const trajectory = details(silhouette.panel, 'Lintasan ilustratif');
-                move($('#trajectoryCanvas')?.parentElement, trajectory);
-                // The graph container includes its reading instructions.
+                move($('#silhouetteHelp'), silhouette.panel);
+
             }
 
             const hardware = workspace('sec-hardware', 'Peralatan', 'Pilih komponen pada gambar.', dialog);
@@ -220,22 +228,30 @@
                 const picker = $('#labHardwarePicker');
                 move(picker, hardware.panel);
                 move($('#hwSpecTitle'), hardware.panel);
-                const explanation = details(hardware.panel, 'Penjelasan komponen');
-                move($('#hwSpecBody'), explanation);
-                move($('#hwSpecNote'), explanation);
-                move($('input[oninput^="adjustRifleBalancePoint"]')?.parentElement, details(hardware.panel, 'Penanda posisi diagram'));
+                move($('#hwSpecBody'), hardware.panel);
+                move($('#hwSpecNote'), hardware.panel);
                 const options = Array.from(picker?.options || []);
                 const initialKey = picker?.value || 'stock';
+                const ns = 'http://www.w3.org/2000/svg';
+                const leaders = document.createElementNS(ns, 'svg');
+                leaders.classList.add('lw-hardware-leaders');
+                leaders.setAttribute('aria-hidden', 'true');
+                view.append(leaders);
                 const markerButtons = Array.from(svg.querySelectorAll('.hw-marker')).map(marker => {
                     const button = el('button', 'lw-hardware-pin', marker.querySelector('.hw-marker-number').textContent.trim());
                     button.type = 'button';
                     const key = marker.getAttribute('data-hw-key');
+                    button.dataset.hwKey = key;
                     button.setAttribute('aria-label', marker.getAttribute('aria-label'));
                     attribute(marker, 'aria-hidden', 'true');
                     attribute(marker, 'tabindex', '-1');
                     listen(button, 'click', () => window.inspectHardware(key));
                     view.append(button);
-                    return { marker, button, key };
+                    const line = document.createElementNS(ns, 'line');
+                    const dot = document.createElementNS(ns, 'circle');
+                    dot.setAttribute('r', '3');
+                    leaders.append(line, dot);
+                    return { marker, button, key, line, dot };
                 });
                 const stash = document.createDocumentFragment();
                 options.forEach(option => move(option, stash));
@@ -245,14 +261,28 @@
                 let mark;
                 refreshHardware = () => {
                     const bounds = view.getBoundingClientRect();
-                    markerButtons.forEach(({ marker, button, key }) => {
-                        button.hidden = scopeKeys.has(key) !== (mode === 'scope');
+                    if (!bounds.width || !bounds.height) return;
+                    leaders.setAttribute('viewBox', '0 0 ' + bounds.width + ' ' + bounds.height);
+                    const points = [];
+                    markerButtons.forEach(({marker, button, key, line, dot}) => {
+                        const hidden = scopeKeys.has(key) !== (mode === 'scope');
+                        button.hidden = hidden;
+                        line.style.display = dot.style.display = hidden ? 'none' : '';
                         button.setAttribute('aria-pressed', marker.getAttribute('aria-pressed'));
-                        if (button.hidden) return;
+                        if (hidden) return;
                         const point = marker.querySelector('.hw-marker-halo').getBoundingClientRect();
-                        button.style.left = (point.left + point.width / 2 - bounds.left) + 'px';
-                        button.style.top = (point.top + point.height / 2 - bounds.top) + 'px';
+                        points.push({key, x:point.left + point.width / 2 - bounds.left,
+                            y:point.top + point.height / 2 - bounds.top});
                     });
+                    for (const pin of layoutHardwarePins(points, bounds.width, bounds.height)) {
+                        const {button, marker, line, dot} = markerButtons.find(item => item.key === pin.key);
+                        button.style.left = pin.x + 'px';button.style.top = pin.y + 'px';
+                        line.setAttribute('x1', pin.x);line.setAttribute('y1', pin.y);
+                        line.setAttribute('x2', pin.anchorX);line.setAttribute('y2', pin.anchorY);
+                        dot.setAttribute('cx', pin.anchorX);dot.setAttribute('cy', pin.anchorY);
+                        const color = marker.getAttribute('aria-pressed') === 'true' ? '#0057A5' : '#67747B';
+                        line.setAttribute('stroke', color);dot.setAttribute('fill', color);
+                    }
                 };
                 function selectGroup(nextMode, key, inspect) {
                     if (!picker || !svg) return;

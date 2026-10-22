@@ -51,7 +51,17 @@ for(const width of [320,375,390]){
  picker.value='sec-hardware';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
  d.querySelector('[data-lw-hardware="scope"]').click();await settle(f);
  const hardwarePicker=d.querySelector('#labHardwarePicker');hardwarePicker.value='ocular';hardwarePicker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
- for(const pin of d.querySelectorAll('.lw-hardware-pin:not([hidden])'))assert(pin.getBoundingClientRect().width>=44&&pin.getBoundingClientRect().height>=44,width+': hardware hit area');
+ assert(!d.querySelector('#hwSpecBody').closest('details'),width+': explanation shown directly');
+ for(const mode of ['rifle','scope']){
+  d.querySelector('[data-lw-hardware="'+mode+'"]').click();await settle(f);
+  const pins=[...d.querySelectorAll('.lw-hardware-pin:not([hidden])')];
+  for(let i=0;i<pins.length;i++){
+   const pin=pins[i],a=pin.getBoundingClientRect();assert(a.width>=44&&a.height>=44,width+': hardware hit area');
+   for(const other of pins.slice(i+1)){const b=other.getBoundingClientRect();assert(a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top,width+': hardware hit areas do not overlap');}
+   pin.click();await settle(f);assert(hardwarePicker.value===pin.dataset.hwKey,width+': pin selects the intended component');
+  }
+ }
+ hardwarePicker.value='ocular';hardwarePicker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
  d.querySelector('#sec-hardware .lw-info-button').click();await settle(f);
  assert(d.querySelector('#lw-info').open&&d.querySelector('#lw-info #lab-sources'),width+': sources reachable');d.querySelector('.lw-dialog-close').click();
  f.style.width='1280px';await settle(f);await settle(f);
