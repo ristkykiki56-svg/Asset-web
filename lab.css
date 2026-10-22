@@ -13,6 +13,8 @@
             --imssu-orange: #FF4800;
             --walnut-gold: #B37B24;
             --ok-green: #0E7C47;
+            --on-orange: #000000;
+            --on-character: #FFFFFF;
         }
 
         html.cad-dark {
@@ -29,6 +31,7 @@
             --imssu-orange: #FF5714;
             --walnut-gold: #E5A93C;
             --ok-green: #10B981;
+            --on-character: #111315;
         }
 
         * {
@@ -162,6 +165,8 @@ button:focus-visible,input:focus-visible,a:focus-visible,[role="button"]:focus-v
 input[type=range].mech-slider:focus-visible{outline:3px solid var(--imssu-orange)!important;outline-offset:6px}
 #tactileTriggerBtn{touch-action:none}
 html.cad-dark .tech-sheet{color:var(--ink-900)}
+/* Dark text stays legible on orange labels and their darker hover surfaces. */
+[class~="bg-[#FF4800]"],[class~="hover:bg-[#FF4800]"]:hover{color:var(--on-orange)}
 @media(min-width:1280px){.lab-header-row{flex-wrap:nowrap}.lab-brand{flex:0 1 auto}.lab-section-nav{order:0;flex:0 1 auto}}
 @media(max-width:767px){
   .lab-brand-text p{display:none}
@@ -237,7 +242,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-header { position: sticky; top: 0; z-index: 50; }
   .lab-header-row {
     display: grid;
-    grid-template-columns: 36px minmax(0,1fr) auto;
+    grid-template-columns: 44px minmax(0,1fr) auto;
     align-items: center;
     gap: 8px 10px;
     min-height: 0;
@@ -247,8 +252,8 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
     display: grid;
     grid-column: 1;
     place-items: center;
-    height: 36px;
-    width: 36px;
+    height: 44px;
+    width: 44px;
     border: 1px solid var(--rule-light);
     font: 700 19px 'Plus Jakarta Sans', sans-serif;
     text-decoration: none;
@@ -271,7 +276,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
     gap: .65rem;
     justify-content: space-between;
     list-style: none;
-    min-height: 36px;
+    min-height: 44px;
     padding: 0 .65rem;
     border: 1px solid var(--rule-light);
     cursor: pointer;
@@ -315,7 +320,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-mobile-picker select {
     width: 100%;
     min-width: 0;
-    min-height: 42px;
+    min-height: 44px;
     padding: .55rem 1.8rem .55rem .65rem;
     border: 1px solid var(--rule-heavy);
     border-radius: 0;
@@ -353,6 +358,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 
   .lab-mobile-disclosure > summary {
     display: flex;
+    min-height: 44px;
     align-items: center;
     justify-content: space-between;
     gap: .65rem;
@@ -626,7 +632,8 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 @media(max-width:767px) {
   :root {scroll-padding-top:125px;}
   .lab-intro-provenance {display:flex;gap:.4rem;margin-top:.5rem}
-  .lab-intro-provenance span,.lab-intro-provenance a {min-height:28px;padding:.25rem .45rem;font-size:10px;line-height:1.35}
+  .lab-intro-provenance span {min-height:28px;padding:.25rem .45rem;font-size:10px;line-height:1.35}
+  .lab-intro-provenance a {min-width:44px;min-height:44px;padding:.25rem .45rem;font-size:10px;line-height:1.35}
   .lab-desktop-purpose {display:none}
   .lab-hero-description {display:none}
   #main-content {padding-bottom:calc(116px + env(safe-area-inset-bottom))!important}
@@ -973,7 +980,7 @@ html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg
   color:var(--ink-900);font-size:12px;font-weight:700;cursor:pointer
 }
 #sec-biomech .ts-pose-art-choices button[aria-pressed="true"]{
-  border-color:var(--clarisa-blue);background:var(--clarisa-blue);color:white
+  border-color:var(--clarisa-blue);background:var(--clarisa-blue);color:var(--on-character)
 }
 #sec-biomech .ts-pose-art-choices [data-pose-color="red"][aria-pressed="true"]{
   border-color:var(--aurellia-red);background:var(--aurellia-red)
