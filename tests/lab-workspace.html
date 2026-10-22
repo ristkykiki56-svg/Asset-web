@@ -7,6 +7,7 @@
 const result=document.querySelector('#result'),errors=[];let checks=0;
 const assert=(yes,message)=>{checks++;if(!yes)errors.push(message)};
 const settle=f=>new Promise(r=>f.contentWindow.requestAnimationFrame(()=>f.contentWindow.requestAnimationFrame(r)));
+try {
 for(const width of [320,375,390]){
  const f=document.createElement('iframe');f.title='Workspace fixture';f.style.width=width+'px';f.src='/lab.html';
  const ready=new Promise(r=>f.onload=r);document.body.append(f);await ready;await f.contentDocument.fonts.ready;await settle(f);
@@ -75,5 +76,6 @@ for(const width of [320,375,390]){
  assert(picker.value==='sec-biomech',width+': final action returns to posture');
  f.remove();
 }
+} catch(error){errors.push('Fixture exception: '+error.message);}
 result.dataset.status=errors.length?'fail':'pass';result.textContent=JSON.stringify({checks,errors},null,2);
 </script></html>
