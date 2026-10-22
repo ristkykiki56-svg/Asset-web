@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<title>Mobile lab workspace regression</title>
+<style>body{font:14px system-ui}output{display:block;white-space:pre-wrap}iframe{height:667px;border:0}</style>
+<output id="result" data-status="pending">RUNNING</output>
+<script type="module">
+const result=document.querySelector('#result'),errors=[];let checks=0;
+const assert=(yes,message)=>{checks++;if(!yes)errors.push(message)};
+const settle=f=>new Promise(r=>f.contentWindow.requestAnimationFrame(()=>f.contentWindow.requestAnimationFrame(r)));
+for(const width of [320,375,390]){
+ const f=document.createElement('iframe');f.title='Workspace fixture';f.style.width=width+'px';f.src='/lab.html';
+ const ready=new Promise(r=>f.onload=r);document.body.append(f);await ready;await f.contentDocument.fonts.ready;await settle(f);
+ const d=f.contentDocument,w=f.contentWindow,picker=d.querySelector('#labMobileModuleSelect');
+ assert(d.documentElement.classList.contains('lw-active'),width+': workspace mounted');
+ if(!d.querySelector('.lw-workbench')){f.remove();continue;}
+ for(const id of ['sec-biomech','sec-trigger','sec-optics','sec-imssu','sec-hardware']){
+  picker.value=id;picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+  const shell=d.querySelector('#'+id+' .lw-workbench'),stage=shell.querySelector('.lw-stage'),panel=shell.querySelector('.lw-panel');
+  assert(shell.getBoundingClientRect().height>100,width+': visible '+id);
+  assert(stage.getBoundingClientRect().top>=d.querySelector('header').getBoundingClientRect().bottom-2,width+': stage clears header '+id);
+  assert(stage.getBoundingClientRect().height>=130,width+': usable stage '+id);
+  assert(panel.getBoundingClientRect().bottom<=667,width+': controls in viewport '+id);
+  assert(d.documentElement.scrollWidth<=width,width+': no page overflow '+id);
+ }
+ picker.value='sec-optics';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+ const lens=d.querySelector('[data-lw-optics="lens"]');lens.click();await settle(f);
+ assert(!d.querySelector('#ocularLensCanvas').closest('[hidden]'),width+': lens visible');
+ const primary=[...d.querySelectorAll('#sec-optics .lw-panel input[type=range]')].find(input=>input.getBoundingClientRect().height>0);
+ assert(!!primary,width+': active optical control');
+ if(primary){primary.value=primary.max;primary.dispatchEvent(new Event('input',{bubbles:true}));await settle(f);
+  assert(d.querySelector('#ocularLensCanvas').getBoundingClientRect().bottom<=d.querySelector('#sec-optics .lw-panel').getBoundingClientRect().top+2,width+': lens and control visible together');}
+ for(const input of d.querySelectorAll('.lw-panel input[type=range]')){
+  if(input.getBoundingClientRect().height)assert(input.getBoundingClientRect().height>=44,width+': range hit area');
+ }
+ const ids=[...d.querySelectorAll('[id]')].map(e=>e.id);assert(new Set(ids).size===ids.length,width+': unique DOM ids');
+ picker.value='sec-biomech';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+ d.querySelector('#sec-biomech .lw-options').open=true;
+ const character=d.querySelector('#postureArtMode');character.checked=false;character.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+ for(const id of ['archSlider','hipLockSlider'])assert(d.getElementById(id).getBoundingClientRect().height>=44,width+': reachable model '+id);
+ for(const pin of d.querySelectorAll('#biomechPinsOverlay .callout-node:not([hidden])')){const r=pin.getBoundingClientRect();assert(r.left>=0&&r.right<=width+1,width+': posture pin within screen');}
+ picker.value='sec-hardware';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+ d.querySelector('[data-lw-hardware="scope"]').click();await settle(f);
+ const hardwarePicker=d.querySelector('#labHardwarePicker');hardwarePicker.value='ocular';hardwarePicker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+ for(const pin of d.querySelectorAll('.lw-hardware-pin:not([hidden])'))assert(pin.getBoundingClientRect().width>=44&&pin.getBoundingClientRect().height>=44,width+': hardware hit area');
+ d.querySelector('#sec-hardware .lw-info-button').click();await settle(f);
+ assert(d.querySelector('#lw-info').open&&d.querySelector('#lw-info #lab-sources'),width+': sources reachable');d.querySelector('.lw-dialog-close').click();
+ f.style.width='1280px';await settle(f);await settle(f);
+ assert(!d.documentElement.classList.contains('lw-active'),width+': desktop restored');
+ assert(d.querySelector('#optEyeDist').closest('#sec-optics'),width+': original optical input restored');
+ assert(d.querySelector('#archSlider').getBoundingClientRect().height>0,width+': desktop model remains reachable');
+ f.style.width=width+'px';await settle(f);await settle(f);
+ assert(d.querySelectorAll('#ocularLensCanvas').length===1,width+': round trip keeps one canvas');
+ assert(d.querySelector('#labHardwarePicker').value==='ocular',width+': hardware selection survives breakpoint');
+ d.querySelector('#labNextModule').click();await settle(f);
+ assert(picker.value==='sec-biomech',width+': final action returns to posture');
+ f.remove();
+}
+result.dataset.status=errors.length?'fail':'pass';result.textContent=JSON.stringify({checks,errors},null,2);
+</script></html>

@@ -238,7 +238,13 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 point.x = Number(button.dataset.svgX);
                 point.y = Number(button.dataset.svgY);
                 const pixel = point.matrixTransform(matrix);
-                button.style.left = `${pixel.x - bounds.left}px`;
+                const anchorX = pixel.x - bounds.left;
+                const workspace = document.documentElement.classList.contains('lw-active');
+                const leftSide = anchorX < bounds.width / 2;
+                const labelX = workspace ? (leftSide ? 28 : bounds.width - 28) : anchorX;
+                button.dataset.lwSide = leftSide ? 'left' : 'right';
+                button.style.setProperty('--lw-leader', `${workspace ? Math.abs(anchorX - labelX) : 0}px`);
+                button.style.left = `${labelX}px`;
                 button.style.top = `${pixel.y - bounds.top}px`;
             });
         }

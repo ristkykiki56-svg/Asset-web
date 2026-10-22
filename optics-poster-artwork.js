@@ -61,7 +61,8 @@ if(view&&zoomButton){
    else view.removeAttribute('aria-label');
    zoomButton.setAttribute('aria-pressed',String(zoom));
    zoomButton.textContent=zoom?'Tampilkan seluruh gambar':'Perbesar detail gambar';
-   view.scrollLeft=zoom ? Math.max(0,view.scrollWidth-view.clientWidth) : 0;
+   // The eye/ocular junction is near 66% of the scene, not its far right edge.
+   view.scrollLeft=zoom ? Math.max(0,Math.min(view.scrollWidth-view.clientWidth,view.scrollWidth*.66-view.clientWidth/2)) : 0;
    apply({
      dist:document.getElementById('optEyeDist')?.value,
      height:document.getElementById('optCheekHeight')?.value
