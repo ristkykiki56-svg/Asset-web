@@ -546,33 +546,19 @@ let sfxActive = false;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm (MODEL)`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm (MODEL)`;
 
-            // The camera is fixed; only the illustrative head moves in this side view.
-            // Increasing the eye-distance slider increases the gap from the fixed ocular lens.
-            // Lateral movement is perpendicular to this side view and updates only the lens canvas.
-            const dx = (dist - 85) * 0.6;
-            const dy = -7 - comb * 0.85;
-            document.getElementById('svgShooterHeadSide').setAttribute(
-                'transform', 'translate(' + dx.toFixed(2) + ', ' + dy.toFixed(2) + ')');
-
             const err = Math.hypot(dist - 85, comb * 1.5, lat * 1.5);
             const badge = document.getElementById('opticsLockBadge');
-            const mini = document.getElementById('axisStatusMini');
             if (err < 7) {
                 badge.textContent = 'SIMULASI LINGKARAN TERLIHAT';
                 badge.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                mini.textContent = 'LINGKARAN PENUH (MODEL)';
-                mini.className = 'text-[var(--ok-green)] font-bold';
             } else {
                 badge.textContent = 'SIMULASI BAYANGAN TEPI';
                 badge.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                mini.textContent = 'BAYANGAN TEPI (MODEL)';
-                mini.className = 'text-[var(--aurellia-red)] font-bold';
             }
             // Always paint a static optical view immediately; on mobile this module can
             // become visible after the IntersectionObserver's first notification.
             // Waiting for visibility alone previously left an empty canvas.
             renderOcularLoop(performance.now(), true);
-            window.OpticsPosterArt?.update({dist, height: comb});
         }
 
         function calibratePerfectOptics() {
@@ -912,7 +898,7 @@ let sfxActive = false;
                 code: 'KOMPONEN #03 // PEGANGAN',
                 title: 'Pegangan dan Area Pelatuk',
                 body: 'Titik 03 menunjukkan grip atau pegangan tangan di belakang bilah pelatuk. Pada gambar, area ini berada di bawah bagian tengah senapan.',
-                note: 'Bilah pelatuk berada di depan grip. Untuk melihat ilustrasi gerak jari, buka materi Pelatuk.'
+                note: 'Bilah pelatuk berada di depan grip. Untuk mempelajari tahapan pergerakan pelatuk, buka materi Pelatuk.'
             },
             riser: {
                 code: 'KOMPONEN #04 // BADAN DEPAN',
@@ -954,7 +940,7 @@ let sfxActive = false;
                 code: 'KOMPONEN #10 // OKULER',
                 title: 'Lensa Okuler dan Area Dioptri',
                 body: 'Titik 10 menandai okuler, yaitu ujung teleskop yang menghadap mata. Bagian ini menjadi tempat pengguna melihat gambar dan garis bidik.',
-                note: 'Untuk membandingkan posisi mata dan pandangan melalui lensa, buka materi Optik.'
+                note: 'Untuk mempelajari perubahan pandangan melalui lensa, buka materi Optik.'
             }
         };
 
@@ -1076,12 +1062,7 @@ function setupLabMobileExperience() {
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
         if (id === 'sec-optics') {
             renderOcularLoop(performance.now(), true);
-            // When the lesson was hidden, its width was zero. Re-apply head position
-            // after it becomes visible, using the true mobile fitted artwork size.
-            requestAnimationFrame(() => window.OpticsPosterArt?.renderImmediately({
-                dist: document.getElementById('optEyeDist')?.value,
-                height: document.getElementById('optCheekHeight')?.value
-            }));
+
         }
         if (id === 'sec-hardware' && media.matches) {
             // Initial selection may be made while the lesson is still hidden.

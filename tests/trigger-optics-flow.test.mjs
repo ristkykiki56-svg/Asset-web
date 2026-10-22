@@ -18,26 +18,26 @@ test('trigger stages follow take-up, creep, over-travel and update the explanati
  assert.ok(stages.A.progress<stages.B.progress&&stages.B.progress<stages.C.progress);
  assert.doesNotMatch(read('lab.html'),/selectFingerVector|data-trigger-vector|adjustTriggerShoeContact/);
 });
-test('optics removes percentage variation and keeps head and lens in one mobile stage',()=>{
+test('optics removes percentage variation and keeps a single lens view',()=>{
  for(const file of ['lab.html','lab.js','lab-workspace.js'])assert.doesNotMatch(read(file),/optPressure|Variasi pandangan|VARIASI PANDANGAN/);
  const workspace=read('lab-workspace.js');
- assert.match(workspace,/lw-optics-pair/);
- assert.match(workspace,/optics.stage.append\(head, lens\)/);
+ assert.doesNotMatch(workspace,/lw-optics-pair/);
+ assert.match(workspace,/optics.stage.append\(lens\)/);
  assert.doesNotMatch(workspace,/head.hidden = mode|lens.hidden = mode|tabs\(optics/);
 });
 
 
-test('optical controls update head, edge shadow and reset using only three positions',()=>{
+test('optical controls update edge shadow and reset using only three positions',()=>{
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{value:'0',setAttribute(k,v){this[k]=v;}});return nodes.get(id);};
  get('optEyeDist').value='85';
- const changes=[],context=vm.createContext({document:{getElementById:get},renderOcularLoop(){},performance:{now:()=>0},playMechTick(){},window:{OpticsPosterArt:{update:v=>changes.push(v)}}});
+ let draws=0;const context=vm.createContext({document:{getElementById:get},renderOcularLoop(){draws++;},performance:{now:()=>0},playMechTick(){}});
  const js=read('lab.js');
  vm.runInContext(js.slice(js.indexOf('        function updateOpticalSim'),js.indexOf('        function renderOcularLoop')),context);
  context.updateOpticalSim();assert.match(get('opticsLockBadge').textContent,/LINGKARAN/);
  get('optEyeDist').value='110';get('optCheekHeight').value='10';context.updateOpticalSim();
- assert.equal(get('svgShooterHeadSide').transform,'translate(15.00, -15.50)');
+ assert.equal(nodes.has('svgShooterHeadSide'),false);
  assert.match(get('opticsLockBadge').textContent,/BAYANGAN/);
- assert.equal(changes.at(-1).dist,110);assert.equal(changes.at(-1).height,10);
+ assert.equal(draws,2);
  get('optLat').value='12';context.calibratePerfectOptics();
  assert.deepEqual(['optEyeDist','optCheekHeight','optLat'].map(id=>Number(get(id).value)),[85,0,0]);
  assert.equal(nodes.has('optPressure'),false);

@@ -19,10 +19,7 @@
                 if (typeof window.positionBiomechPins === 'function') window.positionBiomechPins();
                 if (typeof window.updateOpticalSim === 'function') window.updateOpticalSim();
                 if (typeof window.renderOcularLoop === 'function') window.renderOcularLoop(performance.now(), true);
-                window.OpticsPosterArt?.renderImmediately({
-                    dist: $('#optEyeDist')?.value,
-                    height: $('#optCheekHeight')?.value
-                });
+
                 refreshHardware();
             });
         }
@@ -160,14 +157,9 @@
             const optics = workspace('sec-optics', 'Optik', 'Pilih kontrol, lalu amati gambarnya.', dialog);
             if (optics) {
                 optics.root.querySelector('.lw-limitation').textContent = 'Angka contoh ilustrasi, bukan rekomendasi setelan.';
-                const head = el('div', 'lw-view lw-optics-head');
                 const lens = el('div', 'lw-view lw-optics-lens');
-                optics.stage.classList.add('lw-optics-pair');
-                head.append(el('p', 'lw-optics-caption', 'Posisi mata terhadap okuler'));
                 lens.append(el('p', 'lw-optics-caption', 'Pandangan melalui lensa'));
-                optics.stage.append(head, lens);
-                move($('#opticalSidePan'), head);
-                move($('#opticsDetailToggle'), optics.panel);
+                optics.stage.append(lens);
                 move($('#ocularLensCanvas'), lens);
                 const label = el('label', 'lw-parameter-label', 'Kontrol');
                 const parameter = el('select', 'lw-parameter-choice');

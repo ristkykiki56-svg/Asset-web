@@ -178,10 +178,10 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose, activeBiomechId\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
 
- for(const id of ['triggerTravelMarker','triggerZoneA','triggerZoneB','triggerZoneC','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
+ for(const id of ['triggerTravelMarker','triggerZoneA','triggerZoneB','triggerZoneC','ocularLensCanvas']){
   assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
- assert.match(html,/id="opticalAlignmentIllustration"/);
+
  assert.match(js,/const SILHOUETTE_RASTERS =/);
  assert.match(js,/className = 'silhouette-raster'/);
  assert.doesNotMatch(js,/const SILHOUETTE_PATHS =/);
@@ -261,45 +261,4 @@ test('original poster photograph is present with the expected PNG dimensions',()
  assert.equal(bytes.subarray(1,4).toString(),'PNG');
  assert.equal(bytes.readUInt32BE(16),3466);
  assert.equal(bytes.readUInt32BE(20),5000);
-});
-
-
-test('optics study uses a fixed detailed scope and only a slider-driven head',()=>{
-  assert.match(html, /id="opticalAlignmentIllustration"/);
-  assert.match(html, /id="opticFixedScope"/);
-  assert.match(html, /id="optStaticRifle"/);
-  assert.match(html, /id="svgShooterHeadSide"/);
-  assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
-  assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 835 282"/);
-  assert.match(html, /TINGGI POSISI MATA/);
-  assert.doesNotMatch(html, /VARIASI PANDANGAN/);
-  assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
-  assert.match(js, /const dy = -7 - comb \* 0\.85/);
-  assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);
-  assert.match(css, /\.optical-side-pan/);
-});
-
-test('optics maintains authentic independent WebP layers without a pixel warp',()=>{
- const layers=['optic-static.webp','optic-head.webp','optic-foreground.webp'];
- for(const filename of layers){
-  const data=readFileSync(new URL('../assets/optics/'+filename,import.meta.url));
-  assert.ok(data.byteLength>20000,filename+' unexpectedly small');
-  assert.equal(data.subarray(0,4).toString(),'RIFF');
-  assert.equal(data.subarray(8,12).toString(),'WEBP');
- }
- const adapter=readFileSync(new URL('../optics-poster-artwork.js',import.meta.url),'utf8');
- assert.match(html,/id="opticalAlignmentArtwork"/);
- assert.match(html,/id="opticStaticArt"/);
- assert.match(html,/id="opticHeadArt"/);
- assert.match(html,/id="opticForegroundArt"/);
- assert.match(html,/defer src="\/optics-poster-artwork.js"/);
- assert.match(js,/OpticsPosterArt\?\.update\(\{dist, height: comb\}\)/);
- assert.match(adapter,/head\.style\.transform/);
- assert.match(adapter,/translate3d/);
- assert.match(adapter,/fallback\.hidden=true/);
- assert.match(adapter,/addEventListener\('error',fail\)/);
- assert.doesNotMatch(adapter,/getImageData|putImageData|createImageData|ImageData|setInterval\(/);
- assert.match(css,/#sec-optics #opticHeadArt/);
- assert.match(css,/#sec-optics #opticForegroundArt\{z-index:2\}/);
- assert.match(css,/prefers-reduced-motion:reduce/);
 });

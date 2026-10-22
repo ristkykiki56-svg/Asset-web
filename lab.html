@@ -356,7 +356,7 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Jarak mata dan lensa teleskop</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Ubah satu kontrol setiap kali. Jarak dan tinggi mata menggeser kepala sedikit pada gambar samping serta mengubah lingkaran pandangan. Posisi lateral mengubah tampilan dalam lensa. Amati posisi mata dan pandangan lensa secara bersamaan. Angka merupakan contoh ilustrasi, bukan rekomendasi setelan.</p>
+<p class="lab-section-hint">Ubah jarak, tinggi, atau posisi mata ke samping, lalu amati perubahan area terang dan bayangan di tepi lensa. Angka merupakan contoh ilustrasi, bukan rekomendasi setelan.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
                     Kembalikan posisi awal
@@ -376,106 +376,6 @@
                         <canvas id="ocularLensCanvas" width="300" height="300" role="img" aria-label="Ilustrasi pandangan melalui lensa optik; perubahan bayangan mengikuti parameter contoh, bukan kondisi optik senapan asli" class="w-full h-full rounded-full border-4 border-[#111315] shadow-md"></canvas>
                     </div>
 
-                    <!-- Live Side-Profile Head & Cheekpiece Alignment Diagram (Recreating the Poster's 4 Head-on-Scope Inset Photos) -->
-                    <div class="w-full border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 mt-3">
-                        <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mb-1">
-                            <span>POTONGAN SAMPING: MATA &rarr; LENSA OKULER</span>
-                            <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
-                        </div>
-                        <div id="opticalSidePan" class="optical-side-pan" tabindex="-1">
-                        <div id="opticalAlignmentArtwork" class="optics-layer-stage" hidden role="img" aria-label="Gambar teleskop dan senapan tetap; kepala karakter bergeser sedikit mendatar dan vertikal mengikuti kontrol jarak dan tinggi mata">
-                          <img id="opticStaticArt" src="/assets/optics/optic-static.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                          <img id="opticHeadArt" src="/assets/optics/optic-head.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                          <img id="opticForegroundArt" src="/assets/optics/optic-foreground.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                        </div>
-                        <svg id="opticalAlignmentIllustration" viewBox="0 0 835 282" class="w-full h-auto block" role="img" aria-labelledby="optSideTitle optSideDesc">
-<title id="optSideTitle">Studi ilustratif jarak mata dan lensa okuler</title>
-<desc id="optSideDesc">Karakter generik tampak samping; hanya bagian kepala yang berubah posisi mengikuti dua slider. Teleskop dan badan senapan tetap diam. Bentuk dan jarak hanyalah contoh visual.</desc>
-<defs>
- <pattern id="opticGrid" width="23" height="23" patternUnits="userSpaceOnUse"><path d="M23 0H0V23" fill="none" stroke="#CFD8D6" stroke-width=".55" opacity=".55"/></pattern>
- <linearGradient id="scopeMatte" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5C6B72"/><stop offset=".18" stop-color="#313F46"/><stop offset=".56" stop-color="#151F25"/><stop offset="1" stop-color="#263238"/></linearGradient>
- <linearGradient id="scopeBell" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#66747B"/><stop offset=".25" stop-color="#35444A"/><stop offset=".85" stop-color="#17252D"/><stop offset="1" stop-color="#111B22"/></linearGradient>
- <linearGradient id="scopeSteel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#D6DFDE"/><stop offset=".27" stop-color="#ABB9BC"/><stop offset=".6" stop-color="#5B727D"/><stop offset="1" stop-color="#2F4652"/></linearGradient>
- <linearGradient id="scopeBlue" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5D97BF"/><stop offset=".29" stop-color="#24669A"/><stop offset=".7" stop-color="#0A426F"/><stop offset="1" stop-color="#082E50"/></linearGradient>
- <linearGradient id="headFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E8BFA6"/><stop offset=".43" stop-color="#D9A68E"/><stop offset="1" stop-color="#B77E6D"/></linearGradient>
- <linearGradient id="hairInk" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#424144"/><stop offset=".48" stop-color="#25272C"/><stop offset="1" stop-color="#151C24"/></linearGradient>
- <linearGradient id="blueJersey" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#3D83B4"/><stop offset=".4" stop-color="#19578E"/><stop offset="1" stop-color="#122E59"/></linearGradient>
- <filter id="softScopeShadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0D2737" flood-opacity=".2"/></filter>
-</defs>
-<rect width="835" height="282" fill="#F9FAF7"/><rect width="835" height="282" fill="url(#opticGrid)"/>
-<g aria-hidden="true" opacity=".8"><line x1="14" y1="103" x2="825" y2="103" stroke="#3B7A89" stroke-width="1.5" stroke-dasharray="9 6"/><line x1="14" y1="184" x2="825" y2="184" stroke="#AEBAB7" stroke-width="1" stroke-dasharray="3 8"/></g>
-<!-- Scope and rifle are fixed, irrespective of sliders. -->
-<g id="optStaticRifle" aria-hidden="true" filter="url(#softScopeShadow)">
- <rect x="9" y="183" width="520" height="18" rx="4" fill="url(#scopeSteel)" stroke="#334650" stroke-width="1.4"/>
- <rect x="9" y="201" width="555" height="25" rx="3" fill="url(#scopeBlue)" stroke="#173C60" stroke-width="1.5"/>
- <path d="M0 231H552L579 215H613V242H545L523 255H0Z" fill="#3B4D59" stroke="#253F4F" stroke-width="2"/>
- <path d="M1 230H500M12 237H352" stroke="#C3D2D1" stroke-width="1.7" opacity=".45"/>
- <path d="M14 208H243M273 208H391" stroke="#96BADD" stroke-width="1.5" opacity=".55"/>
- <rect x="306" y="228" width="36" height="22" rx="3" fill="#253541" stroke="#98A6A9"/>
- <path d="M366 232H451V248H427L414 270H381L369 257Z" fill="#273037" stroke="#697C83" stroke-width="1.5"/>
- <path d="M426 231V250M436 231V242" stroke="#D0D6D6" stroke-opacity=".55" stroke-width="1.2"/>
- <path d="M568 206L606 204L635 214L638 229H582L566 225Z" fill="#111C23" stroke="#65747B" stroke-width="1.5"/>
- <rect x="627" y="205" width="10" height="32" rx="2" fill="#17242B" stroke="#667982"/>
-</g>
-<!-- Conceptual precision telescope based on the poster's assembly silhouette, not a product specification. -->
-<g id="opticFixedScope" aria-hidden="true" filter="url(#softScopeShadow)">
- <path d="M31 78H150L190 88V119L150 129H31Z" fill="url(#scopeBell)" stroke="#233239" stroke-width="2"/>
- <path d="M36 80H143L180 90" stroke="#8AA2A9" stroke-width="2" opacity=".5"/>
- <ellipse cx="31" cy="103" rx="12" ry="27" fill="#17272F" stroke="#657B81" stroke-width="3"/>
- <ellipse cx="30" cy="103" rx="6.5" ry="22" fill="#062B31" stroke="#376D72" stroke-width="1.5"/>
- <path d="M48 77V130M54 77V130" stroke="#121D23" stroke-width="3" opacity=".7"/>
- <rect x="190" y="91" width="297" height="25" rx="2.5" fill="url(#scopeMatte)" stroke="#253A45" stroke-width="1.8"/>
- <path d="M199 93H475" stroke="#BBCBD0" stroke-width="1.6" opacity=".5"/>
- <g fill="url(#scopeMatte)" stroke="#192E38" stroke-width="1.4"><rect x="230" y="87" width="29" height="33" rx="3"/><rect x="398" y="87" width="28" height="33" rx="3"/></g>
- <g stroke="#90A5AA" stroke-width="1.15" fill="#1F2F39"><circle cx="237" cy="95" r="3"/><circle cx="252" cy="95" r="3"/><circle cx="405" cy="95" r="3"/><circle cx="419" cy="95" r="3"/></g>
- <path d="M234 118V141H259V118M404 118V141H425V118" fill="#2B3B45" stroke="#233640" stroke-width="2"/>
- <rect x="218" y="139" width="228" height="9" rx="1" fill="#243742" stroke="#657B84" stroke-width="1.2"/>
- <path d="M242 150V180M416 150V180" stroke="#354D59" stroke-width="4"/>
- <rect x="242" y="175" width="179" height="8" rx="1.5" fill="#283F4B" stroke="#536D78"/>
- <rect x="315" y="66" width="47" height="29" rx="4" fill="url(#scopeMatte)" stroke="#22323A" stroke-width="1.8"/>
- <rect x="318" y="53" width="41" height="18" rx="2" fill="#303D44" stroke="#192D38" stroke-width="1.5"/>
- <path d="M321 55V67M326 55V67M332 55V67M338 55V67M344 55V67M350 55V67M355 55V67" stroke="#72858B" stroke-width="1.8" opacity=".9"/>
- <circle cx="339" cy="103" r="24" fill="url(#scopeMatte)" stroke="#17282E" stroke-width="2"/>
- <circle cx="339" cy="103" r="15" fill="#273943" stroke="#748D93" stroke-width="1.2"/>
- <circle cx="339" cy="103" r="4" fill="#17272D" stroke="#ABBFC2"/>
- <g fill="#1C2C36" stroke="#344C55"><rect x="452" y="86" width="26" height="35" rx="3"/><rect x="483" y="85" width="43" height="37" rx="4"/></g>
- <path d="M456 89V118M462 87V119M468 87V119M474 88V117M488 88V118M496 87V119M504 87V119M512 88V118" stroke="#738990" stroke-width="1.4" opacity=".85"/>
- <rect x="520" y="84" width="14" height="39" rx="3" fill="url(#scopeBell)" stroke="#1A2931" stroke-width="2"/>
- <ellipse cx="534" cy="103" rx="4" ry="19.5" fill="#1A2B34" stroke="#8FA1A1" stroke-width="2"/>
-</g>
-<g id="optStaticBody" aria-hidden="true">
- <path d="M646 229Q663 201 694 204Q742 206 794 232V282H588Q602 249 646 229Z" fill="url(#blueJersey)" stroke="#203D52" stroke-width="2"/>
- <path d="M677 215Q712 226 736 277" stroke="#A3C6D7" stroke-width="11" opacity=".5" fill="none"/>
- <path d="M671 213Q716 218 756 275" stroke="#0F335B" stroke-width="2.5" fill="none"/>
-</g>
-<!-- Only this group responds to eye-distance and head-height controls. -->
-<g id="svgShooterHeadSide" transform="translate(0, -7)" aria-hidden="true">
- <path d="M651 188Q668 204 690 205L703 239Q667 242 647 215Z" fill="url(#headFace)" stroke="#9B6D5A" stroke-width="1.2"/>
- <path d="M724 53Q758 58 767 94Q780 145 794 166L794 233Q767 224 748 188Q728 148 728 118Z" fill="url(#hairInk)" stroke="#28313A" stroke-width="2"/>
- <path d="M746 75Q758 127 778 174M750 92Q757 139 777 198" stroke="#818187" stroke-width="1" fill="none" opacity=".26"/>
- <path d="M581 30Q599 3 658 9Q724 15 737 74Q740 126 711 174L686 190L629 171L589 126Q564 88 581 30Z" fill="url(#hairInk)" stroke="#232E35" stroke-width="2.8"/>
- <path d="M587 68Q596 47 625 42Q667 42 690 71Q706 96 697 134Q693 159 681 171L661 187Q648 195 626 183Q603 173 589 154Q579 146 564 135Q563 130 573 119L583 111Q575 88 587 68Z" fill="url(#headFace)" stroke="#956E61" stroke-width="2.1"/>
- <path d="M655 179Q678 167 692 145L687 173Q672 191 659 187Z" fill="#A87865" opacity=".5"/>
- <path d="M579 66Q582 32 621 27Q676 14 707 52Q722 71 717 106Q705 69 678 60Q644 47 620 65Q596 77 587 104Q581 87 579 66Z" fill="url(#hairInk)" stroke="#30383E" stroke-width="1.5"/>
- <path d="M600 45Q636 22 685 51M617 47Q667 32 705 74" stroke="#8A8681" stroke-width="1.2" opacity=".26" fill="none"/>
- <path d="M694 117Q704 104 711 116Q716 128 705 140Q699 148 693 142" fill="#C38C74" stroke="#916353" stroke-width="1.4"/>
- <path d="M701 119Q707 120 704 128L699 134" stroke="#986856" stroke-width="1.2" fill="none"/>
- <path d="M579 117Q575 123 562 133Q570 137 581 137" fill="none" stroke="#A16F60" stroke-width="1.8"/>
- <path d="M565 144Q576 146 589 143" stroke="#98675B" stroke-width="1.2" fill="none"/>
- <path d="M566 151Q579 158 593 151" stroke="#A16E60" stroke-width="1.3" fill="none"/>
- <path d="M576 100Q591 90 603 98" fill="none" stroke="#363038" stroke-width="3" stroke-linecap="round"/>
- <path d="M577 107Q588 102 601 107" fill="none" stroke="#5D4A48" stroke-width="1.5"/>
- <path d="M578 110Q588 114 599 109" fill="#F0F1E9" stroke="#5E5450" stroke-width="1.2"/>
- <ellipse cx="584" cy="110" rx="3" ry="4" fill="#2A3942"/><circle cx="583.2" cy="109" r="1" fill="#E6ECEE"/>
- <path d="M590 109L600 107" stroke="#2D3134" stroke-width="1.5"/>
- <circle cx="584" cy="110" r="2.6" fill="#228EAE" stroke="white" stroke-width="1.1"/>
-</g>
-</svg>
-                        </div>
-                        <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalSidePan" aria-pressed="false">Perbesar detail gambar</button>
-                        <p class="optical-side-hint">Gambar awal ditampilkan utuh. Perbesar detail gambar untuk melihat bagian mata dan okuler. Jarak dan tinggi mata menggeser kepala. Kontrol ke samping hanya mengubah pandangan dalam lensa.
-                        <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
-                    </div>
                 </div>
 
                 <!-- Right 7 Cols: Precision Optical Sliders & Poster Guidelines -->
@@ -525,20 +425,20 @@
                     <!-- Educational descriptions supplied in the original prototype; not an authoritative rules quotation -->
                     <div id="opticsExplanation" class="border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 space-y-3">
                         <div class="font-mono-tech text-xs font-bold uppercase border-b border-[var(--rule-light)] pb-1.5">
-                            MEMAHAMI POSISI MATA DAN PANDANGAN LENSA
+                            MEMBACA PANDANGAN MELALUI LENSA
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[var(--ink-700)] leading-relaxed">
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // POSISI MATA</strong>
-                                Okuler adalah lensa teleskop yang paling dekat dengan mata. Gambar samping memperlihatkan jarak dan tinggi mata terhadap okuler. Perbesar detail untuk melihat celahnya lebih jelas.
+                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // JARAK MATA</strong>
+                                Jarak mata adalah jarak antara mata dan okuler, yaitu lensa yang dekat dengan mata. Pada ilustrasi ini, perubahan jarak mengubah luas area terang yang terlihat.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // PERUBAHAN POSISI</strong>
-                                Jarak mata mengubah celah mata terhadap okuler. Tinggi mata menggeser posisi kepala ke atas atau ke bawah. Amati perubahan area terang pada pandangan lensa saat mengubah salah satu kontrol.
+                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // TINGGI MATA</strong>
+                                Kontrol tinggi menggambarkan perubahan posisi mata ke atas atau ke bawah terhadap sumbu teleskop. Amati perubahan letak area terang dan bayangan di tepi lensa.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // PANDANGAN LENSA</strong>
-                                Area terang menunjukkan bagian pandangan yang terlihat; area gelap menggambarkan bayangan di tepi. Kontrol ke samping menggeser area terang tanpa menggerakkan gambar kepala dari samping. Ilustrasi ini tidak menghitung kondisi optik teleskop tertentu.
+                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // POSISI KE SAMPING</strong>
+                                Kontrol ke samping menggambarkan pergeseran mata ke kiri atau ke kanan. Area terang menunjukkan bagian pandangan yang terlihat, sedangkan area gelap menggambarkan bayangan tepi. Ilustrasi ini tidak menghitung kondisi teleskop tertentu.
                             </div>
                         </div>
                     </div>
@@ -1039,7 +939,6 @@
     </dialog>
     <script defer src="/lab.js"></script>
     <script defer src="/posture-art.js"></script>
-    <script defer src="/optics-poster-artwork.js"></script>
     <script defer src="/lab-workspace.js"></script>
 </body>
 </html>

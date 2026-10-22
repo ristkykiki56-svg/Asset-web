@@ -34,14 +34,10 @@ test('copy gate: posture explains body parts with original poster photos',()=>{
  assert.doesNotMatch(anatomy,/WebP|SVG|slider|sensor|persen/i);
 });
 
-test('copy gate: optics describes both the moving-head and lens-only controls', () => {
-  assert.match(html, /Jarak dan tinggi mata menggeser kepala/);
-  assert.match(html, /Posisi lateral mengubah tampilan dalam lensa/);
-  assert.match(html, /Jarak dan tinggi mata menggeser kepala/);
-  assert.match(js, /optLatLabel'\)\.textContent = .*mm \(MODEL\)/);
-  assert.match(js, /optCheekHeightLabel'\)\.textContent = .*mm \(MODEL\)/);
-  assert.match(optics, /getForeground:\(\)=>foreground/);
-  assert.doesNotMatch(html, /Slider hanya menggeser kepala ilustrasi/);
+test('copy gate: optics explains lens changes without referring to a side image',()=>{
+ assert.match(html,/amati perubahan area terang dan bayangan/);
+ assert.doesNotMatch(html,/gambar samping|menggeser kepala|Amati posisi mata dan pandangan lensa secara bersamaan/i);
+ assert.match(html,/bukan rekomendasi setelan/);
 });
 
 test('copy gate: silhouette failure retains the animal silhouette and 20 buttons', () => {
