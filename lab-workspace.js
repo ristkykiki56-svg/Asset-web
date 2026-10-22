@@ -119,18 +119,10 @@
                 move($('.lab-biomech-stage'), posture.stage);
                 move($('#dossierTitle'), posture.panel);
                 move($('#labCalloutPicker'), posture.panel);
-                const options = details(posture.panel, 'Sudut pandang & model');
+                const options = details(posture.panel, 'Sudut pandang & karakter');
                 move($('#labMobilePosePicker'), options);
                 move($('#xrayToggleBtn'), options);
                 move($('#postureArtControls'), options);
-                document.querySelectorAll('#sec-biomech .ts-scheme-only').forEach(node => {
-                    if (!node.parentElement.closest('.ts-scheme-only')) move(node, options);
-                });
-                options.querySelectorAll('.ts-scheme-only details').forEach(node => {
-                    const wasOpen = node.open;
-                    restores.push(() => { node.open = media.matches ? wasOpen : true; });
-                    node.open = true;
-                });
                 move($('#dossierBody'), details(posture.panel, 'Penjelasan titik'));
             }
 

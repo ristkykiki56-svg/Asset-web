@@ -1,7 +1,7 @@
 /**
  * Shooting Lab posture sprite adapter.
  * Images are not sourced from measured athlete photos; no motion or bone simulation.
- * The original SVG renderer remains the fallback until all six approved assets load.
+ * Missing artwork is reported explicitly; no substitute character is generated.
  */
 (() => {
   'use strict';
@@ -17,7 +17,7 @@
   // Approximate visual anchor fractions checked against both WebP alpha masks.
   // Subject-left is screen-right in front view; these are not anatomical measurements.
   const anchors = {
-    front:{spine:[.50,.43],head:[.51,.13],rightShoulder:[.31,.27],leftArm:[.68,.28],leftWrist:[.65,.30],rightHand:[.33,.39],elbowHip:[.64,.45],pelvis:[.50,.51],leftLeg:[.64,.77],rightLeg:[.31,.77]},
+    front:{spine:[.50,.43],head:[.51,.13],rightShoulder:[.31,.27],leftArm:[.68,.28],leftWrist:[.65,.30],rightHand:[.33,.39],elbowHip:[.79,.35],pelvis:[.50,.51],leftLeg:[.64,.77],rightLeg:[.31,.77]},
     side:{spine:[.42,.43],head:[.37,.13],rightShoulder:[.45,.27],leftArm:[.57,.27],leftWrist:[.55,.23],rightHand:[.50,.23],elbowHip:[.48,.47],pelvis:[.46,.52],leftLeg:[.40,.76],rightLeg:[.51,.76]},
     back:{spine:[.50,.42],head:[.50,.14],rightShoulder:[.69,.28],leftArm:[.31,.29],leftWrist:[.22,.39],rightHand:[.72,.39],elbowHip:[.36,.46],pelvis:[.50,.52],leftLeg:[.35,.76],rightLeg:[.69,.76]}
   };
@@ -32,8 +32,6 @@
       b.disabled=!state.ready;
       b.setAttribute('aria-pressed',String(state.color===b.dataset.poseColor && state.active));
     }
-    const toggle=document.getElementById('postureArtMode');
-    if(toggle){ toggle.disabled=!state.ready; toggle.checked=state.active; }
     document.getElementById('sec-biomech')?.classList.toggle('ts-pose-art-active',state.ready && state.active);
   }
   function refresh() {
@@ -50,14 +48,18 @@
       const x=d.x+f[0]*d.w;
       return [mirrored?460-x:x,d.y+f[1]*d.h];
     },
-    figure:(pose)=>{
+    figure:(pose,selectedId)=>{
       if(!state.ready||!state.active)return '';
       const v=viewOf(pose),d=dimensions[v];
       const href=url(state.color,v),mirror=pose==='sideRight';
       const graphic='<image href="'+href+'" x="'+d.x+'" y="'+d.y+'" width="'+d.w+'" height="'+d.h+'" preserveAspectRatio="xMidYMid meet" />';
-      const guide=document.getElementById('xrayToggleBtn')?.getAttribute('aria-pressed')==='true'
-        ?'<line x1="230" y1="36" x2="230" y2="490" stroke="#5b858f" stroke-width="1.5" stroke-dasharray="5 7" opacity=".65" />'
-        :'';
+      const point=anchors[v]?.[selectedId];
+      const x=point ? d.x+point[0]*d.w : 230;
+      const y=point ? d.y+point[1]*d.h : 270;
+      const guideX=mirror?460-x:x;
+      const guide=document.getElementById('xrayToggleBtn')?.getAttribute('aria-pressed')==='true' && point
+        ? '<g class="posture-point-guide" aria-hidden="true" fill="none" stroke="#FF4800" stroke-width="3"><circle cx="'+guideX+'" cy="'+y+'" r="24" fill="#FF4800" fill-opacity=".12"/><path d="M'+(guideX-34)+' '+y+'H'+(guideX+34)+'M'+guideX+' '+(y-34)+'V'+(y+34)+'" stroke-dasharray="5 4"/></g>'
+        : '';
       return '<g role="img" aria-label="Ilustrasi karakter statis '+(state.color==='blue'?'versi biru':'versi merah')+', tampak '+v+'. Bukan pengukuran atlet.">'
         +(mirror?'<g transform="translate(460 0) scale(-1 1)">'+graphic+'</g>':graphic)
         +guide+'</g>';
@@ -70,31 +72,24 @@
     });
   }
   function init() {
-    const mode=document.getElementById('postureArtMode');
     const controls=document.getElementById('postureArtControls');
-    if(!mode||!controls)return;
-    mode.disabled=true;
+    if(!controls)return;
     controls.addEventListener('click',e=>{
       const btn=e.target.closest('[data-pose-color]');
       if(!btn||!state.ready)return;
       state.color=btn.dataset.poseColor;state.active=true;
-      status('Karakter '+(state.color==='blue'?'biru':'merah')+' ditampilkan tanpa gerakan. Slider tersedia pada mode skema SVG.');
-      refresh();
-    });
-    mode.addEventListener('change',()=>{
-      state.active=state.ready && mode.checked;
-      status(state.active?'Karakter WebP statis. Matikan opsi gambar untuk membuka kontrol skema.':'Skema SVG aktif. Slider model tersedia di bawah gambar.');
+      status('Karakter '+(state.color==='blue'?'biru':'merah')+' ditampilkan tanpa gerakan. Pilih sudut pandang atau titik tubuh untuk melihat penjelasannya.');
       refresh();
     });
     syncControls();
     Promise.all(variants.flatMap(v=>views.map(p=>preload(url(v,p))))).then(()=>{
       state.ready=true;
       state.active=true;
-      status('Pilih karakter dan sudut pandang. Matikan opsi gambar untuk menggunakan slider skema.');
+      status('Pilih warna karakter, sudut pandang, atau titik tubuh.');
       refresh();
     }).catch(()=>{
       state.ready=false;state.active=false;
-      status('Aset karakter belum tersedia; skema SVG tetap digunakan.',true);
+      status('Gambar karakter tidak dapat dimuat. Muat ulang halaman untuk mencoba lagi.',true);
       refresh();
     });
   }

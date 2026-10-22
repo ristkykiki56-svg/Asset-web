@@ -176,7 +176,7 @@
                     <label class="lab-callout-label" for="labCalloutPicker">Bagian yang ingin dipelajari</label>
                     <select id="labCalloutPicker" class="lab-callout-select" aria-label="Pilih titik anatomi untuk dijelaskan"></select>
                     <button onclick="toggleXraySkeleton()" id="xrayToggleBtn" aria-pressed="true" class="px-3 py-2 border border-[#0055B8] text-[var(--clarisa-blue)] font-bold hover:bg-[#0055B8] hover:text-white transition">
-                        Garis postur: tampil
+                        Panduan titik: tampil
                     </button>
                 </div>
             </div>
@@ -186,9 +186,8 @@
                 <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Biru · karakter ilustratif</button>
                 <button type="button" data-pose-color="red" aria-pressed="false" disabled>Merah · karakter ilustratif</button>
               </div>
-              <label class="ts-pose-art-switch"><input id="postureArtMode" type="checkbox" disabled> Gunakan gambar karakter</label>
               <p id="postureArtStatus" aria-live="polite">Memeriksa ketersediaan aset ilustrasi…</p>
-              <p class="ts-pose-art-note">Mode karakter menggunakan WebP statis. Matikan opsi gambar karakter untuk membuka skema SVG beserta slider model. Keduanya bukan rekonstruksi atlet.</p>
+              <p class="ts-pose-art-note">Pilih warna dan sudut pandang untuk mengenali bagian tubuh pada ilustrasi.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
@@ -202,59 +201,6 @@
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
-                            <defs>
-                                <marker id="leaderDot" markerWidth="6" markerHeight="6" refX="3" refY="3">
-                                    <circle cx="3" cy="3" r="2.5" fill="#FF4800"/>
-                                </marker>
-                                <linearGradient id="biomechBlueKit" x1="0" y1="0" x2="1" y2=".25">
-                                  <stop offset="0" stop-color="#173B68"/><stop offset=".38" stop-color="#2861A0"/><stop offset=".72" stop-color="#1D4E86"/><stop offset="1" stop-color="#132E54"/>
-                                </linearGradient>
-                                <linearGradient id="biomechRedKit" x1="0" y1="0" x2="1" y2=".25">
-                                  <stop offset="0" stop-color="#642B38"/><stop offset=".4" stop-color="#B7404E"/><stop offset=".72" stop-color="#8D303E"/><stop offset="1" stop-color="#542530"/>
-                                </linearGradient>
-                                <linearGradient id="biomechTrouser" x1="0" y1="0" x2="1" y2="0">
-                                  <stop offset="0" stop-color="#18252B"/><stop offset=".47" stop-color="#445057"/><stop offset="1" stop-color="#182329"/>
-                                </linearGradient>
-                                <linearGradient id="biomechShoe" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0" stop-color="#EFF0EA"/><stop offset=".55" stop-color="#CDD4D2"/><stop offset="1" stop-color="#66777A"/>
-                                </linearGradient>
-                                <linearGradient id="biomechSkin" x1="0" y1="0" x2="1" y2=".5">
-                                  <stop offset="0" stop-color="#BA8972"/><stop offset=".55" stop-color="#E2B8A0"/><stop offset="1" stop-color="#9C6E5D"/>
-                                </linearGradient>
-                                <linearGradient id="biomechHair" x1="0" y1="0" x2="1" y2="1">
-                                  <stop offset="0" stop-color="#5E5050"/><stop offset=".35" stop-color="#282A30"/><stop offset="1" stop-color="#131A20"/>
-                                </linearGradient>
-                            </defs>
-
-                            <!-- Illustrative grid, not a millimeter scale -->
-                            <g class="biomech-ruler" stroke="var(--rule-light)" stroke-width="1" font-size="8" fill="var(--ink-500)">
-                                <line x1="18" y1="20" x2="18" y2="500"/>
-                                <line x1="14" y1="60" x2="22" y2="60"/><text x="25" y="63">SKEMA</text>
-                                <line x1="14" y1="160" x2="22" y2="160"/><text x="25" y="163">—</text>
-                                <line x1="14" y1="260" x2="22" y2="260"/><text x="25" y="263">—</text>
-                                <line x1="14" y1="360" x2="22" y2="360"/><text x="25" y="363">—</text>
-                                <line x1="14" y1="485" x2="22" y2="485"/><text x="25" y="488">LANTAI</text>
-                            </g>
-
-                            <!-- Center of Gravity Vertical Plumb Line (Garis Pusat Beban) -->
-                            <g id="svgCogPlumbGroup" transform="translate(230, 0)">
-                                <line x1="0" y1="18" x2="0" y2="495" stroke="#FF4800" stroke-width="1.5" stroke-dasharray="6 4"/>
-                                <rect x="-68" y="12" width="136" height="18" fill="var(--ink-900)"/>
-                                <text x="0" y="24" text-anchor="middle" fill="var(--bg-surface)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">SUMBU MODEL (ILUSTRASI)</text>
-                            </g>
-
-                            <!-- Ground Force Plate & 90° Target Line Protractor -->
-                            <g class="biomech-ground" transform="translate(0, 475)">
-                                <line x1="45" y1="20" x2="425" y2="20" stroke="var(--ink-900)" stroke-width="1.5"/>
-                                <text x="52" y="13" fill="var(--ink-700)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">&larr; ARAH SASARAN (SUDUT BERDIRI 90&deg;)</text>
-                                <!-- Left Foot Force Plate -->
-                                <rect x="145" y="20" width="64" height="16" fill="#0055B8"/>
-                                <text id="plateLeftText" x="177" y="50" text-anchor="middle" fill="#0055B8" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KIRI · MODEL</text>
-                                <!-- Right Foot Force Plate -->
-                                <rect x="252" y="20" width="64" height="16" fill="#D11F26"/>
-                                <text id="plateRightText" x="284" y="50" text-anchor="middle" fill="#D11F26" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KANAN · MODEL</text>
-                            </g>
-
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
                             <g id="svgAthleteLayer"></g>
 
@@ -269,45 +215,6 @@
                         <div id="biomechPinsOverlay" class="absolute inset-0 pointer-events-none"></div>
                     </div>
 
-                    <!-- Bottom Mechanical Posture Sliders -->
-                    <div class="ts-scheme-only pt-4 border-t border-[var(--rule-light)] space-y-3">
-                        <div class="flex items-center justify-between font-mono-tech text-xs">
-                            <span class="font-bold uppercase">UBAH INDIKATOR MODEL</span>
-                            <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset parameter</button>
-                        </div>
-
-                        <p class="lab-diagram-context">Dalam mode skema SVG, slider mengubah bentuk figur serta indikator contoh. Kontrol ini disembunyikan pada mode karakter WebP. Semua nilainya bukan hasil pengukuran tubuh.</p>
-                         <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah indikator model</summary>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                                <div class="lab-parameter-heading flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>PARAMETER LENGKUNGAN (MODEL):</span>
-                                    <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0° (MODEL)</strong>
-                                </div>
-                                <input id="archSlider" type="range" min="-4" max="22" step="1" value="12" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Lengkungan punggung model, derajat">
-                            </div>
-
-                            <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                                <div class="lab-parameter-heading flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>POSISI SIKU RELATIF KE PINGGUL (MODEL):</span>
-                                    <strong id="hipLockReadout" class="text-[var(--ok-green)]">100 / 100 (MODEL)</strong>
-                                </div>
-                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Variasi posisi siku kiri pada model visual, bukan pengukuran atau nilai ideal">
-                            </div>
-                        </div>
-</details>
-
-                        <!-- Telemetry Bar: Muscle EMG Load vs Passive Bone Load -->
-                        <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono-tech text-[11px]">
-                            <div>
-                                <span class="text-[var(--ink-500)]">STATUS DIAGRAM: </span>
-                                <strong id="skeletalStatusLabel" class="text-[var(--ok-green)]">PARAMETER AWAL MODEL</strong>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span>INDEKS PERUBAHAN VISUAL: <strong id="muzzleSwayReadout">0 / 100</strong></span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Right 6 Cols: Selected Callout Specification Sheet + Complete 10-Point Poster Index -->
@@ -315,19 +222,19 @@
                     <!-- Active Callout Technical Dossier -->
                     <div class="border-2 border-[var(--rule-heavy)] p-5 bg-[var(--bg-paper)] space-y-3">
                         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                            <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK ANATOMI #01 // TULANG BELAKANG</span>
-                            <span id="dossierRef" class="text-[var(--ink-500)]">SKEMA ILUSTRATIF — SUMBER POSTER BELUM TERVERIFIKASI</span>
+                            <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK 01 // PUNGGUNG</span>
+                            <span id="dossierRef" class="text-[var(--ink-500)]">ILUSTRASI BAGIAN TUBUH</span>
                         </div>
 
                         <h3 id="dossierTitle" aria-live="polite" class="text-xl font-extrabold tracking-tight">
-                            Lengkungan Punggung &amp; Tahanan Beban Pasif (Skeletal Support)
+                            Punggung
                         </h3>
 
                         <p id="dossierBody" class="text-sm text-[var(--ink-700)] leading-relaxed">
-                            Garis tubuh dalam ilustrasi bukan pengukuran distribusi beban. Pada mode karakter WebP, slider hanya mengubah indikator dan garis model, bukan bentuk tubuh.
+                            Titik 01 menandai bagian tengah punggung pada ilustrasi tampak belakang.
                         </p>
 
-                        <div id="dossierMetrics" class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 font-mono-tech text-[11px]"></div>
+
                     </div>
 
                     <!-- All 10 Prototype Callouts Table -->

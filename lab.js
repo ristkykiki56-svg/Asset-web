@@ -71,83 +71,63 @@ let sfxActive = false;
         const POSTER_BIOMECH_DATA = [
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
-                code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Lengkungan Punggung & Tahanan Beban Pasif',
-                desc: 'Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan pada mode tersebut. Pada mode skema SVG, slider mengubah bentuk figur dan indikator contoh; tidak ada gaya atau distribusi beban yang diukur.',
-                metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Punggung',
+                desc: 'Punggung terlihat dari belakang, di antara kedua bahu hingga pinggang. Titik 01 menandai bagian tengah punggung pada ilustrasi. Pilih tampak samping untuk membandingkan bentuk punggung dan posisi badan.'
             },
             {
                 id: 'head', num: '02', pose: 'front', x: 50, y: 16,
-                code: 'TITIK ANATOMI #02 // POSISI KEPALA',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Posisi Kepala Tegak & Pandangan Lurus',
-                desc: 'Ilustrasi posisi kepala dan garis pandang. Bentuk serta jarak pada gambar tidak mengacu pada pengukuran Clarisa atau Aurellia.',
-                metrics: ['FOKUS: posisi kepala', 'ACUAN: skema visual', 'UKURAN: bukan data atlet']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Kepala dan arah pandang',
+                desc: 'Titik 02 menandai kepala pada tampak depan. Perhatikan hubungan kepala dengan bahu di bawahnya. Untuk melihat hubungan wajah dengan teleskop, pilih tampak samping; gambar depan tidak memperlihatkan arah pandang melalui lensa.'
             },
             {
                 id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
-                code: 'TITIK ANATOMI #03 // BAHU KANAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Bahu Kanan & Sandaran Buttplate',
-                desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
-                metrics: ['BAGIAN: bahu kanan', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Bahu kanan',
+                desc: 'Titik 03 menandai bahu kanan karakter, yang berada di sisi kiri gambar saat dilihat dari depan. Perhatikan posisinya terhadap pangkal lengan dan bagian atas badan.'
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
-                code: 'TITIK ANATOMI #04 // BAHU KIRI & LENGAN KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Bahu Kiri & Segitiga Penopang Lengan Kiri',
-                desc: 'Ilustrasi posisi lengan penopang sebagai komponen postur berdiri. Tidak dapat digunakan untuk menyimpulkan persentase kerja otot.',
-                metrics: ['LENGAN: ilustrasi', 'POSISI: contoh', 'AKTIVITAS OTOT: tidak diukur']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Bahu dan lengan kiri',
+                desc: 'Titik 04 menandai pangkal lengan kiri, di sisi kanan gambar tampak depan. Pada sudut ini lengan berada di samping badan. Ikuti bentuknya dari bahu menuju siku dan pergelangan tangan.'
             },
             {
                 id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
-                code: 'TITIK ANATOMI #05 // TANGAN & PERGELANGAN KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Tangan dan Pergelangan Tangan Kiri',
-                desc: 'Variasi posisi pergelangan ditampilkan secara konseptual. Posisi latihan nyata harus disesuaikan secara langsung oleh pelatih dan atlet.',
-                metrics: ['FUNGSI: dukungan posisi', 'VARIASI: anatomi atlet', 'ACUAN: bukan ukuran tunggal']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Tangan dan pergelangan kiri',
+                desc: 'Titik 05 menandai tangan kiri pada tampak samping. Tangan ini berada di bawah bagian depan senapan. Perhatikan pertemuan pergelangan dengan lengan bawah; detail jari tidak seluruhnya terlihat dari sudut ini.'
             },
             {
                 id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
-                code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Tangan Kanan, Grip & Jari Pelatuk',
-                desc: 'Diagram menunjukkan letak grip, telunjuk, dan pelatuk dalam satu contoh posisi. Sudut dan tekanan tangan tidak diukur dan bukan rekomendasi untuk semua atlet.',
-                metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: skema arah']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Tangan kanan dan grip',
+                desc: 'Titik 06 menandai area tangan kanan di dekat grip pada tampak samping. Bandingkan letaknya dengan tangan kiri yang berada lebih ke depan. Detail jari pelatuk tidak diperlihatkan secara terpisah pada gambar ini.'
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
-                code: 'TITIK ANATOMI #07 // SIKU KIRI & PINGGUL',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kunci Siku Kiri pada Tulang Pinggul',
-                desc: 'Diagram menampilkan letak siku terhadap pinggul. Klaim tentang pengurangan goyangan dalam persen tidak didukung pengukuran pada simulator.',
-                metrics: ['KONTAK: ilustrasi', 'EFEK: belum terukur', 'ANGKA REDUKSI: tidak tersedia']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Siku kiri',
+                desc: 'Titik 07 menandai siku kiri di sisi kanan gambar tampak depan. Lengan pada ilustrasi ini berada di samping badan. Perhatikan pertemuan lengan atas dan lengan bawah di dekat pinggang.'
             },
             {
                 id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
-                code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Penyelarasan Badan, Bahu & Pinggul',
-                desc: 'Ilustrasi menampilkan hubungan badan, bahu, dan pinggul dari satu sudut. Gambar tidak menunjukkan sudut ideal atau pedoman teknik yang terverifikasi.',
-                metrics: ['PINGGUL: contoh visual', 'TORSO: contoh orientasi', 'PUNTIRAN: tidak diukur']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Badan dan pinggul',
+                desc: 'Titik 08 menandai area pinggul pada tampak samping kanan. Bandingkan posisinya dengan bahu di atas dan kaki di bawah. Hubungan ketiga bagian ini lebih mudah terlihat dari samping daripada dari depan.'
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                code: 'TITIK ANATOMI #09 // KAKI KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kaki Kiri — Skema Penopang Berdiri',
-                desc: 'Kaki kiri ditandai sebagai salah satu bagian penopang postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
-                metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Kaki kiri',
+                desc: 'Titik 09 menandai kaki kiri karakter, di sisi kanan gambar tampak depan. Ikuti bentuknya dari pinggul, lutut, hingga sepatu untuk membedakan kaki kiri dan kanan.'
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kaki Kanan — Skema Penopang Berdiri',
-                desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
-                metrics: ['DISTRIBUSI: tidak diukur', 'SUDUT: hanya ilustrasi', 'ATURAN: posisi berdiri']
+                ref: 'ILUSTRASI BAGIAN TUBUH',
+                title: 'Kaki kanan',
+                desc: 'Titik 10 menandai kaki kanan karakter, di sisi kiri gambar tampak depan. Bandingkan letaknya dengan kaki kiri dan jarak antara kedua sepatu pada ilustrasi.'
             }
         ];
 
@@ -155,74 +135,12 @@ let sfxActive = false;
         let activeBiomechId = 'spine';
         let showXraySkeleton = true;
 
-function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
-    // Generic sports-kit figure, deliberately NOT a replica or biomechanical measurement.
-    const side = pose === "sideLeft" || pose === "sideRight";
-    const blue = pose === "front" || pose === "back";
-    const u = -arch * 1.1;
-    const p = arch * .65;
-    const armShift = Math.round((100 - hipLock) * .4); // visual-only, not biomechanics
-    const kit = blue ? "url(#biomechBlueKit)" : "url(#biomechRedKit)";
-    const skin = "url(#biomechSkin)";
-    const torsoX = side ? 177 : 170;
-    const direction = pose === "sideRight" ? -1 : 1;
-    const legs = side
-      ? `<path d="M184 274L178 471H219L234 287Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M224 280L260 471H297L264 276Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`
-      : `<path d="M177 277L157 471H198L223 288Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M228 286L259 471H300L270 275Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`;
-    const shoes=side
-      ? `<path d="M169 463H220Q233 470 239 482H167Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M254 463H298Q314 469 324 482H253Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`
-      : `<path d="M151 463H199Q210 469 219 482H149Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M256 463H303Q320 469 324 482H254Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`;
-    const upper = side
-      ? `<path d="M181 118Q203 109 235 115Q252 132 247 170L257 274Q219 287 185 277Q187 210 179 160Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
-         <path d="M189 136Q200 127 230 132" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="2.7"/>
-         <path d="M191 159L196 256" fill="none" stroke="#FFFFFF" stroke-opacity=".19" stroke-width="4"/>
-         <path d="M238 147L247 256" fill="none" stroke="#151C24" stroke-opacity=".28" stroke-width="3"/>`
-      : `<path d="M169 121Q191 107 223 111Q259 108 270 124L263 184L269 277Q223 290 177 277L171 186Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
-         <path d="M180 134Q212 122 258 134" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3"/>
-         <path d="M187 165L190 261M252 158L257 261" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3"/>`;
-    const arms = side
-      ? `<path d="M246 141Q267 175 242 ${219 + armShift}Q265 ${212 + armShift} 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-         <path d="M250 142Q267 169 253 188" fill="none" stroke="${kit}" stroke-width="24" stroke-linecap="round"/>`
-      : `<path d="M170 143Q147 183 163 ${224 + armShift}M269 143Q286 172 269 ${229 + armShift}" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
-         <path d="M168 143L157 167M269 143L277 166" stroke="${kit}" stroke-width="25" stroke-linecap="round"/>`;
-    const equipment = side
-      ? `<g opacity=".82"><path d="M${direction===1?233:50} 119H${direction===1?392:200}" stroke="#4C6167" stroke-width="7" stroke-linecap="round"/><path d="M${direction===1?254:70} 105H${direction===1?363:173}" stroke="#202D34" stroke-width="9" stroke-linecap="round"/></g>`
-      : `<g opacity=".82"><path d="M49 123H198" stroke="#586A6C" stroke-width="8" stroke-linecap="round"/><rect x="109" y="109" width="94" height="9" rx="3" fill="#29383B"/></g>`;
-    const faceX=side?210:216;
-    return `<g class="biomech-editorial-figure" aria-hidden="true">
-      <ellipse cx="230" cy="489" rx="120" ry="8" fill="#233136" opacity=".11"/>
-      ${legs}${shoes}${equipment}
-      <g transform="translate(${u*.45},${p*.12})">${upper}${arms}</g>
-      <g transform="translate(${u},0)">
-        <path d="M${faceX-12} 100L${faceX-11} 115H${faceX+10}L${faceX+10} 102" fill="${skin}" stroke="#796357" stroke-width="1.2"/>
-        <ellipse cx="${faceX}" cy="78" rx="24" ry="29" fill="${skin}" stroke="#7A625A" stroke-width="1.7"/>
-        <path d="M${faceX-22} 76Q${faceX-28} 42 ${faceX} 44Q${faceX+28} 46 ${faceX+23} 69Q${faceX+7} 60 ${faceX-1} 55Q${faceX-15} 68 ${faceX-22} 76" fill="url(#biomechHair)"/>
-        <path d="M${faceX+19} 67Q${faceX+35} 85 ${faceX+25} 122" fill="none" stroke="#34353B" stroke-width="10" stroke-linecap="round"/>
-      </g>
-      <path d="M${faceX+u} 115Q${faceX+11} 188 ${faceX+p} 277" fill="none" stroke="#478D94" stroke-width="2.2" stroke-dasharray="5 7" opacity=".85"/>
-    </g>`;
-}
-
         // Anchor locations refer to illustrative SVG anatomy, not measured positions.
         // Keeping coordinates in SVG units prevents responsive letterbox offsets.
         function biomechAnchor(point, arch, hipLock) {
             const spriteAnchor = window.tsPosturePoseArt?.anchor(point, currentPose);
             if (spriteAnchor) return spriteAnchor;
-            const upper = -arch * 1.1;
-            const elbow = Math.round((100 - hipLock) * .4);
-            const anchors = {
-                spine: [214 + upper * .35, 214],
-                head: [216 + upper, 80],
-                rightShoulder: [173 + upper * .45, 145],
-                leftArm: [273 + upper * .45, 157],
-                leftWrist: [251 + upper * .45, 190],
-                rightHand: [234 + upper * .45, 194],
-                elbowHip: [267 + upper * .45, 225 + elbow],
-                pelvis: [224 + arch * .65, 278],
-                leftLeg: [181, 416],
-                rightLeg: [283, 416]
-            };
-            return anchors[point.id] || [point.x * 4.6, point.y * 5.4];
+            return [point.x * 4.6, point.y * 5.4];
         }
 
         // Convert SVG units to container pixels, preserving correct alignment
@@ -255,38 +173,9 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const leaderLayer = document.getElementById('svgActiveLeaderLine');
             const pinsContainer = document.getElementById('biomechPinsOverlay');
 
-            const arch = parseFloat(document.getElementById('archSlider').value);
-            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
-
-            const upperShift = -arch * 1.1;
-            const pelvisShift = arch * 0.65;
-            const elbowShift = Math.round((100 - hipLock) * .4);
-
-            let figSvg = '';
-            let arrowsSvg = '';
-
-            figSvg = window.tsPosturePoseArt?.figure(currentPose) || buildEditorialPostureIllustration(currentPose, arch, hipLock);
-            arrowsSvg = '';
-
-            // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
-            if (showXraySkeleton && !window.tsPosturePoseArt?.isActive()) {
-                figSvg += `
-                    <g stroke="#3F9DA0" stroke-width="2.1" fill="none" opacity="0.9">
-                        <!-- Spinal Column Curve -->
-                        <path d="M${214 + upperShift} 98 Q${236 + pelvisShift} 190 ${214 + pelvisShift} 275" stroke-dasharray="5 3"/>
-                        <!-- Pelvic Iliac Crest Bar -->
-                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(63, 157, 160, 0.08)"/>
-                        <!-- Elbow-to-Hip Bone Lock Node -->
-                        <circle cx="${238 + pelvisShift}" cy="${230 + elbowShift}" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
-                        <!-- Left & Right Femur Load Vectors -->
-                        <line x1="${190 + pelvisShift}" y1="278" x2="177" y2="465"/>
-                        <line x1="${238 + pelvisShift}" y1="278" x2="284" y2="465" stroke-opacity="0.5" stroke-dasharray="4 4"/>
-                    </g>
-                `;
-            }
-
-            athleteLayer.innerHTML = figSvg;
-            arrowsLayer.innerHTML = arrowsSvg;
+            const arch = 0, hipLock = 0;
+            athleteLayer.innerHTML = window.tsPosturePoseArt?.figure(currentPose, activeBiomechId) || '';
+            arrowsLayer.replaceChildren();
 
             // Leader and interactive numbers must refer to the same anchor.
             const activePt = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId);
@@ -345,7 +234,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             showXraySkeleton = !showXraySkeleton;
             playMechTick(960);
             const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? 'Garis postur: tampil' : 'Garis postur: sembunyi';
+            btn.textContent = showXraySkeleton ? 'Panduan titik: tampil' : 'Panduan titik: sembunyi';
             btn.setAttribute('aria-pressed',String(showXraySkeleton));
             btn.className = showXraySkeleton
                 ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
@@ -380,19 +269,10 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const picker = document.getElementById('labCalloutPicker');
             if (picker) picker.value = item.id;
 
-            document.getElementById('dossierCode').textContent = item.code;
+            document.getElementById('dossierCode').textContent = `TITIK ${item.num} // ${item.title.toUpperCase()}`;
             document.getElementById('dossierRef').textContent = item.ref;
             document.getElementById('dossierTitle').textContent = item.title;
             document.getElementById('dossierBody').textContent = item.desc;
-            document.getElementById('dossierMetrics').innerHTML = item.metrics.map(m => {
-                const [k, v] = m.split(':');
-                return `
-                    <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                        <span class="text-[var(--ink-500)] block text-[10px]">${k}</span>
-                        <strong class="text-[var(--ink-900)]">${v || ''}</strong>
-                    </div>
-                `;
-            }).join('');
             renderBiomechViewport();
             renderBiomechIndexTable();
         }
@@ -412,51 +292,11 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                         }">${item.num}</span>
                         <div class="min-w-0">
                             <div class="font-bold text-xs truncate">${item.title}</div>
-                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${item.code.split('//')[1]}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Tampak belakang',front:'Tampak depan',sideLeft:'Tampak samping kiri',sideRight:'Tampak samping kanan'})[item.pose]}</div>
                         </div>
                     </button>
                 `;
             }).join('');
-        }
-
-        function updatePosturePhysics() {
-            const arch = parseFloat(document.getElementById('archSlider').value);
-            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
-
-            document.getElementById('archDegReadout').textContent = `${arch > 0 ? '+' : ''}${arch.toFixed(1)}° (MODEL VISUAL)`;
-            document.getElementById('hipLockReadout').textContent = `${hipLock} / 100 (MODEL)`;
-
-            const stability = Math.max(15, Math.min(99, Math.round(100 - Math.abs(arch - 12) * 3.4 - (100 - hipLock) * 0.55)));
-            const changeIndex = Math.max(0, Math.min(100, 100 - stability)); // unitless display model, not mm
-            const leftLoad = Math.min(78, Math.max(48, Math.round(65 + (12 - arch) * 0.7)));
-            const rightLoad = 100 - leftLoad;
-
-            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad} unit contoh`;
-            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad} unit contoh`;
-            document.getElementById('muzzleSwayReadout').textContent = `${changeIndex} / 100`;
-
-            const statusEl = document.getElementById('skeletalStatusLabel');
-            if (stability >= 82) {
-                statusEl.textContent = 'PARAMETER MODEL DI POSISI AWAL';
-                statusEl.className = 'text-[var(--ok-green)]';
-            } else if (stability >= 55) {
-                statusEl.textContent = 'PARAMETER MODEL BERUBAH';
-                statusEl.className = 'text-[#B37B24]';
-            } else {
-                statusEl.textContent = 'PARAMETER MODEL JAUH DARI TITIK AWAL';
-                statusEl.className = 'text-[var(--aurellia-red)]';
-            }
-
-            const cogGroup = document.getElementById('svgCogPlumbGroup');
-            cogGroup.setAttribute('transform', `translate(${230 + (12 - arch) * 2.2}, 0)`);
-            renderBiomechViewport();
-        }
-
-        function resetPostureParameters() {
-            document.getElementById('archSlider').value = 12;
-            document.getElementById('hipLockSlider').value = 100;
-            playMechTick(1000);
-            updatePosturePhysics();
         }
 
         function selectFingerVector(vec) {
@@ -1215,7 +1055,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             setupOcularVisibility();
             renderBiomechIndexTable();
             selectBiomechCallout('spine');
-            updatePosturePhysics();
             drawOscilloscope(0.65);
             updateOpticalSim();
             buildSilhouetteRack();

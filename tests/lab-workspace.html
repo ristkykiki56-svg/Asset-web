@@ -35,8 +35,10 @@ for(const width of [320,375,390]){
  const ids=[...d.querySelectorAll('[id]')].map(e=>e.id);assert(new Set(ids).size===ids.length,width+': unique DOM ids');
  picker.value='sec-biomech';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
  d.querySelector('#sec-biomech .lw-options').open=true;
- const character=d.querySelector('#postureArtMode');character.checked=false;character.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
- for(const id of ['archSlider','hipLockSlider'])assert(d.getElementById(id).getBoundingClientRect().height>=44,width+': reachable model '+id);
+ assert(!d.querySelector('#postureArtMode,#archSlider,#hipLockSlider'),width+': obsolete model controls removed');
+ const guide=d.querySelector('#xrayToggleBtn');guide.click();await settle(f);
+ assert(!d.querySelector('.posture-point-guide'),width+': guide hidden');
+ guide.click();await settle(f);assert(d.querySelector('.posture-point-guide'),width+': guide shown');
  for(const pin of d.querySelectorAll('#biomechPinsOverlay .callout-node:not([hidden])')){const r=pin.getBoundingClientRect();assert(r.left>=0&&r.right<=width+1,width+': posture pin within screen');}
  picker.value='sec-hardware';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
  d.querySelector('[data-lw-hardware="scope"]').click();await settle(f);
@@ -47,7 +49,7 @@ for(const width of [320,375,390]){
  f.style.width='1280px';await settle(f);await settle(f);
  assert(!d.documentElement.classList.contains('lw-active'),width+': desktop restored');
  assert(d.querySelector('#optEyeDist').closest('#sec-optics'),width+': original optical input restored');
- assert(d.querySelector('#archSlider').getBoundingClientRect().height>0,width+': desktop model remains reachable');
+ assert(!d.querySelector('#postureArtMode,#archSlider'),width+': desktop has character artwork only');
  f.style.width=width+'px';await settle(f);await settle(f);
  assert(d.querySelectorAll('#ocularLensCanvas').length===1,width+': round trip keeps one canvas');
  assert(d.querySelector('#labHardwarePicker').value==='ocular',width+': hardware selection survives breakpoint');

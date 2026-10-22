@@ -26,9 +26,9 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('nine sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
+test('seven remaining sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
- assert.equal(sliders.length,9);
+ assert.equal(sliders.length,7);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
  assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,13);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
@@ -71,7 +71,7 @@ test('mobile Lab offers five focused lessons without removing desktop content',(
  assert.match(html,/id="labNextModule"/);
  assert.match(html,/id="labPrevModule"/);
  assert.equal((html.match(/class="lab-heading-short"/g)||[]).length,5);
- assert.equal((html.match(/data-lab-mobile-collapse/g)||[]).length,8);
+ assert.equal((html.match(/data-lab-mobile-collapse/g)||[]).length,7);
  assert.equal((html.match(/data-rack-animal=/g)||[]).length,4);
  assert.match(html,/aria-label="Diagram senapan, geser horizontal/);
  assert.match(js,/function setupLabMobileExperience/);
@@ -173,12 +173,9 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
 
 
 test('four remaining Lab visuals use layered illustrations and preserve DOM wiring',()=>{
- assert.match(js,/function buildEditorialPostureIllustration/);
- assert.match(html,/id="biomechBlueKit"/);
- assert.match(html,/id="biomechRedKit"/);
+ assert.doesNotMatch(js,/function buildEditorialPostureIllustration/);
  assert.match(html,/id="svgAthleteLayer"/);
- assert.match(html,/id="svgCogPlumbGroup"/);
- assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose, activeBiomechId\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
  assert.match(html,/id="triggerMechanismDiagram"/);
  for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
@@ -203,22 +200,20 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
 });
 
 
-test('callout alignment and elbow controls are connected to the rendered SVG',()=>{
+test('callout alignment remains connected to the character illustration',()=>{
   assert.match(js,/function positionBiomechPins\(\)/);
   assert.match(js,/getScreenCTM/);
   assert.match(js,/createSVGPoint/);
   assert.match(js,/button\.dataset\.svgX/);
   assert.match(js,/new ResizeObserver/);
-  assert.match(js,/buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
-  assert.match(js,/const armShift = Math\.round\(\(100 - hipLock\)/);
-  assert.match(js,/cy="\$\{230 \+ elbowShift\}"/);
+  assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
 });
 
 test('diagram labels do not misrepresent conceptual plots as measured data',()=>{
   assert.doesNotMatch(js,/WAKTU \(ms\)/);
   assert.match(js,/URUTAN MODEL/);
   assert.match(html,/BUKAN GAYA\/WAKTU UKUR/);
-  assert.match(html,/POSISI SIKU RELATIF KE PINGGUL \(MODEL\)/);
+  assert.doesNotMatch(html,/id="hipLockSlider"/);
 });
 
 
@@ -236,7 +231,7 @@ test('interactive diagram markers expose a single keyboard path and truthful pre
 
 test('anatomy selection keeps ten stable click controls and viewpoint-aware anchor coordinates',()=>{
  assert.match(js,/function biomechAnchor\(point, arch, hipLock\)/);
- assert.match(js,/const anchors = \{/);
+ assert.match(readFileSync(new URL('../posture-art.js',import.meta.url),'utf8'),/const anchors = \{/);
  assert.match(js,/btn\.dataset\.biomechId = pt\.id/);
  assert.match(js,/pinsContainer\.querySelector\('\[data-biomech-id=/);
  assert.match(js,/btn\.addEventListener\('click', \(\) => selectBiomechCallout\(pt\.id\)\)/);
@@ -248,22 +243,14 @@ test('anatomy selection keeps ten stable click controls and viewpoint-aware anch
 });
 
 
-test('review-only blue/red static posture adapter keeps existing SVG fallback',()=>{
+test('blue/red character illustrations have an explicit unavailable state and no SVG character fallback',()=>{
  const adapter=readFileSync(new URL('../posture-art.js',import.meta.url),'utf8');
- assert.match(html,/id="postureArtControls"/);
- assert.match(html,/id="postureArtMode"/);
  assert.match(html,/data-pose-color="blue"/);
  assert.match(html,/data-pose-color="red"/);
- assert.match(html,/defer src="\/posture-art.js"/);
- assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration/);
- assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
+ assert.doesNotMatch(html,/id="postureArtMode"/);
  assert.match(adapter,/Promise\.all\(variants\.flatMap/);
- assert.match(adapter,/state\.ready=false;state\.active=false/);
- assert.match(adapter,/skema SVG tetap digunakan/);
- assert.match(adapter,/aria-pressed/);
- assert.match(css,/ts-pose-art-controls/);
- assert.match(css,/ts-pose-art-active \.ts-scheme-only/);
- assert.equal((html.match(/id="postureArtMode"/g)||[]).length,1);
+ assert.match(adapter,/Gambar karakter tidak dapat dimuat/);
+ assert.doesNotMatch(adapter,/mode\.addEventListener/);
 });
 
 
