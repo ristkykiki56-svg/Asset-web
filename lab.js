@@ -74,70 +74,70 @@ let sfxActive = false;
                 ref: 'MATERI POSTER V15',
                 title: 'Punggung dan kenyamanan postur',
                 desc: 'Poster menjelaskan hubungan lengkungan tubuh dengan keseimbangan dan kenyamanan posisi berdiri. Bagian atas badan sedikit condong ke belakang dan panggul maju; poster juga mengingatkan agar lengkungan tidak dibuat ekstrem.',
-                viewNote: 'Titik 01 menunjukkan punggung karakter dari belakang. Gambar ini dipakai untuk mengenali bagiannya; lengkungan saat membidik lebih jelas pada foto di poster.'
+                viewNote: 'Foto belakang memperlihatkan hubungan punggung, panggul, dan posisi berdiri saat membidik. Penanda menunjukkan area punggung; besar lengkungannya tidak diukur dari foto.'
             },
             {
-                id: 'head', num: '02', pose: 'front', x: 50, y: 16,
+                id: 'head', num: '02', pose: 'sideLeft', x: 50, y: 16,
                 ref: 'MATERI POSTER V15',
                 title: 'Kepala, pipi, dan arah pandang',
                 desc: 'Poster menekankan kepala yang rileks, pipi bertumpu pada sandaran pipi, dan pandangan langsung melalui teleskop. Jarak mata perlu memberi pandangan yang penuh dan jelas tanpa memaksa leher.',
-                viewNote: 'Titik 02 berada di kepala pada tampak depan. Ilustrasi depan tidak sedang membidik; pilih tampak samping untuk melihat kepala di dekat teleskop.'
+                viewNote: 'Detail kepala memperlihatkan mata, teleskop, dan sandaran pipi pada foto poster. Penanda berada di sekitar mata untuk membantu melihat hubungan ketiganya.'
             },
             {
-                id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
+                id: 'rightShoulder', num: '03', pose: 'back', x: 39, y: 28,
                 ref: 'MATERI POSTER V15',
                 title: 'Bahu kanan dan bantalan bahu',
                 desc: 'Dalam poster, bahu kanan dirilekskan dan bantalan bahu pada ujung popor bertumpu dengan mantap pada bahu. Hubungan kedua bagian ini membantu mengenali posisi senapan terhadap badan.',
-                viewNote: 'Titik 03 menandai bahu kanan karakter, di sisi kiri gambar tampak depan. Kontak bantalan bahu dengan tubuh tidak diperlihatkan pada sudut ini.'
+                viewNote: 'Foto belakang memperlihatkan bahu dan ujung popor di dekatnya. Penanda mengikuti area bahu kanan; sebagian pertemuan bantalan dengan bahu dapat tertutup pakaian atau senapan.'
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
                 ref: 'MATERI POSTER V15',
                 title: 'Bahu kiri dan lengan penopang',
                 desc: 'Poster menjelaskan bahu kiri yang rileks dan lengan atas kiri yang dekat dengan badan sebagai bagian penopang senapan. Tumpuan lengan dan tangan dibahas bersama, bukan sebagai gerakan bahu yang terpisah.',
-                viewNote: 'Titik 04 menandai pangkal lengan kiri di sisi kanan gambar tampak depan. Lengan karakter sedang di samping badan, bukan memperagakan tumpuan saat membidik.'
+                viewNote: 'Foto depan atau serong memperlihatkan lengan kiri yang tertekuk sebagai penopang. Penanda berada pada area lengan atas; bandingkan dengan titik siku kiri nomor 07.'
             },
             {
-                id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
+                id: 'leftWrist', num: '05', pose: 'sideRight', x: 67, y: 26,
                 ref: 'MATERI POSTER V15',
                 title: 'Tangan dan pergelangan kiri',
                 desc: 'Poster memperlihatkan tangan kiri sebagai penopang bagian depan senapan. Bentuk tumpuannya dapat berupa telapak terbuka atau tangan mengepal; materi poster menekankan posisi pergelangan yang lurus.',
-                viewNote: 'Titik 05 menunjukkan area tangan kiri di bawah bagian depan senapan pada tampak samping. Gambar hanya memperlihatkan salah satu bentuk tumpuan.'
+                viewNote: 'Detail tangan memperbesar bagian yang menopang senapan. Penanda menunjukkan pergelangan dan tangan kiri, di bawah bagian depan senapan.'
             },
             {
-                id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
+                id: 'rightHand', num: '06', pose: 'sideRight', x: 43, y: 31,
                 ref: 'MATERI POSTER V15',
                 title: 'Tangan kanan dan jari pelatuk',
                 desc: 'Poster membahas genggaman kanan yang mantap, nyaman, dan rileks pada grip. Jari telunjuk menyentuh bilah pelatuk hanya saat siap menembak; ilustrasi Pelatuk memperlihatkan bagian yang disentuh jari.',
-                viewNote: 'Titik 06 menandai tangan di dekat grip pada tampak samping. Detail sentuhan telunjuk pada bilah pelatuk tidak terlihat jelas pada karakter ini.'
+                viewNote: 'Detail tangan memperlihatkan grip dan area jari kanan. Penanda mengarah ke tangan yang menggenggam grip; foto ini tidak menampilkan gerakan jari.'
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
                 ref: 'MATERI POSTER V15',
                 title: 'Siku kiri dan pinggul',
                 desc: 'Poster menjelaskan hubungan siku kiri dengan bagian atas pinggul kiri sebagai tumpuan untuk merilekskan lengan penopang. Posisi panggul dibahas bersama letak siku agar kedua bagian dapat saling mendukung.',
-                viewNote: 'Titik 07 menunjukkan siku kiri pada tampak depan. Lengan karakter berada di samping badan; gambar ini tidak memperagakan siku yang bertumpu pada pinggul seperti foto poster.'
+                viewNote: 'Foto depan atau serong memperlihatkan siku kiri dan sisi badan secara bersamaan. Penanda menunjukkan area siku; bentuk pakaian dapat menutupi batas kontak siku dengan pinggul.'
             },
             {
-                id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
+                id: 'pelvis', num: '08', pose: 'back', x: 50, y: 51,
                 ref: 'MATERI POSTER V15',
                 title: 'Badan, bahu, dan panggul',
                 desc: 'Poster menghubungkan badan yang sedikit condong ke belakang, bahu yang mengarah ke sasaran, dan panggul yang maju. Ketiganya dibaca sebagai satu kesatuan posisi berdiri, bukan sudut ideal yang sama untuk setiap orang.',
-                viewNote: 'Titik 08 menandai panggul pada tampak samping cermin. Tampilan ini membalik gambar samping yang sama, bukan foto baru dari sisi tubuh yang berbeda.'
+                viewNote: 'Foto belakang memperlihatkan hubungan panggul dengan punggung dan kedua kaki saat berdiri. Penanda menunjukkan area panggul, bukan hasil ukur posisi atau pembagian berat.'
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
                 ref: 'MATERI POSTER V15',
                 title: 'Kaki kiri dan tumpuan berdiri',
                 desc: 'Poster menggambarkan kaki kiri sebagai tumpuan utama dengan posisi mendekati tegak dan tidak tegang. Bagian kaki dibahas dari panggul, lutut, hingga telapak; kenyamanan berdiri tetap menjadi perhatian.',
-                viewNote: 'Titik 09 berada pada kaki kiri karakter, di sisi kanan gambar tampak depan. Gambar ini tidak mengukur pembagian berat antara kedua kaki.'
+                viewNote: 'Foto depan atau serong memperlihatkan kaki kiri dari pinggul hingga sepatu. Penanda mengikuti bagian kaki kiri pada foto atlet yang dipilih.'
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
                 ref: 'MATERI POSTER V15',
                 title: 'Lutut dan kaki kanan',
                 desc: 'Poster menggambarkan kaki kanan sedikit lebih ke luar untuk melengkapi tumpuan kaki kiri dan menjaga posisi yang nyaman. Arah kaki dan keadaan lutut dibahas bersama dalam posisi berdiri.',
-                viewNote: 'Titik 10 berada pada kaki kanan karakter, di sisi kiri gambar tampak depan. Sudut kaki dan beban pada gambar tidak menunjukkan hasil pengukuran atlet.'
+                viewNote: 'Foto depan atau serong memperlihatkan arah lutut dan kaki kanan dalam posisi berdiri. Penanda mengikuti kaki kanan; sudut dan beban tubuh tidak diukur dari gambar.'
             }
         ];
 
@@ -161,19 +161,36 @@ let sfxActive = false;
             const matrix = svg?.getScreenCTM?.();
             if (!svg || !overlay || !matrix) return;
             const bounds = overlay.getBoundingClientRect();
+            const workspace = document.documentElement.classList.contains('lw-active');
+            const leftIds = new Set(['spine', 'rightShoulder', 'rightHand', 'rightLeg']);
+            const positions = [];
             overlay.querySelectorAll('.callout-node').forEach(button => {
+                if (button.hidden) return;
                 const point = svg.createSVGPoint();
                 point.x = Number(button.dataset.svgX);
                 point.y = Number(button.dataset.svgY);
                 const pixel = point.matrixTransform(matrix);
-                const anchorX = pixel.x - bounds.left;
-                const workspace = document.documentElement.classList.contains('lw-active');
-                const leftSide = anchorX < bounds.width / 2;
-                const labelX = workspace ? (leftSide ? 28 : bounds.width - 28) : anchorX;
-                button.dataset.lwSide = leftSide ? 'left' : 'right';
-                button.style.setProperty('--lw-leader', `${workspace ? Math.abs(anchorX - labelX) : 0}px`);
-                button.style.left = `${labelX}px`;
-                button.style.top = `${pixel.y - bounds.top}px`;
+                positions.push({button, x:pixel.x-bounds.left, y:pixel.y-bounds.top});
+            });
+            for (const left of [true, false]) {
+                const group = positions.filter(p => leftIds.has(p.button.dataset.biomechId) === left).sort((a,b)=>a.y-b.y);
+                const gap = group.length>1 ? Math.min(44,Math.max(0,bounds.height-48)/(group.length-1)) : 44;
+                let previous = 24-gap;
+                group.forEach((p,index) => {
+                    const ceiling = bounds.height-24-(group.length-1-index)*gap;
+                    p.labelY = Math.max(previous+gap,Math.min(ceiling,p.y));
+                    previous=p.labelY;
+                });
+            }
+            positions.forEach(({button,x,y,labelY}) => {
+                const left = leftIds.has(button.dataset.biomechId);
+                const labelX = workspace ? (left?28:bounds.width-28) : x;
+                const top = workspace ? labelY : y;
+                button.dataset.lwSide=left?'left':'right';
+                button.style.setProperty('--lw-leader',workspace?Math.hypot(x-labelX,y-top)+'px':'0px');
+                button.style.setProperty('--lw-leader-angle',Math.atan2(y-top,x-labelX)*180/Math.PI+'deg');
+                button.style.left=labelX+'px';
+                button.style.top=top+'px';
             });
         }
 
@@ -240,6 +257,17 @@ let sfxActive = false;
             if (next) selectBiomechCallout(next.id);
         }
 
+        function openPosturePhotoDetail() {
+            if (!window.tsPosturePoseArt?.isActive()) return;
+            const dialog = document.getElementById('posturePhotoDialog');
+            const item = POSTER_BIOMECH_DATA.find(point => point.id === activeBiomechId);
+            document.getElementById('posturePhotoDetailTitle').textContent =
+                window.tsPosturePoseArt.person() + ' · ' + item.title;
+            document.getElementById('posturePhotoDetailView').innerHTML =
+                window.tsPosturePoseArt.detail(currentPose, activeBiomechId);
+            if (!dialog.open) dialog.showModal();
+        }
+
         function toggleXraySkeleton() {
             showXraySkeleton = !showXraySkeleton;
             playMechTick(960);
@@ -270,10 +298,10 @@ let sfxActive = false;
                     : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
             });
             const viewLabels = {
-                back: 'FIG 1.1 — TAMPAK PUNGGUNG (ILUSTRASI)',
-                front: 'FIG 1.2 — TAMPAK DEPAN (ILUSTRASI)',
-                sideLeft: 'FIG 1.3 — TAMPAK SAMPING (ILUSTRASI)',
-                sideRight: 'FIG 1.4 — TAMPAK SAMPING (CERMIN)'
+                back: 'FOTO POSTER V15 — BELAKANG',
+                front: 'FOTO POSTER V15 — DEPAN / SERONG',
+                sideLeft: 'FOTO POSTER V15 — DETAIL KEPALA',
+                sideRight: 'FOTO POSTER V15 — DETAIL TANGAN'
             };
             document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
             const picker = document.getElementById('labCalloutPicker');
@@ -303,7 +331,7 @@ let sfxActive = false;
                         }">${item.num}</span>
                         <div class="min-w-0">
                             <div class="font-bold text-xs truncate">${item.title}</div>
-                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Tampak belakang',front:'Tampak depan',sideLeft:'Tampak samping',sideRight:'Samping (cermin)'})[item.pose]}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Foto belakang',front:'Foto depan / serong',sideLeft:'Detail kepala',sideRight:'Detail tangan'})[item.pose]}</div>
                         </div>
                     </button>
                 `;

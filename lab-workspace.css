@@ -1,4 +1,16 @@
 /* Mobile experiments reserve room for both the visual and its controls. */
+#sec-biomech.ts-pose-art-active .lab-biomech-stage{background:#fff}
+#posturePhotoLoading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;padding:24px;background:white;color:#111315;font:13px/1.6 'Plus Jakarta Sans',sans-serif;text-align:center;z-index:40}
+#posturePhotoLoading[hidden]{display:none}
+#posturePhotoDialog{width:min(720px,calc(100% - 24px));max-height:90dvh;margin:auto;padding:16px;border:1px solid var(--rule-heavy);border-radius:6px;background:var(--bg-surface);color:var(--ink-900);overflow:auto}
+#posturePhotoDialog::backdrop{background:rgba(0,0,0,.6)}
+.posture-photo-dialog-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.posture-photo-dialog-header h2{font-size:16px;font-weight:750;margin:0}
+.posture-photo-dialog-header button,#posturePhotoZoom{min-height:44px;min-width:44px;padding:8px 12px;border:1px solid var(--rule-heavy);background:var(--bg-surface);color:var(--ink-900);font-weight:700}
+#posturePhotoDialog .posture-photo-detail-view{height:min(65dvh,560px);margin-top:12px;background:white}
+#posturePhotoDialog p{font-size:12px;margin:10px 0 0}
+#posturePhotoZoom:disabled{opacity:.5;cursor:wait}
+
 @media(max-width:767px){
  html.lw-active{scroll-padding-top:0;overflow:hidden}
  .lw-active body{height:100dvh;overflow:hidden}
@@ -58,6 +70,7 @@
  .lw-active .lab-mobile-stepper button{min-height:44px;font:700 11px/1.3 'Plus Jakarta Sans',sans-serif;padding:7px}
  .lw-active .lab-mobile-stepper #labModuleProgress{font-size:10px}
  .lw-stage .lab-biomech-stage{width:100%;height:100%!important;min-height:0!important;border:0;background:var(--bg-surface)}
+ .lw-panel>#posturePhotoZoom{display:block;width:100%;margin-top:6px;font-size:12px}
  .lw-stage #biomechDraftSvg{width:100%;height:100%;max-height:100%}
  .lw-stage #svgActiveLeaderLine{display:none}
  .lw-active #sec-biomech #biomechPinsOverlay .callout-node{width:44px!important;height:44px!important;min-width:44px;min-height:44px;border:0!important;background:transparent!important;color:var(--ink-900)!important;box-shadow:none!important;isolation:isolate;transform:translate(-50%,-50%)!important;font:750 11px 'Plus Jakarta Sans',sans-serif}
@@ -67,7 +80,8 @@
  .lw-active #biomechPinsOverlay .callout-node[aria-pressed="true"]{color:#000!important}
  .lw-active #biomechPinsOverlay .callout-node::after{content:"";position:absolute;height:1px;width:var(--lw-leader,0px);top:50%;background:var(--ink-500);z-index:-2;pointer-events:none}
  .lw-active #biomechPinsOverlay .callout-node[data-lw-side="left"]::after{left:50%}
- .lw-active #biomechPinsOverlay .callout-node[data-lw-side="right"]::after{right:50%}
+ .lw-active #biomechPinsOverlay .callout-node::after{left:50%!important;right:auto!important;transform:rotate(var(--lw-leader-angle,0deg));transform-origin:0 50%}
+ .lw-active #sec-biomech .lw-workbench{grid-template-rows:auto auto minmax(150px,1fr) auto auto}
  .lw-trigger-curve{flex-direction:column;gap:4px}
  .lw-trigger-curve #oscPhaseLabel{align-self:flex-start;font:700 11px/1.3 'Plus Jakarta Sans',sans-serif;padding:5px 7px}
  .lw-trigger-curve #triggerOscCanvas{width:100%;height:calc(100% - 32px)!important;min-height:80px;background:#0E1116;border-radius:5px}

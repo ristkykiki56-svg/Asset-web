@@ -231,7 +231,7 @@ test('interactive diagram markers expose a single keyboard path and truthful pre
 
 test('anatomy selection keeps ten stable click controls and viewpoint-aware anchor coordinates',()=>{
  assert.match(js,/function biomechAnchor\(point, arch, hipLock\)/);
- assert.match(readFileSync(new URL('../posture-art.js',import.meta.url),'utf8'),/const anchors = \{/);
+ assert.match(readFileSync(new URL('../posture-art.js',import.meta.url),'utf8'),/const photos=\{/);
  assert.match(js,/btn\.dataset\.biomechId = pt\.id/);
  assert.match(js,/pinsContainer\.querySelector\('\[data-biomech-id=/);
  assert.match(js,/btn\.addEventListener\('click', \(\) => selectBiomechCallout\(pt\.id\)\)/);
@@ -243,30 +243,24 @@ test('anatomy selection keeps ten stable click controls and viewpoint-aware anch
 });
 
 
-test('blue/red character illustrations have an explicit unavailable state and no SVG character fallback',()=>{
+test('poster photographs have an explicit unavailable state and no generated fallback',()=>{
  const adapter=readFileSync(new URL('../posture-art.js',import.meta.url),'utf8');
  assert.match(html,/data-pose-color="blue"/);
  assert.match(html,/data-pose-color="red"/);
+ assert.match(html,/Clarisa Azalia/);
+ assert.match(html,/Aurellia Cassandra/);
  assert.doesNotMatch(html,/id="postureArtMode"/);
- assert.match(adapter,/Promise\.all\(variants\.flatMap/);
- assert.match(adapter,/Gambar karakter tidak dapat dimuat/);
- assert.doesNotMatch(adapter,/mode\.addEventListener/);
+ assert.match(adapter,/poster-v15\.png/);
+ assert.match(adapter,/Foto poster tidak dapat dimuat/);
+ assert.doesNotMatch(adapter,/scale\(-1/);
 });
 
 
-test('posture review is complete only when all six valid WebP images are present',()=>{
- const base=new URL('../assets/posture/',import.meta.url);
- const names=['blue-front','blue-side','blue-back','red-front','red-side','red-back'];
- const present=names.filter(name=>existsSync(new URL(name+'.webp',base)));
- if(present.length!==0)assert.deepEqual(present,names,'posture assets must be added as a complete set');
- if(process.env.REQUIRE_POSTURE_ASSETS==='1')assert.equal(present.length,6,'merge gate: assets are missing');
- for(const name of present){
-   const location=new URL(name+'.webp',base);
-   assert.ok(statSync(location).size>=1000,name+' should not be a placeholder');
-   const data=readFileSync(location);
-   assert.equal(data.subarray(0,4).toString(),'RIFF',name+' is not a RIFF/WebP asset');
-   assert.equal(data.subarray(8,12).toString(),'WEBP',name+' has an invalid WebP header');
- }
+test('original poster photograph is present with the expected PNG dimensions',()=>{
+ const bytes=readFileSync(new URL('../assets/posture/poster-v15.png',import.meta.url));
+ assert.equal(bytes.subarray(1,4).toString(),'PNG');
+ assert.equal(bytes.readUInt32BE(16),3466);
+ assert.equal(bytes.readUInt32BE(20),5000);
 });
 
 

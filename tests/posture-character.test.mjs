@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
-test('Posture exposes only the character illustrations and removes obsolete model controls',()=>{
+test('Posture exposes the poster photos and removes obsolete model controls',()=>{
  const html=read('lab.html'),js=read('lab.js');
  assert.doesNotMatch(html,/id="(?:postureArtMode|archSlider|hipLockSlider)"/);
  assert.doesNotMatch(js,/function (?:buildEditorialPostureIllustration|updatePosturePhysics|resetPostureParameters)/);
@@ -22,7 +22,7 @@ test('each anatomy explanation describes the selected body part rather than impl
  }
 });
 
-test('character guide visibly toggles at the selected anchor, including a mirrored view',async()=>{
+test('photo guide visibly toggles at the selected anchor in each real view',async()=>{
  let pressed='true';
  const controls={addEventListener(){}};
  const elements={postureArtControls:controls,postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}},xrayToggleBtn:{getAttribute:()=>pressed}};
@@ -52,5 +52,5 @@ test('desktop anatomy index renders all ten entries with readable viewpoint labe
  vm.runInContext('renderBiomechIndexTable()',context);
  assert.equal((list.innerHTML.match(/<button/g)||[]).length,10);
  assert.doesNotMatch(list.innerHTML,/undefined|WebP|slider/);
- assert.match(list.innerHTML,/Tampak depan/);
+ assert.match(list.innerHTML,/Foto depan/);
 });

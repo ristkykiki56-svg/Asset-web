@@ -30,10 +30,10 @@ test('all ten posture selections show poster teaching and a separate note matchi
   assert.equal(nodes.get('labMobilePosePicker').value,point.pose);
  }
  context.selectBiomechCallout('pelvis');
- assert.match(nodes.get('dossierViewNote').textContent,/membalik gambar samping yang sama/);
+ assert.match(nodes.get('dossierViewNote').textContent,/Foto belakang/);
  context.selectBiomechCallout('elbowHip');
  assert.match(nodes.get('dossierBody').textContent,/tumpuan/);
- assert.match(nodes.get('dossierViewNote').textContent,/tidak memperagakan siku yang bertumpu/);
+ assert.match(nodes.get('dossierViewNote').textContent,/Foto depan atau serong memperlihatkan siku/);
 });
 
 test('trigger direction and contact descriptions match selected controls without claiming measured force',()=>{

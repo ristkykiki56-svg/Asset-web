@@ -158,19 +158,19 @@
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
                 <div class="lab-pose-controls flex flex-wrap items-center gap-2 font-mono-tech text-xs">
                     <label class="lab-mobile-pose-label" for="labMobilePosePicker">Sudut pandang</label>
-                    <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Punggung</option><option value="front">Depan</option><option value="sideLeft">Samping</option><option value="sideRight">Samping (cermin)</option></select>
+                    <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Belakang</option><option value="front">Depan / serong</option><option value="sideLeft">Detail kepala</option><option value="sideRight">Detail tangan</option></select>
                     <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
                         <button onclick="switchPose('back')" id="poseTab-back" aria-pressed="true" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
-                            1. Skema Punggung
+                            1. Belakang
                         </button>
                         <button onclick="switchPose('front')" id="poseTab-front" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            2. Skema Depan
+                            2. Depan / serong
                         </button>
                         <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            3. Samping
+                            3. Detail kepala
                         </button>
                         <button onclick="switchPose('sideRight')" id="poseTab-sideRight" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            4. Samping (Cermin)
+                            4. Detail tangan
                         </button>
                     </div>
                     <label class="lab-callout-label" for="labCalloutPicker">Bagian yang ingin dipelajari</label>
@@ -181,25 +181,27 @@
                 </div>
             </div>
 
-            <div id="postureArtControls" class="ts-pose-art-controls" role="group" aria-label="Pilihan ilustrasi postur">
-              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Ilustrasi karakter</span>
-                <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Biru · karakter ilustratif</button>
-                <button type="button" data-pose-color="red" aria-pressed="false" disabled>Merah · karakter ilustratif</button>
+            <div id="postureArtControls" class="ts-pose-art-controls" role="group" aria-label="Pilih foto atlet">
+              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Foto poster</span>
+                <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Clarisa Azalia</button>
+                <button type="button" data-pose-color="red" aria-pressed="false" disabled>Aurellia Cassandra</button>
               </div>
-              <p id="postureArtStatus" aria-live="polite">Memeriksa ketersediaan aset ilustrasi…</p>
-              <p class="ts-pose-art-note">Pilih warna dan sudut pandang untuk mengenali bagian tubuh. Samping (cermin) membalik gambar samping yang sama; bukan foto dari sisi tubuh yang berbeda.</p>
+              <button id="posturePhotoZoom" type="button" disabled onclick="openPosturePhotoDetail()" aria-haspopup="dialog" class="min-h-11 px-3 py-2 border border-[var(--rule-heavy)]">Perbesar titik</button>
+              <p id="postureArtStatus" aria-live="polite">Memuat foto poster…</p>
+              <p class="ts-pose-art-note">Pilih atlet dan foto yang ingin dilihat. Nomor mengikuti bagian tubuh pada foto asli poster. Gunakan Perbesar titik untuk melihat bagian terpilih lebih dekat.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between drafting-bg reg-corner">
                     <div class="lab-figure-caption flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
-                        <span id="stagePoseTitle" class="font-bold">FIG 1.1 — ILUSTRASI PUNGGUNG (BUKAN REKONSTRUKSI POSTER)</span>
+                        <span id="stagePoseTitle" class="font-bold">FOTO POSTER V15 — BELAKANG</span>
                         <span class="text-[var(--ink-500)]">PIN SESUAI SUDUT PANDANG · 10 TITIK TOTAL</span>
                     </div>
 
                     <p class="lab-diagram-context">Pilih angka atau nama bagian tubuh. Memilih titik menampilkan sudut pandang yang memperlihatkan bagian tersebut. Mengganti sudut pandang memilih titik pertama yang tersedia pada gambar itu.</p>
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
+                        <p id="posturePhotoLoading" role="status">Memuat foto poster…</p>
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
                             <g id="svgAthleteLayer"></g>
@@ -233,7 +235,7 @@
                         <p id="dossierBody" class="text-sm text-[var(--ink-700)] leading-relaxed">
                             Poster menjelaskan hubungan lengkungan tubuh dengan keseimbangan dan kenyamanan posisi berdiri. Lengkungan tidak dibuat ekstrem.
                         </p>
-                        <p id="dossierViewNote" class="text-xs text-[var(--ink-700)] leading-relaxed border-t border-[var(--rule-light)] pt-3">Titik 01 menunjukkan punggung karakter dari belakang; lengkungan saat membidik lebih jelas pada foto di poster.</p>
+                        <p id="dossierViewNote" class="text-xs text-[var(--ink-700)] leading-relaxed border-t border-[var(--rule-light)] pt-3">Foto belakang memperlihatkan punggung, panggul, dan posisi berdiri saat membidik.</p>
 
 
                     </div>
@@ -1118,8 +1120,8 @@
               <tr><th scope="row">Production Rifle, 4,5 mm (.177), lead pellet, posisi berdiri</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025.</td></tr>
               <tr><th scope="row">Jarak ayam 18 m, babi 27 m, kalkun 33 m, domba 41 m</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025; toleransi jarak ±2,5%.</td></tr>
               <tr><th scope="row">Siluet airgun ukuran 1/10</th><td>Aturan resmi</td><td>Aturan mencantumkan skala target; gambar di halaman ini hanya membantu mengenali bentuk, bukan template produksi sasaran.</td></tr>
-              <tr><th scope="row">Penjelasan Postur dan bagian peralatan</th><td>Materi poster</td><td>Diringkas dari poster pembelajaran Clarisa Azalia dan Aurellia Cassandra, versi 15. Pesan latihan pada poster dibedakan dari posisi yang terlihat pada karakter Lab.</td></tr>
-              <tr><th scope="row">Grafik pelatuk, pandangan optik, dan gambar karakter</th><td>Model demonstrasi</td><td>Angka dan perubahan gambar merupakan contoh interaktif, bukan hasil ukur atlet atau ketentuan teknik postur IMSSU.</td></tr>
+              <tr><th scope="row">Penjelasan Postur dan bagian peralatan</th><td>Materi poster</td><td>Diringkas dari poster pembelajaran Clarisa Azalia dan Aurellia Cassandra, versi 15. Foto postur asli poster dipakai bersama ringkasan pesan latihannya.</td></tr>
+              <tr><th scope="row">Grafik pelatuk dan pandangan optik</th><td>Model demonstrasi</td><td>Angka dan perubahan gambar merupakan contoh interaktif, bukan hasil ukur atlet atau ketentuan teknik postur IMSSU.</td></tr>
               <tr><th scope="row">Lintasan, pengaruh angin, titik nol, klik elevasi</th><td>Bukan kalkulator</td><td>Grafik hanya animasi bentuk; tidak menghitung koreksi tembakan atau karakteristik peralatan.</td></tr>
             </tbody>
           </table></div>
@@ -1139,6 +1141,11 @@
             </div>
         </div>
     </footer>
+    <dialog id="posturePhotoDialog" aria-labelledby="posturePhotoDetailTitle">
+      <div class="posture-photo-dialog-header"><h2 id="posturePhotoDetailTitle">Detail foto</h2><button type="button" onclick="document.getElementById('posturePhotoDialog').close()" autofocus>Tutup ×</button></div>
+      <div id="posturePhotoDetailView" class="posture-photo-detail-view"></div>
+      <p>Detail foto asli poster v15. Tutup untuk memilih titik atau foto lain.</p>
+    </dialog>
     <script defer src="/lab.js"></script>
     <script defer src="/posture-art.js"></script>
     <script defer src="/optics-poster-artwork.js"></script>
