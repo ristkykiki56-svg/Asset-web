@@ -123,7 +123,9 @@
                 move($('#labMobilePosePicker'), options);
                 move($('#xrayToggleBtn'), options);
                 move($('#postureArtControls'), options);
-                move($('#dossierBody'), details(posture.panel, 'Penjelasan titik'));
+                const pointInfo = details(posture.panel, 'Penjelasan titik');
+                move($('#dossierBody'), pointInfo);
+                move($('#dossierViewNote'), pointInfo);
             }
 
             const trigger = workspace('sec-trigger', 'Pelatuk', 'Bandingkan arah atau amati kurva.', dialog);
@@ -145,9 +147,11 @@
                 move($('#btnVec-C')?.parentElement, directionPanel);
                 move($('input[oninput^="adjustTriggerShoeContact"]')?.parentElement, directionPanel);
                 move($('#vectorExplanationBox'), details(directionPanel, 'Penjelasan arah'));
+                const curveInfo = details(trigger.panel, 'Cara membaca kurva');
+                move($('#triggerCurveHelp'), curveInfo);
                 let mark;
                 const select = key => {
-                    curve.hidden = curvePanel.hidden = key !== 'curve';
+                    curve.hidden = curvePanel.hidden = curveInfo.hidden = key !== 'curve';
                     direction.hidden = directionPanel.hidden = key !== 'direction';
                     mark(key);
                     redraw();
@@ -156,7 +160,7 @@
                 select('curve');
             }
 
-            const optics = workspace('sec-optics', 'Optik', 'Ubah satu parameter model.', dialog);
+            const optics = workspace('sec-optics', 'Optik', 'Pilih kontrol, lalu amati gambarnya.', dialog);
             if (optics) {
                 const head = el('div', 'lw-view lw-optics-head');
                 const lens = el('div', 'lw-view lw-optics-lens');
@@ -164,14 +168,14 @@
                 move($('#opticalSidePan'), head);
                 move($('#opticsDetailToggle'), head);
                 move($('#ocularLensCanvas'), lens);
-                const label = el('label', 'lw-parameter-label', 'Parameter');
+                const label = el('label', 'lw-parameter-label', 'Kontrol');
                 const parameter = el('select', 'lw-parameter-choice');
-                parameter.setAttribute('aria-label', 'Pilih parameter optik');
+                parameter.setAttribute('aria-label', 'Pilih kontrol optik');
                 label.append(parameter);
                 optics.panel.append(label);
                 const definitions = [
                     ['optEyeDist', 'Jarak mata', 'head'], ['optCheekHeight', 'Tinggi mata', 'head'],
-                    ['optLat', 'Posisi lateral', 'lens'], ['optPressure', 'Intensitas lensa', 'lens']
+                    ['optLat', 'Posisi ke samping', 'lens'], ['optPressure', 'Variasi pandangan', 'lens']
                 ];
                 const wrappers = definitions.map(([id]) => {
                     const wrapper = document.getElementById(id)?.parentElement;
@@ -200,6 +204,7 @@
                 mark = tabs(optics, 'optics', [['head', 'Posisi kepala'], ['lens', 'Dalam lensa']], select);
                 select('head');
                 move($('#sec-optics button[onclick="calibratePerfectOptics()"]'), optics.panel);
+                move($('#opticsExplanation'), details(optics.panel, 'Cara membaca gambar'));
             }
 
             const silhouette = workspace('sec-imssu', 'Sasaran siluet', 'Pilih kelompok, lalu ketuk sasaran.', dialog);
@@ -214,7 +219,10 @@
                 silhouette.panel.append(readout);
                 move($('#rackGroupScore')?.parentElement, readout);
                 move($('button[onclick="resetSilhouetteRack()"]'), silhouette.panel);
-                move($('#trajectoryCanvas')?.parentElement, details(silhouette.panel, 'Lintasan ilustratif'));
+                move($('#silhouetteHelp'), details(silhouette.panel, 'Kelompok dan hitungan sasaran'));
+                const trajectory = details(silhouette.panel, 'Lintasan ilustratif');
+                move($('#trajectoryCanvas')?.parentElement, trajectory);
+                // The graph container includes its reading instructions.
             }
 
             const hardware = workspace('sec-hardware', 'Peralatan', 'Pilih komponen pada gambar.', dialog);

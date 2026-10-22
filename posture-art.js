@@ -60,7 +60,7 @@
       const guide=document.getElementById('xrayToggleBtn')?.getAttribute('aria-pressed')==='true' && point
         ? '<g class="posture-point-guide" aria-hidden="true" fill="none" stroke="#FF4800" stroke-width="3"><circle cx="'+guideX+'" cy="'+y+'" r="24" fill="#FF4800" fill-opacity=".12"/><path d="M'+(guideX-34)+' '+y+'H'+(guideX+34)+'M'+guideX+' '+(y-34)+'V'+(y+34)+'" stroke-dasharray="5 4"/></g>'
         : '';
-      return '<g role="img" aria-label="Ilustrasi karakter statis '+(state.color==='blue'?'versi biru':'versi merah')+', tampak '+v+'. Bukan pengukuran atlet.">'
+      return '<g role="img" aria-label="Karakter '+(state.color==='blue'?'biru':'merah')+', tampak '+(mirror?'samping cermin':({front:'depan',back:'belakang',side:'samping'})[v])+'.">'
         +(mirror?'<g transform="translate(460 0) scale(-1 1)">'+graphic+'</g>':graphic)
         +guide+'</g>';
     }

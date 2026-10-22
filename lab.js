@@ -71,63 +71,73 @@ let sfxActive = false;
         const POSTER_BIOMECH_DATA = [
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Punggung',
-                desc: 'Punggung terlihat dari belakang, di antara kedua bahu hingga pinggang. Titik 01 menandai bagian tengah punggung pada ilustrasi. Pilih tampak samping untuk membandingkan bentuk punggung dan posisi badan.'
+                ref: 'MATERI POSTER V15',
+                title: 'Punggung dan kenyamanan postur',
+                desc: 'Poster menjelaskan hubungan lengkungan tubuh dengan keseimbangan dan kenyamanan posisi berdiri. Bagian atas badan sedikit condong ke belakang dan panggul maju; poster juga mengingatkan agar lengkungan tidak dibuat ekstrem.',
+                viewNote: 'Titik 01 menunjukkan punggung karakter dari belakang. Gambar ini dipakai untuk mengenali bagiannya; lengkungan saat membidik lebih jelas pada foto di poster.'
             },
             {
                 id: 'head', num: '02', pose: 'front', x: 50, y: 16,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Kepala dan arah pandang',
-                desc: 'Titik 02 menandai kepala pada tampak depan. Perhatikan hubungan kepala dengan bahu di bawahnya. Untuk melihat hubungan wajah dengan teleskop, pilih tampak samping; gambar depan tidak memperlihatkan arah pandang melalui lensa.'
+                ref: 'MATERI POSTER V15',
+                title: 'Kepala, pipi, dan arah pandang',
+                desc: 'Poster menekankan kepala yang rileks, pipi bertumpu pada sandaran pipi, dan pandangan langsung melalui teleskop. Jarak mata perlu memberi pandangan yang penuh dan jelas tanpa memaksa leher.',
+                viewNote: 'Titik 02 berada di kepala pada tampak depan. Ilustrasi depan tidak sedang membidik; pilih tampak samping untuk melihat kepala di dekat teleskop.'
             },
             {
                 id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Bahu kanan',
-                desc: 'Titik 03 menandai bahu kanan karakter, yang berada di sisi kiri gambar saat dilihat dari depan. Perhatikan posisinya terhadap pangkal lengan dan bagian atas badan.'
+                ref: 'MATERI POSTER V15',
+                title: 'Bahu kanan dan bantalan bahu',
+                desc: 'Dalam poster, bahu kanan dirilekskan dan bantalan bahu pada ujung popor bertumpu dengan mantap pada bahu. Hubungan kedua bagian ini membantu mengenali posisi senapan terhadap badan.',
+                viewNote: 'Titik 03 menandai bahu kanan karakter, di sisi kiri gambar tampak depan. Kontak bantalan bahu dengan tubuh tidak diperlihatkan pada sudut ini.'
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Bahu dan lengan kiri',
-                desc: 'Titik 04 menandai pangkal lengan kiri, di sisi kanan gambar tampak depan. Pada sudut ini lengan berada di samping badan. Ikuti bentuknya dari bahu menuju siku dan pergelangan tangan.'
+                ref: 'MATERI POSTER V15',
+                title: 'Bahu kiri dan lengan penopang',
+                desc: 'Poster menjelaskan bahu kiri yang rileks dan lengan atas kiri yang dekat dengan badan sebagai bagian penopang senapan. Tumpuan lengan dan tangan dibahas bersama, bukan sebagai gerakan bahu yang terpisah.',
+                viewNote: 'Titik 04 menandai pangkal lengan kiri di sisi kanan gambar tampak depan. Lengan karakter sedang di samping badan, bukan memperagakan tumpuan saat membidik.'
             },
             {
                 id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
+                ref: 'MATERI POSTER V15',
                 title: 'Tangan dan pergelangan kiri',
-                desc: 'Titik 05 menandai tangan kiri pada tampak samping. Tangan ini berada di bawah bagian depan senapan. Perhatikan pertemuan pergelangan dengan lengan bawah; detail jari tidak seluruhnya terlihat dari sudut ini.'
+                desc: 'Poster memperlihatkan tangan kiri sebagai penopang bagian depan senapan. Bentuk tumpuannya dapat berupa telapak terbuka atau tangan mengepal; materi poster menekankan posisi pergelangan yang lurus.',
+                viewNote: 'Titik 05 menunjukkan area tangan kiri di bawah bagian depan senapan pada tampak samping. Gambar hanya memperlihatkan salah satu bentuk tumpuan.'
             },
             {
                 id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Tangan kanan dan grip',
-                desc: 'Titik 06 menandai area tangan kanan di dekat grip pada tampak samping. Bandingkan letaknya dengan tangan kiri yang berada lebih ke depan. Detail jari pelatuk tidak diperlihatkan secara terpisah pada gambar ini.'
+                ref: 'MATERI POSTER V15',
+                title: 'Tangan kanan dan jari pelatuk',
+                desc: 'Poster membahas genggaman kanan yang mantap, nyaman, dan rileks pada grip. Jari telunjuk menyentuh bilah pelatuk hanya saat siap menembak; ilustrasi Pelatuk memperlihatkan bagian yang disentuh jari.',
+                viewNote: 'Titik 06 menandai tangan di dekat grip pada tampak samping. Detail sentuhan telunjuk pada bilah pelatuk tidak terlihat jelas pada karakter ini.'
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Siku kiri',
-                desc: 'Titik 07 menandai siku kiri di sisi kanan gambar tampak depan. Lengan pada ilustrasi ini berada di samping badan. Perhatikan pertemuan lengan atas dan lengan bawah di dekat pinggang.'
+                ref: 'MATERI POSTER V15',
+                title: 'Siku kiri dan pinggul',
+                desc: 'Poster menjelaskan hubungan siku kiri dengan bagian atas pinggul kiri sebagai tumpuan untuk merilekskan lengan penopang. Posisi panggul dibahas bersama letak siku agar kedua bagian dapat saling mendukung.',
+                viewNote: 'Titik 07 menunjukkan siku kiri pada tampak depan. Lengan karakter berada di samping badan; gambar ini tidak memperagakan siku yang bertumpu pada pinggul seperti foto poster.'
             },
             {
                 id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Badan dan pinggul',
-                desc: 'Titik 08 menandai area pinggul pada tampak samping kanan. Bandingkan posisinya dengan bahu di atas dan kaki di bawah. Hubungan ketiga bagian ini lebih mudah terlihat dari samping daripada dari depan.'
+                ref: 'MATERI POSTER V15',
+                title: 'Badan, bahu, dan panggul',
+                desc: 'Poster menghubungkan badan yang sedikit condong ke belakang, bahu yang mengarah ke sasaran, dan panggul yang maju. Ketiganya dibaca sebagai satu kesatuan posisi berdiri, bukan sudut ideal yang sama untuk setiap orang.',
+                viewNote: 'Titik 08 menandai panggul pada tampak samping cermin. Tampilan ini membalik gambar samping yang sama, bukan foto baru dari sisi tubuh yang berbeda.'
             },
             {
                 id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Kaki kiri',
-                desc: 'Titik 09 menandai kaki kiri karakter, di sisi kanan gambar tampak depan. Ikuti bentuknya dari pinggul, lutut, hingga sepatu untuk membedakan kaki kiri dan kanan.'
+                ref: 'MATERI POSTER V15',
+                title: 'Kaki kiri dan tumpuan berdiri',
+                desc: 'Poster menggambarkan kaki kiri sebagai tumpuan utama dengan posisi mendekati tegak dan tidak tegang. Bagian kaki dibahas dari panggul, lutut, hingga telapak; kenyamanan berdiri tetap menjadi perhatian.',
+                viewNote: 'Titik 09 berada pada kaki kiri karakter, di sisi kanan gambar tampak depan. Gambar ini tidak mengukur pembagian berat antara kedua kaki.'
             },
             {
                 id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                ref: 'ILUSTRASI BAGIAN TUBUH',
-                title: 'Kaki kanan',
-                desc: 'Titik 10 menandai kaki kanan karakter, di sisi kiri gambar tampak depan. Bandingkan letaknya dengan kaki kiri dan jarak antara kedua sepatu pada ilustrasi.'
+                ref: 'MATERI POSTER V15',
+                title: 'Lutut dan kaki kanan',
+                desc: 'Poster menggambarkan kaki kanan sedikit lebih ke luar untuk melengkapi tumpuan kaki kiri dan menjaga posisi yang nyaman. Arah kaki dan keadaan lutut dibahas bersama dalam posisi berdiri.',
+                viewNote: 'Titik 10 berada pada kaki kanan karakter, di sisi kiri gambar tampak depan. Sudut kaki dan beban pada gambar tidak menunjukkan hasil pengukuran atlet.'
             }
         ];
 
@@ -262,8 +272,8 @@ let sfxActive = false;
             const viewLabels = {
                 back: 'FIG 1.1 — TAMPAK PUNGGUNG (ILUSTRASI)',
                 front: 'FIG 1.2 — TAMPAK DEPAN (ILUSTRASI)',
-                sideLeft: 'FIG 1.3 — TAMPAK SAMPING KIRI (ILUSTRASI)',
-                sideRight: 'FIG 1.4 — TAMPAK SAMPING KANAN (ILUSTRASI)'
+                sideLeft: 'FIG 1.3 — TAMPAK SAMPING (ILUSTRASI)',
+                sideRight: 'FIG 1.4 — TAMPAK SAMPING (CERMIN)'
             };
             document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
             const picker = document.getElementById('labCalloutPicker');
@@ -273,6 +283,7 @@ let sfxActive = false;
             document.getElementById('dossierRef').textContent = item.ref;
             document.getElementById('dossierTitle').textContent = item.title;
             document.getElementById('dossierBody').textContent = item.desc;
+            document.getElementById('dossierViewNote').textContent = item.viewNote;
             renderBiomechViewport();
             renderBiomechIndexTable();
         }
@@ -292,7 +303,7 @@ let sfxActive = false;
                         }">${item.num}</span>
                         <div class="min-w-0">
                             <div class="font-bold text-xs truncate">${item.title}</div>
-                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Tampak belakang',front:'Tampak depan',sideLeft:'Tampak samping kiri',sideRight:'Tampak samping kanan'})[item.pose]}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Tampak belakang',front:'Tampak depan',sideLeft:'Tampak samping',sideRight:'Samping (cermin)'})[item.pose]}</div>
                         </div>
                     </button>
                 `;
@@ -333,31 +344,30 @@ let sfxActive = false;
                 dev.textContent = 'Vektor lurus (contoh)';
                 dev.className = 'text-[var(--ok-green)]';
                 box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR B:</strong> Garis hijau menunjukkan arah lurus dalam diagram dua dimensi; bukan toleransi IMSSU atau instruksi menyetel senapan.';
+                box.innerHTML = '<strong>ARAH B:</strong> Pilihan B menyorot garis tengah berwarna hijau. Bandingkan dengan garis C dan A untuk melihat perbedaan arah gerak yang digambarkan.';
             } else if (vec === 'C') {
                 stamp.textContent = 'VEKTOR C: ARAH MIRING (MODEL)';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
                 dev.textContent = 'Vektor bergeser kiri (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR C:</strong> Jalur garis pada gambar miring ke kiri. Ini adalah perbandingan arah pada diagram, bukan ukuran efek atau penilaian teknik atlet.';
+                box.innerHTML = '<strong>ARAH C:</strong> Pilihan C menyorot jalur yang melengkung ke kiri pada gambar. Pilih B untuk membandingkannya dengan garis tengah.';
             } else {
                 stamp.textContent = 'VEKTOR A: ARAH MIRING (MODEL)';
                 stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
                 dev.textContent = 'Vektor bergeser kanan (contoh)';
                 dev.className = 'text-[var(--aurellia-red)]';
                 box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR A:</strong> Jalur garis pada gambar miring ke kanan. Model ini tidak menghitung pengaruhnya pada akurasi atau gaya pelepasan nyata.';
+                box.innerHTML = '<strong>ARAH A:</strong> Pilihan A menyorot jalur yang melengkung ke kanan pada gambar. Pilih B untuk membandingkannya dengan garis tengah.';
             }
         }
 
         function adjustTriggerShoeContact(val) {
             const v = parseFloat(val);
             document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
-            const searGf = Math.max(0, Math.min(100, Math.round(50 - v * 0.65))); // demonstration index, never gf
-            document.getElementById('searWeightReadout').textContent = `${searGf} / 100 (MODEL)`;
+            document.getElementById('searWeightReadout').textContent = Math.abs(v) <= 5 ? 'Tengah bilah' : v < -5 ? 'Bagian atas bilah' : 'Bagian bawah bilah';
             document.getElementById('shoeHeightText').textContent =
-                Math.abs(v) <= 5 ? 'TENGAH (POSISI MODEL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
+                Math.abs(v) <= 5 ? 'TENGAH BILAH' : v < -5 ? 'BAGIAN ATAS BILAH' : 'BAGIAN BAWAH BILAH';
         }
 
         let oscProgress = 0.65;
@@ -487,7 +497,7 @@ let sfxActive = false;
                         playSteelImpactSound();
                     }
                 } else {
-                    lbl.textContent = 'FASE 4: FOLLOW-THROUGH STABIL';
+                    lbl.textContent = 'FASE 4: GERAKAN LANJUTAN';
                 }
 
                 drawOscilloscope(oscProgress);
@@ -571,7 +581,7 @@ let sfxActive = false;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm (MODEL)`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm (MODEL)`;
             document.getElementById('optPressureLabel').textContent =
-                press > 72 ? `${press}% (PERUBAHAN BESAR)` : press < 25 ? `${press}% (PERUBAHAN KECIL)` : `${press}% (PERUBAHAN SEDANG)`;
+                `${press}% (VARIASI GAMBAR)`;
 
             // The camera is fixed; only the illustrative head moves in this side view.
             // Increasing the eye-distance slider increases the gap from the fixed ocular lens.
@@ -873,7 +883,7 @@ let sfxActive = false;
             ctx.clearRect(0, 0, w, h);
 
             const wind = parseFloat(document.getElementById('windRangeInput').value);
-            document.getElementById('windValText').textContent = `${wind.toFixed(1)} unit model`;
+            document.getElementById('windValText').textContent = `${wind.toFixed(1)} / 8`;
 
             const spec = RANGE_SPECS[selectedAnimal];
             // No wind drift or turret click predictions: the input only changes the illustration.
@@ -932,62 +942,62 @@ let sfxActive = false;
             stock: {
                 code: 'KOMPONEN #01 // POPOR',
                 title: 'Popor dan Bantalan Bahu',
-                body: 'Titik 01 menunjukkan bagian belakang senapan pada gambar poster, termasuk area popor dan bantalan bahu.',
-                note: 'Foto poster digunakan untuk mengenali letak bagian. Panjang popor dan setelannya tidak diukur.'
+                body: 'Titik 01 menunjukkan popor dan bantalan di bagian paling belakang senapan. Bantalan bahu berada di ujung yang bersentuhan dengan bahu.',
+                note: 'Bandingkan dengan sandaran pipi, nomor 02, yang berada di bagian atas popor.'
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // SANDARAN PIPI',
                 title: 'Sandaran Pipi (Cheekpiece)',
-                body: 'Titik 02 menandai sandaran pipi di bagian atas popor senapan merah. Bagian ini menjadi tempat pipi bertumpu ketika menggunakan optik.',
-                note: 'Tinggi dan bentuk pada foto bukan acuan pengaturan untuk setiap atlet.'
+                body: 'Titik 02 menandai sandaran pipi di atas popor. Bagian ini menjadi tempat pipi bertumpu ketika mata menghadap teleskop.',
+                note: 'Letaknya lebih tinggi daripada grip. Gambar memperlihatkan komponen, bukan posisi kepala atlet.'
             },
             grip: {
                 code: 'KOMPONEN #03 // PEGANGAN',
                 title: 'Pegangan dan Area Pelatuk',
-                body: 'Titik 03 berada di area pegangan tangan dan pelatuk. Foto menunjukkan letak luarnya, bukan posisi jari saat menembak.',
-                note: 'Bentuk pegangan terlihat pada poster; ukuran dan tekanan jari tidak tersedia.'
+                body: 'Titik 03 menunjukkan grip atau pegangan tangan di belakang bilah pelatuk. Pada gambar, area ini berada di bawah bagian tengah senapan.',
+                note: 'Bilah pelatuk berada di depan grip. Untuk melihat ilustrasi gerak jari, buka materi Pelatuk.'
             },
             riser: {
                 code: 'KOMPONEN #04 // BADAN DEPAN',
                 title: 'Bagian Depan Badan Senapan (Fore-End)',
-                body: 'Titik 04 menunjukkan bagian depan badan senapan yang tampak pada gambar merah, di belakang area tabung dan laras.',
-                note: 'Titik ini tidak menunjukkan peninggi teleskop. Diagram tidak digunakan untuk menentukan ukuran atau penyetelan komponen.'
+                body: 'Titik 04 menunjukkan bagian bawah badan depan senapan, di depan grip. Bagian ini merupakan area tempat tangan penopang berada.',
+                note: 'Bandingkan dengan tabung udara nomor 05 di bagian depan senapan. Nomor 04 bukan pengatur teleskop.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
                 title: 'Area Tabung Udara',
-                body: 'Titik 05 menunjukkan area tabung udara di bawah bagian depan senapan pada gambar poster.',
-                note: 'Tekanan, kapasitas, dan jenis tabung tidak dapat ditentukan dari gambar ini.'
+                body: 'Titik 05 menunjukkan tabung udara di bawah laras. Tabung ini menyimpan udara bertekanan yang digunakan senapan angin.',
+                note: 'Tabung dan laras adalah bagian berbeda. Pada gambar, laras berada lebih tinggi dan memanjang ke arah ujung depan.'
             },
             barrel: {
                 code: 'KOMPONEN #06 // LARAS',
                 title: 'Laras dan Bagian Ujung Depan',
-                body: 'Titik 06 mengarah ke bagian depan senapan. Gambar menunjukkan letak luarnya tanpa rincian struktur laras.',
-                note: 'Panjang, kaliber, dan komponen internal tidak diverifikasi melalui foto poster.'
+                body: 'Titik 06 menandai laras di bagian depan senapan. Laras merupakan jalur keluarnya pellet menuju mulut laras.',
+                note: 'Ikuti bagian yang memanjang dari badan senapan ke ujung paling depan. Bentuk luar tidak menunjukkan isi laras.'
             },
             objective: {
                 code: 'KOMPONEN #07 // OBJEKTIF',
                 title: 'Lensa Objektif Teleskop',
-                body: 'Titik 07 berada pada bagian depan teleskop di diagram atas. Lensa objektif menerima cahaya dari arah objek yang diamati.',
-                note: 'Diagram atas adalah ilustrasi optik terpisah, bukan foto teleskop yang terpasang pada senapan merah.'
+                body: 'Titik 07 menandai lensa objektif di ujung depan teleskop. Lensa ini menerima cahaya dari objek yang dilihat.',
+                note: 'Pada ilustrasi, objektif berada di sisi kiri. Bandingkan dengan lensa okuler nomor 10 di sisi kanan, dekat mata.'
             },
             turrets: {
                 code: 'KOMPONEN #08 // TURRET',
                 title: 'Turret Elevasi dan Windage',
-                body: 'Titik 08 menunjukkan lokasi kontrol turret pada ilustrasi teleskop. Bentuk dan posisi kontrol berbeda menurut model perangkat.',
-                note: 'Jumlah klik, rentang pengaturan, dan spesifikasi perangkat asli tidak disajikan.'
+                body: 'Titik 08 menandai turret, yaitu kenop di sekitar bagian tengah teleskop. Kenop ini berkaitan dengan pengaturan posisi garis bidik.',
+                note: 'Gambar hanya menunjukkan letak kenop. Memilih nomor ini tidak mengubah pembidikan atau setelan teleskop.'
             },
             zoom: {
                 code: 'KOMPONEN #09 // CINCIN PEMBESARAN',
                 title: 'Cincin Pembesaran Teleskop',
-                body: 'Titik 09 menandai cincin pembesaran pada ilustrasi optik. Tidak semua teleskop memiliki bentuk pengatur yang sama.',
-                note: 'Gambar tidak menunjukkan tingkat pembesaran atau pengaturan yang dipakai atlet.'
+                body: 'Titik 09 menandai cincin pembesaran di dekat ujung belakang teleskop. Cincin ini digunakan untuk mengubah pembesaran pada teleskop yang mendukungnya.',
+                note: 'Nomor ini hanya menyorot komponen; ukuran gambar sasaran tidak ikut diperbesar.'
             },
             ocular: {
                 code: 'KOMPONEN #10 // OKULER',
                 title: 'Lensa Okuler dan Area Dioptri',
-                body: 'Titik 10 berada pada ujung teleskop yang menghadap mata dalam ilustrasi tampak luar.',
-                note: 'Ilustrasi tidak memperlihatkan pengaturan dioptri maupun jarak mata hasil pengukuran.'
+                body: 'Titik 10 menandai okuler, yaitu ujung teleskop yang menghadap mata. Bagian ini menjadi tempat pengguna melihat gambar dan garis bidik.',
+                note: 'Untuk membandingkan posisi mata dan pandangan melalui lensa, buka materi Optik.'
             }
         };
 

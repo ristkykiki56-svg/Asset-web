@@ -57,7 +57,7 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
  assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
  assert.doesNotMatch(js,/ref: 'REF POSTER/);
- assert.match(js,/unit model/);
+ assert.match(js,/wind.toFixed\(1\)/);
  assert.match(js,/JARAK SESUAI ATURAN/);
  assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
  assert.match(html,/bukan template produksi sasaran/);
@@ -111,7 +111,7 @@ test('educational model avoids unsupported ideal-settings and explains recorded 
  assert.doesNotMatch(html,/Take-Up \(0–70 gf\)/);
  assert.doesNotMatch(html,/LUBANG #2 — OPTIMAL/);
  assert.doesNotMatch(html,/85 mm \(IDEAL\)/);
- assert.match(html,/INDEKS GERAKAN MODEL:/);
+ assert.match(html,/LETAK JARI:/);
  assert.match(html,/bukan rekaman gaya, waktu, atau performa atlet/);
  assert.match(html,/ATURAN · IMSSU 2025/);
  assert.match(html,/MODEL · BUKAN DATA UKUR/);
@@ -278,7 +278,7 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
   assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
   assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 835 282"/);
   assert.match(html, /TINGGI POSISI MATA/);
-  assert.match(html, /INTENSITAS PERUBAHAN LENSA/);
+  assert.match(html, /VARIASI PANDANGAN/);
   assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
   assert.match(js, /const dy = -7 - comb \* 0\.85/);
   assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);

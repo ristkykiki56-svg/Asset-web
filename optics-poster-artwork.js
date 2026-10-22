@@ -81,14 +81,14 @@ function maybeReady(){
  fallback.setAttribute('hidden','');
  fallback.style.setProperty('display','none','important');
  document.getElementById('sec-optics')?.classList.add('optics-poster-ready');
- announce('Ilustrasi berlapis aktif. Kepala bergerak terbatas sesuai slider; teleskop dan senapan tetap diam.');
+ announce('Gambar siap. Kontrol jarak dan tinggi menggeser kepala sedikit; senapan dan teleskop tetap diam.');
  apply({dist:document.getElementById('optEyeDist')?.value,height:document.getElementById('optCheekHeight')?.value},true);
 }
 function fail(){
  ready=false;stage.hidden=true;fallback.hidden=false;
  fallback.removeAttribute('hidden');
  fallback.style.removeProperty('display');
- announce('Ilustrasi gambar tidak tersedia. Skema SVG cadangan ditampilkan.');
+ announce('Gambar utama tidak dapat dimuat. Ilustrasi pengganti ditampilkan; kontrol tetap dapat digunakan.');
 }
 for(const im of [base,head,foreground]){
  im.addEventListener('load',maybeReady);

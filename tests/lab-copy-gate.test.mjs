@@ -12,7 +12,7 @@ const optics = read('optics-poster-artwork.js');
 // Gate for copy affected by the five-lesson raster migration. Keep scope
 // deliberately narrow: legacy technical quotations elsewhere are not rewritten.
 test('copy gate: five lesson introductions and equipment descriptions are plain, specific Indonesian', () => {
-  const introductions = [...html.matchAll(/<p class="lab-section-hint">([^<]+)<\/p>/g)].map(match => match[1]);
+  const introductions = [...html.matchAll(/<p\b[^>]*class="lab-section-hint"[^>]*>([^<]+)<\/p>/g)].map(match => match[1]);
   assert.equal(introductions.length, 5, 'expected one introduction per lesson');
   const block = js.slice(js.indexOf('const HARDWARE_SPECS = {'), js.indexOf('function inspectHardware(key)'));
   assert.ok(block.length > 1500, 'hardware descriptions must be present');
@@ -36,7 +36,7 @@ test('copy gate: posture explains body parts and offers only character artwork',
 
 test('copy gate: optics describes both the moving-head and lens-only controls', () => {
   assert.match(html, /Jarak dan tinggi mata menggeser kepala/);
-  assert.match(html, /posisi lateral dan intensitas hanya mengubah tampilan dalam lensa/);
+  assert.match(html, /Posisi lateral dan variasi pandangan hanya mengubah tampilan dalam lensa/);
   assert.match(html, /Dua kontrol posisi menggeser kepala/);
   assert.match(js, /optLatLabel'\)\.textContent = .*mm \(MODEL\)/);
   assert.match(js, /optCheekHeightLabel'\)\.textContent = .*mm \(MODEL\)/);
@@ -58,8 +58,8 @@ test('copy gate: hardware photo, separate scope diagram and marker-only slider a
   assert.match(html, /PENANDA POSISI PADA DIAGRAM/);
   assert.match(html, /Posisi tersebut tidak dihitung dari berat/);
   assert.match(js, /title: 'Bagian Depan Badan Senapan \(Fore-End\)'/);
-  assert.match(js, /Titik ini tidak menunjukkan peninggi teleskop/);
-  assert.match(js, /Diagram atas adalah ilustrasi optik terpisah/);
+  assert.match(js, /Nomor 04 bukan pengatur teleskop/);
+  assert.match(html, /Gambar senapan dan ilustrasi teleskop ditampilkan secara terpisah/);
   assert.doesNotMatch(html, /DISTRIBUSI BERAT &amp; TITIK KESEIMBANGAN SENAPAN/);
   assert.doesNotMatch(html, /\[04\] Penyelarasan Peninggi/);
 });
