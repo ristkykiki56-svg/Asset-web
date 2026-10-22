@@ -1,0 +1,174 @@
+/* Mobile experiments reserve room for both the visual and its controls. */
+#sec-biomech.ts-pose-art-active .lab-biomech-stage{background:#fff}
+#posturePhotoLoading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;padding:24px;background:white;color:#111315;font:13px/1.6 'Plus Jakarta Sans',sans-serif;text-align:center;z-index:40}
+#posturePhotoLoading[hidden]{display:none}
+#posturePhotoDialog{width:min(720px,calc(100% - 24px));max-height:90dvh;margin:auto;padding:16px;border:1px solid var(--rule-heavy);border-radius:6px;background:var(--bg-surface);color:var(--ink-900);overflow:auto}
+#posturePhotoDialog::backdrop{background:rgba(0,0,0,.6)}
+.posture-photo-dialog-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.posture-photo-dialog-header h2{font-size:16px;font-weight:750;margin:0}
+.posture-photo-dialog-header button,#posturePhotoZoom{min-height:44px;min-width:44px;padding:8px 12px;border:1px solid var(--rule-heavy);background:var(--bg-surface);color:var(--ink-900);font-weight:700}
+#posturePhotoDialog .posture-photo-detail-view{height:min(65dvh,560px);margin-top:12px;background:white}
+#posturePhotoDialog p{font-size:12px;margin:10px 0 0}
+#posturePhotoZoom:disabled{opacity:.5;cursor:wait}
+
+@media(max-width:767px){
+ html.lw-active{scroll-padding-top:0;overflow:hidden}
+ .lw-active body{height:100dvh;overflow:hidden}
+ .lw-active body>section,.lw-active body>footer,.lw-active .lab-local-nav{display:none!important}
+ .lw-active .lab-header{height:64px;position:relative}
+ .lw-active .lab-header-row{height:64px;min-height:0;padding:8px 0;grid-template-columns:44px minmax(0,1fr);gap:8px}
+ .lw-active .lab-header .lab-brand{display:none!important}
+ .lw-active .lab-mobile-picker{grid-column:2;grid-row:1;display:block;border:0;padding:0}
+ .lw-active .lab-mobile-picker label{display:none}
+ .lw-active .lab-mobile-picker select{height:44px;padding-inline:8px 22px;font-size:13px}
+ .lw-active #main-content{display:flex;flex-direction:column;height:calc(100dvh - 64px);max-width:none;width:100%;padding:0!important;margin:0;gap:0;overflow:hidden}
+ .lw-active #main-content>.lab-notice-wrap,.lw-active #main-content>.lab-sources-wrap{display:none!important}
+ .lw-active #main-content>section[id^="sec-"]{display:none!important;margin:0!important;padding:0!important;min-height:0;overflow:hidden}
+ .lw-active #main-content>section[id^="sec-"].is-active{display:block!important;flex:1}
+ .lw-active #main-content>section[id^="sec-"]>:not(.lw-workbench){display:none!important}
+ .lw-workbench{height:100%;min-height:0;display:grid;grid-template-rows:auto auto minmax(130px,1fr) auto auto;background:var(--bg-paper)}
+ .lw-limitation{grid-row:5;margin:0;padding:3px 14px;font:10px/1.4 'Plus Jakarta Sans',sans-serif;color:var(--ink-700)}
+ .lw-heading{grid-row:1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 14px;border-bottom:1px solid var(--rule-light);background:var(--bg-surface)}
+ .lw-active #main-content .lw-heading h2{font:800 19px/1.2 'Plus Jakarta Sans',sans-serif;letter-spacing:-.035em;margin:0}
+ .lw-heading p{font-size:11px;line-height:1.4;color:var(--ink-700);margin:3px 0 0}
+ .lw-heading button{flex:none;min-height:44px;border:0;background:transparent;color:var(--clarisa-blue);font:650 11px 'Plus Jakarta Sans',sans-serif;padding:0 4px}
+ .lw-tabs{grid-row:2;display:flex;gap:4px;padding:5px 14px;background:var(--bg-surface);border-bottom:1px solid var(--rule-light)}
+ .lw-tabs button{flex:1;min-width:44px;min-height:44px;border:1px solid var(--rule-light);border-radius:4px;background:var(--bg-surface);color:var(--ink-700);font:700 12px/1.2 'Plus Jakarta Sans',sans-serif;padding:7px}
+ .lw-active #main-content .lw-tabs button[aria-pressed="true"]{background:var(--ink-900)!important;border-color:var(--ink-900);color:var(--bg-surface);box-shadow:none!important}
+ .lw-stage{grid-row:3;min-width:0;min-height:0;position:relative;display:flex;align-items:stretch;justify-content:center;overflow:hidden;background:var(--bg-surface);border-bottom:1px solid var(--rule-light)}
+ .lw-view{height:100%;width:100%;min-width:0;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:8px 14px}
+ .lw-active [hidden]{display:none!important}
+ .lw-panel{grid-row:4;max-height:42dvh;min-height:0;overflow:auto;overscroll-behavior:contain;padding:10px 14px;background:var(--bg-surface);border-top:1px solid var(--rule-light);font:13px/1.5 'Plus Jakarta Sans',sans-serif;scrollbar-width:thin}
+ .lw-panel>p{margin:2px 0 7px;color:var(--ink-700);font-size:11px}
+ .lw-panel select,.lw-parameter-choice{width:100%;min-height:44px;max-width:100%;border:1px solid var(--rule-heavy);border-radius:4px;background:var(--bg-surface);color:var(--ink-900);font:600 13px 'Plus Jakarta Sans',sans-serif;padding:8px}
+ .lw-panel button{min-height:44px;min-width:44px;font-size:12px;line-height:1.3;padding:8px 10px}
+ .lw-panel input[type=range].mech-slider{height:44px;min-height:44px;width:100%;margin:0;background:linear-gradient(var(--rule-light),var(--rule-light)) center/100% 4px no-repeat;touch-action:pan-y}
+ .lw-panel input[type=range].mech-slider::-webkit-slider-thumb{width:24px;height:24px;border-radius:3px}
+ .lw-panel input[type=range].mech-slider::-moz-range-thumb{width:24px;height:24px;border:2px solid var(--bg-surface);background:var(--ink-900);border-radius:3px}
+ .lw-readout{font-size:13px!important;line-height:1.4!important;letter-spacing:0!important;margin:0 0 7px!important}
+ .lw-options{margin-top:6px;border-top:1px solid var(--rule-light)}
+ .lw-options>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;color:var(--clarisa-blue);list-style:disclosure-closed inside}
+ .lw-options[open]>summary{list-style:disclosure-open inside}
+ .lw-options p{font-size:12px;line-height:1.6;margin:8px 0}
+ #sec-biomech .lw-panel>#postureArtControls{padding:8px 0;border:0;margin:0;gap:8px}
+ #sec-biomech .lw-panel .ts-pose-art-label{width:auto;margin:0;font-size:11px}
+ #sec-biomech .lw-panel .ts-pose-art-note{display:none}
+ #sec-biomech .lw-panel .ts-pose-art-choices{gap:6px}
+ #sec-biomech .lw-panel .ts-pose-art-choices button{font-size:11px}
+ .lw-options .ts-pose-art-note,.lw-options .ts-pose-art-switch,.lw-options #postureArtStatus{font-size:11px}
+ .lw-options .ts-pose-art-choices button{min-height:44px}
+ .lw-options .ts-scheme-only details{display:block}
+ .lw-options .ts-scheme-only summary{display:none}
+ .lw-options .ts-scheme-only .lab-diagram-context{display:none}
+ .lw-panel .lw-parameter-control{padding:5px 0!important;margin:0;border:0;background:transparent}
+ .lw-parameter-control>div:first-child{font:600 11px/1.4 'Plus Jakarta Sans',sans-serif;gap:8px;margin:5px 0 0}
+ .lw-parameter-control>div:last-child:not(:first-child){font-size:10px!important}
+ .lw-panel .lw-actions{display:flex;gap:6px}
+ .lw-panel .lw-actions>button{flex:1}
+ .lw-panel #windRangeInput{min-width:80px}
+ .lw-panel #windRangeInput:only-of-type{width:100%}
+ .lw-panel #trajectoryCanvas{max-width:100%;height:130px}
+ .lw-active #main-content .lab-mobile-stepper{position:relative!important;flex:none;min-height:58px;width:100%;margin:0;padding:6px 12px calc(6px + env(safe-area-inset-bottom));box-shadow:none;grid-template-columns:minmax(0,1fr) auto minmax(0,1.4fr);border:0;border-top:1px solid var(--rule-light);background:var(--bg-paper)}
+ .lw-active .lab-mobile-stepper button{min-height:44px;font:700 11px/1.3 'Plus Jakarta Sans',sans-serif;padding:7px}
+ .lw-active .lab-mobile-stepper #labModuleProgress{font-size:10px}
+ .lw-stage .lab-biomech-stage{width:100%;height:100%!important;min-height:0!important;border:0;background:var(--bg-surface)}
+ .lw-panel>#posturePhotoZoom{display:block;width:100%;margin-top:6px;font-size:12px}
+ .lw-stage #biomechDraftSvg{width:100%;height:100%;max-height:100%}
+ .lw-stage #svgActiveLeaderLine{display:none}
+ .lw-active #sec-biomech #biomechPinsOverlay .callout-node{width:44px!important;height:44px!important;min-width:44px;min-height:44px;border:0!important;background:transparent!important;color:var(--ink-900)!important;box-shadow:none!important;isolation:isolate;transform:translate(-50%,-50%)!important;font:750 11px 'Plus Jakarta Sans',sans-serif}
+ .lw-active #biomechPinsOverlay .callout-node::before{content:"";position:absolute;inset:10px;background:var(--bg-surface);border:1px solid var(--ink-900);border-radius:50%;z-index:-1}
+ .lw-active #sec-biomech #biomechPinsOverlay .callout-node{translate:none!important;scale:1!important}
+ .lw-active #biomechPinsOverlay .callout-node[aria-pressed="true"]::before{background:#FF4800;border-color:#FF4800}
+ .lw-active #biomechPinsOverlay .callout-node[aria-pressed="true"]{color:#000!important}
+ .lw-active #biomechPinsOverlay .callout-node::after{content:"";position:absolute;height:1px;width:var(--lw-leader,0px);top:50%;background:var(--ink-500);z-index:-2;pointer-events:none}
+ .lw-active #biomechPinsOverlay .callout-node[data-lw-side="left"]::after{left:50%}
+ .lw-active #biomechPinsOverlay .callout-node::after{left:50%!important;right:auto!important;transform:rotate(var(--lw-leader-angle,0deg));transform-origin:0 50%}
+ .lw-active #sec-biomech .lw-workbench{grid-template-rows:auto auto minmax(150px,1fr) auto auto}
+ .lw-trigger-curve{flex-direction:column;gap:4px}
+ .lw-trigger-curve #oscPhaseLabel{align-self:flex-start;font:700 11px/1.3 'Plus Jakarta Sans',sans-serif;padding:5px 7px}
+ .lw-trigger-curve #triggerOscCanvas{width:100%;height:calc(100% - 32px)!important;min-height:80px;background:#0E1116;border-radius:5px}
+ .lw-trigger-direction{gap:8px}
+ .lw-trigger-actions{height:auto;gap:6px;padding:0;justify-content:stretch}
+ .lw-trigger-actions button{flex:1}
+ .lw-direction-controls{height:auto;display:block;padding:0}
+ .lw-trigger-direction>svg{width:48%;height:100%;max-height:100%}
+ .lw-trigger-direction #triggerVectorDiagram{pointer-events:none}
+ .lw-optics-lens #ocularLensCanvas{height:min(100%,280px)!important;width:auto!important;max-width:100%;aspect-ratio:1;border:0;box-shadow:none}
+ .lw-hardware-view{position:relative;width:100%;height:100%;padding:0;display:flex;align-items:center}
+ .lw-hardware-view .hw-marker{pointer-events:none;visibility:hidden}
+ .lw-hardware-pin{position:absolute;transform:translate(-50%,-50%);width:44px;height:44px;border:0;background:transparent;color:var(--ink-900);font:750 10px 'Plus Jakarta Sans',sans-serif;isolation:isolate}
+ .lw-hardware-pin::before{content:"";position:absolute;inset:10px;border-radius:50%;background:var(--bg-surface);border:1px solid var(--ink-900);z-index:-1}
+ .lw-hardware-pin[aria-pressed="true"]::before{background:#FF4800;border-color:#FF4800}
+ .lw-hardware-pin[aria-pressed="true"]{color:#000}
+ .lw-active #sec-hardware .lw-hardware-pin[aria-pressed="true"]{background:transparent!important;border:0!important;box-shadow:none!important}
+ .lw-hardware-view #hardwareBlueprintSvg{width:100%!important;min-width:0!important;max-width:100%;height:100%!important;max-height:100%;touch-action:pan-y}
+ .lw-hardware-view .hw-paper-guides,.lw-hardware-view .hw-cob-section{display:none}
+ .lw-stage.lw-rifle .hw-scope-section,.lw-stage.lw-scope .hw-rifle-section{display:none}
+ #sec-imssu .lw-stage{flex-direction:column;align-items:stretch}
+ #sec-imssu .lw-stage>.lw-tabs{flex:none}
+ #sec-imssu .lw-stage>:has(>[data-rack-animal]){flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+ .lw-hardware-view .hw-figure-mono{font-size:12px}
+ .lw-stage [data-rack-animal]{max-width:100%;width:100%!important;padding:12px 0}
+ .lw-stage [data-rack-animal]:not(.is-current){display:none!important}
+ .lw-stage [data-rack-animal].is-current{display:flex!important}
+ .lw-stage [id^="rackRow-"]{width:100%;gap:4px}
+ .lw-stage .steel-target-btn{flex:1;min-width:44px!important;min-height:64px!important;height:64px;padding:5px}
+ .lw-stage .steel-target-btn svg{max-width:100%;height:42px}
+ .lw-panel #rangeBtn-chicken,.lw-panel #rangeBtn-pig,.lw-panel #rangeBtn-turkey,.lw-panel #rangeBtn-ram{padding:6px;min-height:44px}
+ .lw-stage [id^="rackRow-"]+div{height:auto;min-height:28px;font-size:10px;padding:5px 8px}
+ #lw-info{width:min(580px,calc(100% - 24px));max-height:85dvh;margin:auto;overflow:auto;overscroll-behavior:contain;border:1px solid var(--rule-heavy);border-radius:8px;background:var(--bg-surface);color:var(--ink-900);padding:16px}
+ #lw-info::backdrop{background:rgba(0,0,0,.5)}
+ #lw-info>.lw-dialog-close{position:sticky;top:0;display:block;margin-left:auto;z-index:1}
+ #lw-info button{min-height:44px;min-width:44px;padding:8px 12px;background:var(--ink-900);color:var(--bg-surface);border:0;border-radius:4px;font:700 12px 'Plus Jakarta Sans',sans-serif}
+ #lw-info .source-audit{padding:0}
+ #lw-info h2{font-size:22px}
+ #lw-info .source-table-wrap{overflow:auto}
+ #lw-info a{display:inline-block;min-height:44px;padding-block:10px}
+}
+@media(max-width:767px) and (max-height:580px){
+ html.lw-active,.lw-active body{overflow:auto}
+ .lw-active #main-content{height:550px;overflow:visible}
+}
+
+/* Trigger stages use one selection color throughout the sequence. */
+.trigger-stage-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.trigger-stage-buttons button{flex:1;min-width:100px;min-height:44px;padding:10px;border:1px solid var(--rule-heavy);background:var(--bg-surface);color:var(--ink-900);font-weight:700}
+.trigger-stage-buttons button[aria-pressed="true"]{background:var(--clarisa-blue);color:white;border-color:var(--clarisa-blue)}
+.trigger-stage-buttons button:focus-visible{outline:3px solid var(--clarisa-blue);outline-offset:3px}
+.trigger-stage-explanation{border-top:1px solid var(--rule-light);padding-top:12px;line-height:1.65}
+.trigger-stage-explanation h3{font-weight:750;margin-bottom:6px}
+.trigger-stage-explanation p{margin:6px 0}
+@media(max-width:767px){
+ #sec-trigger .lw-trigger-direction{padding:8px 14px}
+ #sec-trigger .lw-trigger-direction #triggerVectorDiagram{width:100%;height:auto;max-height:100%}
+ .lw-direction-controls{flex-direction:column;align-items:stretch;padding:0;gap:6px}
+ .lw-direction-controls .trigger-stage-buttons{display:flex;gap:4px}
+ .lw-direction-controls .trigger-stage-buttons button{min-width:0;padding:8px 4px;font-size:11px}
+ .lw-direction-controls .trigger-stage-explanation{font-size:12px;line-height:1.6}
+ .lw-optics-caption{flex:none;font-size:10px;line-height:1.3;color:var(--ink-700);margin:0;text-align:center}
+ #sec-optics .lw-workbench{grid-template-rows:auto 0 minmax(180px,1fr) auto auto}
+}
+
+@media(max-width:767px){
+}
+
+@media(max-width:767px){
+ .lw-optics-lens{flex-direction:column;gap:6px}
+ .lw-optics-lens #ocularLensCanvas{height:calc(100% - 24px)!important;max-height:320px;width:auto!important;max-width:100%;min-height:0;object-fit:contain}
+}
+
+@media(max-width:767px){
+ .lw-hardware-view #hardwareBlueprintSvg{height:calc(100% - 88px)!important}
+ .lw-hardware-leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+ .lw-hardware-leaders line{stroke-width:1.25}
+ .lw-hardware-pin{z-index:2}
+ .lw-hardware-pin:focus-visible{outline:3px solid var(--clarisa-blue);outline-offset:-3px;border-radius:4px}
+ #sec-hardware .lw-panel>#hwSpecTitle{font-size:15px;line-height:1.4;margin:8px 0 5px}
+ #sec-hardware .lw-panel>#hwSpecBody,#sec-hardware .lw-panel>#hwSpecNote{font:12px/1.65 'Plus Jakarta Sans',sans-serif;margin:6px 0;padding:0;border:0;color:var(--ink-700)}
+ #sec-hardware .lw-workbench{grid-template-rows:auto auto minmax(180px,1fr) auto auto}
+ #sec-imssu .lw-panel>#silhouetteHelp{font-size:12px;line-height:1.65;margin:8px 0}
+}
+
+@media(max-width:767px){
+ .lw-hardware-view .hw-scope-section>text,.lw-hardware-view .hw-rifle-section>text,.lw-hardware-view #hardwareBlueprintSvg>g[aria-hidden="true"]{display:none}
+}

@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/lab.css">
+    <link rel="stylesheet" href="/lab-workspace.css">
 </head>
 <body class="min-h-screen selection:bg-[#FF4800] selection:text-white">
     <a href="#main-content" class="lab-skip">Lewati navigasi</a>
@@ -50,17 +51,6 @@
                 </nav>
 
                 <!-- Right: Paper / CAD Dark Mode & Audio Switch -->
-                <details class="lab-settings" open><summary>Pengaturan <span aria-hidden="true">⌄</span></summary><div class="lab-controls flex items-center gap-2 font-mono-tech text-[11px]">
-                    <button aria-pressed="false" onclick="togglePaperTheme()" id="themeSwitchBtn" class="px-2.5 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-subtle)] transition flex items-center gap-1.5">
-                        <span id="themeIndicator" class="w-2 h-2 bg-[var(--ink-900)] inline-block"></span>
-                        <span id="themeText">MODE: KERTAS CETAK</span>
-                    </button>
-                    <button aria-pressed="false" onclick="toggleAudioSfx()" id="sfxSwitchBtn" class="px-2.5 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition flex items-center gap-1.5">
-                        <span id="sfxDot" class="w-2 h-2 bg-[#7E838C] inline-block"></span>
-                        <span id="sfxLabel">AUDIO: BISU</span>
-                    </button>
-                </div>
-                </details>
                 <div class="lab-mobile-picker"><label for="labMobileModuleSelect">Pilih materi</label><select id="labMobileModuleSelect" aria-label="Pilih materi Shooting Lab"><option value="sec-biomech">01 · Postur tubuh</option><option value="sec-trigger">02 · Pelatuk</option><option value="sec-optics">03 · Optik</option><option value="sec-imssu">04 · Sasaran siluet</option><option value="sec-hardware">05 · Peralatan</option></select></div>
             </div>
         </div>
@@ -136,7 +126,7 @@
     <main id="main-content" class="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 space-y-16">
         <details class="lab-mobile-disclosure lab-notice-wrap" data-lab-mobile-collapse open><summary>Simulasi edukatif — lihat batas penggunaan <span aria-hidden="true">⌄</span></summary><aside class="lab-notice" role="note" aria-label="Batas penggunaan simulasi">
           <strong>SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR</strong>
-          <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, X-Ray, kurva pelatuk, optik, senapan, serta lintasan bukan rekonstruksi tersertifikasi atau hasil ukur. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
+          <p>Hanya kaliber, posisi, jarak sasaran, dan ketentuan yang secara eksplisit didukung rulebook yang ditampilkan sebagai fakta resmi. Ilustrasi postur, kurva pelatuk, optik, dan senapan merupakan materi pembelajaran, bukan hasil pengukuran. Tidak ada rekomendasi angka setelan, tekanan, atau koreksi tembakan dalam halaman ini. <a href="/rules">Baca dokumen peraturan</a>.</p>
         </aside></details>
 
         <!-- =====================================================================
@@ -151,109 +141,39 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Postur berdiri dan bagian penopang tubuh</span><span class="lab-heading-short">Postur tubuh</span>
 </h2>
-<p class="lab-section-hint">Pilih sudut pandang dan titik anatomi untuk melihat lokasinya. Saat sudut pandang berganti, titik yang dipilih menyesuaikan bagian yang terlihat.</p>
+<p class="lab-section-hint">Pilih bagian tubuh yang ingin dipelajari. Foto dan penjelasan akan mengikuti titik yang dipilih. Gunakan Perbesar titik untuk melihat detailnya.</p>
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
                 <div class="lab-pose-controls flex flex-wrap items-center gap-2 font-mono-tech text-xs">
-                    <label class="lab-mobile-pose-label" for="labMobilePosePicker">Sudut pandang</label>
-                    <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Punggung</option><option value="front">Depan</option><option value="sideLeft">Samping kiri</option><option value="sideRight">Samping kanan</option></select>
-                    <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                        <button onclick="switchPose('back')" id="poseTab-back" aria-pressed="true" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
-                            1. Skema Punggung
-                        </button>
-                        <button onclick="switchPose('front')" id="poseTab-front" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            2. Skema Depan
-                        </button>
-                        <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            3. Samping Kiri
-                        </button>
-                        <button onclick="switchPose('sideRight')" id="poseTab-sideRight" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            4. Samping Kanan
-                        </button>
-                    </div>
                     <label class="lab-callout-label" for="labCalloutPicker">Bagian yang ingin dipelajari</label>
                     <select id="labCalloutPicker" class="lab-callout-select" aria-label="Pilih titik anatomi untuk dijelaskan"></select>
-                    <button onclick="toggleXraySkeleton()" id="xrayToggleBtn" aria-pressed="true" class="px-3 py-2 border border-[#0055B8] text-[var(--clarisa-blue)] font-bold hover:bg-[#0055B8] hover:text-white transition">
-                        Garis postur: tampil
-                    </button>
+
                 </div>
             </div>
 
-            <div id="postureArtControls" class="ts-pose-art-controls" role="group" aria-label="Pilihan ilustrasi postur">
-              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Ilustrasi karakter</span>
-                <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Biru · karakter ilustratif</button>
-                <button type="button" data-pose-color="red" aria-pressed="false" disabled>Merah · karakter ilustratif</button>
+            <div id="postureArtControls" class="ts-pose-art-controls" role="group" aria-label="Pilih foto atlet">
+              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Atlet</span>
+                <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Clarisa Azalia</button>
+                <button type="button" data-pose-color="red" aria-pressed="false" disabled>Aurellia Cassandra</button>
               </div>
-              <label class="ts-pose-art-switch"><input id="postureArtMode" type="checkbox" disabled> Gunakan gambar karakter</label>
-              <p id="postureArtStatus" aria-live="polite">Memeriksa ketersediaan aset ilustrasi…</p>
-              <p class="ts-pose-art-note">Mode karakter menggunakan WebP statis. Matikan opsi gambar karakter untuk membuka skema SVG beserta slider model. Keduanya bukan rekonstruksi atlet.</p>
+              <button id="posturePhotoZoom" type="button" disabled onclick="openPosturePhotoDetail()" aria-haspopup="dialog" class="min-h-11 px-3 py-2 border border-[var(--rule-heavy)]">Perbesar titik</button>
+              <p id="postureArtStatus" aria-live="polite">Memuat foto…</p>
+              <p class="ts-pose-art-note">Foto mengikuti titik yang dipilih.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between drafting-bg reg-corner">
                     <div class="lab-figure-caption flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
-                        <span id="stagePoseTitle" class="font-bold">FIG 1.1 — ILUSTRASI PUNGGUNG (BUKAN REKONSTRUKSI POSTER)</span>
+                        <span id="stagePoseTitle" class="font-bold">Postur: punggung dan bahu</span>
                         <span class="text-[var(--ink-500)]">PIN SESUAI SUDUT PANDANG · 10 TITIK TOTAL</span>
                     </div>
 
-                    <p class="lab-diagram-context">Pilih angka pada gambar atau dari daftar 10 titik. Penanda mengikuti sudut pandang, bukan titik anatomi hasil pengukuran.</p>
+                    <p class="lab-diagram-context">Pilih angka pada foto atau nama bagian tubuh. Foto akan berganti otomatis sesuai bagian yang dipilih.</p>
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
+                        <p id="posturePhotoLoading" role="status">Memuat foto…</p>
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
-                            <defs>
-                                <marker id="leaderDot" markerWidth="6" markerHeight="6" refX="3" refY="3">
-                                    <circle cx="3" cy="3" r="2.5" fill="#FF4800"/>
-                                </marker>
-                                <linearGradient id="biomechBlueKit" x1="0" y1="0" x2="1" y2=".25">
-                                  <stop offset="0" stop-color="#173B68"/><stop offset=".38" stop-color="#2861A0"/><stop offset=".72" stop-color="#1D4E86"/><stop offset="1" stop-color="#132E54"/>
-                                </linearGradient>
-                                <linearGradient id="biomechRedKit" x1="0" y1="0" x2="1" y2=".25">
-                                  <stop offset="0" stop-color="#642B38"/><stop offset=".4" stop-color="#B7404E"/><stop offset=".72" stop-color="#8D303E"/><stop offset="1" stop-color="#542530"/>
-                                </linearGradient>
-                                <linearGradient id="biomechTrouser" x1="0" y1="0" x2="1" y2="0">
-                                  <stop offset="0" stop-color="#18252B"/><stop offset=".47" stop-color="#445057"/><stop offset="1" stop-color="#182329"/>
-                                </linearGradient>
-                                <linearGradient id="biomechShoe" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0" stop-color="#EFF0EA"/><stop offset=".55" stop-color="#CDD4D2"/><stop offset="1" stop-color="#66777A"/>
-                                </linearGradient>
-                                <linearGradient id="biomechSkin" x1="0" y1="0" x2="1" y2=".5">
-                                  <stop offset="0" stop-color="#BA8972"/><stop offset=".55" stop-color="#E2B8A0"/><stop offset="1" stop-color="#9C6E5D"/>
-                                </linearGradient>
-                                <linearGradient id="biomechHair" x1="0" y1="0" x2="1" y2="1">
-                                  <stop offset="0" stop-color="#5E5050"/><stop offset=".35" stop-color="#282A30"/><stop offset="1" stop-color="#131A20"/>
-                                </linearGradient>
-                            </defs>
-
-                            <!-- Illustrative grid, not a millimeter scale -->
-                            <g class="biomech-ruler" stroke="var(--rule-light)" stroke-width="1" font-size="8" fill="var(--ink-500)">
-                                <line x1="18" y1="20" x2="18" y2="500"/>
-                                <line x1="14" y1="60" x2="22" y2="60"/><text x="25" y="63">SKEMA</text>
-                                <line x1="14" y1="160" x2="22" y2="160"/><text x="25" y="163">—</text>
-                                <line x1="14" y1="260" x2="22" y2="260"/><text x="25" y="263">—</text>
-                                <line x1="14" y1="360" x2="22" y2="360"/><text x="25" y="363">—</text>
-                                <line x1="14" y1="485" x2="22" y2="485"/><text x="25" y="488">LANTAI</text>
-                            </g>
-
-                            <!-- Center of Gravity Vertical Plumb Line (Garis Pusat Beban) -->
-                            <g id="svgCogPlumbGroup" transform="translate(230, 0)">
-                                <line x1="0" y1="18" x2="0" y2="495" stroke="#FF4800" stroke-width="1.5" stroke-dasharray="6 4"/>
-                                <rect x="-68" y="12" width="136" height="18" fill="var(--ink-900)"/>
-                                <text x="0" y="24" text-anchor="middle" fill="var(--bg-surface)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">SUMBU MODEL (ILUSTRASI)</text>
-                            </g>
-
-                            <!-- Ground Force Plate & 90° Target Line Protractor -->
-                            <g class="biomech-ground" transform="translate(0, 475)">
-                                <line x1="45" y1="20" x2="425" y2="20" stroke="var(--ink-900)" stroke-width="1.5"/>
-                                <text x="52" y="13" fill="var(--ink-700)" font-size="9" font-family="IBM Plex Mono" font-weight="bold">&larr; ARAH SASARAN (SUDUT BERDIRI 90&deg;)</text>
-                                <!-- Left Foot Force Plate -->
-                                <rect x="145" y="20" width="64" height="16" fill="#0055B8"/>
-                                <text id="plateLeftText" x="177" y="50" text-anchor="middle" fill="#0055B8" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KIRI · MODEL</text>
-                                <!-- Right Foot Force Plate -->
-                                <rect x="252" y="20" width="64" height="16" fill="#D11F26"/>
-                                <text id="plateRightText" x="284" y="50" text-anchor="middle" fill="#D11F26" font-size="10" font-family="IBM Plex Mono" font-weight="bold">KANAN · MODEL</text>
-                            </g>
-
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
                             <g id="svgAthleteLayer"></g>
 
@@ -268,45 +188,6 @@
                         <div id="biomechPinsOverlay" class="absolute inset-0 pointer-events-none"></div>
                     </div>
 
-                    <!-- Bottom Mechanical Posture Sliders -->
-                    <div class="ts-scheme-only pt-4 border-t border-[var(--rule-light)] space-y-3">
-                        <div class="flex items-center justify-between font-mono-tech text-xs">
-                            <span class="font-bold uppercase">UBAH INDIKATOR MODEL</span>
-                            <button onclick="resetPostureParameters()" class="underline hover:text-[#FF4800]">Reset parameter</button>
-                        </div>
-
-                        <p class="lab-diagram-context">Dalam mode skema SVG, slider mengubah bentuk figur serta indikator contoh. Kontrol ini disembunyikan pada mode karakter WebP. Semua nilainya bukan hasil pengukuran tubuh.</p>
-                         <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Ubah indikator model</summary>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                                <div class="lab-parameter-heading flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>PARAMETER LENGKUNGAN (MODEL):</span>
-                                    <strong id="archDegReadout" class="text-[var(--clarisa-blue)]">+12.0° (MODEL)</strong>
-                                </div>
-                                <input id="archSlider" type="range" min="-4" max="22" step="1" value="12" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Lengkungan punggung model, derajat">
-                            </div>
-
-                            <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                                <div class="lab-parameter-heading flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                    <span>POSISI SIKU RELATIF KE PINGGUL (MODEL):</span>
-                                    <strong id="hipLockReadout" class="text-[var(--ok-green)]">100 / 100 (MODEL)</strong>
-                                </div>
-                                <input id="hipLockSlider" type="range" min="20" max="100" step="5" value="100" oninput="updatePosturePhysics()" class="mech-slider" aria-label="Variasi posisi siku kiri pada model visual, bukan pengukuran atau nilai ideal">
-                            </div>
-                        </div>
-</details>
-
-                        <!-- Telemetry Bar: Muscle EMG Load vs Passive Bone Load -->
-                        <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono-tech text-[11px]">
-                            <div>
-                                <span class="text-[var(--ink-500)]">STATUS DIAGRAM: </span>
-                                <strong id="skeletalStatusLabel" class="text-[var(--ok-green)]">PARAMETER AWAL MODEL</strong>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span>INDEKS PERUBAHAN VISUAL: <strong id="muzzleSwayReadout">0 / 100</strong></span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Right 6 Cols: Selected Callout Specification Sheet + Complete 10-Point Poster Index -->
@@ -314,19 +195,20 @@
                     <!-- Active Callout Technical Dossier -->
                     <div class="border-2 border-[var(--rule-heavy)] p-5 bg-[var(--bg-paper)] space-y-3">
                         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                            <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK ANATOMI #01 // TULANG BELAKANG</span>
-                            <span id="dossierRef" class="text-[var(--ink-500)]">SKEMA ILUSTRATIF — SUMBER POSTER BELUM TERVERIFIKASI</span>
+                            <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK 01 // PUNGGUNG</span>
+                            <span id="dossierRef" class="text-[var(--ink-500)]">POSTUR BERDIRI</span>
                         </div>
 
                         <h3 id="dossierTitle" aria-live="polite" class="text-xl font-extrabold tracking-tight">
-                            Lengkungan Punggung &amp; Tahanan Beban Pasif (Skeletal Support)
+                            Punggung dan kenyamanan postur
                         </h3>
 
                         <p id="dossierBody" class="text-sm text-[var(--ink-700)] leading-relaxed">
-                            Garis tubuh dalam ilustrasi bukan pengukuran distribusi beban. Pada mode karakter WebP, slider hanya mengubah indikator dan garis model, bukan bentuk tubuh.
+                            Posisi badan sedikit condong ke belakang dengan panggul maju untuk membentuk tumpuan yang seimbang. Lengkungan punggung tetap dalam batas nyaman.
                         </p>
+                        <p id="dossierViewNote" class="text-xs text-[var(--ink-700)] leading-relaxed border-t border-[var(--rule-light)] pt-3">Foto belakang memperlihatkan punggung, panggul, dan posisi berdiri saat membidik.</p>
 
-                        <div id="dossierMetrics" class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 font-mono-tech text-[11px]"></div>
+
                     </div>
 
                     <!-- All 10 Prototype Callouts Table -->
@@ -351,126 +233,48 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[var(--aurellia-red)] font-bold uppercase tracking-wider">
-                        BAGIAN 02 // MEKANIKA BILAH PELATUK, VEKTOR JARI (C–B–A) &amp; KURVA ILUSTRATIF
+                        BAGIAN 02 // TAHAPAN PERGERAKAN PELATUK (A → B → C) &amp; KURVA ILUSTRATIF
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-<span class="lab-heading-long">Memahami pergerakan pelatuk lewat diagram</span><span class="lab-heading-short">Pelatuk</span>
+<span class="lab-heading-long">Memahami tahapan pergerakan pelatuk</span><span class="lab-heading-short">Pelatuk</span>
 </h2>
-<p class="lab-section-hint">Pilih A, B, atau C untuk membandingkan arah gerak. Tekan dan tahan tombol simulasi atau putar contoh untuk melihat empat fase. Grafik bukan rekaman tarikan pelatuk.</p>
+<p class="lab-section-hint">Pilih tahap A, B, atau C untuk memahami pergerakan pelatuk sebelum dan setelah pelepasan. Putar urutan untuk melihat hubungannya dengan kurva ilustrasi.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">PERBANDINGAN ARAH GERAKAN—BUKAN STANDAR TARIKAN</strong>
+                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">TAHAP PERGERAKAN PELATUK</strong>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
-                <!-- Left 6 Cols: Vector C-B-A & Mechanical Sear Cutaway from prototype -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5">
-                    <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                        <span class="font-bold">FIG 2.1 — PERGERAKAN PEMICU (C/B/A) &amp; TUAS BILAH PELATUK</span>
-                        <span id="activeVectorStamp" class="px-2 py-0.5 bg-[#0E7C47] text-white font-bold">VEKTOR B: GARIS TENGAH</span>
+                    <h3 class="font-bold">Tiga tahap pergerakan pelatuk</h3>
+                    <svg id="triggerVectorDiagram" viewBox="0 0 420 180" class="w-full" role="img" aria-labelledby="triggerStageDiagramTitle triggerStageDiagramDesc">
+                        <title id="triggerStageDiagramTitle">Urutan pergerakan pelatuk dari A ke C</title>
+                        <desc id="triggerStageDiagramDesc">A adalah tarikan awal, B pergerakan setelah tahanan terasa hingga pelepasan, dan C pergerakan setelah pelepasan. Panjang bagian hanya membantu membaca urutan.</desc>
+                        <rect id="triggerZoneA" x="15" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <rect id="triggerZoneB" x="145" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <rect id="triggerZoneC" x="285" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <g fill="#182B35" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700">
+                            <text x="75" y="58">A · Take-up</text><text x="205" y="58">B · Creep</text><text x="345" y="58">C · Over-travel</text>
+                        </g>
+                        <path d="M30 88H390" stroke="#52646D" stroke-width="2"/>
+                        <path d="M382 82L390 88L382 94" fill="none" stroke="#52646D" stroke-width="2"/>
+                        <circle id="triggerTravelMarker" cx="75" cy="88" r="8" fill="#0057A5" stroke="white" stroke-width="2"/>
+                        <path d="M275 20V130" stroke="#182B35" stroke-width="2" stroke-dasharray="4 4"/>
+                        <g fill="#182B35" text-anchor="middle" font-family="sans-serif" font-size="12">
+                            <text x="75" y="147">Tarikan awal</text><text x="205" y="147">Sebelum pelepasan</text><text x="345" y="147">Setelah pelepasan</text>
+                            <text x="275" y="16">Pelepasan</text>
+                        </g>
+                    </svg>
+                    <div id="triggerStageButtons" class="trigger-stage-buttons" role="group" aria-label="Pilih tahap pergerakan pelatuk">
+                        <button type="button" id="btnStage-A" aria-controls="triggerStageExplanation" aria-pressed="true" onclick="selectTriggerStage('A')">A · Tarikan awal</button>
+                        <button type="button" id="btnStage-B" aria-controls="triggerStageExplanation" aria-pressed="false" onclick="selectTriggerStage('B')">B · Sebelum pelepasan</button>
+                        <button type="button" id="btnStage-C" aria-controls="triggerStageExplanation" aria-pressed="false" onclick="selectTriggerStage('C')">C · Setelah pelepasan</button>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Left Diagram: Exact Poster "PELATUK" C - B - A Vector Diagram -->
-                        <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">TIGA JALUR PERGERAKAN · SKEMA</span>
-                            <svg id="triggerVectorDiagram" viewBox="0 0 230 220" class="w-full h-48" role="group" aria-labelledby="triggerVectorTitle triggerVectorDesc">
-<title id="triggerVectorTitle">Tiga arah pergerakan ilustratif</title><desc id="triggerVectorDesc">Pilih A, B, atau C untuk melihat perbandingan garis, bukan ukuran gaya atau anjuran posisi nyata.</desc>
-<defs>
-<linearGradient id="triggerGraphite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68777B"/><stop offset=".33" stop-color="#39494B"/><stop offset="1" stop-color="#202A2E"/></linearGradient>
-<linearGradient id="triggerPlate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3F4F0"/><stop offset="1" stop-color="#D8DDD8"/></linearGradient>
-</defs>
-<path d="M22 166H207" stroke="#C6C9C3" stroke-width="1" stroke-dasharray="4 5"/>
-<path d="M115 18V178" stroke="#D1D6D0" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="57" y="13" width="116" height="57" rx="9" fill="url(#triggerGraphite)" stroke="#263338" stroke-width="2"/>
-<path d="M62 22H167" stroke="#DAE2E0" opacity=".5" stroke-width="2"/>
-<rect x="99" y="63" width="33" height="21" rx="5" fill="url(#triggerPlate)" stroke="#455259" stroke-width="1.5"/>
-<path id="svgVecC" d="M95 75 C94 111 82 141 62 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
-<path id="svgVecB" d="M115 75 L115 170" fill="none" stroke="#0E7C47" stroke-width="5" stroke-linecap="round"/>
-<path id="svgVecA" d="M135 75 C136 109 151 143 168 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
-<circle cx="95" cy="75" r="4" fill="#D1D9D8"/><circle cx="115" cy="75" r="4" fill="#D1D9D8"/><circle cx="135" cy="75" r="4" fill="#D1D9D8"/>
-<text x="115" y="45" text-anchor="middle" fill="#EDF1F0" font-family="IBM Plex Mono" font-size="10" font-weight="700" letter-spacing="1">MODEL ARAH</text>
-<g tabindex="0" role="button" data-trigger-vector="C" aria-pressed="false" aria-label="Pilih skema C: garis melengkung kiri" onclick="selectFingerVector('C')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('C');}" class="trigger-vector-node cursor-pointer" transform="translate(62,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">C</text>
-</g>
-<g tabindex="0" role="button" data-trigger-vector="B" aria-pressed="true" aria-label="Pilih skema B: garis tengah" onclick="selectFingerVector('B')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('B');}" class="trigger-vector-node cursor-pointer" transform="translate(115,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">B</text>
-</g>
-<g tabindex="0" role="button" data-trigger-vector="A" aria-pressed="false" aria-label="Pilih skema A: garis melengkung kanan" onclick="selectFingerVector('A')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('A');}" class="trigger-vector-node cursor-pointer" transform="translate(168,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">A</text>
-</g>
-</svg>
-                            <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>POLA GARIS MODEL:</span>
-                                <strong id="vecDeviationReadout" class="text-[var(--ok-green)]">0.0 mm (NOL)</strong>
-                            </div>
-                        </div>
-
-                        <!-- Right Diagram: Mechanical Sear & Blue Anodized Trigger Shoe Cutaway -->
-                        <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">AREA PERGERAKAN · BUKAN MEKANISME INTERNAL</span>
-                            <svg id="triggerMechanismDiagram" viewBox="0 0 240 220" class="w-full h-48" role="img" aria-labelledby="triggerMechanismTitle triggerMechanismDesc">
-<title id="triggerMechanismTitle">Ilustrasi eksternal bilah dan bidang sentuh</title>
-<desc id="triggerMechanismDesc">Diagram skematis interaksi arah garis dan bidang sentuh, bukan mekanisme internal atau panduan penyetelan.</desc>
-<defs>
-<linearGradient id="triggerOuterMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E9B9D"/><stop offset=".4" stop-color="#45575D"/><stop offset="1" stop-color="#24333A"/></linearGradient>
-<linearGradient id="triggerAccentBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#163C68"/><stop offset=".5" stop-color="#3373AD"/><stop offset="1" stop-color="#1C4E84"/></linearGradient>
-</defs>
-<path d="M29 170H207" stroke="#CDD0C8" stroke-width="1" stroke-dasharray="4 4"/>
-<path d="M38 30H198Q207 30 207 39V56H38Z" fill="url(#triggerOuterMetal)" stroke="#2E3A3F" stroke-width="2"/>
-<path d="M44 35H197" stroke="#EDF1EF" stroke-width="2" opacity=".4"/>
-<path d="M57 57V160Q57 180 77 180H186" fill="none" stroke="url(#triggerOuterMetal)" stroke-width="8" stroke-linecap="round"/>
-<path d="M62 59V155" stroke="#D9E0DC" stroke-width="1.4" opacity=".44"/>
-<circle cx="132" cy="44" r="7" fill="#2C414A" stroke="#C3CDCA" stroke-width="2"/>
-<g id="mechTriggerBlade" transform="rotate(0, 132, 44)">
- <rect x="127" y="44" width="10" height="118" rx="5" fill="url(#triggerAccentBlue)" stroke="#1C4568" stroke-width="1.5"/>
- <path d="M129 52V156" stroke="#BBD8EE" stroke-width="1.6" opacity=".48"/>
- <circle cx="132" cy="86" r="3" fill="#DFECEB"/><circle cx="132" cy="112" r="3" fill="#DFECEB"/><circle cx="132" cy="137" r="3" fill="#DFECEB"/>
- <g id="mechFingerPad" transform="translate(0, 0)">
-  <ellipse cx="158" cy="109" rx="21" ry="13" fill="#DB8B6B" fill-opacity=".42" stroke="#CB6745" stroke-width="1.8"/>
-  <circle cx="137" cy="109" r="13" fill="none" stroke="#537A82" stroke-width="1.4" stroke-dasharray="4 3"/>
-  <path d="M190 109H148" stroke="#DD7146" stroke-width="2" stroke-dasharray="3 3"/>
- </g>
-</g>
-<text x="157" y="72" fill="#465455" font-size="9" font-family="IBM Plex Mono" font-weight="700">BILAH</text>
-<text x="165" y="142" fill="#A95338" font-size="9" font-family="IBM Plex Mono" font-weight="700">AREA CONTOH</text>
-</svg>
-                            <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>INDEKS GERAKAN MODEL:</span>
-                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">50 / 100 (MODEL)</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vector Selector Buttons & Vertical Shoe Contact Slider -->
-                    <div class="space-y-3 pt-1">
-                        <div class="grid grid-cols-3 gap-2 font-mono-tech text-xs">
-                            <button onclick="selectFingerVector('C')" id="btnVec-C" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [C] Arah kiri
-                            </button>
-                            <button onclick="selectFingerVector('B')" id="btnVec-B" aria-pressed="true" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
-                                [B] Garis lurus (contoh)
-                            </button>
-                            <button onclick="selectFingerVector('A')" id="btnVec-A" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [A] Arah kanan
-                            </button>
-                        </div>
-
-                        <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                            <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>POSISI VERTIKAL JARI PADA TRIGGER SHOE:</span>
-                                <strong id="shoeHeightText">TENGAH (POSISI MODEL)</strong>
-                            </div>
-                            <input type="range" min="-22" max="22" value="0" oninput="adjustTriggerShoeContact(this.value)" class="mech-slider" aria-label="Posisi jari pada diagram pelatuk ilustrasi">
-                        </div>
-
-                        <div id="vectorExplanationBox" aria-live="polite" class="p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed">
-                            <strong>ILUSTRASI VEKTOR B:</strong> Garis hijau menggambarkan arah lurus dalam skema dua dimensi. Sudut dan titik sentuh pada gambar bukan toleransi resmi atau instruksi pengaturan senapan.
-                        </div>
+                    <div id="triggerStageExplanation" class="trigger-stage-explanation">
+                        <h3 id="triggerStageTitle">A · Tarikan awal (Take-up)</h3>
+                        <p id="triggerStageBody">Pergerakan awal pelatuk sebelum tahanan mulai terasa. Tahap ini mendahului pergerakan menuju titik pelepasan.</p>
+                        <p class="lab-diagram-context">A, B, dan C menunjukkan urutan pergerakan. Panjang bagian pada gambar tidak mewakili jarak atau setelan pelatuk tertentu.</p>
                     </div>
                 </div>
 
@@ -489,24 +293,24 @@
                         <div class="grid grid-cols-4 gap-1.5 pt-2 mt-2 border-t border-slate-800 font-mono-tech text-[10px] text-center">
                             <div id="oscStage-1" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-sky-400">1. PENARIKAN AWAL</div>
-                                <div>Take-Up (kurva contoh)</div>
+                                <div>Tarikan awal</div>
                             </div>
                             <div id="oscStage-2" class="p-1.5 border border-slate-800 text-slate-300">
-                                <div class="font-bold text-amber-400">2. STABIL</div>
-                                <div>Titik Tahanan (Wall)</div>
+                                <div class="font-bold text-amber-400">2. TAHANAN</div>
+                                <div>Menuju pelepasan</div>
                             </div>
                             <div id="oscStage-3" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-emerald-400">3. PELEPASAN</div>
-                                <div>Sear Break (contoh)</div>
+                                <div>Titik pelepasan</div>
                             </div>
                             <div id="oscStage-4" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-orange-400">4. GERAKAN LANJUTAN</div>
-                                <div>Follow-Through</div>
+                                <div>Gerakan lanjutan</div>
                             </div>
                         </div>
                     </div>
 
-                    <p class="lab-diagram-context lab-trigger-curve-context">Kurva ini menggambarkan urutan fase secara konseptual. Sumbu dan bentuk garis <strong>bukan rekaman gaya, waktu, atau performa atlet</strong>.</p>
+                    <p id="triggerCurveHelp" class="lab-diagram-context lab-trigger-curve-context">Kurva memperlihatkan tarikan awal (A), pergerakan menuju pelepasan (B), titik pelepasan, lalu gerakan lanjutan (C). Tekan dan tahan untuk mengikuti urutannya, atau pilih Putar contoh otomatis. Bentuk garis membantu menjelaskan tahapan dan <strong>bukan rekaman gaya, waktu, atau performa atlet</strong>.</p>
                     <!-- Interactive Tactile Trigger Paddle -->
                     <div class="lab-trigger-action space-y-3">
                         <p class="lab-action-label">COBA SIMULASI · LANGKAH 02</p><div class="flex flex-col sm:flex-row gap-2 font-mono-tech text-xs">
@@ -521,8 +325,8 @@
                         </div>
 
                         <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)] flex flex-wrap justify-between gap-2 font-mono-tech text-[11px]">
-                            <span>DIAGNOSTIK TARIKAN: <strong id="pullDiagnosticText" class="text-[var(--ok-green)]">KURVA ILUSTRATIF DITAMPILKAN</strong></span>
-                            <span>FOLLOW-THROUGH: <strong class="text-[var(--clarisa-blue)]">FASE AKHIR — TIDAK MEMUAT ACUAN WAKTU</strong></span>
+                            <span>STATUS PEMUTARAN: <strong id="pullDiagnosticText" class="text-[var(--ok-green)]">KURVA ILUSTRATIF DITAMPILKAN</strong></span>
+                            <span>GERAKAN LANJUTAN: <strong class="text-[var(--clarisa-blue)]">FASE AKHIR — TIDAK MEMUAT ACUAN WAKTU</strong></span>
                         </div>
                     </div>
                 </div>
@@ -541,10 +345,10 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Jarak mata dan lensa teleskop</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Ubah satu kontrol setiap kali. Jarak dan tinggi mata menggeser kepala pada gambar samping; posisi lateral dan intensitas hanya mengubah tampilan dalam lensa. Angka adalah parameter model.</p>
+<p class="lab-section-hint">Ubah jarak, tinggi, atau posisi mata ke samping, lalu amati perubahan area terang dan bayangan di tepi lensa. Angka merupakan contoh ilustrasi, bukan rekomendasi setelan.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
-                    Reset Posisi Model Optik
+                    Kembalikan posisi awal
                 </button>
             </div>
 
@@ -561,111 +365,11 @@
                         <canvas id="ocularLensCanvas" width="300" height="300" role="img" aria-label="Ilustrasi pandangan melalui lensa optik; perubahan bayangan mengikuti parameter contoh, bukan kondisi optik senapan asli" class="w-full h-full rounded-full border-4 border-[#111315] shadow-md"></canvas>
                     </div>
 
-                    <!-- Live Side-Profile Head & Cheekpiece Alignment Diagram (Recreating the Poster's 4 Head-on-Scope Inset Photos) -->
-                    <div class="w-full border border-[var(--rule-light)] bg-[var(--bg-surface)] p-3 mt-3">
-                        <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mb-1">
-                            <span>POTONGAN SAMPING: MATA &rarr; LENSA OKULER</span>
-                            <span id="axisStatusMini" class="text-[var(--ok-green)] font-bold">SUMBU LURUS</span>
-                        </div>
-                        <div id="opticalSidePan" class="optical-side-pan" tabindex="-1">
-                        <div id="opticalAlignmentArtwork" class="optics-layer-stage" hidden role="img" aria-label="Gambar teleskop dan senapan tetap; kepala karakter bergeser sedikit mendatar dan vertikal mengikuti kontrol jarak dan tinggi mata">
-                          <img id="opticStaticArt" src="/assets/optics/optic-static.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                          <img id="opticHeadArt" src="/assets/optics/optic-head.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                          <img id="opticForegroundArt" src="/assets/optics/optic-foreground.webp" alt="" aria-hidden="true" draggable="false" width="1320" height="528" decoding="async">
-                        </div>
-                        <svg id="opticalAlignmentIllustration" viewBox="0 0 835 282" class="w-full h-auto block" role="img" aria-labelledby="optSideTitle optSideDesc">
-<title id="optSideTitle">Studi ilustratif jarak mata dan lensa okuler</title>
-<desc id="optSideDesc">Karakter generik tampak samping; hanya bagian kepala yang berubah posisi mengikuti dua slider. Teleskop dan badan senapan tetap diam. Bentuk dan jarak hanyalah contoh visual.</desc>
-<defs>
- <pattern id="opticGrid" width="23" height="23" patternUnits="userSpaceOnUse"><path d="M23 0H0V23" fill="none" stroke="#CFD8D6" stroke-width=".55" opacity=".55"/></pattern>
- <linearGradient id="scopeMatte" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5C6B72"/><stop offset=".18" stop-color="#313F46"/><stop offset=".56" stop-color="#151F25"/><stop offset="1" stop-color="#263238"/></linearGradient>
- <linearGradient id="scopeBell" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#66747B"/><stop offset=".25" stop-color="#35444A"/><stop offset=".85" stop-color="#17252D"/><stop offset="1" stop-color="#111B22"/></linearGradient>
- <linearGradient id="scopeSteel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#D6DFDE"/><stop offset=".27" stop-color="#ABB9BC"/><stop offset=".6" stop-color="#5B727D"/><stop offset="1" stop-color="#2F4652"/></linearGradient>
- <linearGradient id="scopeBlue" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5D97BF"/><stop offset=".29" stop-color="#24669A"/><stop offset=".7" stop-color="#0A426F"/><stop offset="1" stop-color="#082E50"/></linearGradient>
- <linearGradient id="headFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E8BFA6"/><stop offset=".43" stop-color="#D9A68E"/><stop offset="1" stop-color="#B77E6D"/></linearGradient>
- <linearGradient id="hairInk" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#424144"/><stop offset=".48" stop-color="#25272C"/><stop offset="1" stop-color="#151C24"/></linearGradient>
- <linearGradient id="blueJersey" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#3D83B4"/><stop offset=".4" stop-color="#19578E"/><stop offset="1" stop-color="#122E59"/></linearGradient>
- <filter id="softScopeShadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0D2737" flood-opacity=".2"/></filter>
-</defs>
-<rect width="835" height="282" fill="#F9FAF7"/><rect width="835" height="282" fill="url(#opticGrid)"/>
-<g aria-hidden="true" opacity=".8"><line x1="14" y1="103" x2="825" y2="103" stroke="#3B7A89" stroke-width="1.5" stroke-dasharray="9 6"/><line x1="14" y1="184" x2="825" y2="184" stroke="#AEBAB7" stroke-width="1" stroke-dasharray="3 8"/></g>
-<!-- Scope and rifle are fixed, irrespective of sliders. -->
-<g id="optStaticRifle" aria-hidden="true" filter="url(#softScopeShadow)">
- <rect x="9" y="183" width="520" height="18" rx="4" fill="url(#scopeSteel)" stroke="#334650" stroke-width="1.4"/>
- <rect x="9" y="201" width="555" height="25" rx="3" fill="url(#scopeBlue)" stroke="#173C60" stroke-width="1.5"/>
- <path d="M0 231H552L579 215H613V242H545L523 255H0Z" fill="#3B4D59" stroke="#253F4F" stroke-width="2"/>
- <path d="M1 230H500M12 237H352" stroke="#C3D2D1" stroke-width="1.7" opacity=".45"/>
- <path d="M14 208H243M273 208H391" stroke="#96BADD" stroke-width="1.5" opacity=".55"/>
- <rect x="306" y="228" width="36" height="22" rx="3" fill="#253541" stroke="#98A6A9"/>
- <path d="M366 232H451V248H427L414 270H381L369 257Z" fill="#273037" stroke="#697C83" stroke-width="1.5"/>
- <path d="M426 231V250M436 231V242" stroke="#D0D6D6" stroke-opacity=".55" stroke-width="1.2"/>
- <path d="M568 206L606 204L635 214L638 229H582L566 225Z" fill="#111C23" stroke="#65747B" stroke-width="1.5"/>
- <rect x="627" y="205" width="10" height="32" rx="2" fill="#17242B" stroke="#667982"/>
-</g>
-<!-- Conceptual precision telescope based on the poster's assembly silhouette, not a product specification. -->
-<g id="opticFixedScope" aria-hidden="true" filter="url(#softScopeShadow)">
- <path d="M31 78H150L190 88V119L150 129H31Z" fill="url(#scopeBell)" stroke="#233239" stroke-width="2"/>
- <path d="M36 80H143L180 90" stroke="#8AA2A9" stroke-width="2" opacity=".5"/>
- <ellipse cx="31" cy="103" rx="12" ry="27" fill="#17272F" stroke="#657B81" stroke-width="3"/>
- <ellipse cx="30" cy="103" rx="6.5" ry="22" fill="#062B31" stroke="#376D72" stroke-width="1.5"/>
- <path d="M48 77V130M54 77V130" stroke="#121D23" stroke-width="3" opacity=".7"/>
- <rect x="190" y="91" width="297" height="25" rx="2.5" fill="url(#scopeMatte)" stroke="#253A45" stroke-width="1.8"/>
- <path d="M199 93H475" stroke="#BBCBD0" stroke-width="1.6" opacity=".5"/>
- <g fill="url(#scopeMatte)" stroke="#192E38" stroke-width="1.4"><rect x="230" y="87" width="29" height="33" rx="3"/><rect x="398" y="87" width="28" height="33" rx="3"/></g>
- <g stroke="#90A5AA" stroke-width="1.15" fill="#1F2F39"><circle cx="237" cy="95" r="3"/><circle cx="252" cy="95" r="3"/><circle cx="405" cy="95" r="3"/><circle cx="419" cy="95" r="3"/></g>
- <path d="M234 118V141H259V118M404 118V141H425V118" fill="#2B3B45" stroke="#233640" stroke-width="2"/>
- <rect x="218" y="139" width="228" height="9" rx="1" fill="#243742" stroke="#657B84" stroke-width="1.2"/>
- <path d="M242 150V180M416 150V180" stroke="#354D59" stroke-width="4"/>
- <rect x="242" y="175" width="179" height="8" rx="1.5" fill="#283F4B" stroke="#536D78"/>
- <rect x="315" y="66" width="47" height="29" rx="4" fill="url(#scopeMatte)" stroke="#22323A" stroke-width="1.8"/>
- <rect x="318" y="53" width="41" height="18" rx="2" fill="#303D44" stroke="#192D38" stroke-width="1.5"/>
- <path d="M321 55V67M326 55V67M332 55V67M338 55V67M344 55V67M350 55V67M355 55V67" stroke="#72858B" stroke-width="1.8" opacity=".9"/>
- <circle cx="339" cy="103" r="24" fill="url(#scopeMatte)" stroke="#17282E" stroke-width="2"/>
- <circle cx="339" cy="103" r="15" fill="#273943" stroke="#748D93" stroke-width="1.2"/>
- <circle cx="339" cy="103" r="4" fill="#17272D" stroke="#ABBFC2"/>
- <g fill="#1C2C36" stroke="#344C55"><rect x="452" y="86" width="26" height="35" rx="3"/><rect x="483" y="85" width="43" height="37" rx="4"/></g>
- <path d="M456 89V118M462 87V119M468 87V119M474 88V117M488 88V118M496 87V119M504 87V119M512 88V118" stroke="#738990" stroke-width="1.4" opacity=".85"/>
- <rect x="520" y="84" width="14" height="39" rx="3" fill="url(#scopeBell)" stroke="#1A2931" stroke-width="2"/>
- <ellipse cx="534" cy="103" rx="4" ry="19.5" fill="#1A2B34" stroke="#8FA1A1" stroke-width="2"/>
-</g>
-<g id="optStaticBody" aria-hidden="true">
- <path d="M646 229Q663 201 694 204Q742 206 794 232V282H588Q602 249 646 229Z" fill="url(#blueJersey)" stroke="#203D52" stroke-width="2"/>
- <path d="M677 215Q712 226 736 277" stroke="#A3C6D7" stroke-width="11" opacity=".5" fill="none"/>
- <path d="M671 213Q716 218 756 275" stroke="#0F335B" stroke-width="2.5" fill="none"/>
-</g>
-<!-- Only this group responds to eye-distance and head-height controls. -->
-<g id="svgShooterHeadSide" transform="translate(0, -7)" aria-hidden="true">
- <path d="M651 188Q668 204 690 205L703 239Q667 242 647 215Z" fill="url(#headFace)" stroke="#9B6D5A" stroke-width="1.2"/>
- <path d="M724 53Q758 58 767 94Q780 145 794 166L794 233Q767 224 748 188Q728 148 728 118Z" fill="url(#hairInk)" stroke="#28313A" stroke-width="2"/>
- <path d="M746 75Q758 127 778 174M750 92Q757 139 777 198" stroke="#818187" stroke-width="1" fill="none" opacity=".26"/>
- <path d="M581 30Q599 3 658 9Q724 15 737 74Q740 126 711 174L686 190L629 171L589 126Q564 88 581 30Z" fill="url(#hairInk)" stroke="#232E35" stroke-width="2.8"/>
- <path d="M587 68Q596 47 625 42Q667 42 690 71Q706 96 697 134Q693 159 681 171L661 187Q648 195 626 183Q603 173 589 154Q579 146 564 135Q563 130 573 119L583 111Q575 88 587 68Z" fill="url(#headFace)" stroke="#956E61" stroke-width="2.1"/>
- <path d="M655 179Q678 167 692 145L687 173Q672 191 659 187Z" fill="#A87865" opacity=".5"/>
- <path d="M579 66Q582 32 621 27Q676 14 707 52Q722 71 717 106Q705 69 678 60Q644 47 620 65Q596 77 587 104Q581 87 579 66Z" fill="url(#hairInk)" stroke="#30383E" stroke-width="1.5"/>
- <path d="M600 45Q636 22 685 51M617 47Q667 32 705 74" stroke="#8A8681" stroke-width="1.2" opacity=".26" fill="none"/>
- <path d="M694 117Q704 104 711 116Q716 128 705 140Q699 148 693 142" fill="#C38C74" stroke="#916353" stroke-width="1.4"/>
- <path d="M701 119Q707 120 704 128L699 134" stroke="#986856" stroke-width="1.2" fill="none"/>
- <path d="M579 117Q575 123 562 133Q570 137 581 137" fill="none" stroke="#A16F60" stroke-width="1.8"/>
- <path d="M565 144Q576 146 589 143" stroke="#98675B" stroke-width="1.2" fill="none"/>
- <path d="M566 151Q579 158 593 151" stroke="#A16E60" stroke-width="1.3" fill="none"/>
- <path d="M576 100Q591 90 603 98" fill="none" stroke="#363038" stroke-width="3" stroke-linecap="round"/>
- <path d="M577 107Q588 102 601 107" fill="none" stroke="#5D4A48" stroke-width="1.5"/>
- <path d="M578 110Q588 114 599 109" fill="#F0F1E9" stroke="#5E5450" stroke-width="1.2"/>
- <ellipse cx="584" cy="110" rx="3" ry="4" fill="#2A3942"/><circle cx="583.2" cy="109" r="1" fill="#E6ECEE"/>
- <path d="M590 109L600 107" stroke="#2D3134" stroke-width="1.5"/>
- <circle cx="584" cy="110" r="2.6" fill="#228EAE" stroke="white" stroke-width="1.1"/>
-</g>
-</svg>
-                        </div>
-                        <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalSidePan" aria-pressed="false">Perbesar detail gambar</button>
-                        <p class="optical-side-hint">Gambar awal ditampilkan utuh. Perbesar detail gambar untuk melihat bagian mata dan okuler. Dua kontrol posisi menggeser kepala; dua kontrol lainnya hanya mengubah tampilan dalam lensa.
-                        <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
-                    </div>
                 </div>
 
                 <!-- Right 7 Cols: Precision Optical Sliders & Poster Guidelines -->
                 <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-5">
-                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Coba ubah posisi mata · 4 kontrol model</summary>
+                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Coba tiga kontrol posisi mata</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- 1. Eye Relief Distance -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
@@ -685,7 +389,7 @@
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>2. TINGGI POSISI MATA (MODEL):</span>
-                                <strong id="optCheekHeightLabel" class="text-[var(--ok-green)]">0.0 mm (SEJAJAR)</strong>
+                                <strong id="optCheekHeightLabel" class="text-[var(--ok-green)]">0.0 mm (CONTOH)</strong>
                             </div>
                             <input id="optCheekHeight" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Perubahan tinggi posisi kepala pada ilustrasi, bukan pengukuran, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
@@ -698,45 +402,32 @@
                         <!-- 3. Lateral Cant / Offset -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>3. POSISI LATERAL MATA (LENSA):</span>
-                                <strong id="optLatLabel" class="text-[var(--ok-green)]">0.0 mm (TENGAH)</strong>
+                                <span>3. POSISI MATA KE SAMPING:</span>
+                                <strong id="optLatLabel" class="text-[var(--ok-green)]">0.0 mm (CONTOH)</strong>
                             </div>
-                            <input id="optLat" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Offset horizontal mata ilustrasi, milimeter">
+                            <input id="optLat" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Posisi mata ke samping pada ilustrasi, milimeter">
                         </div>
 
-                        <!-- 4. Cheek Pressure & Pulse Tremor -->
-                        <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                            <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>4. INTENSITAS PERUBAHAN LENSA:</span>
-                                <strong id="optPressureLabel" class="text-[var(--ok-green)]">50% (CONTOH MODEL)</strong>
-                            </div>
-                            <input id="optPressure" type="range" min="10" max="100" value="50" oninput="updateOpticalSim()" class="mech-slider" aria-label="Intensitas perubahan visual pada model lensa, bukan ukuran tekanan sebenarnya">
-                            <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
-                                <span>Perubahan kecil</span>
-                                <span>Perubahan sedang</span>
-                                <span>Perubahan besar</span>
-                            </div>
-                        </div>
                     </div>
 </details>
 
                     <!-- Educational descriptions supplied in the original prototype; not an authoritative rules quotation -->
-                    <div class="border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 space-y-3">
+                    <div id="opticsExplanation" class="border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 space-y-3">
                         <div class="font-mono-tech text-xs font-bold uppercase border-b border-[var(--rule-light)] pb-1.5">
-                            ILUSTRASI KONSEP: POSISI KEPALA DAN LENSA
+                            MEMBACA PANDANGAN MELALUI LENSA
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[var(--ink-700)] leading-relaxed">
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // GAMBAR SAMPING</strong>
-                                Gambar samping menunjukkan hubungan kepala dan okuler. Perubahan posisinya hanya simulasi visual.
+                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // JARAK MATA</strong>
+                                Jarak mata adalah jarak antara mata dan okuler, yaitu lensa yang dekat dengan mata. Pada ilustrasi ini, perubahan jarak mengubah luas area terang yang terlihat.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // DUA KONTROL POSISI</strong>
-                                Jarak dan tinggi mata mengubah posisi kepala ilustratif. Sandaran pipi tidak ditampilkan dan tekanan pada popor tidak dihitung.
+                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // TINGGI MATA</strong>
+                                Kontrol tinggi menggambarkan perubahan posisi mata ke atas atau ke bawah terhadap sumbu teleskop. Amati perubahan letak area terang dan bayangan di tepi lensa.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // TAMPILAN DALAM LENSA</strong>
-                                Lingkaran dan bayangan tepi berubah sesuai parameter model. Gambar tidak menunjukkan kualitas atau setelan optik sebenarnya.
+                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // POSISI KE SAMPING</strong>
+                                Kontrol ke samping menggambarkan pergeseran mata ke kiri atau ke kanan. Area terang menunjukkan bagian pandangan yang terlihat, sedangkan area gelap menggambarkan bayangan tepi. Ilustrasi ini tidak menghitung kondisi teleskop tertentu.
                             </div>
                         </div>
                     </div>
@@ -751,12 +442,12 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[#FF4800] font-bold uppercase tracking-wider">
-                        BAGIAN 04 // ARENA SASARAN SILUET IMSSU 4 TINGKAT &amp; BALISTIK PELURU DIABOLO
+                        BAGIAN 04 // JENIS SASARAN SILUET DAN JARAKNYA
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal sasaran siluet dan jaraknya</span><span class="lab-heading-short">Sasaran siluet</span>
 </h2>
-<p class="lab-section-hint">Pilih jenis sasaran, lalu ketuk siluet untuk menandainya jatuh atau berdiri kembali. Di ponsel, satu kelompok ditampilkan setiap kali. Jarak mengikuti materi aturan; gerakan dan kurva lintasan bersifat ilustratif.</p>
+<p id="silhouetteHelp" class="lab-section-hint">Pilih jenis sasaran, lalu ketuk siluet untuk menandainya jatuh atau berdiri kembali. Di ponsel, satu kelompok ditampilkan setiap kali. Setiap kelompok berisi lima sasaran. Hitungan menunjukkan sasaran yang kamu tandai jatuh, bukan hasil pembidikan yang dihitung.</p>
                 </div>
                 <div class="flex items-center gap-3 font-mono-tech text-xs">
                     <div class="px-3 py-2 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
@@ -855,7 +546,7 @@
                                 <circle cx="100" cy="100" r="3.5" fill="#D11F26"/>
                             </svg>
                             <p class="font-mono-tech text-[10px] text-center text-[var(--ink-500)] mt-1">
-                                Perbandingan gambar ilustratif; bukan template atau penampang optik berskala.
+                                Garis silang di tengah membantu membandingkan posisi bentuk siluet. Ukuran gambar bukan skala sasaran sebenarnya.
                             </p>
                         </div>
 
@@ -870,7 +561,7 @@
                                 <div>
                                     <div class="font-mono-tech text-xs font-bold uppercase">PELURU DIABOLO UJUNG BULAT (4.5mm)</div>
                                     <p class="text-xs text-[var(--ink-700)] leading-relaxed mt-0.5">
-                                        Bentuk pellet pada gambar bersifat ilustratif. Rulebook IMSSU mengatur kaliber dan bahan pellet, bukan menyatakan bentuk ini paling akurat.
+                                        Gambar memperlihatkan kepala membulat, bagian tengah yang menyempit, dan bagian belakang yang melebar. Bentuk ini membantu mengenali pellet diabolo.
                                     </p>
                                 </div>
                             </div>
@@ -878,29 +569,13 @@
                             <div class="p-3.5 border border-[var(--rule-light)] bg-[var(--bg-paper)]">
                                 <div class="font-mono-tech text-xs font-bold uppercase text-[var(--clarisa-blue)]">PEMBERSIHAN LARAS BERKALA</div>
                                 <p class="text-xs text-[var(--ink-700)] leading-relaxed mt-0.5">
-                                    Jadwal perawatan dan prosedur pembersihan mengikuti manual pabrikan, bukan angka putaran/tembakan yang ditentukan simulator ini.
+                                    Ikuti jadwal dan cara perawatan dalam manual pabrikan. Gambar di halaman ini hanya membantu mengenali bagian peralatan.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Ballistic Drop & Elevation Click Solver Canvas -->
-                    <div class="border border-[var(--rule-heavy)] bg-[#0E1116] p-3 space-y-2">
-                        <div class="flex flex-wrap justify-between items-center font-mono-tech text-[11px] text-slate-200">
-                            <span>GRAFIK ILUSTRATIF (BUKAN PERHITUNGAN BALISTIK)</span>
-                            <span id="ballisticSpecLine" class="text-[#FF4800] font-bold">DOMBA 41M // JARAK RESMI · BENTUK LINTASAN ILUSTRASI</span>
-                        </div>
-                        <canvas id="trajectoryCanvas" width="580" height="170" class="w-full h-[160px] block"></canvas>
-                        <div class="flex flex-col sm:flex-row items-center gap-3 pt-1">
-                            <div class="w-full sm:flex-1 flex items-center gap-3 font-mono-tech text-[11px] text-slate-300">
-                                <span class="shrink-0">INTENSITAS GRAFIK: <strong id="windValText" class="text-sky-400">2.0 unit model</strong></span>
-                                <input id="windRangeInput" type="range" min="0" max="8" step="0.5" value="2" oninput="renderTrajectoryGraph()" class="mech-slider" aria-label="Intensitas kurva ilustrasi, bukan data angin atau balistik">
-                            </div>
-                            <button onclick="triggerBallisticTrace()" class="w-full sm:w-auto px-4 py-2 bg-[#FF4800] text-white font-mono-tech text-xs font-bold uppercase hover:bg-[#e03f00] transition">
-                                Putar Ilustrasi
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
 </details>
             </div>
@@ -913,19 +588,19 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[#B37B24] font-bold uppercase tracking-wider">
-                        BAGIAN 05 // ANATOMI SENAPAN ANGIN MATCH, TITIK KESEIMBANGAN &amp; BEDAH TELESKOP
+                        BAGIAN 05 // BAGIAN SENAPAN DAN TELESKOP
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Mengenal bagian senapan dan teleskop</span><span class="lab-heading-short">Bagian peralatan</span>
 </h2>
-<p class="lab-section-hint">Pilih nomor 01–06 pada foto senapan merah atau 07–10 pada skema teleskop. Pada ponsel, diagram bergeser ke penanda yang dipilih.</p>
+<p class="lab-section-hint">Pilih nomor 01–06 pada foto senapan merah atau 07–10 pada skema teleskop. Pada ponsel, pilih Senapan atau Teleskop lalu pilih komponennya.</p>
                 </div>
 
                 <span class="font-mono-tech text-[11px] text-[var(--ink-500)]">SENAPAN MERAH · GAMBAR DARI POSTER</span>
             </div>
 
             <div class="lab-hardware-mobile-control"><label for="labHardwarePicker">Pilih komponen</label><select id="labHardwarePicker" aria-label="Pilih komponen pada diagram peralatan">
-              <option value="stock">01 · Popor (stock)</option><option value="cheekpiece">02 · Sandaran pipi</option><option value="grip">03 · Grip</option><option value="riser">04 · Penopang depan</option><option value="cylinder">05 · Tabung udara</option><option value="barrel">06 · Laras</option><option value="objective">07 · Lensa depan</option><option value="turrets">08 · Turret</option><option value="zoom">09 · Pembesaran</option><option value="ocular">10 · Lensa okuler</option>
+              <option value="stock">01 · Popor dan Bantalan Bahu</option><option value="cheekpiece">02 · Sandaran Pipi</option><option value="grip">03 · Pegangan dan Pelatuk</option><option value="riser">04 · Penopang Depan</option><option value="cylinder">05 · Tabung Udara</option><option value="barrel">06 · Laras</option><option value="objective">07 · Lensa Objektif</option><option value="turrets">08 · Turret Elevasi dan Windage</option><option value="zoom">09 · Cincin Pembesaran</option><option value="ocular">10 · Lensa Okuler</option>
             </select></div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 8 Cols: Dual Technical Blueprint (Rifle + Detailed Scope Diagram from Bottom-Left of Poster) -->
@@ -983,28 +658,28 @@
   <text x="704" y="53" class="hw-figure-mono" fill="#555E5D" font-size="9.5">DETAIL</text>
   <text x="704" y="67" fill="#222A2D" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">OPTIK</text>
   <text x="704" y="81" fill="#69716E" font-size="9" font-family="IBM Plex Mono, monospace">MODEL EKSTERIOR</text>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-pressed="false" aria-label="Pilih lensa depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="objective" aria-pressed="false" aria-label="Pilih Lensa Objektif" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('objective');}" onclick="inspectHardware('objective')">
   <title>7. lensa depan</title>
   <rect class="hw-hitbox" x="69" y="70" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="92" cy="93" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="92" cy="93" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="92" y="97" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">07</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-pressed="false" aria-label="Pilih turret" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="turrets" aria-pressed="false" aria-label="Pilih Turret Elevasi dan Windage" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('turrets');}" onclick="inspectHardware('turrets')">
   <title>8. turret</title>
   <rect class="hw-hitbox" x="324" y="3" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="347" cy="26" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="347" cy="26" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="347" y="30" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">08</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-pressed="false" aria-label="Pilih pembesaran" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="zoom" aria-pressed="false" aria-label="Pilih Cincin Pembesaran" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('zoom');}" onclick="inspectHardware('zoom')">
   <title>9. pembesaran</title>
   <rect class="hw-hitbox" x="507" y="71" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="530" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="530" cy="94" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="530" y="98" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">09</text>
  </g>
-  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-pressed="false" aria-label="Pilih lensa okuler" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
+  <g class="hw-marker cursor-pointer" tabindex="0" role="button" data-hw-key="ocular" aria-pressed="false" aria-label="Pilih Lensa Okuler" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('ocular');}" onclick="inspectHardware('ocular')">
   <title>10. lensa okuler</title>
   <rect class="hw-hitbox" x="617" y="71" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="640" cy="94" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
@@ -1065,46 +740,43 @@
 </g>
   <path d="M133 225L194 224M362 229H388" stroke="#545D5C" stroke-width="2" stroke-dasharray="3 5" opacity=".55"/>
   <image id="hwRedRifleRaster" href="/assets/hardware/aurellia-red-poster.webp" x="45" y="136" width="792" height="266" preserveAspectRatio="xMidYMid meet" pointer-events="none" aria-hidden="true" onload="this.ownerSVGElement.classList.add('hw-raster-ready')" onerror="this.ownerSVGElement.classList.remove('hw-raster-ready')"/>
-  <g id="svgCobFulcrum" transform="translate(420,364)" class="hw-balance-indicator">
-   <path d="M0 0L-10 16H10Z" fill="#E35F2E" stroke="#FFFFFF" stroke-width="1.3"/>
-   <text x="0" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" font-weight="700" fill="#B65431">TITIK MODEL</text>
-  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(0,89)" tabindex="0" role="button" data-hw-key="stock" aria-pressed="false" aria-label="Pilih popor" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
+
+  <g class="hw-marker cursor-pointer" transform="translate(0,89)" tabindex="0" role="button" data-hw-key="stock" aria-pressed="false" aria-label="Pilih Popor dan Bantalan Bahu" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('stock');}" onclick="inspectHardware('stock')">
   <title>1. popor</title>
   <rect class="hw-hitbox" x="55" y="219" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="78" cy="242" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="78" cy="242" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="78" y="246" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">01</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(-32,108)" tabindex="0" role="button" data-hw-key="cheekpiece" aria-pressed="true" aria-label="Pilih sandaran pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
+  <g class="hw-marker cursor-pointer" transform="translate(-32,108)" tabindex="0" role="button" data-hw-key="cheekpiece" aria-pressed="true" aria-label="Pilih Sandaran Pipi" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cheekpiece');}" onclick="inspectHardware('cheekpiece')">
   <title>2. sandaran pipi</title>
   <rect class="hw-hitbox" x="187" y="101" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="210" cy="124" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="210" cy="124" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="210" y="128" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">02</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(-55,55)" tabindex="0" role="button" data-hw-key="grip" aria-pressed="false" aria-label="Pilih grip" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
+  <g class="hw-marker cursor-pointer" transform="translate(-55,55)" tabindex="0" role="button" data-hw-key="grip" aria-pressed="false" aria-label="Pilih Pegangan dan Pelatuk" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('grip');}" onclick="inspectHardware('grip')">
   <title>3. grip</title>
   <rect class="hw-hitbox" x="288" y="249" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="311" cy="272" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="311" cy="272" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="311" y="276" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">03</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(36,96)" tabindex="0" role="button" data-hw-key="riser" aria-pressed="false" aria-label="Pilih penopang depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
+  <g class="hw-marker cursor-pointer" transform="translate(36,96)" tabindex="0" role="button" data-hw-key="riser" aria-pressed="false" aria-label="Pilih Penopang Depan" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('riser');}" onclick="inspectHardware('riser')">
   <title>4. penopang depan</title>
   <rect class="hw-hitbox" x="413" y="169" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="436" cy="192" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="436" cy="192" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="436" y="196" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">04</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(65,0)" tabindex="0" role="button" data-hw-key="cylinder" aria-pressed="false" aria-label="Pilih tabung udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
+  <g class="hw-marker cursor-pointer" transform="translate(65,0)" tabindex="0" role="button" data-hw-key="cylinder" aria-pressed="false" aria-label="Pilih Tabung Udara" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('cylinder');}" onclick="inspectHardware('cylinder')">
   <title>5. tabung udara</title>
   <rect class="hw-hitbox" x="587" y="246" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="610" cy="269" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
   <circle class="hw-marker-disc" cx="610" cy="269" r="12.5" fill="#232A2C" stroke="#FFFFFF" stroke-width="1.4"/>
   <text class="hw-marker-number" x="610" y="273" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="700">05</text>
  </g>
-  <g class="hw-marker cursor-pointer" transform="translate(30,83)" tabindex="0" role="button" data-hw-key="barrel" aria-pressed="false" aria-label="Pilih laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
+  <g class="hw-marker cursor-pointer" transform="translate(30,83)" tabindex="0" role="button" data-hw-key="barrel" aria-pressed="false" aria-label="Pilih Laras" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();inspectHardware('barrel');}" onclick="inspectHardware('barrel')">
   <title>6. laras</title>
   <rect class="hw-hitbox" x="732" y="130" width="46" height="46" rx="23" fill="transparent"/>
   <circle class="hw-marker-halo" cx="755" cy="153" r="16" fill="var(--bg-surface)" stroke="#BDC0BD" stroke-width="1.1"/>
@@ -1118,31 +790,23 @@
 </svg>
                     </div>
 
-                    <!-- Center of Balance (Berat & Keseimbangan Senapan) Interactive Bar -->
-                    <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                        <div class="flex flex-wrap justify-between font-mono-tech text-[11px] mb-1.5">
-                            <span>PINDAHKAN PENANDA POSISI PADA DIAGRAM:</span>
-                            <strong id="cobFeedbackText" class="text-[var(--ok-green)]">PENANDA DI TENGAH DIAGRAM</strong>
-                        </div>
-                        <input type="range" min="350" max="490" value="420" oninput="adjustRifleBalancePoint(this.value)" class="mech-slider" aria-label="Geser penanda pada diagram; bukan titik keseimbangan hasil pengukuran">
-                         <p class="lab-diagram-context">Penanda berpindah secara visual. Posisi tersebut tidak dihitung dari berat atau titik keseimbangan senapan pada foto.</p>
-                    </div>
+
                 </div>
 
                 <!-- Right 4 Cols: Hardware Component Specification Sheet & 10-Part Index -->
                 <div class="lg:col-span-4 p-4 sm:p-6 flex flex-col justify-between space-y-4">
                     <div class="border-2 border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-5 space-y-3">
                         <div id="hwSpecCode" class="font-mono-tech text-[11px] font-bold text-[#FF4800] uppercase">
-                            KOMPONEN #02 // PENYELARASAN KEPALA
+                            KOMPONEN #02 // SANDARAN PIPI
                         </div>
                         <h3 id="hwSpecTitle" aria-live="polite" class="text-xl font-extrabold tracking-tight">
-                            Cheek Piece (Sandaran Pipi Presisi)
+                            Sandaran Pipi
                         </h3>
                         <p id="hwSpecBody" class="text-xs sm:text-sm text-[var(--ink-700)] leading-relaxed">
-                            Sandaran pipi merupakan bagian tempat kepala bertumpu saat melihat melalui optik. Ilustrasi hanya menunjukkan letak komponen, bukan setelan atlet tertentu.
+                            Nomor 02 menunjukkan sandaran pipi di atas popor. Bagian ini menjadi tempat pipi bertumpu ketika mata menghadap teleskop.
                         </p>
                         <div id="hwSpecNote" class="p-3 bg-[var(--bg-surface)] border border-[var(--rule-light)] font-mono-tech text-[11px] text-[var(--clarisa-blue)]">
-                            BATAS GAMBAR: foto senapan berasal dari poster; ukuran dan pengaturan komponen tidak diperiksa. Teleskop pada diagram atas merupakan skema terpisah.
+                            Bandingkan sandaran pipi dengan bantalan bahu di belakangnya. Gambar senapan dan ilustrasi teleskop ditampilkan secara terpisah.
                         </div>
                     </div>
 
@@ -1157,31 +821,31 @@
                                 <span>[01] Popor dan Bantalan Bahu</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cheekpiece')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[02] Cheek Piece (Sandaran Pipi)</span><span>&rarr;</span>
+                                <span>[02] Sandaran Pipi</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('grip')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[03] Pegangan dan Area Pelatuk</span><span>&rarr;</span>
+                                <span>[03] Pegangan dan Pelatuk</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('riser')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[04] Bagian Depan Badan Senapan</span><span>&rarr;</span>
+                                <span>[04] Penopang Depan</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('cylinder')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[05] Tabung Udara Bertekanan (PCP)</span><span>&rarr;</span>
+                                <span>[05] Tabung Udara</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('barrel')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[06] Panjang Senapan &amp; Laras Match</span><span>&rarr;</span>
+                                <span>[06] Laras</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('objective')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[07] Lensa Objektif &amp; Fokus Paralaks</span><span>&rarr;</span>
+                                <span>[07] Lensa Objektif</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('turrets')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[08] Turret Elevasi &amp; Windage</span><span>&rarr;</span>
+                                <span>[08] Turret Elevasi dan Windage</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('zoom')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[09] Cincin Pembesaran (Zoom Ring)</span><span>&rarr;</span>
+                                <span>[09] Cincin Pembesaran</span><span>&rarr;</span>
                             </button>
                             <button onclick="inspectHardware('ocular')" class="text-left px-3 py-1.5 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] bg-[var(--bg-paper)] flex justify-between">
-                                <span>[10] Lensa Okuler &amp; Fokus Reticle</span><span>&rarr;</span>
+                                <span>[10] Lensa Okuler</span><span>&rarr;</span>
                             </button>
                         </div>
 </details>
@@ -1207,10 +871,9 @@
             <tbody>
               <tr><th scope="row">Production Rifle, 4,5 mm (.177), lead pellet, posisi berdiri</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025.</td></tr>
               <tr><th scope="row">Jarak ayam 18 m, babi 27 m, kalkun 33 m, domba 41 m</th><td>Aturan resmi</td><td>IMSSU Airgun Rules 2025; toleransi jarak ±2,5%.</td></tr>
-              <tr><th scope="row">Siluet airgun ukuran 1/10</th><td>Aturan resmi</td><td>Aturan mencantumkan skala target; SVG pada website hanyalah ikon, bukan template produksi sasaran.</td></tr>
-              <tr><th scope="row">Postur, anatomi X-Ray dan presentasi diagram senapan</th><td>Ilustrasi</td><td>Tidak ada foto/poster sumber yang tersedia untuk memvalidasi bentuk dan posisi setiap bagian.</td></tr>
-              <tr><th scope="row">Pembagian berat badan, sudut, indeks penopang, grafik pelatuk dan optik</th><td>Model demonstrasi</td><td>Angka dan respons slider tidak berasal dari pengukuran atlet atau pedoman kuantitatif IMSSU.</td></tr>
-              <tr><th scope="row">Lintasan, pengaruh angin, titik nol, klik elevasi</th><td>Bukan kalkulator</td><td>Grafik hanya animasi bentuk; tidak menghitung koreksi tembakan atau karakteristik peralatan.</td></tr>
+              <tr><th scope="row">Siluet airgun ukuran 1/10</th><td>Aturan resmi</td><td>Aturan mencantumkan skala target; gambar di halaman ini hanya membantu mengenali bentuk, bukan template produksi sasaran.</td></tr>
+              <tr><th scope="row">Penjelasan Postur dan bagian peralatan</th><td>Materi poster</td><td>Diringkas dari poster pembelajaran Clarisa Azalia dan Aurellia Cassandra, versi 15. Foto postur asli poster dipakai bersama ringkasan pesan latihannya.</td></tr>
+              <tr><th scope="row">Grafik pelatuk dan pandangan optik</th><td>Model demonstrasi</td><td>Angka dan perubahan gambar merupakan contoh interaktif, bukan hasil ukur atlet atau ketentuan teknik postur IMSSU.</td></tr>
             </tbody>
           </table></div>
           <p class="source-links">Rujukan: <a href="https://imssu.org/wp-content/uploads/2025/04/IMSSU-Rules-English-2025.pdf" target="_blank" rel="noopener noreferrer">IMSSU Official Sporting Rules 2025 (PDF)</a> · <a href="https://imssu.net/documents/" target="_blank" rel="noopener noreferrer">Indeks dokumen IMSSU</a> · <a href="/rules">Halaman peraturan Twin Shooter</a>.</p>
@@ -1229,8 +892,13 @@
             </div>
         </div>
     </footer>
+    <dialog id="posturePhotoDialog" aria-labelledby="posturePhotoDetailTitle">
+      <div class="posture-photo-dialog-header"><h2 id="posturePhotoDetailTitle">Detail foto</h2><button type="button" onclick="document.getElementById('posturePhotoDialog').close()" autofocus>Tutup ×</button></div>
+      <div id="posturePhotoDetailView" class="posture-photo-detail-view"></div>
+      <p>Detail bagian tubuh yang dipilih. Tutup untuk memilih titik lain.</p>
+    </dialog>
     <script defer src="/lab.js"></script>
     <script defer src="/posture-art.js"></script>
-    <script defer src="/optics-poster-artwork.js"></script>
+    <script defer src="/lab-workspace.js"></script>
 </body>
 </html>

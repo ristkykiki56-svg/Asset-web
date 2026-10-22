@@ -30,6 +30,9 @@ jobs:
             /tmp/twinshooter-qa/desktop.png
             /tmp/twinshooter-qa/mobile.png
             /tmp/twinshooter-qa/viewport-result.html
+            /tmp/twinshooter-qa/lab-workspace-result.json
+            /tmp/twinshooter-qa/lab-viewport-result.html
+            /tmp/twinshooter-qa/lab-workspace-failure.png
             /tmp/twinshooter-qa/rules-rules-desktop.png
             /tmp/twinshooter-qa/rules-rules-mobile.png
             /tmp/twinshooter-qa/rules-minutes-desktop.png

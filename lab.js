@@ -1,228 +1,85 @@
-let sfxActive = false;
-        let audioCtx = null;
-
-        function ensureAudio() {
-            if (!audioCtx) {
-                const Cls = window.AudioContext || window.webkitAudioContext;
-                if (Cls) audioCtx = new Cls();
-            }
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            return audioCtx;
-        }
-
-        function playMechTick(freq = 900) {
-            if (!sfxActive) return;
-            try {
-                const ctx = ensureAudio();
-                if (!ctx) return;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.06, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.04);
-            } catch (e) {}
-        }
-
-        function playSteelImpactSound() {
-            if (!sfxActive) return;
-            try {
-                const ctx = ensureAudio();
-                if (!ctx) return;
-                [1240, 1890, 2920].forEach((f, idx) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = idx === 0 ? 'square' : 'sine';
-                    osc.frequency.setValueAtTime(f, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(f * 0.93, ctx.currentTime + 0.42);
-                    gain.gain.setValueAtTime(0.07 / (idx + 1), ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0008, ctx.currentTime + 0.44);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.45);
-                });
-            } catch (e) {}
-        }
-
-        function toggleAudioSfx() {
-            sfxActive = !sfxActive;
-            document.getElementById('sfxDot').style.backgroundColor = sfxActive ? '#0E7C47' : '#7E838C';
-            document.getElementById('sfxLabel').textContent = sfxActive ? 'AUDIO: AKTIF' : 'AUDIO: BISU';
-            document.getElementById('sfxSwitchBtn').setAttribute('aria-pressed', String(sfxActive));
-            if (sfxActive) playMechTick(1050);
-        }
-
-        function togglePaperTheme() {
-            const root = document.documentElement;
-            const isDark = root.classList.toggle('cad-dark');
-            document.getElementById('themeText').textContent = isDark ? 'MODE: DARKROOM CAD' : 'MODE: KERTAS CETAK';
-            document.getElementById('themeSwitchBtn').setAttribute('aria-pressed',String(isDark));
-            playMechTick(760);
-            renderBiomechViewport();
-            drawOscilloscope(oscProgress);
-            renderTrajectoryGraph();
-        }
-
         const POSTER_BIOMECH_DATA = [
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
-                code: 'TITIK ANATOMI #01 // TULANG BELAKANG & ALUR BEBAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Lengkungan Punggung & Tahanan Beban Pasif',
-                desc: 'Karakter WebP tetap statis dan kontrol parameter tidak ditampilkan pada mode tersebut. Pada mode skema SVG, slider mengubah bentuk figur dan indikator contoh; tidak ada gaya atau distribusi beban yang diukur.',
-                metrics: ['DIAGRAM: postur berdiri', 'GEOMETRI: contoh visual', 'DATA SENSOR: tidak tersedia']
+                ref: 'POSTUR BERDIRI',
+                title: 'Punggung dan kenyamanan postur',
+                desc: 'Posisi badan sedikit condong ke belakang dengan panggul maju untuk membentuk tumpuan yang seimbang. Lengkungan punggung tetap dalam batas nyaman dan tidak dibuat berlebihan.',
+                viewNote: 'Penanda menunjukkan area punggung. Perhatikan hubungannya dengan bahu dan panggul saat mempertahankan posisi berdiri.'
             },
             {
-                id: 'head', num: '02', pose: 'front', x: 50, y: 16,
-                code: 'TITIK ANATOMI #02 // POSISI KEPALA',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Posisi Kepala Tegak & Pandangan Lurus',
-                desc: 'Ilustrasi posisi kepala dan garis pandang. Bentuk serta jarak pada gambar tidak mengacu pada pengukuran Clarisa atau Aurellia.',
-                metrics: ['FOKUS: posisi kepala', 'ACUAN: skema visual', 'UKURAN: bukan data atlet']
+                id: 'head', num: '02', pose: 'sideLeft', x: 50, y: 16,
+                ref: 'POSTUR BERDIRI',
+                title: 'Kepala, pipi, dan arah pandang',
+                desc: 'Kepala berada dalam posisi rileks dengan pipi bertumpu pada sandaran pipi. Mata menghadap langsung ke lensa okuler agar bidang pandang terlihat penuh dan jelas.',
+                viewNote: 'Pembesaran berpusat pada area mata. Perhatikan jarak mata terhadap okuler dan letak pipi di atas sandaran.'
             },
             {
-                id: 'rightShoulder', num: '03', pose: 'front', x: 39, y: 28,
-                code: 'TITIK ANATOMI #03 // BAHU KANAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Bahu Kanan & Sandaran Buttplate',
-                desc: 'Diagram membedakan posisi bahu kanan dan titik pertemuan dengan popor. Kenyamanan serta posisi yang sesuai tidak dapat ditentukan dari gambar ini.',
-                metrics: ['BAGIAN: bahu kanan', 'KONTAK POPOR: ilustrasi', 'TINGGI HOOK: tidak diukur']
+                id: 'rightShoulder', num: '03', pose: 'back', x: 39, y: 28,
+                ref: 'POSTUR BERDIRI',
+                title: 'Bahu kanan dan bantalan bahu',
+                desc: 'Bahu kanan tetap rileks, sementara bantalan popor bertumpu dengan mantap pada bahu. Posisi ini menjaga hubungan senapan dengan badan selama membidik.',
+                viewNote: 'Penanda mengarah ke area bahu kanan di dekat ujung popor. Sebagian permukaan kontak dapat tertutup pakaian atau senapan.'
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
-                code: 'TITIK ANATOMI #04 // BAHU KIRI & LENGAN KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Bahu Kiri & Segitiga Penopang Lengan Kiri',
-                desc: 'Ilustrasi posisi lengan penopang sebagai komponen postur berdiri. Tidak dapat digunakan untuk menyimpulkan persentase kerja otot.',
-                metrics: ['LENGAN: ilustrasi', 'POSISI: contoh', 'AKTIVITAS OTOT: tidak diukur']
+                ref: 'POSTUR BERDIRI',
+                title: 'Bahu kiri dan lengan penopang',
+                desc: 'Bahu kiri berada dalam keadaan rileks dengan lengan atas dekat pada badan. Lengan kiri dan tangan penopang bekerja sebagai satu tumpuan untuk menahan bagian depan senapan.',
+                viewNote: 'Penanda menunjukkan area lengan atas kiri. Bandingkan dengan letak siku pada titik 07.'
             },
             {
-                id: 'leftWrist', num: '05', pose: 'sideLeft', x: 67, y: 26,
-                code: 'TITIK ANATOMI #05 // TANGAN & PERGELANGAN KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Tangan dan Pergelangan Tangan Kiri',
-                desc: 'Variasi posisi pergelangan ditampilkan secara konseptual. Posisi latihan nyata harus disesuaikan secara langsung oleh pelatih dan atlet.',
-                metrics: ['FUNGSI: dukungan posisi', 'VARIASI: anatomi atlet', 'ACUAN: bukan ukuran tunggal']
+                id: 'leftWrist', num: '05', pose: 'sideRight', x: 67, y: 26,
+                ref: 'POSTUR BERDIRI',
+                title: 'Tangan dan pergelangan kiri',
+                desc: 'Tangan kiri menopang bagian depan senapan melalui telapak terbuka atau genggaman. Pergelangan tetap lurus untuk mempertahankan tumpuan yang nyaman.',
+                viewNote: 'Penanda berada pada pergelangan tangan penopang, tepat di bawah bagian depan senapan.'
             },
             {
-                id: 'rightHand', num: '06', pose: 'sideLeft', x: 43, y: 31,
-                code: 'TITIK ANATOMI #06 // TANGAN KANAN & TRIGGER',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Tangan Kanan, Grip & Jari Pelatuk',
-                desc: 'Diagram menunjukkan letak grip, telunjuk, dan pelatuk dalam satu contoh posisi. Sudut dan tekanan tangan tidak diukur dan bukan rekomendasi untuk semua atlet.',
-                metrics: ['GENGGAMAN: Mantap & Rileks', 'JARI TELUNJUK: Bebas popor', 'SUDUT TARIK: skema arah']
+                id: 'rightHand', num: '06', pose: 'sideRight', x: 43, y: 31,
+                ref: 'POSTUR BERDIRI',
+                title: 'Tangan kanan dan jari pelatuk',
+                desc: 'Tangan kanan menggenggam grip dengan mantap dan rileks. Jari telunjuk menyentuh bilah pelatuk hanya saat siap menembak, sementara genggaman tetap nyaman.',
+                viewNote: 'Penanda menunjukkan tangan yang menggenggam grip. Bilah pelatuk berada di depan grip.'
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
-                code: 'TITIK ANATOMI #07 // SIKU KIRI & PINGGUL',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kunci Siku Kiri pada Tulang Pinggul',
-                desc: 'Diagram menampilkan letak siku terhadap pinggul. Klaim tentang pengurangan goyangan dalam persen tidak didukung pengukuran pada simulator.',
-                metrics: ['KONTAK: ilustrasi', 'EFEK: belum terukur', 'ANGKA REDUKSI: tidak tersedia']
+                ref: 'POSTUR BERDIRI',
+                title: 'Siku kiri dan pinggul',
+                desc: 'Siku kiri bertumpu di bagian atas pinggul kiri untuk membantu merilekskan lengan penopang. Posisi panggul yang sedikit maju mendekatkan tumpuan siku ke badan.',
+                viewNote: 'Penanda mengikuti area siku kiri. Batas kontak siku dengan pinggul dapat tertutup pakaian.'
             },
             {
-                id: 'pelvis', num: '08', pose: 'sideRight', x: 50, y: 51,
-                code: 'TITIK ANATOMI #08 // BADAN, BAHU & PINGGUL',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Penyelarasan Badan, Bahu & Pinggul',
-                desc: 'Ilustrasi menampilkan hubungan badan, bahu, dan pinggul dari satu sudut. Gambar tidak menunjukkan sudut ideal atau pedoman teknik yang terverifikasi.',
-                metrics: ['PINGGUL: contoh visual', 'TORSO: contoh orientasi', 'PUNTIRAN: tidak diukur']
+                id: 'pelvis', num: '08', pose: 'back', x: 50, y: 51,
+                ref: 'POSTUR BERDIRI',
+                title: 'Badan, bahu, dan panggul',
+                desc: 'Panggul sedikit maju, bahu mengarah ke sasaran, dan bagian atas badan condong ke belakang. Hubungan ketiganya membentuk posisi berdiri yang stabil dan nyaman.',
+                viewNote: 'Penanda berada di area panggul. Perhatikan hubungannya dengan punggung dan kedua tungkai.'
             },
             {
-                id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                code: 'TITIK ANATOMI #09 // KAKI KIRI',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kaki Kiri — Skema Penopang Berdiri',
-                desc: 'Kaki kiri ditandai sebagai salah satu bagian penopang postur berdiri. Pembagian berat tubuh tepat tidak ditetapkan oleh IMSSU Airgun Rules dan tidak diukur di halaman ini.',
-                metrics: ['DISTRIBUSI: berbeda per atlet', 'PERSENTASE: tidak diukur', 'STATUS: skema postur']
+                id: 'leftLeg', num: '09', pose: 'feet', x: 39, y: 78,
+                ref: 'POSTUR BERDIRI',
+                title: 'Kaki kiri dan tumpuan berdiri',
+                desc: 'Kaki kiri menjadi tumpuan utama dengan posisi mendekati tegak. Lutut dan tungkai tetap nyaman tanpa ketegangan berlebihan saat mempertahankan posisi berdiri.',
+                viewNote: 'Penanda berada pada pergelangan kaki kiri. Foto kaki memperjelas arah tungkai dan letak sepatu.'
             },
             {
-                id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                code: 'TITIK ANATOMI #10 // LUTUT & KAKI KANAN',
-                ref: 'SKEMA EDUKATIF · BUKAN DATA UKUR ATLET',
-                title: 'Kaki Kanan — Skema Penopang Berdiri',
-                desc: 'Diagram menunjukkan kaki kanan sebagai bagian dari tumpuan berdiri. Angka beban dan sudut yang tampil pada model tidak boleh ditafsirkan sebagai standar resmi postur.',
-                metrics: ['DISTRIBUSI: tidak diukur', 'SUDUT: hanya ilustrasi', 'ATURAN: posisi berdiri']
+                id: 'rightLeg', num: '10', pose: 'feet', x: 62, y: 78,
+                ref: 'POSTUR BERDIRI',
+                title: 'Lutut dan kaki kanan',
+                desc: 'Kaki kanan ditempatkan sedikit lebih ke luar untuk melengkapi tumpuan kaki kiri. Arah lutut dan telapak disesuaikan agar posisi berdiri tetap nyaman.',
+                viewNote: 'Penanda mengarah ke area pergelangan kaki kanan. Pada foto serong, bagian ini dapat tertutup tungkai kiri. Bandingkan letak kedua sepatu untuk melihat susunan tumpuan.'
             }
         ];
 
         let currentPose = 'back';
         let activeBiomechId = 'spine';
-        let showXraySkeleton = true;
-
-function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
-    // Generic sports-kit figure, deliberately NOT a replica or biomechanical measurement.
-    const side = pose === "sideLeft" || pose === "sideRight";
-    const blue = pose === "front" || pose === "back";
-    const u = -arch * 1.1;
-    const p = arch * .65;
-    const armShift = Math.round((100 - hipLock) * .4); // visual-only, not biomechanics
-    const kit = blue ? "url(#biomechBlueKit)" : "url(#biomechRedKit)";
-    const skin = "url(#biomechSkin)";
-    const torsoX = side ? 177 : 170;
-    const direction = pose === "sideRight" ? -1 : 1;
-    const legs = side
-      ? `<path d="M184 274L178 471H219L234 287Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M224 280L260 471H297L264 276Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`
-      : `<path d="M177 277L157 471H198L223 288Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/><path d="M228 286L259 471H300L270 275Z" fill="url(#biomechTrouser)" stroke="#2C3940" stroke-width="2.5"/>`;
-    const shoes=side
-      ? `<path d="M169 463H220Q233 470 239 482H167Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M254 463H298Q314 469 324 482H253Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`
-      : `<path d="M151 463H199Q210 469 219 482H149Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/><path d="M256 463H303Q320 469 324 482H254Z" fill="url(#biomechShoe)" stroke="#39434A" stroke-width="2"/>`;
-    const upper = side
-      ? `<path d="M181 118Q203 109 235 115Q252 132 247 170L257 274Q219 287 185 277Q187 210 179 160Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
-         <path d="M189 136Q200 127 230 132" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="2.7"/>
-         <path d="M191 159L196 256" fill="none" stroke="#FFFFFF" stroke-opacity=".19" stroke-width="4"/>
-         <path d="M238 147L247 256" fill="none" stroke="#151C24" stroke-opacity=".28" stroke-width="3"/>`
-      : `<path d="M169 121Q191 107 223 111Q259 108 270 124L263 184L269 277Q223 290 177 277L171 186Z" fill="${kit}" stroke="#303E43" stroke-width="2.6"/>
-         <path d="M180 134Q212 122 258 134" fill="none" stroke="#FFFFFF" stroke-opacity=".42" stroke-width="3"/>
-         <path d="M187 165L190 261M252 158L257 261" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3"/>`;
-    const arms = side
-      ? `<path d="M246 141Q267 175 242 ${219 + armShift}Q265 ${212 + armShift} 285 155" fill="none" stroke="${skin}" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-         <path d="M250 142Q267 169 253 188" fill="none" stroke="${kit}" stroke-width="24" stroke-linecap="round"/>`
-      : `<path d="M170 143Q147 183 163 ${224 + armShift}M269 143Q286 172 269 ${229 + armShift}" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>
-         <path d="M168 143L157 167M269 143L277 166" stroke="${kit}" stroke-width="25" stroke-linecap="round"/>`;
-    const equipment = side
-      ? `<g opacity=".82"><path d="M${direction===1?233:50} 119H${direction===1?392:200}" stroke="#4C6167" stroke-width="7" stroke-linecap="round"/><path d="M${direction===1?254:70} 105H${direction===1?363:173}" stroke="#202D34" stroke-width="9" stroke-linecap="round"/></g>`
-      : `<g opacity=".82"><path d="M49 123H198" stroke="#586A6C" stroke-width="8" stroke-linecap="round"/><rect x="109" y="109" width="94" height="9" rx="3" fill="#29383B"/></g>`;
-    const faceX=side?210:216;
-    return `<g class="biomech-editorial-figure" aria-hidden="true">
-      <ellipse cx="230" cy="489" rx="120" ry="8" fill="#233136" opacity=".11"/>
-      ${legs}${shoes}${equipment}
-      <g transform="translate(${u*.45},${p*.12})">${upper}${arms}</g>
-      <g transform="translate(${u},0)">
-        <path d="M${faceX-12} 100L${faceX-11} 115H${faceX+10}L${faceX+10} 102" fill="${skin}" stroke="#796357" stroke-width="1.2"/>
-        <ellipse cx="${faceX}" cy="78" rx="24" ry="29" fill="${skin}" stroke="#7A625A" stroke-width="1.7"/>
-        <path d="M${faceX-22} 76Q${faceX-28} 42 ${faceX} 44Q${faceX+28} 46 ${faceX+23} 69Q${faceX+7} 60 ${faceX-1} 55Q${faceX-15} 68 ${faceX-22} 76" fill="url(#biomechHair)"/>
-        <path d="M${faceX+19} 67Q${faceX+35} 85 ${faceX+25} 122" fill="none" stroke="#34353B" stroke-width="10" stroke-linecap="round"/>
-      </g>
-      <path d="M${faceX+u} 115Q${faceX+11} 188 ${faceX+p} 277" fill="none" stroke="#478D94" stroke-width="2.2" stroke-dasharray="5 7" opacity=".85"/>
-    </g>`;
-}
 
         // Anchor locations refer to illustrative SVG anatomy, not measured positions.
         // Keeping coordinates in SVG units prevents responsive letterbox offsets.
         function biomechAnchor(point, arch, hipLock) {
             const spriteAnchor = window.tsPosturePoseArt?.anchor(point, currentPose);
             if (spriteAnchor) return spriteAnchor;
-            const upper = -arch * 1.1;
-            const elbow = Math.round((100 - hipLock) * .4);
-            const anchors = {
-                spine: [214 + upper * .35, 214],
-                head: [216 + upper, 80],
-                rightShoulder: [173 + upper * .45, 145],
-                leftArm: [273 + upper * .45, 157],
-                leftWrist: [251 + upper * .45, 190],
-                rightHand: [234 + upper * .45, 194],
-                elbowHip: [267 + upper * .45, 225 + elbow],
-                pelvis: [224 + arch * .65, 278],
-                leftLeg: [181, 416],
-                rightLeg: [283, 416]
-            };
-            return anchors[point.id] || [point.x * 4.6, point.y * 5.4];
+            return [point.x * 4.6, point.y * 5.4];
         }
 
         // Convert SVG units to container pixels, preserving correct alignment
@@ -233,13 +90,36 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const matrix = svg?.getScreenCTM?.();
             if (!svg || !overlay || !matrix) return;
             const bounds = overlay.getBoundingClientRect();
+            const workspace = document.documentElement.classList.contains('lw-active');
+            const leftIds = new Set(['spine', 'rightShoulder', 'rightHand', 'rightLeg']);
+            const positions = [];
             overlay.querySelectorAll('.callout-node').forEach(button => {
+                if (button.hidden) return;
                 const point = svg.createSVGPoint();
                 point.x = Number(button.dataset.svgX);
                 point.y = Number(button.dataset.svgY);
                 const pixel = point.matrixTransform(matrix);
-                button.style.left = `${pixel.x - bounds.left}px`;
-                button.style.top = `${pixel.y - bounds.top}px`;
+                positions.push({button, x:pixel.x-bounds.left, y:pixel.y-bounds.top});
+            });
+            for (const left of [true, false]) {
+                const group = positions.filter(p => leftIds.has(p.button.dataset.biomechId) === left).sort((a,b)=>a.y-b.y);
+                const gap = group.length>1 ? Math.min(44,Math.max(0,bounds.height-48)/(group.length-1)) : 44;
+                let previous = 24-gap;
+                group.forEach((p,index) => {
+                    const ceiling = bounds.height-24-(group.length-1-index)*gap;
+                    p.labelY = Math.max(previous+gap,Math.min(ceiling,p.y));
+                    previous=p.labelY;
+                });
+            }
+            positions.forEach(({button,x,y,labelY}) => {
+                const left = leftIds.has(button.dataset.biomechId);
+                const labelX = workspace ? (left?28:bounds.width-28) : x;
+                const top = workspace ? labelY : y;
+                button.dataset.lwSide=left?'left':'right';
+                button.style.setProperty('--lw-leader',workspace?Math.hypot(x-labelX,y-top)+'px':'0px');
+                button.style.setProperty('--lw-leader-angle',Math.atan2(y-top,x-labelX)*180/Math.PI+'deg');
+                button.style.left=labelX+'px';
+                button.style.top=top+'px';
             });
         }
 
@@ -249,38 +129,9 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const leaderLayer = document.getElementById('svgActiveLeaderLine');
             const pinsContainer = document.getElementById('biomechPinsOverlay');
 
-            const arch = parseFloat(document.getElementById('archSlider').value);
-            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
-
-            const upperShift = -arch * 1.1;
-            const pelvisShift = arch * 0.65;
-            const elbowShift = Math.round((100 - hipLock) * .4);
-
-            let figSvg = '';
-            let arrowsSvg = '';
-
-            figSvg = window.tsPosturePoseArt?.figure(currentPose) || buildEditorialPostureIllustration(currentPose, arch, hipLock);
-            arrowsSvg = '';
-
-            // Optional X-Ray Skeletal Support Overlay (Vertebral column, pelvic crest, femur load path)
-            if (showXraySkeleton && !window.tsPosturePoseArt?.isActive()) {
-                figSvg += `
-                    <g stroke="#3F9DA0" stroke-width="2.1" fill="none" opacity="0.9">
-                        <!-- Spinal Column Curve -->
-                        <path d="M${214 + upperShift} 98 Q${236 + pelvisShift} 190 ${214 + pelvisShift} 275" stroke-dasharray="5 3"/>
-                        <!-- Pelvic Iliac Crest Bar -->
-                        <ellipse cx="${214 + pelvisShift}" cy="275" rx="34" ry="12" fill="rgba(63, 157, 160, 0.08)"/>
-                        <!-- Elbow-to-Hip Bone Lock Node -->
-                        <circle cx="${238 + pelvisShift}" cy="${230 + elbowShift}" r="8" fill="#FF4800" stroke="#FFFFFF" stroke-width="2"/>
-                        <!-- Left & Right Femur Load Vectors -->
-                        <line x1="${190 + pelvisShift}" y1="278" x2="177" y2="465"/>
-                        <line x1="${238 + pelvisShift}" y1="278" x2="284" y2="465" stroke-opacity="0.5" stroke-dasharray="4 4"/>
-                    </g>
-                `;
-            }
-
-            athleteLayer.innerHTML = figSvg;
-            arrowsLayer.innerHTML = arrowsSvg;
+            const arch = 0, hipLock = 0;
+            athleteLayer.innerHTML = window.tsPosturePoseArt?.figure(currentPose, activeBiomechId) || '';
+            arrowsLayer.replaceChildren();
 
             // Leader and interactive numbers must refer to the same anchor.
             const activePt = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId);
@@ -328,23 +179,15 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             positionBiomechPins();
         }
 
-        function switchPose(poseKey) {
-            if (!['back', 'front', 'sideLeft', 'sideRight'].includes(poseKey)) return;
-            const chosen = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId && p.pose === poseKey);
-            const next = chosen || POSTER_BIOMECH_DATA.find(p => p.pose === poseKey);
-            if (next) selectBiomechCallout(next.id);
-        }
-
-        function toggleXraySkeleton() {
-            showXraySkeleton = !showXraySkeleton;
-            playMechTick(960);
-            const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? 'Garis postur: tampil' : 'Garis postur: sembunyi';
-            btn.setAttribute('aria-pressed',String(showXraySkeleton));
-            btn.className = showXraySkeleton
-                ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
-                : 'px-3 py-2 border border-[var(--rule-heavy)] text-[var(--ink-900)] font-bold transition';
-            renderBiomechViewport();
+        function openPosturePhotoDetail() {
+            if (!window.tsPosturePoseArt?.isActive()) return;
+            const dialog = document.getElementById('posturePhotoDialog');
+            const item = POSTER_BIOMECH_DATA.find(point => point.id === activeBiomechId);
+            document.getElementById('posturePhotoDetailTitle').textContent =
+                window.tsPosturePoseArt.person() + ' · ' + item.title;
+            document.getElementById('posturePhotoDetailView').innerHTML =
+                window.tsPosturePoseArt.detail(currentPose, activeBiomechId);
+            if (!dialog.open) dialog.showModal();
         }
 
         function selectBiomechCallout(id) {
@@ -352,41 +195,23 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             if (!item) return;
             activeBiomechId = item.id;
             currentPose = item.pose;
-            playMechTick(880);
 
-            const mobilePose = document.getElementById('labMobilePosePicker');
-            if (mobilePose) mobilePose.value = currentPose;
-            ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
-                const button = document.getElementById(`poseTab-${k}`);
-                if (!button) return;
-                button.setAttribute('aria-pressed', String(k === currentPose));
-                button.className = k === currentPose
-                    ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
-                    : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
-            });
             const viewLabels = {
-                back: 'FIG 1.1 — TAMPAK PUNGGUNG (ILUSTRASI)',
-                front: 'FIG 1.2 — TAMPAK DEPAN (ILUSTRASI)',
-                sideLeft: 'FIG 1.3 — TAMPAK SAMPING KIRI (ILUSTRASI)',
-                sideRight: 'FIG 1.4 — TAMPAK SAMPING KANAN (ILUSTRASI)'
+                back: 'Postur: punggung dan bahu',
+                front: 'Postur: lengan dan siku',
+                sideLeft: 'Detail kepala',
+                sideRight: 'Detail tangan',
+                feet: 'Detail kaki'
             };
             document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
             const picker = document.getElementById('labCalloutPicker');
             if (picker) picker.value = item.id;
 
-            document.getElementById('dossierCode').textContent = item.code;
+            document.getElementById('dossierCode').textContent = `TITIK ${item.num} // ${item.title.toUpperCase()}`;
             document.getElementById('dossierRef').textContent = item.ref;
             document.getElementById('dossierTitle').textContent = item.title;
             document.getElementById('dossierBody').textContent = item.desc;
-            document.getElementById('dossierMetrics').innerHTML = item.metrics.map(m => {
-                const [k, v] = m.split(':');
-                return `
-                    <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                        <span class="text-[var(--ink-500)] block text-[10px]">${k}</span>
-                        <strong class="text-[var(--ink-900)]">${v || ''}</strong>
-                    </div>
-                `;
-            }).join('');
+            document.getElementById('dossierViewNote').textContent = item.viewNote;
             renderBiomechViewport();
             renderBiomechIndexTable();
         }
@@ -406,125 +231,52 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                         }">${item.num}</span>
                         <div class="min-w-0">
                             <div class="font-bold text-xs truncate">${item.title}</div>
-                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${item.code.split('//')[1]}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Foto belakang',front:'Foto depan / serong',sideLeft:'Detail kepala',sideRight:'Detail tangan',feet:'Detail kaki'})[item.pose]}</div>
                         </div>
                     </button>
                 `;
             }).join('');
         }
 
-        function updatePosturePhysics() {
-            const arch = parseFloat(document.getElementById('archSlider').value);
-            const hipLock = parseFloat(document.getElementById('hipLockSlider').value);
-
-            document.getElementById('archDegReadout').textContent = `${arch > 0 ? '+' : ''}${arch.toFixed(1)}° (MODEL VISUAL)`;
-            document.getElementById('hipLockReadout').textContent = `${hipLock} / 100 (MODEL)`;
-
-            const stability = Math.max(15, Math.min(99, Math.round(100 - Math.abs(arch - 12) * 3.4 - (100 - hipLock) * 0.55)));
-            const changeIndex = Math.max(0, Math.min(100, 100 - stability)); // unitless display model, not mm
-            const leftLoad = Math.min(78, Math.max(48, Math.round(65 + (12 - arch) * 0.7)));
-            const rightLoad = 100 - leftLoad;
-
-            document.getElementById('plateLeftText').textContent = `KIRI: ${leftLoad} unit contoh`;
-            document.getElementById('plateRightText').textContent = `KANAN: ${rightLoad} unit contoh`;
-            document.getElementById('muzzleSwayReadout').textContent = `${changeIndex} / 100`;
-
-            const statusEl = document.getElementById('skeletalStatusLabel');
-            if (stability >= 82) {
-                statusEl.textContent = 'PARAMETER MODEL DI POSISI AWAL';
-                statusEl.className = 'text-[var(--ok-green)]';
-            } else if (stability >= 55) {
-                statusEl.textContent = 'PARAMETER MODEL BERUBAH';
-                statusEl.className = 'text-[#B37B24]';
-            } else {
-                statusEl.textContent = 'PARAMETER MODEL JAUH DARI TITIK AWAL';
-                statusEl.className = 'text-[var(--aurellia-red)]';
+        const TRIGGER_STAGES = {
+            A: {title:'A · Tarikan awal (Take-up)', body:'Pergerakan awal pelatuk sebelum tahanan mulai terasa. Tahap ini mendahului pergerakan menuju titik pelepasan.', progress:0.18, x:75},
+            B: {title:'B · Sebelum pelepasan (Creep)', body:'Pergerakan pelatuk setelah tahanan mulai terasa hingga mencapai titik pelepasan. Pelepasan menandai akhir tahap ini.', progress:0.48, x:205},
+            C: {title:'C · Setelah pelepasan (Over-travel)', body:'Pergerakan pelatuk yang masih berlanjut setelah titik pelepasan. Tahap ini terjadi sesudah mekanisme penahan terlepas.', progress:0.82, x:345}
+        };
+        let selectedTriggerStage = '';
+        function selectTriggerStage(key, syncCurve = true) {
+            const stage = TRIGGER_STAGES[key];
+            if (!stage) return;
+            for (const id of ['A','B','C']) {
+                const selected = id === key;
+                document.getElementById('btnStage-'+id).setAttribute('aria-pressed', String(selected));
+                document.getElementById('triggerZone'+id).setAttribute('stroke-width', selected ? '3' : '1');
+                document.getElementById('triggerZone'+id).setAttribute('stroke', selected ? '#0057A5' : '#65747B');
             }
-
-            const cogGroup = document.getElementById('svgCogPlumbGroup');
-            cogGroup.setAttribute('transform', `translate(${230 + (12 - arch) * 2.2}, 0)`);
-            renderBiomechViewport();
-        }
-
-        function resetPostureParameters() {
-            document.getElementById('archSlider').value = 12;
-            document.getElementById('hipLockSlider').value = 100;
-            playMechTick(1000);
-            updatePosturePhysics();
-        }
-
-        function selectFingerVector(vec) {
-            playMechTick(vec === 'B' ? 980 : 520);
-            ['A', 'B', 'C'].forEach(v => {
-                const btn = document.getElementById(`btnVec-${v}`);
-                const path = document.getElementById(`svgVec${v}`);
-                btn.setAttribute('aria-pressed', String(v === vec));
-                const marker = document.querySelector('#triggerVectorDiagram [data-trigger-vector="' + v + '"]');
-                if (marker) {
-                    marker.setAttribute('aria-pressed', String(v === vec));
-                    marker.classList.toggle('is-selected', v === vec);
-                }
-                if (v === vec) {
-                    btn.className = v === 'B'
-                        ? 'py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition'
-                        : 'py-2 px-2 border-2 border-[#D11F26] bg-[#D11F26] text-white font-bold transition';
-                    path.setAttribute('stroke', v === 'B' ? '#0E7C47' : '#D11F26');
-                    path.setAttribute('stroke-width', '5.5');
-                } else {
-                    btn.className = 'py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition';
-                    path.setAttribute('stroke', '#9CA3AF');
-                    path.setAttribute('stroke-width', '3.5');
-                }
-            });
-
-            const stamp = document.getElementById('activeVectorStamp');
-            const dev = document.getElementById('vecDeviationReadout');
-            const box = document.getElementById('vectorExplanationBox');
-
-            if (vec === 'B') {
-                stamp.textContent = 'VEKTOR B: GARIS TENGAH';
-                stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                dev.textContent = 'Vektor lurus (contoh)';
-                dev.className = 'text-[var(--ok-green)]';
-                box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR B:</strong> Garis hijau menunjukkan arah lurus dalam diagram dua dimensi; bukan toleransi IMSSU atau instruksi menyetel senapan.';
-            } else if (vec === 'C') {
-                stamp.textContent = 'VEKTOR C: ARAH MIRING (MODEL)';
-                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = 'Vektor bergeser kiri (contoh)';
-                dev.className = 'text-[var(--aurellia-red)]';
-                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR C:</strong> Jalur garis pada gambar miring ke kiri. Ini adalah perbandingan arah pada diagram, bukan ukuran efek atau penilaian teknik atlet.';
-            } else {
-                stamp.textContent = 'VEKTOR A: ARAH MIRING (MODEL)';
-                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = 'Vektor bergeser kanan (contoh)';
-                dev.className = 'text-[var(--aurellia-red)]';
-                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>SKEMA VEKTOR A:</strong> Jalur garis pada gambar miring ke kanan. Model ini tidak menghitung pengaruhnya pada akurasi atau gaya pelepasan nyata.';
+            document.getElementById('triggerTravelMarker').setAttribute('cx', stage.x);
+            if (selectedTriggerStage !== key) {
+                document.getElementById('triggerStageTitle').textContent = stage.title;
+                document.getElementById('triggerStageBody').textContent = stage.body;
+                selectedTriggerStage = key;
             }
-        }
-
-        function adjustTriggerShoeContact(val) {
-            const v = parseFloat(val);
-            document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
-            const searGf = Math.max(0, Math.min(100, Math.round(50 - v * 0.65))); // demonstration index, never gf
-            document.getElementById('searWeightReadout').textContent = `${searGf} / 100 (MODEL)`;
-            document.getElementById('shoeHeightText').textContent =
-                Math.abs(v) <= 5 ? 'TENGAH (POSISI MODEL)' : v < -5 ? 'ATAS (LEVERAGE PENDEK / BERAT)' : 'BAWAH (LEVERAGE PANJANG)';
+            if (syncCurve) {
+                endLiveTriggerPull(true);
+                oscProgress = stage.progress;
+                drawOscilloscope(stage.progress);
+                document.getElementById('oscPhaseLabel').textContent = stage.title;
+            }
         }
 
         let oscProgress = 0.65;
         let oscPulling = false;
         let oscReq = null;
-        let oscShotFired = false;
         let oscPlaybackMode = false;
 
         function computePosterTriggerCurve(t) {
-            if (t < 0.28) return 0.72 * Math.sin((t / 0.28) * (Math.PI / 2));
-            if (t < 0.58) return 0.72 + ((t - 0.28) / 0.30) * 0.11;
-            if (t < 0.64) return 0.83 - ((t - 0.58) / 0.06) * 0.09;
-            return 0.74;
+            if (t < 0.28) return 0.42 * Math.sin((t / 0.28) * (Math.PI / 2));
+            if (t < 0.58) return 0.42 + ((t - 0.28) / 0.30) * 0.06;
+            if (t < 0.64) return 0.48 + ((t - 0.58) / 0.06) * 0.30;
+            return 0.78 + ((t - 0.64) / 0.36) * 0.04;
         }
 
         function drawOscilloscope(prog = 0) {
@@ -546,7 +298,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             }
 
             // 4 Phase Vertical Dividers (Penarikan Awal | Stabil | Pelepasan | Gerakan Lanjutan)
-            [0.28, 0.58, 0.66, 1.0].forEach(p => {
+            [0.28, 0.58, 0.64, 1.0].forEach(p => {
                 const x = padL + p * pw;
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
                 ctx.setLineDash([4, 4]);
@@ -565,7 +317,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 
             ctx.fillStyle = '#94A3B8';
             ctx.font = 'bold 10px IBM Plex Mono';
-            ctx.fillText('PROGRES (MODEL)', padL + 6, padT + 10);
+            ctx.fillText('KURVA CONTOH', padL + 6, padT + 10);
             ctx.fillText('URUTAN MODEL →', padL + pw - 103, padT + ph + 22);
 
             // Reference Curve
@@ -610,8 +362,8 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 const on =
                     (n === 1 && prog > 0 && prog < 0.28) ||
                     (n === 2 && prog >= 0.28 && prog < 0.58) ||
-                    (n === 3 && prog >= 0.58 && prog < 0.67) ||
-                    (n === 4 && prog >= 0.67);
+                    (n === 3 && prog >= 0.58 && prog < 0.64) ||
+                    (n === 4 && prog >= 0.64);
                 el.className = on
                     ? 'p-1.5 border border-[#FF4800] bg-[#FF4800]/20 text-white'
                     : 'p-1.5 border border-slate-800 text-slate-400';
@@ -622,26 +374,20 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             oscPlaybackMode = playback;
             oscPulling = true;
             oscProgress = 0;
-            oscShotFired = false;
-            playMechTick(600);
             if (oscReq) cancelAnimationFrame(oscReq);
 
             function frame() {
                 if (!oscPulling) return;
                 oscProgress = Math.min(1, oscProgress + 0.0085);
-                document.getElementById('mechTriggerBlade').setAttribute('transform', `rotate(${oscProgress * 10}, 132, 44)`);
+                selectTriggerStage(oscProgress < 0.28 ? 'A' : oscProgress < 0.64 ? 'B' : 'C', false);
 
                 const lbl = document.getElementById('oscPhaseLabel');
-                if (oscProgress < 0.28) lbl.textContent = 'FASE 1: PENARIKAN AWAL';
-                else if (oscProgress < 0.58) lbl.textContent = 'FASE 2: STABIL DI TITIK TAHANAN';
-                else if (oscProgress < 0.67) {
-                    lbl.textContent = 'FASE 3: PELEPASAN PEMICU (MODEL)';
-                    if (!oscShotFired) {
-                        oscShotFired = true;
-                        playSteelImpactSound();
-                    }
+                if (oscProgress < 0.28) lbl.textContent = 'A · TARIKAN AWAL';
+                else if (oscProgress < 0.58) lbl.textContent = 'B · MENUJU PELEPASAN';
+                else if (oscProgress < 0.64) {
+                    lbl.textContent = 'TITIK PELEPASAN';
                 } else {
-                    lbl.textContent = 'FASE 4: FOLLOW-THROUGH STABIL';
+                    lbl.textContent = 'C · GERAKAN LANJUTAN';
                 }
 
                 drawOscilloscope(oscProgress);
@@ -651,13 +397,12 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             oscReq = requestAnimationFrame(frame);
         }
 
-        function endLiveTriggerPull() {
-            if (oscPlaybackMode) return;
+        function endLiveTriggerPull(force = false) {
+            if (oscPlaybackMode && force !== true) return;
             oscPulling = false;
             if (oscReq != null) cancelAnimationFrame(oscReq);
             oscReq = null;
             document.getElementById('tactileTriggerBtn').setAttribute('aria-pressed','false');
-            document.getElementById('mechTriggerBlade').setAttribute('transform', 'rotate(0, 132, 44)');
         }
 
         function runIdealCurvePlayback() {
@@ -693,7 +438,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             document.addEventListener('visibilitychange', () => {if(document.hidden) endLiveTriggerPull();});
         }
 
-        let ocularTick = 0;
         let ocularVisible = false;
         let ocularReq = null;
         let ocularLast = 0;
@@ -719,49 +463,30 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const dist = parseFloat(document.getElementById('optEyeDist').value);
             const comb = parseFloat(document.getElementById('optCheekHeight').value);
             const lat = parseFloat(document.getElementById('optLat').value);
-            const press = parseFloat(document.getElementById('optPressure').value);
 
             document.getElementById('optEyeDistLabel').textContent = `${dist} mm (CONTOH MODEL)`;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm (MODEL)`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm (MODEL)`;
-            document.getElementById('optPressureLabel').textContent =
-                press > 72 ? `${press}% (PERUBAHAN BESAR)` : press < 25 ? `${press}% (PERUBAHAN KECIL)` : `${press}% (PERUBAHAN SEDANG)`;
-
-            // The camera is fixed; only the illustrative head moves in this side view.
-            // Increasing the eye-distance slider increases the gap from the fixed ocular lens.
-            // Lateral movement is perpendicular to this side view and updates only the lens canvas.
-            const dx = (dist - 85) * 0.6;
-            const dy = -7 - comb * 0.85;
-            document.getElementById('svgShooterHeadSide').setAttribute(
-                'transform', 'translate(' + dx.toFixed(2) + ', ' + dy.toFixed(2) + ')');
 
             const err = Math.hypot(dist - 85, comb * 1.5, lat * 1.5);
             const badge = document.getElementById('opticsLockBadge');
-            const mini = document.getElementById('axisStatusMini');
             if (err < 7) {
                 badge.textContent = 'SIMULASI LINGKARAN TERLIHAT';
                 badge.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                mini.textContent = 'LINGKARAN PENUH (MODEL)';
-                mini.className = 'text-[var(--ok-green)] font-bold';
             } else {
                 badge.textContent = 'SIMULASI BAYANGAN TEPI';
                 badge.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                mini.textContent = 'BAYANGAN TEPI (MODEL)';
-                mini.className = 'text-[var(--aurellia-red)] font-bold';
             }
             // Always paint a static optical view immediately; on mobile this module can
             // become visible after the IntersectionObserver's first notification.
             // Waiting for visibility alone previously left an empty canvas.
             renderOcularLoop(performance.now(), true);
-            window.OpticsPosterArt?.update({dist, height: comb});
         }
 
         function calibratePerfectOptics() {
             document.getElementById('optEyeDist').value = 85;
             document.getElementById('optCheekHeight').value = 0;
             document.getElementById('optLat').value = 0;
-            document.getElementById('optPressure').value = 50;
-            playMechTick(1020);
             updateOpticalSim();
         }
 
@@ -779,11 +504,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const dist = parseFloat(document.getElementById('optEyeDist').value);
             const comb = parseFloat(document.getElementById('optCheekHeight').value);
             const lat = parseFloat(document.getElementById('optLat').value);
-            const press = parseFloat(document.getElementById('optPressure').value);
-
-            const tremor = Math.abs(press - 50) > 20 ? (Math.abs(press - 50) - 20) * 0.15 : 0.25;
-            const tx = Math.sin(ocularTick * 2.8) * tremor;
-            const ty = Math.cos(ocularTick * 3.5) * tremor;
 
             ctx.fillStyle = '#090B0E';
             ctx.fillRect(0, 0, w, h);
@@ -792,7 +512,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 
             ctx.save();
             ctx.beginPath();
-            ctx.arc(cx - lat * 2.5 + tx, cy + comb * 2.5 + ty, exitPupilRadius, 0, Math.PI * 2);
+            ctx.arc(cx - lat * 2.5, cy + comb * 2.5, exitPupilRadius, 0, Math.PI * 2);
             ctx.clip();
 
             // Neutral field-study illustration, not a simulated optical measurement.
@@ -823,7 +543,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 
             // A restrained conceptual silhouette; deliberately no score or aim feedback.
             ctx.save();
-            ctx.translate(cx + tx, cy + ty);
+            ctx.translate(cx, cy);
             ctx.fillStyle = '#25302B';
             ctx.beginPath();
             ctx.moveTo(-19,-13);
@@ -903,8 +623,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 
         let selectedAnimal = 'ram';
         let downedSet = new Set();
-        let shotTraceProg = 1;
-        let ballisticReq = null;
 
         function buildSilhouetteRack() {
             ['ram', 'turkey', 'pig', 'chicken'].forEach(animal => {
@@ -955,7 +673,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             const key = `${animal}-${idx}`;
             const el = document.getElementById(`target-${animal}-${idx}`);
             if (!el) return;
-            playSteelImpactSound();
             selectRangeAnimal(animal);
 
             if (downedSet.has(key)) {
@@ -968,12 +685,10 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 el.setAttribute('aria-pressed','true');
             }
             updateRackCounters();
-            triggerBallisticTrace();
         }
 
         function resetSilhouetteRack() {
             downedSet.clear();
-            playMechTick(840);
             document.querySelectorAll('.steel-target-btn').forEach(b => {b.classList.remove('steel-knocked');b.setAttribute('aria-pressed','false');});
             updateRackCounters();
         }
@@ -994,7 +709,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 if (tier) tier.classList.toggle('is-current', k === animal);
             });
             updateRackCounters();
-            renderTrajectoryGraph();
         }
 
         function updateRackCounters() {
@@ -1005,148 +719,72 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             if (active) active.textContent = `${group} / 5`;
         }
 
-        function triggerBallisticTrace() {
-            if (ballisticReq != null) cancelAnimationFrame(ballisticReq);
-            ballisticReq = null;
-            if (reducedMotion.matches) {shotTraceProg = 1;renderTrajectoryGraph();return;}
-            shotTraceProg = 0;
-            function step() {
-                shotTraceProg = Math.min(1, shotTraceProg + 0.045);
-                renderTrajectoryGraph();
-                if (shotTraceProg < 1) ballisticReq = requestAnimationFrame(step);
-                else ballisticReq = null;
-            }
-            ballisticReq = requestAnimationFrame(step);
-        }
-
-        function renderTrajectoryGraph() {
-            const canvas = document.getElementById('trajectoryCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width, h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
-
-            const wind = parseFloat(document.getElementById('windRangeInput').value);
-            document.getElementById('windValText').textContent = `${wind.toFixed(1)} unit model`;
-
-            const spec = RANGE_SPECS[selectedAnimal];
-            // No wind drift or turret click predictions: the input only changes the illustration.
-            document.getElementById('ballisticSpecLine').textContent =
-                `${spec.label} ${spec.dist}M // JARAK SESUAI ATURAN; LINTASAN SKEMATIS (BUKAN HITUNGAN)`;
-
-            const padL = 40, padR = 28, losY = 54;
-            const scaleX = (w - padL - padR) / 45;
-
-            // Line of Sight
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
-            ctx.setLineDash([4, 4]);
-            ctx.beginPath(); ctx.moveTo(padL, losY); ctx.lineTo(w - padR, losY); ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Distance Posts (18m, 27m, 33m, 41m)
-            [
-                { m: 18, t: '18m Ayam' },
-                { m: 27, t: '27m Babi' },
-                { m: 33, t: '33m Kalkun' },
-                { m: 41, t: '41m Domba' }
-            ].forEach(p => {
-                const x = padL + p.m * scaleX;
-                ctx.strokeStyle = p.m === spec.dist ? '#FF4800' : '#334155';
-                ctx.lineWidth = p.m === spec.dist ? 2 : 1;
-                ctx.beginPath(); ctx.moveTo(x, 18); ctx.lineTo(x, h - 22); ctx.stroke();
-                ctx.fillStyle = p.m === spec.dist ? '#FF4800' : '#94A3B8';
-                ctx.font = 'bold 10px IBM Plex Mono';
-                ctx.fillText(p.t, x - 26, h - 8);
-            });
-
-            function yCurve(m) {
-                const rel = (m - 20) / 21;
-                return losY - 6 + rel * rel * (40 + wind * 7); // illustrative curve only
-            }
-
-            const maxM = spec.dist * shotTraceProg;
-            ctx.strokeStyle = '#FF4800';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            for (let m = 0; m <= maxM; m += 0.5) {
-                const x = padL + m * scaleX;
-                const y = yCurve(m);
-                if (m === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-
-            const px = padL + maxM * scaleX, py = yCurve(maxM);
-            ctx.fillStyle = '#FFFFFF';
-            ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
-        }
-
         // Text is indexed to the current poster-derived rifle and the
         // separate, schematic scope illustration. No measured specifications.
         const HARDWARE_SPECS = {
             stock: {
                 code: 'KOMPONEN #01 // POPOR',
                 title: 'Popor dan Bantalan Bahu',
-                body: 'Titik 01 menunjukkan bagian belakang senapan pada gambar poster, termasuk area popor dan bantalan bahu.',
-                note: 'Foto poster digunakan untuk mengenali letak bagian. Panjang popor dan setelannya tidak diukur.'
+                body: 'Titik 01 menunjukkan popor dan bantalan di bagian paling belakang senapan. Bantalan bahu berada di ujung yang bersentuhan dengan bahu.',
+                note: 'Bandingkan dengan sandaran pipi, nomor 02, yang berada di bagian atas popor.'
             },
             cheekpiece: {
                 code: 'KOMPONEN #02 // SANDARAN PIPI',
-                title: 'Sandaran Pipi (Cheekpiece)',
-                body: 'Titik 02 menandai sandaran pipi di bagian atas popor senapan merah. Bagian ini menjadi tempat pipi bertumpu ketika menggunakan optik.',
-                note: 'Tinggi dan bentuk pada foto bukan acuan pengaturan untuk setiap atlet.'
+                title: 'Sandaran Pipi',
+                body: 'Titik 02 menandai sandaran pipi di atas popor. Bagian ini menjadi tempat pipi bertumpu ketika mata menghadap teleskop.',
+                note: 'Letaknya lebih tinggi daripada grip. Gambar memperlihatkan komponen, bukan posisi kepala atlet.'
             },
             grip: {
                 code: 'KOMPONEN #03 // PEGANGAN',
-                title: 'Pegangan dan Area Pelatuk',
-                body: 'Titik 03 berada di area pegangan tangan dan pelatuk. Foto menunjukkan letak luarnya, bukan posisi jari saat menembak.',
-                note: 'Bentuk pegangan terlihat pada poster; ukuran dan tekanan jari tidak tersedia.'
+                title: 'Pegangan dan Pelatuk',
+                body: 'Titik 03 menunjukkan grip atau pegangan tangan di belakang bilah pelatuk. Pada gambar, area ini berada di bawah bagian tengah senapan.',
+                note: 'Bilah pelatuk berada di depan grip. Untuk mempelajari tahapan pergerakan pelatuk, buka materi Pelatuk.'
             },
             riser: {
                 code: 'KOMPONEN #04 // BADAN DEPAN',
-                title: 'Bagian Depan Badan Senapan (Fore-End)',
-                body: 'Titik 04 menunjukkan bagian depan badan senapan yang tampak pada gambar merah, di belakang area tabung dan laras.',
-                note: 'Titik ini tidak menunjukkan peninggi teleskop. Diagram tidak digunakan untuk menentukan ukuran atau penyetelan komponen.'
+                title: 'Penopang Depan',
+                body: 'Titik 04 menunjukkan bagian bawah badan depan senapan, di depan grip. Bagian ini merupakan area tempat tangan penopang berada.',
+                note: 'Bandingkan dengan tabung udara nomor 05 di bagian depan senapan. Nomor 04 bukan pengatur teleskop.'
             },
             cylinder: {
                 code: 'KOMPONEN #05 // TABUNG UDARA',
-                title: 'Area Tabung Udara',
-                body: 'Titik 05 menunjukkan area tabung udara di bawah bagian depan senapan pada gambar poster.',
-                note: 'Tekanan, kapasitas, dan jenis tabung tidak dapat ditentukan dari gambar ini.'
+                title: 'Tabung Udara',
+                body: 'Titik 05 menunjukkan tabung udara di bawah laras. Tabung ini menyimpan udara bertekanan yang digunakan senapan angin.',
+                note: 'Tabung dan laras adalah bagian berbeda. Pada gambar, laras berada lebih tinggi dan memanjang ke arah ujung depan.'
             },
             barrel: {
                 code: 'KOMPONEN #06 // LARAS',
-                title: 'Laras dan Bagian Ujung Depan',
-                body: 'Titik 06 mengarah ke bagian depan senapan. Gambar menunjukkan letak luarnya tanpa rincian struktur laras.',
-                note: 'Panjang, kaliber, dan komponen internal tidak diverifikasi melalui foto poster.'
+                title: 'Laras',
+                body: 'Titik 06 menandai laras di bagian depan senapan. Laras merupakan jalur keluarnya pellet menuju mulut laras.',
+                note: 'Ikuti bagian yang memanjang dari badan senapan ke ujung paling depan. Bentuk luar tidak menunjukkan isi laras.'
             },
             objective: {
                 code: 'KOMPONEN #07 // OBJEKTIF',
-                title: 'Lensa Objektif Teleskop',
-                body: 'Titik 07 berada pada bagian depan teleskop di diagram atas. Lensa objektif menerima cahaya dari arah objek yang diamati.',
-                note: 'Diagram atas adalah ilustrasi optik terpisah, bukan foto teleskop yang terpasang pada senapan merah.'
+                title: 'Lensa Objektif',
+                body: 'Titik 07 menandai lensa objektif di ujung depan teleskop. Lensa ini menerima cahaya dari objek yang dilihat.',
+                note: 'Pada ilustrasi, objektif berada di sisi kiri. Bandingkan dengan lensa okuler nomor 10 di sisi kanan, dekat mata.'
             },
             turrets: {
                 code: 'KOMPONEN #08 // TURRET',
                 title: 'Turret Elevasi dan Windage',
-                body: 'Titik 08 menunjukkan lokasi kontrol turret pada ilustrasi teleskop. Bentuk dan posisi kontrol berbeda menurut model perangkat.',
-                note: 'Jumlah klik, rentang pengaturan, dan spesifikasi perangkat asli tidak disajikan.'
+                body: 'Titik 08 menandai turret, yaitu kenop di sekitar bagian tengah teleskop. Kenop ini berkaitan dengan pengaturan posisi garis bidik.',
+                note: 'Gambar hanya menunjukkan letak kenop. Memilih nomor ini tidak mengubah pembidikan atau setelan teleskop.'
             },
             zoom: {
                 code: 'KOMPONEN #09 // CINCIN PEMBESARAN',
-                title: 'Cincin Pembesaran Teleskop',
-                body: 'Titik 09 menandai cincin pembesaran pada ilustrasi optik. Tidak semua teleskop memiliki bentuk pengatur yang sama.',
-                note: 'Gambar tidak menunjukkan tingkat pembesaran atau pengaturan yang dipakai atlet.'
+                title: 'Cincin Pembesaran',
+                body: 'Titik 09 menandai cincin pembesaran di dekat ujung belakang teleskop. Cincin ini digunakan untuk mengubah pembesaran pada teleskop yang mendukungnya.',
+                note: 'Nomor ini hanya menyorot komponen; ukuran gambar sasaran tidak ikut diperbesar.'
             },
             ocular: {
                 code: 'KOMPONEN #10 // OKULER',
-                title: 'Lensa Okuler dan Area Dioptri',
-                body: 'Titik 10 berada pada ujung teleskop yang menghadap mata dalam ilustrasi tampak luar.',
-                note: 'Ilustrasi tidak memperlihatkan pengaturan dioptri maupun jarak mata hasil pengukuran.'
+                title: 'Lensa Okuler',
+                body: 'Titik 10 menandai okuler, yaitu ujung teleskop yang menghadap mata. Bagian ini menjadi tempat pengguna melihat gambar dan garis bidik.',
+                note: 'Untuk mempelajari perubahan pandangan melalui lensa, buka materi Optik.'
             }
         };
 
         function inspectHardware(key) {
-            playMechTick(860);
             const item = HARDWARE_SPECS[key];
             if (!item) return;
             const componentSelect = document.getElementById('labHardwarePicker');
@@ -1161,8 +799,7 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
                 button.setAttribute('aria-pressed', String(selected));
                 button.classList.toggle('is-current', selected);
             });
-            const shortNames = {stock:'Popor',cheekpiece:'Sandaran pipi',grip:'Grip',riser:'Penopang depan',cylinder:'Tabung udara',barrel:'Laras',objective:'Lensa depan',turrets:'Turret',zoom:'Pembesaran',ocular:'Lensa okuler'};
-            document.getElementById('blueprintActiveLabel').textContent = 'DIPILIH: ' + shortNames[key];
+            document.getElementById('blueprintActiveLabel').textContent = 'DIPILIH: ' + item.title;
             document.getElementById('hwSpecCode').textContent = item.code;
             document.getElementById('hwSpecTitle').textContent = item.title;
             document.getElementById('hwSpecBody').textContent = item.body;
@@ -1187,30 +824,13 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
             }
         }
 
-        function adjustRifleBalancePoint(val) {
-            const x = parseFloat(val);
-            document.getElementById('svgCobFulcrum').setAttribute('transform', `translate(${x}, 364)`);
-            const fb = document.getElementById('cobFeedbackText');
-            if (x >= 402 && x <= 438) {
-                fb.textContent = 'PENANDA DI TENGAH DIAGRAM';
-                fb.className = 'text-[var(--ok-green)]';
-            } else if (x < 402) {
-                fb.textContent = 'PENANDA BERGESER KE BELAKANG';
-                fb.className = 'text-[var(--aurellia-red)]';
-            } else {
-                fb.textContent = 'PENANDA BERGESER KE DEPAN';
-                fb.className = 'text-[var(--aurellia-red)]';
-            }
-        }
-
         window.addEventListener('DOMContentLoaded', function () {
             setupTriggerInput();
-            selectFingerVector('B');
+            selectTriggerStage('A');
             setupOcularVisibility();
             renderBiomechIndexTable();
             selectBiomechCallout('spine');
-            updatePosturePhysics();
-            drawOscilloscope(0.65);
+            drawOscilloscope(oscProgress);
             updateOpticalSim();
             buildSilhouetteRack();
             selectRangeAnimal('ram');
@@ -1221,7 +841,6 @@ function buildEditorialPostureIllustration(pose, arch, hipLock = 100) {
 function setupLabMobileExperience() {
     const media = window.matchMedia('(max-width: 767px)');
     const disclosures = Array.from(document.querySelectorAll('[data-lab-mobile-collapse]'));
-    const settings = document.querySelector('.lab-settings');
     const picker = document.getElementById('labMobileModuleSelect');
     if (!picker) return;
     const anatomySelect = document.getElementById('labCalloutPicker');
@@ -1264,12 +883,7 @@ function setupLabMobileExperience() {
         if (id === 'sec-biomech') window.requestAnimationFrame(positionBiomechPins);
         if (id === 'sec-optics') {
             renderOcularLoop(performance.now(), true);
-            // When the lesson was hidden, its width was zero. Re-apply head position
-            // after it becomes visible, using the true mobile fitted artwork size.
-            requestAnimationFrame(() => window.OpticsPosterArt?.renderImmediately({
-                dist: document.getElementById('optEyeDist')?.value,
-                height: document.getElementById('optCheekHeight')?.value
-            }));
+
         }
         if (id === 'sec-hardware' && media.matches) {
             // Initial selection may be made while the lesson is still hidden.
@@ -1302,7 +916,6 @@ function setupLabMobileExperience() {
             const compactReference = panel.matches('.lab-notice-wrap,.lab-sources-wrap,.lab-facts');
             panel.open = !media.matches && !compactReference;
         }
-        if (settings) settings.open = !media.matches;
         showModule(active, false);
     };
     const postureStage = document.querySelector('.lab-biomech-stage');
@@ -1310,8 +923,6 @@ function setupLabMobileExperience() {
         new ResizeObserver(() => window.requestAnimationFrame(positionBiomechPins)).observe(postureStage);
     }
     window.addEventListener('resize', () => window.requestAnimationFrame(positionBiomechPins));
-    const posePicker = document.getElementById('labMobilePosePicker');
-    posePicker?.addEventListener('change', () => switchPose(posePicker.value));
     picker.addEventListener('change', () => navigate(picker.value));
     prev?.addEventListener('click', () => navigate(ids[Math.max(0, ids.indexOf(active) - 1)]));
     next?.addEventListener('click', () => navigate(ids[Math.min(ids.length - 1, ids.indexOf(active) + 1)]));

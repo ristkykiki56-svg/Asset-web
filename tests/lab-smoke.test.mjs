@@ -26,21 +26,21 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('nine sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
+test('three remaining sliders and ten unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
- assert.equal(sliders.length,9);
+ assert.equal(sliders.length,3);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
- assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,13);
+ assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,10);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
  assert.match(js,/btn\.setAttribute\('aria-pressed','false'\)/);
 });
 test('pointer cancellation, keyboard input, pose sync, and RAF throttling are implemented',()=>{
  for(const key of ['pointerdown','pointerup','pointercancel','lostpointercapture','keydown','keyup'])assert.ok(js.includes(key),key);
- assert.match(js,/const chosen = POSTER_BIOMECH_DATA\.find\(p => p\.id === activeBiomechId && p\.pose === poseKey\)/);
+ assert.match(js,/currentPose = item\.pose/);
  assert.match(js,/setupOcularVisibility/);
  assert.match(js,/const reducedMotion = window\.matchMedia/);
- assert.match(js,/cancelAnimationFrame\(ballisticReq\)/);
- assert.match(js,/let sfxActive = false/);
+ assert.match(js,/cancelAnimationFrame\(oscReq\)/);
+ assert.doesNotMatch(js,/sfxActive|AudioContext/);
 });
 test('disclaimers separate illustration from rules and provenance',()=>{
  assert.match(html,/SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR/);
@@ -57,8 +57,8 @@ test('published claims distinguish official rules from unvalidated demonstration
  assert.doesNotMatch(html,/110 gf \(IDEAL\)|85 mm \(IDEAL\)|DROP: -6\.8 CM|1085 mm/);
  assert.doesNotMatch(js,/Reduksi goyangan 80%|LINTASAN CONTOH:.*KLIK CONTOH/);
  assert.doesNotMatch(js,/ref: 'REF POSTER/);
- assert.match(js,/unit model/);
- assert.match(js,/JARAK SESUAI ATURAN/);
+ assert.doesNotMatch(js,/windRangeInput/);
+ assert.match(js,/chicken: \{ label: 'AYAM \(CHICKEN\)', dist: 18 \}/);
  assert.doesNotMatch(js,/note: 'STANDAR:|SPESIFIKASI VEKTOR B/);
  assert.match(html,/bukan template produksi sasaran/);
 });
@@ -66,12 +66,12 @@ test('published claims distinguish official rules from unvalidated demonstration
 
 test('mobile Lab offers five focused lessons without removing desktop content',()=>{
  assert.match(html,/id="labMobileModuleSelect"/);
- assert.match(html,/id="labMobilePosePicker"/);
- assert.match(js,/posePicker\?\.addEventListener\('change'/);
+ assert.doesNotMatch(html,/id="labMobilePosePicker"/);
+ assert.doesNotMatch(js,/function switchPose/);
  assert.match(html,/id="labNextModule"/);
  assert.match(html,/id="labPrevModule"/);
  assert.equal((html.match(/class="lab-heading-short"/g)||[]).length,5);
- assert.equal((html.match(/data-lab-mobile-collapse/g)||[]).length,8);
+ assert.equal((html.match(/data-lab-mobile-collapse/g)||[]).length,7);
  assert.equal((html.match(/data-rack-animal=/g)||[]).length,4);
  assert.match(html,/aria-label="Diagram senapan, geser horizontal/);
  assert.match(js,/function setupLabMobileExperience/);
@@ -80,7 +80,7 @@ test('mobile Lab offers five focused lessons without removing desktop content',(
  assert.match(js,/tier\.classList\.toggle\('is-current'/);
  assert.match(css,/lab-mobile-focused main#main-content/);
  assert.match(css,/\.lab-mobile-stepper/);
- assert.match(css,/lab-settings:not\(\[open\]\)/);
+ assert.doesNotMatch(html,/class="lab-settings"/);
 });
 
 test('mobile disclosure markup preserves balanced major HTML containers',()=>{
@@ -111,7 +111,7 @@ test('educational model avoids unsupported ideal-settings and explains recorded 
  assert.doesNotMatch(html,/Take-Up \(0–70 gf\)/);
  assert.doesNotMatch(html,/LUBANG #2 — OPTIMAL/);
  assert.doesNotMatch(html,/85 mm \(IDEAL\)/);
- assert.match(html,/INDEKS GERAKAN MODEL:/);
+ assert.match(html,/Tiga tahap pergerakan pelatuk/);
  assert.match(html,/bukan rekaman gaya, waktu, atau performa atlet/);
  assert.match(html,/ATURAN · IMSSU 2025/);
  assert.match(html,/MODEL · BUKAN DATA UKUR/);
@@ -137,7 +137,7 @@ test('active and total silhouette counts both update across selection and reset'
  assert.match(html,/id="rackHitScore"/);
  assert.match(js,/function updateRackCounters/);
  assert.match(js,/key\.startsWith\(selectedAnimal \+ '-'\)/);
- assert.match(js,/updateRackCounters\(\);\s+renderTrajectoryGraph/);
+ assert.doesNotMatch(js,/triggerBallisticTrace/);
 });
 
 
@@ -157,7 +157,7 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
  assert.doesNotMatch(html,/id="rigSwitch-clarisa"/);
  assert.equal((svg.match(/class="hw-marker cursor-pointer"/g)||[]).length,10);
  assert.equal((svg.match(/class="hw-region cursor-pointer"/g)||[]).length,5);
- for (const id of ['svgCobFulcrum','rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
+ for (const id of ['rigMainChassis','rigRearBlock','rigMuzzleCap','rigCheekName']) {
    assert.equal((svg.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
  for (const key of ['stock','cheekpiece','grip','riser','cylinder','barrel','objective','turrets','zoom','ocular']) {
@@ -173,18 +173,15 @@ test('equipment v2 is real layered inline SVG with stable interactive contracts'
 
 
 test('four remaining Lab visuals use layered illustrations and preserve DOM wiring',()=>{
- assert.match(js,/function buildEditorialPostureIllustration/);
- assert.match(html,/id="biomechBlueKit"/);
- assert.match(html,/id="biomechRedKit"/);
+ assert.doesNotMatch(js,/function buildEditorialPostureIllustration/);
  assert.match(html,/id="svgAthleteLayer"/);
- assert.match(html,/id="svgCogPlumbGroup"/);
- assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
+ assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose, activeBiomechId\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
- assert.match(html,/id="triggerMechanismDiagram"/);
- for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
+
+ for(const id of ['triggerTravelMarker','triggerZoneA','triggerZoneB','triggerZoneC','ocularLensCanvas']){
   assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
- assert.match(html,/id="opticalAlignmentIllustration"/);
+
  assert.match(js,/const SILHOUETTE_RASTERS =/);
  assert.match(js,/className = 'silhouette-raster'/);
  assert.doesNotMatch(js,/const SILHOUETTE_PATHS =/);
@@ -199,26 +196,24 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  }
  assert.match(css,/Four-module visual refinement/);
  assert.doesNotMatch(js,/id="targetSteel-/);
- assert.match(html,/role="group" aria-labelledby="triggerVectorTitle/);
+ assert.match(html,/role="img" aria-labelledby="triggerStageDiagramTitle/);
 });
 
 
-test('callout alignment and elbow controls are connected to the rendered SVG',()=>{
+test('callout alignment remains connected to the character illustration',()=>{
   assert.match(js,/function positionBiomechPins\(\)/);
   assert.match(js,/getScreenCTM/);
   assert.match(js,/createSVGPoint/);
   assert.match(js,/button\.dataset\.svgX/);
   assert.match(js,/new ResizeObserver/);
-  assert.match(js,/buildEditorialPostureIllustration\(currentPose, arch, hipLock\)/);
-  assert.match(js,/const armShift = Math\.round\(\(100 - hipLock\)/);
-  assert.match(js,/cy="\$\{230 \+ elbowShift\}"/);
+  assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
 });
 
 test('diagram labels do not misrepresent conceptual plots as measured data',()=>{
   assert.doesNotMatch(js,/WAKTU \(ms\)/);
   assert.match(js,/URUTAN MODEL/);
   assert.match(html,/BUKAN GAYA\/WAKTU UKUR/);
-  assert.match(html,/POSISI SIKU RELATIF KE PINGGUL \(MODEL\)/);
+  assert.doesNotMatch(html,/id="hipLockSlider"/);
 });
 
 
@@ -228,15 +223,15 @@ test('interactive diagram markers expose a single keyboard path and truthful pre
  assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
  assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
  assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);
- assert.equal((html.match(/data-trigger-vector="[ABC]" aria-pressed=/g)||[]).length,3);
- assert.match(js,/marker\.setAttribute\('aria-pressed', String\(v === vec\)\)/);
+ assert.equal((html.match(/id="btnStage-[ABC]"[^>]*aria-pressed=/g)||[]).length,3);
+ assert.match(js,/getElementById\('btnStage-'\+id\)\.setAttribute\('aria-pressed', String\(selected\)\)/);
  assert.match(js,/if \(node\.classList\.contains\('hw-marker'\)\) node\.setAttribute\('aria-pressed', String\(selected\)\)/);
 });
 
 
 test('anatomy selection keeps ten stable click controls and viewpoint-aware anchor coordinates',()=>{
  assert.match(js,/function biomechAnchor\(point, arch, hipLock\)/);
- assert.match(js,/const anchors = \{/);
+ assert.match(readFileSync(new URL('../posture-art.js',import.meta.url),'utf8'),/const photos=\{/);
  assert.match(js,/btn\.dataset\.biomechId = pt\.id/);
  assert.match(js,/pinsContainer\.querySelector\('\[data-biomech-id=/);
  assert.match(js,/btn\.addEventListener\('click', \(\) => selectBiomechCallout\(pt\.id\)\)/);
@@ -248,77 +243,22 @@ test('anatomy selection keeps ten stable click controls and viewpoint-aware anch
 });
 
 
-test('review-only blue/red static posture adapter keeps existing SVG fallback',()=>{
+test('poster photographs have an explicit unavailable state and no generated fallback',()=>{
  const adapter=readFileSync(new URL('../posture-art.js',import.meta.url),'utf8');
- assert.match(html,/id="postureArtControls"/);
- assert.match(html,/id="postureArtMode"/);
  assert.match(html,/data-pose-color="blue"/);
  assert.match(html,/data-pose-color="red"/);
- assert.match(html,/defer src="\/posture-art.js"/);
- assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose\) \|\| buildEditorialPostureIllustration/);
- assert.match(js,/tsPosturePoseArt\?\.anchor\(point, currentPose\)/);
- assert.match(adapter,/Promise\.all\(variants\.flatMap/);
- assert.match(adapter,/state\.ready=false;state\.active=false/);
- assert.match(adapter,/skema SVG tetap digunakan/);
- assert.match(adapter,/aria-pressed/);
- assert.match(css,/ts-pose-art-controls/);
- assert.match(css,/ts-pose-art-active \.ts-scheme-only/);
- assert.equal((html.match(/id="postureArtMode"/g)||[]).length,1);
+ assert.match(html,/Clarisa Azalia/);
+ assert.match(html,/Aurellia Cassandra/);
+ assert.doesNotMatch(html,/id="postureArtMode"/);
+ assert.match(adapter,/poster-v15\.png/);
+ assert.match(adapter,/Foto poster tidak dapat dimuat/);
+ assert.doesNotMatch(adapter,/scale\(-1/);
 });
 
 
-test('posture review is complete only when all six valid WebP images are present',()=>{
- const base=new URL('../assets/posture/',import.meta.url);
- const names=['blue-front','blue-side','blue-back','red-front','red-side','red-back'];
- const present=names.filter(name=>existsSync(new URL(name+'.webp',base)));
- if(present.length!==0)assert.deepEqual(present,names,'posture assets must be added as a complete set');
- if(process.env.REQUIRE_POSTURE_ASSETS==='1')assert.equal(present.length,6,'merge gate: assets are missing');
- for(const name of present){
-   const location=new URL(name+'.webp',base);
-   assert.ok(statSync(location).size>=1000,name+' should not be a placeholder');
-   const data=readFileSync(location);
-   assert.equal(data.subarray(0,4).toString(),'RIFF',name+' is not a RIFF/WebP asset');
-   assert.equal(data.subarray(8,12).toString(),'WEBP',name+' has an invalid WebP header');
- }
-});
-
-
-test('optics study uses a fixed detailed scope and only a slider-driven head',()=>{
-  assert.match(html, /id="opticalAlignmentIllustration"/);
-  assert.match(html, /id="opticFixedScope"/);
-  assert.match(html, /id="optStaticRifle"/);
-  assert.match(html, /id="svgShooterHeadSide"/);
-  assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
-  assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 835 282"/);
-  assert.match(html, /TINGGI POSISI MATA/);
-  assert.match(html, /INTENSITAS PERUBAHAN LENSA/);
-  assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
-  assert.match(js, /const dy = -7 - comb \* 0\.85/);
-  assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);
-  assert.match(css, /\.optical-side-pan/);
-});
-
-test('optics maintains authentic independent WebP layers without a pixel warp',()=>{
- const layers=['optic-static.webp','optic-head.webp','optic-foreground.webp'];
- for(const filename of layers){
-  const data=readFileSync(new URL('../assets/optics/'+filename,import.meta.url));
-  assert.ok(data.byteLength>20000,filename+' unexpectedly small');
-  assert.equal(data.subarray(0,4).toString(),'RIFF');
-  assert.equal(data.subarray(8,12).toString(),'WEBP');
- }
- const adapter=readFileSync(new URL('../optics-poster-artwork.js',import.meta.url),'utf8');
- assert.match(html,/id="opticalAlignmentArtwork"/);
- assert.match(html,/id="opticStaticArt"/);
- assert.match(html,/id="opticHeadArt"/);
- assert.match(html,/id="opticForegroundArt"/);
- assert.match(html,/defer src="\/optics-poster-artwork.js"/);
- assert.match(js,/OpticsPosterArt\?\.update\(\{dist, height: comb\}\)/);
- assert.match(adapter,/head\.style\.transform/);
- assert.match(adapter,/translate3d/);
- assert.match(adapter,/fallback\.hidden=true/);
- assert.match(adapter,/addEventListener\('error',fail\)/);
- assert.doesNotMatch(adapter,/getImageData|putImageData|createImageData|ImageData|setInterval\(/);
- assert.match(css,/#sec-optics #opticHeadArt/);
- assert.match(css,/#sec-optics #opticForegroundArt\{z-index:2\}/);
- assert.match(css,/prefers-reduced-motion:reduce/);
+test('original poster photograph is present with the expected PNG dimensions',()=>{
+ const bytes=readFileSync(new URL('../assets/posture/poster-v15.png',import.meta.url));
+ assert.equal(bytes.subarray(1,4).toString(),'PNG');
+ assert.equal(bytes.readUInt32BE(16),3466);
+ assert.equal(bytes.readUInt32BE(20),5000);
 });

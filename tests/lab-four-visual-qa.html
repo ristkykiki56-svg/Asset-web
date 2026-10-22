@@ -23,7 +23,7 @@ frame.addEventListener('load',()=>{
   section.style.margin='0';
   main.classList.remove('space-y-16');main.style.padding='14px 14px 20px';main.style.margin='0 auto';
   const pose=new URL(location.href).searchParams.get('pose');
-  if(id==='sec-biomech' && ['back','front','sideLeft','sideRight'].includes(pose))win.switchPose(pose);
+  if(id==='sec-biomech'){const point={back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose];if(point)win.selectBiomechCallout(point);}
   if(id==='sec-optics'){
    const params=new URL(location.href).searchParams;
    if(params.has('dist')||params.has('height')){
@@ -31,23 +31,13 @@ frame.addEventListener('load',()=>{
     if(params.has('height'))doc.getElementById('optCheekHeight').value=params.get('height');
     win.updateOpticalSim();
    }
-   if(params.get('detail')==='1')doc.getElementById('opticsDetailToggle').click();
   }
   win.scrollTo(0,0);
   if(id==='sec-optics'){
-   // Decode every registered raster layer before screenshots. In headless
-   // Chromium, a large transparent WebP can otherwise briefly paint alone
-   // during the first programmatic mobile zoom/scroll frame.
-   const images=['opticStaticArt','opticHeadArt','opticForegroundArt'].map(id=>doc.getElementById(id));
-   Promise.all(images.map(im=>im.decode())).then(()=>{
-    win.OpticsPosterArt?.renderImmediately({
-     dist:doc.getElementById('optEyeDist').value,
-     height:doc.getElementById('optCheekHeight').value
-    });
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-     win.scrollTo(0,0);document.body.dataset.snapshot='ready';
-    }));
-   }).catch(()=>{document.body.dataset.snapshot='error';document.body.dataset.reason='optics image decode failed'});
+   win.renderOcularLoop(performance.now(),true);
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    win.scrollTo(0,0);document.body.dataset.snapshot='ready';
+   }));
   } else if(id==='sec-imssu'){
    const images=[...doc.querySelectorAll('#sec-imssu .silhouette-raster')];
    Promise.all(images.map(im=>im.decode())).then(()=>{

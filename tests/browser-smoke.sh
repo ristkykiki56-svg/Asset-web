@@ -44,17 +44,9 @@ echo 'Captured desktop/mobile homepage screenshots'
 # PDF.js needs real-time worker rendering, not virtual-time-budget polling.
 npm install --no-save --no-package-lock --ignore-scripts puppeteer-core@24.17.0 --silent
 PORT="$PORT" CHROME="$CHROME" node tests/rules-browser-qa.mjs
-# Lab route, viewport and interaction checks (production CSS, no Tailwind Play CDN).
-"$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
-  --window-size=1500,1000 --virtual-time-budget=8000 --dump-dom \
-  "http://127.0.0.1:$PORT/tests/lab-viewport-smoke.html" \
-  >/tmp/twinshooter-qa/lab-viewport-result.html 2>/tmp/twinshooter-qa/lab-chrome.log
-if ! grep -Fq 'data-status="pass"' /tmp/twinshooter-qa/lab-viewport-result.html; then
-  grep -E 'data-status="fail"|exception|overflow' /tmp/twinshooter-qa/lab-viewport-result.html || true
-  echo 'Lab viewport/interactions smoke failed' >&2
-  exit 1
-fi
-echo 'Lab browser QA PASS (320px–1440px)'
+# The interactive fixture awaits animation frames and image/font loading.
+# Use real-time polling, as for PDF.js, rather than a virtual-time DOM dump.
+PORT="$PORT" CHROME="$CHROME" node tests/lab-browser-qa.mjs
 "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
   --hide-scrollbars --window-size=1440,1000 --virtual-time-budget=1200 \
   --screenshot=/tmp/twinshooter-qa/lab-desktop.png "http://127.0.0.1:$PORT/lab.html" \

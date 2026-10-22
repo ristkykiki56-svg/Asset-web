@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Audit accessibility regressions</title>
+<style>body{font:14px system-ui}output{display:block;white-space:pre-wrap}iframe{display:block;height:900px;border:0}</style>
+<output id="result" data-status="pending">RUNNING</output>
+<script type="module">
+const result = document.querySelector('#result');
+const failures = [];
+let checks = 0;
+const check = (condition, message) => { checks++; if (!condition) failures.push(message); };
+const settle = frame => new Promise(resolve => frame.contentWindow.requestAnimationFrame(() => frame.contentWindow.requestAnimationFrame(resolve)));
+async function open(path, width) {
+  document.querySelector('iframe')?.remove();
+  const frame = document.createElement('iframe');
+  frame.title = 'Regression fixture';
+  frame.style.width = width + 'px';
+  frame.src = path;
+  const ready = new Promise(resolve => frame.onload = resolve);
+  document.body.append(frame);
+  await ready;
+  await frame.contentDocument.fonts.ready;
+  await settle(frame);
+  return frame;
+}
+function contrast(a, b) {
+  const luminance = color => {
+    const rgb = color.match(/[\d.]+/g).slice(0,3).map(Number).map(c => {
+      c /= 255;
+      return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4;
+    });
+    return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
+  };
+  const l = [luminance(a), luminance(b)].sort((a,b) => b-a);
+  return (l[0]+.05)/(l[1]+.05);
+}
+function touch(doc, selectors, label) {
+  for (const element of doc.querySelectorAll(selectors)) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height || element.closest('[hidden]')) continue;
+    check(rect.width >= 43.9 && rect.height >= 43.9,
+      `${label}: small target ${element.id || element.textContent.trim().slice(0,35)} (${rect.width.toFixed(1)} x ${rect.height.toFixed(1)})`);
+  }
+}
+try {
+  for (const width of [320,375,768,1280]) {
+    let frame = await open('/', width);
+    let doc = frame.contentDocument;
+    const nav = doc.querySelector('nav');
+    check(nav.scrollWidth <= nav.clientWidth + 1, `${width}: profile nav scrolls horizontally`);
+    check(doc.documentElement.scrollWidth <= width, `${width}: profile page overflow`);
+    for (const link of nav.querySelectorAll('a')) {
+      const r = link.getBoundingClientRect();
+      check(r.left >= 0 && r.right <= width, `${width}: hidden nav destination ${link.textContent}`);
+    }
+    frame = await open('/rules.html', width);
+    doc = frame.contentDocument;
+    doc.querySelector('#rulesSearchDisclosure').open = true;
+    await settle(frame);
+    check(doc.documentElement.scrollWidth <= width, `${width}: PDF search overflow ${doc.documentElement.scrollWidth}`);
+    for (const control of doc.querySelectorAll('.rules-search-controls input,.rules-search-controls button')) {
+      const r = control.getBoundingClientRect();
+      check(r.left >= 0 && r.right <= width, `${width}: PDF search control outside viewport`);
+    }
+    touch(doc, '.rules-toolbar button,.rules-toolbar input,.rules-search input,.rules-search button,.rules-secondary-controls summary', `${width}: PDF`);
+  }
+  const frame = await open('/lab.html', 375);
+  const doc = frame.contentDocument;
+  touch(doc, '.lab-mobile-back,.lab-settings > summary,.lab-mobile-picker select,.lab-intro-provenance a,.lab-notice-wrap > summary', 'Lab mobile');
+  for (const theme of ['light','dark']) {
+    doc.documentElement.classList.toggle('cad-dark', theme === 'dark');
+    await settle(frame);
+    for (const selector of ['#dossierCode','.lab-brand [class*="bg-[#FF4800]"]']) {
+      const style = frame.contentWindow.getComputedStyle(doc.querySelector(selector));
+      const ratio = contrast(style.color, style.backgroundColor);
+      check(ratio >= 4.5, `Lab ${theme}: ${selector} contrast ${ratio.toFixed(2)}`);
+    }
+    const actionStyle = frame.contentWindow.getComputedStyle(doc.querySelector('#tactileTriggerBtn'));
+    check(contrast(actionStyle.color, 'rgb(224,63,0)') >= 4.5, `Lab ${theme}: orange hover contrast`);
+    for (const color of ['blue','red']) {
+      for (const button of doc.querySelectorAll('[data-pose-color]')) button.setAttribute('aria-pressed', String(button.dataset.poseColor === color));
+      const style = frame.contentWindow.getComputedStyle(doc.querySelector(`[data-pose-color="${color}"]`));
+      const ratio = contrast(style.color, style.backgroundColor);
+      check(ratio >= 4.5, `Lab ${theme}: selected ${color} contrast ${ratio.toFixed(2)}`);
+    }
+  }
+  result.dataset.status = failures.length ? 'fail' : 'pass';
+  result.textContent = JSON.stringify({checks, failures}, null, 2);
+} catch(error) {
+  result.dataset.status = 'error';
+  result.textContent = error.stack;
+}
+</script>
+</html>
