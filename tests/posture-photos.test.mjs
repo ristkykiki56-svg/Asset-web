@@ -87,3 +87,20 @@ test('both athletes have a separate feet crop with two distinct ankle anchors an
   }
  }
 });
+
+
+test('Clarisa rear crop preserves the outside of the left thigh, calf and shoe',async()=>{
+ const art=await adapter(),polygon=art.getPhoto('back').clip.split(' ').map(pair=>pair.split(',').map(Number));
+ const inside=([x,y])=>{
+  let hit=false;
+  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+   const [a,b]=polygon[i],[c,d]=polygon[j];
+   if((b>y)!==(d>y)&&x<(c-a)*(y-b)/(d-b)+a)hit=!hit;
+  }
+  return hit;
+ };
+ // Visible source-photo samples along the trouser edge and the left shoe.
+ for(const point of [[825,1100],[830,1200],[840,1400],[845,1580],[830,1700],[850,1780]]){
+  assert.ok(inside(point),'crop must retain source pixel '+point.join(','));
+ }
+});
