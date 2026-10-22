@@ -16,7 +16,7 @@ test('mobile lessons retain explanations beside every experiment',()=>{
  assert.ok(source.includes("$('#trajectoryCanvas')?.parentElement"),'trajectory instructions move with their graph');
 });
 
-test('all ten posture selections show poster teaching and a separate note matching the view',()=>{
+test('all ten anatomy selections show standalone teaching and select the matching photo',()=>{
  const source=read('lab.js'),nodes=new Map();
  const context=vm.createContext({document:{getElementById:id=>{if(!nodes.has(id))nodes.set(id,{setAttribute(){}});return nodes.get(id);}},playMechTick(){},renderBiomechViewport(){},renderBiomechIndexTable(){}});
  vm.runInContext(source.slice(source.indexOf('const POSTER_BIOMECH_DATA'),source.indexOf('        // Anchor locations')),context);
@@ -24,16 +24,17 @@ test('all ten posture selections show poster teaching and a separate note matchi
  const points=vm.runInContext('POSTER_BIOMECH_DATA',context);
  for(const point of points){
   context.selectBiomechCallout(point.id);
-  assert.match(nodes.get('dossierBody').textContent,/[Pp]oster/);
+  assert.equal(nodes.get('dossierBody').textContent,point.desc);
+  assert.doesNotMatch(point.desc+' '+point.viewNote,/poster|SVG|WebP/i);
   assert.equal(nodes.get('dossierViewNote').textContent,point.viewNote);
   assert.equal(nodes.get('dossierTitle').textContent,point.title);
-  assert.equal(nodes.get('labMobilePosePicker').value,point.pose);
+  assert.equal(vm.runInContext('currentPose',context),point.pose);
  }
  context.selectBiomechCallout('pelvis');
- assert.match(nodes.get('dossierViewNote').textContent,/Foto belakang/);
+ assert.match(nodes.get('dossierViewNote').textContent,/panggul/);
  context.selectBiomechCallout('elbowHip');
  assert.match(nodes.get('dossierBody').textContent,/tumpuan/);
- assert.match(nodes.get('dossierViewNote').textContent,/Foto depan atau serong memperlihatkan siku/);
+ assert.match(nodes.get('dossierViewNote').textContent,/siku/);
 });
 
 test('trigger direction and contact descriptions match selected controls without claiming measured force',()=>{

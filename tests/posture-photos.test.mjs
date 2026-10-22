@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import {createHash} from 'node:crypto';
 const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 async function adapter(){
- const buttons=[],elements={postureArtControls:{addEventListener(){}},postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}},xrayToggleBtn:{getAttribute:()=> 'true'}};
+ const buttons=[],elements={postureArtControls:{addEventListener(){}},postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}}};
  const context=vm.createContext({window:{renderBiomechViewport(){}},document:{readyState:'complete',getElementById:id=>elements[id],querySelectorAll:()=>buttons},Image:class{naturalWidth=3466;set src(value){queueMicrotask(()=>this.onload());}},queueMicrotask});
  vm.runInContext(read('posture-art.js'),context);await new Promise(resolve=>setImmediate(resolve));return context.window.tsPosturePoseArt;
 }
@@ -68,4 +68,22 @@ test('the photo area reports loading and failure instead of leaving a blank diag
  assert.equal(zoom.disabled,true);
  pendingImage.onload();assert.equal(stage.hidden,true);assert.equal(zoom.disabled,false);
  pendingImage.onerror();assert.equal(stage.hidden,false);assert.match(stage.textContent,/tidak dapat dimuat/);
+});
+
+
+test('both athletes have a separate feet crop with two distinct ankle anchors and centered zoom',async()=>{
+ const art=await adapter();
+ for(const athlete of ['blue','red']){
+  art.choose(athlete);
+  const crop=art.getPhoto('feet');
+  assert.notDeepEqual(Array.from(crop.frame),Array.from(art.getPhoto('front').frame));
+  const left=art.anchor({id:'leftLeg'},'feet'),right=art.anchor({id:'rightLeg'},'feet');
+  assert.ok(Math.hypot(left[0]-right[0],left[1]-right[1])>60);
+  for(const id of ['leftLeg','rightLeg']){
+   assert.ok(crop.points[id],athlete+' must define '+id+' rather than use a center fallback');
+   const p=art.anchor({id},'feet');
+   assert.ok(p[0]>26&&p[0]<434&&p[1]>26&&p[1]<514);
+   assert.ok(art.detail('feet',id).includes('viewBox="'+(p[0]-75)+' '+(p[1]-75)+' 150 150"'));
+  }
+ }
 });

@@ -27,7 +27,7 @@ test('copy gate: five lesson introductions and equipment descriptions are plain,
 });
 
 test('copy gate: posture explains body parts with original poster photos',()=>{
- assert.match(html,/Pilih atlet dan foto/);
+ assert.match(html,/Foto dan penjelasan akan mengikuti titik yang dipilih/);
  assert.doesNotMatch(html,/Gunakan gambar karakter|membuka skema SVG|id="archSlider"/);
  assert.doesNotMatch(posture,/Slider tersedia|Matikan opsi/);
  const anatomy=js.slice(js.indexOf('const POSTER_BIOMECH_DATA'),js.indexOf('let currentPose'));

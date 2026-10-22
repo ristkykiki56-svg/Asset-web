@@ -36,7 +36,7 @@ test('seven remaining sliders and thirteen unique SVG keyboard controls remain a
 });
 test('pointer cancellation, keyboard input, pose sync, and RAF throttling are implemented',()=>{
  for(const key of ['pointerdown','pointerup','pointercancel','lostpointercapture','keydown','keyup'])assert.ok(js.includes(key),key);
- assert.match(js,/const chosen = POSTER_BIOMECH_DATA\.find\(p => p\.id === activeBiomechId && p\.pose === poseKey\)/);
+ assert.match(js,/currentPose = item\.pose/);
  assert.match(js,/setupOcularVisibility/);
  assert.match(js,/const reducedMotion = window\.matchMedia/);
  assert.match(js,/cancelAnimationFrame\(ballisticReq\)/);
@@ -66,8 +66,8 @@ test('published claims distinguish official rules from unvalidated demonstration
 
 test('mobile Lab offers five focused lessons without removing desktop content',()=>{
  assert.match(html,/id="labMobileModuleSelect"/);
- assert.match(html,/id="labMobilePosePicker"/);
- assert.match(js,/posePicker\?\.addEventListener\('change'/);
+ assert.doesNotMatch(html,/id="labMobilePosePicker"/);
+ assert.doesNotMatch(js,/function switchPose/);
  assert.match(html,/id="labNextModule"/);
  assert.match(html,/id="labPrevModule"/);
  assert.equal((html.match(/class="lab-heading-short"/g)||[]).length,5);

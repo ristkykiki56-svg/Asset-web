@@ -152,56 +152,38 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Postur berdiri dan bagian penopang tubuh</span><span class="lab-heading-short">Postur tubuh</span>
 </h2>
-<p class="lab-section-hint">Pilih sudut pandang dan titik anatomi untuk melihat lokasinya. Saat sudut pandang berganti, titik yang dipilih menyesuaikan bagian yang terlihat.</p>
+<p class="lab-section-hint">Pilih bagian tubuh yang ingin dipelajari. Foto dan penjelasan akan mengikuti titik yang dipilih. Gunakan Perbesar titik untuk melihat detailnya.</p>
                 </div>
 
                 <!-- 4 Prototype Pose Switchers + X-Ray Skeletal Toggle -->
                 <div class="lab-pose-controls flex flex-wrap items-center gap-2 font-mono-tech text-xs">
-                    <label class="lab-mobile-pose-label" for="labMobilePosePicker">Sudut pandang</label>
-                    <select id="labMobilePosePicker" class="lab-mobile-pose-select" aria-label="Pilih sudut pandang postur"><option value="back">Belakang</option><option value="front">Depan / serong</option><option value="sideLeft">Detail kepala</option><option value="sideRight">Detail tangan</option></select>
-                    <div class="inline-flex border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                        <button onclick="switchPose('back')" id="poseTab-back" aria-pressed="true" class="px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition">
-                            1. Belakang
-                        </button>
-                        <button onclick="switchPose('front')" id="poseTab-front" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            2. Depan / serong
-                        </button>
-                        <button onclick="switchPose('sideLeft')" id="poseTab-sideLeft" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            3. Detail kepala
-                        </button>
-                        <button onclick="switchPose('sideRight')" id="poseTab-sideRight" aria-pressed="false" class="px-3 py-2 hover:bg-[var(--bg-subtle)] transition">
-                            4. Detail tangan
-                        </button>
-                    </div>
                     <label class="lab-callout-label" for="labCalloutPicker">Bagian yang ingin dipelajari</label>
                     <select id="labCalloutPicker" class="lab-callout-select" aria-label="Pilih titik anatomi untuk dijelaskan"></select>
-                    <button onclick="toggleXraySkeleton()" id="xrayToggleBtn" aria-pressed="true" class="px-3 py-2 border border-[#0055B8] text-[var(--clarisa-blue)] font-bold hover:bg-[#0055B8] hover:text-white transition">
-                        Panduan titik: tampil
-                    </button>
+
                 </div>
             </div>
 
             <div id="postureArtControls" class="ts-pose-art-controls" role="group" aria-label="Pilih foto atlet">
-              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Foto poster</span>
+              <div class="ts-pose-art-choices"><span class="ts-pose-art-label">Atlet</span>
                 <button type="button" data-pose-color="blue" aria-pressed="false" disabled>Clarisa Azalia</button>
                 <button type="button" data-pose-color="red" aria-pressed="false" disabled>Aurellia Cassandra</button>
               </div>
               <button id="posturePhotoZoom" type="button" disabled onclick="openPosturePhotoDetail()" aria-haspopup="dialog" class="min-h-11 px-3 py-2 border border-[var(--rule-heavy)]">Perbesar titik</button>
-              <p id="postureArtStatus" aria-live="polite">Memuat foto poster…</p>
-              <p class="ts-pose-art-note">Pilih atlet dan foto yang ingin dilihat. Nomor mengikuti bagian tubuh pada foto asli poster. Gunakan Perbesar titik untuk melihat bagian terpilih lebih dekat.</p>
+              <p id="postureArtStatus" aria-live="polite">Memuat foto…</p>
+              <p class="ts-pose-art-note">Foto mengikuti titik yang dipilih.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
                 <!-- Left 6 Cols: Interactive Drafting Stage with Callout Leader Lines -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 flex flex-col justify-between drafting-bg reg-corner">
                     <div class="lab-figure-caption flex items-center justify-between font-mono-tech text-[11px] border-b border-[var(--rule-light)] pb-2 mb-3">
-                        <span id="stagePoseTitle" class="font-bold">FOTO POSTER V15 — BELAKANG</span>
+                        <span id="stagePoseTitle" class="font-bold">Postur: punggung dan bahu</span>
                         <span class="text-[var(--ink-500)]">PIN SESUAI SUDUT PANDANG · 10 TITIK TOTAL</span>
                     </div>
 
-                    <p class="lab-diagram-context">Pilih angka atau nama bagian tubuh. Memilih titik menampilkan sudut pandang yang memperlihatkan bagian tersebut. Mengganti sudut pandang memilih titik pertama yang tersedia pada gambar itu.</p>
+                    <p class="lab-diagram-context">Pilih angka pada foto atau nama bagian tubuh. Foto akan berganti otomatis sesuai bagian yang dipilih.</p>
                     <!-- Main Interactive SVG Drafting Viewport -->
                     <div class="lab-biomech-stage relative w-full h-[520px] flex items-center justify-center select-none overflow-hidden">
-                        <p id="posturePhotoLoading" role="status">Memuat foto poster…</p>
+                        <p id="posturePhotoLoading" role="status">Memuat foto…</p>
                         <svg id="biomechDraftSvg" viewBox="0 0 460 540" class="w-full h-full">
                             <!-- Dynamic Athlete Illustration + X-Ray Skeleton Layer -->
                             <g id="svgAthleteLayer"></g>
@@ -225,7 +207,7 @@
                     <div class="border-2 border-[var(--rule-heavy)] p-5 bg-[var(--bg-paper)] space-y-3">
                         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
                             <span id="dossierCode" class="px-2 py-0.5 bg-[#FF4800] text-white font-bold">TITIK 01 // PUNGGUNG</span>
-                            <span id="dossierRef" class="text-[var(--ink-500)]">MATERI POSTER V15</span>
+                            <span id="dossierRef" class="text-[var(--ink-500)]">POSTUR BERDIRI</span>
                         </div>
 
                         <h3 id="dossierTitle" aria-live="polite" class="text-xl font-extrabold tracking-tight">
@@ -233,7 +215,7 @@
                         </h3>
 
                         <p id="dossierBody" class="text-sm text-[var(--ink-700)] leading-relaxed">
-                            Poster menjelaskan hubungan lengkungan tubuh dengan keseimbangan dan kenyamanan posisi berdiri. Lengkungan tidak dibuat ekstrem.
+                            Posisi badan sedikit condong ke belakang dengan panggul maju untuk membentuk tumpuan yang seimbang. Lengkungan punggung tetap dalam batas nyaman.
                         </p>
                         <p id="dossierViewNote" class="text-xs text-[var(--ink-700)] leading-relaxed border-t border-[var(--rule-light)] pt-3">Foto belakang memperlihatkan punggung, panggul, dan posisi berdiri saat membidik.</p>
 
@@ -1144,7 +1126,7 @@
     <dialog id="posturePhotoDialog" aria-labelledby="posturePhotoDetailTitle">
       <div class="posture-photo-dialog-header"><h2 id="posturePhotoDetailTitle">Detail foto</h2><button type="button" onclick="document.getElementById('posturePhotoDialog').close()" autofocus>Tutup ×</button></div>
       <div id="posturePhotoDetailView" class="posture-photo-detail-view"></div>
-      <p>Detail foto asli poster v15. Tutup untuk memilih titik atau foto lain.</p>
+      <p>Detail bagian tubuh yang dipilih. Tutup untuk memilih titik lain.</p>
     </dialog>
     <script defer src="/lab.js"></script>
     <script defer src="/posture-art.js"></script>

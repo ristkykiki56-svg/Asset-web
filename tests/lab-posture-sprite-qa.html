@@ -10,7 +10,7 @@ iframe{width:100%;height:100%;border:0;display:block}
 <script>
 const params=new URL(location.href).searchParams;
 const color=params.get('color')==='red'?'red':'blue';
-const pose=['back','front','sideLeft','sideRight'].includes(params.get('pose'))?params.get('pose'):'front';
+const pose=['back','front','sideLeft','sideRight','feet'].includes(params.get('pose'))?params.get('pose'):'front';
 const frame=document.getElementById('lab');
 function failure(msg){document.body.dataset.snapshot='error';const out=document.getElementById('qa-error');out.style.display='block';out.textContent=msg;}
 frame.addEventListener('load',async()=>{
@@ -30,17 +30,14 @@ frame.addEventListener('load',async()=>{
   main.classList.remove('space-y-16');
   main.style.padding='14px 14px 20px';
   main.style.margin='0 auto';
-  const switcher=doc.getElementById('postureArtMode');
-  if(!switcher)throw Error('No sprite mode control');
-  for(let tries=0;tries<60 && switcher.disabled;tries++){
+  for(let tries=0;tries<100&&!win.tsPosturePoseArt?.isActive();tries++){
     await new Promise(resolve=>win.setTimeout(resolve,50));
   }
-  if(switcher.disabled)throw Error('Sprite mode disabled, assets have not loaded');
+  if(!win.tsPosturePoseArt?.isActive())throw Error('Photo has not loaded');
   doc.querySelector('[data-pose-color="'+color+'"]').click();
-  win.switchPose(pose);
-  const expected=color+'-'+(pose==='sideRight'?'side':'sideLeft'===pose?'side':pose)+'.webp';
-  const img=doc.querySelector('#svgAthleteLayer image[href$="'+expected+'"]');
-  if(!img)throw Error('Wrong/missing sprite '+expected);
+  win.selectBiomechCallout({back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose]);
+  const expected='poster-v15.png';
+  if(!doc.querySelector('#svgAthleteLayer image[href$="'+expected+'"]'))throw Error('Missing original photo');
   // Rendering and SVG updates are synchronous; record readiness without an iframe RAF gate.
   win.positionBiomechPins();
   win.scrollTo(0,0);

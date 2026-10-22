@@ -71,79 +71,78 @@ let sfxActive = false;
         const POSTER_BIOMECH_DATA = [
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Punggung dan kenyamanan postur',
-                desc: 'Poster menjelaskan hubungan lengkungan tubuh dengan keseimbangan dan kenyamanan posisi berdiri. Bagian atas badan sedikit condong ke belakang dan panggul maju; poster juga mengingatkan agar lengkungan tidak dibuat ekstrem.',
-                viewNote: 'Foto belakang memperlihatkan hubungan punggung, panggul, dan posisi berdiri saat membidik. Penanda menunjukkan area punggung; besar lengkungannya tidak diukur dari foto.'
+                desc: 'Posisi badan sedikit condong ke belakang dengan panggul maju untuk membentuk tumpuan yang seimbang. Lengkungan punggung tetap dalam batas nyaman dan tidak dibuat berlebihan.',
+                viewNote: 'Penanda menunjukkan area punggung. Perhatikan hubungannya dengan bahu dan panggul saat mempertahankan posisi berdiri.'
             },
             {
                 id: 'head', num: '02', pose: 'sideLeft', x: 50, y: 16,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Kepala, pipi, dan arah pandang',
-                desc: 'Poster menekankan kepala yang rileks, pipi bertumpu pada sandaran pipi, dan pandangan langsung melalui teleskop. Jarak mata perlu memberi pandangan yang penuh dan jelas tanpa memaksa leher.',
-                viewNote: 'Detail kepala memperlihatkan mata, teleskop, dan sandaran pipi pada foto poster. Penanda berada di sekitar mata untuk membantu melihat hubungan ketiganya.'
+                desc: 'Kepala berada dalam posisi rileks dengan pipi bertumpu pada sandaran pipi. Mata menghadap langsung ke lensa okuler agar bidang pandang terlihat penuh dan jelas.',
+                viewNote: 'Pembesaran berpusat pada area mata. Perhatikan jarak mata terhadap okuler dan letak pipi di atas sandaran.'
             },
             {
                 id: 'rightShoulder', num: '03', pose: 'back', x: 39, y: 28,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Bahu kanan dan bantalan bahu',
-                desc: 'Dalam poster, bahu kanan dirilekskan dan bantalan bahu pada ujung popor bertumpu dengan mantap pada bahu. Hubungan kedua bagian ini membantu mengenali posisi senapan terhadap badan.',
-                viewNote: 'Foto belakang memperlihatkan bahu dan ujung popor di dekatnya. Penanda mengikuti area bahu kanan; sebagian pertemuan bantalan dengan bahu dapat tertutup pakaian atau senapan.'
+                desc: 'Bahu kanan tetap rileks, sementara bantalan popor bertumpu dengan mantap pada bahu. Posisi ini menjaga hubungan senapan dengan badan selama membidik.',
+                viewNote: 'Penanda mengarah ke area bahu kanan di dekat ujung popor. Sebagian permukaan kontak dapat tertutup pakaian atau senapan.'
             },
             {
                 id: 'leftArm', num: '04', pose: 'front', x: 58, y: 33,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Bahu kiri dan lengan penopang',
-                desc: 'Poster menjelaskan bahu kiri yang rileks dan lengan atas kiri yang dekat dengan badan sebagai bagian penopang senapan. Tumpuan lengan dan tangan dibahas bersama, bukan sebagai gerakan bahu yang terpisah.',
-                viewNote: 'Foto depan atau serong memperlihatkan lengan kiri yang tertekuk sebagai penopang. Penanda berada pada area lengan atas; bandingkan dengan titik siku kiri nomor 07.'
+                desc: 'Bahu kiri berada dalam keadaan rileks dengan lengan atas dekat pada badan. Lengan kiri dan tangan penopang bekerja sebagai satu tumpuan untuk menahan bagian depan senapan.',
+                viewNote: 'Penanda menunjukkan area lengan atas kiri. Bandingkan dengan letak siku pada titik 07.'
             },
             {
                 id: 'leftWrist', num: '05', pose: 'sideRight', x: 67, y: 26,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Tangan dan pergelangan kiri',
-                desc: 'Poster memperlihatkan tangan kiri sebagai penopang bagian depan senapan. Bentuk tumpuannya dapat berupa telapak terbuka atau tangan mengepal; materi poster menekankan posisi pergelangan yang lurus.',
-                viewNote: 'Detail tangan memperbesar bagian yang menopang senapan. Penanda menunjukkan pergelangan dan tangan kiri, di bawah bagian depan senapan.'
+                desc: 'Tangan kiri menopang bagian depan senapan melalui telapak terbuka atau genggaman. Pergelangan tetap lurus untuk mempertahankan tumpuan yang nyaman.',
+                viewNote: 'Penanda berada pada pergelangan tangan penopang, tepat di bawah bagian depan senapan.'
             },
             {
                 id: 'rightHand', num: '06', pose: 'sideRight', x: 43, y: 31,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Tangan kanan dan jari pelatuk',
-                desc: 'Poster membahas genggaman kanan yang mantap, nyaman, dan rileks pada grip. Jari telunjuk menyentuh bilah pelatuk hanya saat siap menembak; ilustrasi Pelatuk memperlihatkan bagian yang disentuh jari.',
-                viewNote: 'Detail tangan memperlihatkan grip dan area jari kanan. Penanda mengarah ke tangan yang menggenggam grip; foto ini tidak menampilkan gerakan jari.'
+                desc: 'Tangan kanan menggenggam grip dengan mantap dan rileks. Jari telunjuk menyentuh bilah pelatuk hanya saat siap menembak, sementara genggaman tetap nyaman.',
+                viewNote: 'Penanda menunjukkan tangan yang menggenggam grip. Bilah pelatuk berada di depan grip.'
             },
             {
                 id: 'elbowHip', num: '07', pose: 'front', x: 56, y: 44,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Siku kiri dan pinggul',
-                desc: 'Poster menjelaskan hubungan siku kiri dengan bagian atas pinggul kiri sebagai tumpuan untuk merilekskan lengan penopang. Posisi panggul dibahas bersama letak siku agar kedua bagian dapat saling mendukung.',
-                viewNote: 'Foto depan atau serong memperlihatkan siku kiri dan sisi badan secara bersamaan. Penanda menunjukkan area siku; bentuk pakaian dapat menutupi batas kontak siku dengan pinggul.'
+                desc: 'Siku kiri bertumpu di bagian atas pinggul kiri untuk membantu merilekskan lengan penopang. Posisi panggul yang sedikit maju mendekatkan tumpuan siku ke badan.',
+                viewNote: 'Penanda mengikuti area siku kiri. Batas kontak siku dengan pinggul dapat tertutup pakaian.'
             },
             {
                 id: 'pelvis', num: '08', pose: 'back', x: 50, y: 51,
-                ref: 'MATERI POSTER V15',
+                ref: 'POSTUR BERDIRI',
                 title: 'Badan, bahu, dan panggul',
-                desc: 'Poster menghubungkan badan yang sedikit condong ke belakang, bahu yang mengarah ke sasaran, dan panggul yang maju. Ketiganya dibaca sebagai satu kesatuan posisi berdiri, bukan sudut ideal yang sama untuk setiap orang.',
-                viewNote: 'Foto belakang memperlihatkan hubungan panggul dengan punggung dan kedua kaki saat berdiri. Penanda menunjukkan area panggul, bukan hasil ukur posisi atau pembagian berat.'
+                desc: 'Panggul sedikit maju, bahu mengarah ke sasaran, dan bagian atas badan condong ke belakang. Hubungan ketiganya membentuk posisi berdiri yang stabil dan nyaman.',
+                viewNote: 'Penanda berada di area panggul. Perhatikan hubungannya dengan punggung dan kedua tungkai.'
             },
             {
-                id: 'leftLeg', num: '09', pose: 'front', x: 39, y: 78,
-                ref: 'MATERI POSTER V15',
+                id: 'leftLeg', num: '09', pose: 'feet', x: 39, y: 78,
+                ref: 'POSTUR BERDIRI',
                 title: 'Kaki kiri dan tumpuan berdiri',
-                desc: 'Poster menggambarkan kaki kiri sebagai tumpuan utama dengan posisi mendekati tegak dan tidak tegang. Bagian kaki dibahas dari panggul, lutut, hingga telapak; kenyamanan berdiri tetap menjadi perhatian.',
-                viewNote: 'Foto depan atau serong memperlihatkan kaki kiri dari pinggul hingga sepatu. Penanda mengikuti bagian kaki kiri pada foto atlet yang dipilih.'
+                desc: 'Kaki kiri menjadi tumpuan utama dengan posisi mendekati tegak. Lutut dan tungkai tetap nyaman tanpa ketegangan berlebihan saat mempertahankan posisi berdiri.',
+                viewNote: 'Penanda berada pada pergelangan kaki kiri. Foto kaki memperjelas arah tungkai dan letak sepatu.'
             },
             {
-                id: 'rightLeg', num: '10', pose: 'front', x: 62, y: 78,
-                ref: 'MATERI POSTER V15',
+                id: 'rightLeg', num: '10', pose: 'feet', x: 62, y: 78,
+                ref: 'POSTUR BERDIRI',
                 title: 'Lutut dan kaki kanan',
-                desc: 'Poster menggambarkan kaki kanan sedikit lebih ke luar untuk melengkapi tumpuan kaki kiri dan menjaga posisi yang nyaman. Arah kaki dan keadaan lutut dibahas bersama dalam posisi berdiri.',
-                viewNote: 'Foto depan atau serong memperlihatkan arah lutut dan kaki kanan dalam posisi berdiri. Penanda mengikuti kaki kanan; sudut dan beban tubuh tidak diukur dari gambar.'
+                desc: 'Kaki kanan ditempatkan sedikit lebih ke luar untuk melengkapi tumpuan kaki kiri. Arah lutut dan telapak disesuaikan agar posisi berdiri tetap nyaman.',
+                viewNote: 'Penanda mengarah ke area pergelangan kaki kanan. Pada foto serong, bagian ini dapat tertutup tungkai kiri. Bandingkan letak kedua sepatu untuk melihat susunan tumpuan.'
             }
         ];
 
         let currentPose = 'back';
         let activeBiomechId = 'spine';
-        let showXraySkeleton = true;
 
         // Anchor locations refer to illustrative SVG anatomy, not measured positions.
         // Keeping coordinates in SVG units prevents responsive letterbox offsets.
@@ -250,13 +249,6 @@ let sfxActive = false;
             positionBiomechPins();
         }
 
-        function switchPose(poseKey) {
-            if (!['back', 'front', 'sideLeft', 'sideRight'].includes(poseKey)) return;
-            const chosen = POSTER_BIOMECH_DATA.find(p => p.id === activeBiomechId && p.pose === poseKey);
-            const next = chosen || POSTER_BIOMECH_DATA.find(p => p.pose === poseKey);
-            if (next) selectBiomechCallout(next.id);
-        }
-
         function openPosturePhotoDetail() {
             if (!window.tsPosturePoseArt?.isActive()) return;
             const dialog = document.getElementById('posturePhotoDialog');
@@ -268,18 +260,6 @@ let sfxActive = false;
             if (!dialog.open) dialog.showModal();
         }
 
-        function toggleXraySkeleton() {
-            showXraySkeleton = !showXraySkeleton;
-            playMechTick(960);
-            const btn = document.getElementById('xrayToggleBtn');
-            btn.textContent = showXraySkeleton ? 'Panduan titik: tampil' : 'Panduan titik: sembunyi';
-            btn.setAttribute('aria-pressed',String(showXraySkeleton));
-            btn.className = showXraySkeleton
-                ? 'px-3 py-2 border border-[#0055B8] bg-[#0055B8] text-white font-bold transition'
-                : 'px-3 py-2 border border-[var(--rule-heavy)] text-[var(--ink-900)] font-bold transition';
-            renderBiomechViewport();
-        }
-
         function selectBiomechCallout(id) {
             const item = POSTER_BIOMECH_DATA.find(d => d.id === id);
             if (!item) return;
@@ -287,21 +267,12 @@ let sfxActive = false;
             currentPose = item.pose;
             playMechTick(880);
 
-            const mobilePose = document.getElementById('labMobilePosePicker');
-            if (mobilePose) mobilePose.value = currentPose;
-            ['back', 'front', 'sideLeft', 'sideRight'].forEach(k => {
-                const button = document.getElementById(`poseTab-${k}`);
-                if (!button) return;
-                button.setAttribute('aria-pressed', String(k === currentPose));
-                button.className = k === currentPose
-                    ? 'px-3 py-2 font-bold bg-[var(--ink-900)] text-[var(--bg-surface)] transition'
-                    : 'px-3 py-2 hover:bg-[var(--bg-subtle)] transition';
-            });
             const viewLabels = {
-                back: 'FOTO POSTER V15 — BELAKANG',
-                front: 'FOTO POSTER V15 — DEPAN / SERONG',
-                sideLeft: 'FOTO POSTER V15 — DETAIL KEPALA',
-                sideRight: 'FOTO POSTER V15 — DETAIL TANGAN'
+                back: 'Postur: punggung dan bahu',
+                front: 'Postur: lengan dan siku',
+                sideLeft: 'Detail kepala',
+                sideRight: 'Detail tangan',
+                feet: 'Detail kaki'
             };
             document.getElementById('stagePoseTitle').textContent = viewLabels[currentPose];
             const picker = document.getElementById('labCalloutPicker');
@@ -331,7 +302,7 @@ let sfxActive = false;
                         }">${item.num}</span>
                         <div class="min-w-0">
                             <div class="font-bold text-xs truncate">${item.title}</div>
-                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Foto belakang',front:'Foto depan / serong',sideLeft:'Detail kepala',sideRight:'Detail tangan'})[item.pose]}</div>
+                            <div class="font-mono-tech text-[10px] text-[var(--ink-500)] truncate">${({back:'Foto belakang',front:'Foto depan / serong',sideLeft:'Detail kepala',sideRight:'Detail tangan',feet:'Detail kaki'})[item.pose]}</div>
                         </div>
                     </button>
                 `;
@@ -1193,8 +1164,6 @@ function setupLabMobileExperience() {
         new ResizeObserver(() => window.requestAnimationFrame(positionBiomechPins)).observe(postureStage);
     }
     window.addEventListener('resize', () => window.requestAnimationFrame(positionBiomechPins));
-    const posePicker = document.getElementById('labMobilePosePicker');
-    posePicker?.addEventListener('change', () => switchPose(posePicker.value));
     picker.addEventListener('change', () => navigate(picker.value));
     prev?.addEventListener('click', () => navigate(ids[Math.max(0, ids.indexOf(active) - 1)]));
     next?.addEventListener('click', () => navigate(ids[Math.min(ids.length - 1, ids.indexOf(active) + 1)]));

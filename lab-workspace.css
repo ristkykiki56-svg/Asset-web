@@ -52,7 +52,11 @@
  .lw-options>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;color:var(--clarisa-blue);list-style:disclosure-closed inside}
  .lw-options[open]>summary{list-style:disclosure-open inside}
  .lw-options p{font-size:12px;line-height:1.6;margin:8px 0}
- .lw-options #postureArtControls{padding:8px 0;border:0;margin:0;gap:8px}
+ #sec-biomech .lw-panel>#postureArtControls{padding:8px 0;border:0;margin:0;gap:8px}
+ #sec-biomech .lw-panel .ts-pose-art-label{width:auto;margin:0;font-size:11px}
+ #sec-biomech .lw-panel .ts-pose-art-note{display:none}
+ #sec-biomech .lw-panel .ts-pose-art-choices{gap:6px}
+ #sec-biomech .lw-panel .ts-pose-art-choices button{font-size:11px}
  .lw-options .ts-pose-art-note,.lw-options .ts-pose-art-switch,.lw-options #postureArtStatus{font-size:11px}
  .lw-options .ts-pose-art-choices button{min-height:44px}
  .lw-options .ts-scheme-only details{display:block}

@@ -22,26 +22,22 @@ test('each anatomy explanation describes the selected body part rather than impl
  }
 });
 
-test('photo guide visibly toggles at the selected anchor in each real view',async()=>{
- let pressed='true';
+test('photo guide stays visible at the selected anchor in each automatic view',async()=>{
  const controls={addEventListener(){}};
- const elements={postureArtControls:controls,postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}},xrayToggleBtn:{getAttribute:()=>pressed}};
+ const elements={postureArtControls:controls,postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}}};
  const context=vm.createContext({window:{renderBiomechViewport(){}},document:{readyState:'complete',getElementById:id=>elements[id],querySelectorAll:()=>[]},Image:class{naturalWidth=200;set src(value){queueMicrotask(()=>this.onload());}},queueMicrotask});
  vm.runInContext(read('posture-art.js'),context);
  await new Promise(resolve=>setImmediate(resolve));
  const art=context.window.tsPosturePoseArt;
  assert.equal(art.isActive(),true);
- for(const pose of ['front','back','sideLeft','sideRight']){
+ for(const pose of ['front','back','sideLeft','sideRight','feet']){
   const point=art.anchor({id:'head'},pose);
   const image=art.figure(pose,'head');
   assert.match(image,/<image href=/);
   assert.ok(image.includes('cx="'+point[0]+'" cy="'+point[1]+'"'),pose+' guide matches the pin');
   assert.doesNotMatch(image,/<path[^>]*fill="url/);
  }
- pressed='false';
- assert.doesNotMatch(art.figure('front','head'),/posture-point-guide/);
- pressed='true';
- assert.match(art.figure('front','head'),/posture-point-guide/);
+ assert.match(art.figure('feet','leftLeg'),/posture-point-guide/);
 });
 
 test('desktop anatomy index renders all ten entries with readable viewpoint labels',()=>{

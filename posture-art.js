@@ -17,8 +17,10 @@
    sideRight:{frame:[2040,2460,850,590],clip:'2040,2460 2890,2460 2890,2658 2801,2662 2748,2648 2710,2686 2682,2737 2645,2775 2629,2844 2607,2915 2584,2978 2554,3022 2520,3055 2445,3055 2384,3032 2321,3018 2242,2984 2151,2931 2062,2866 2040,2771',points:{leftWrist:[2660,2700],rightHand:[2440,2635],head:[2150,2490]}}
   }
  };
+ photos.blue.feet={frame:[700,3450,470,830],clip:photos.blue.front.clip,points:{leftLeg:[1040,4050],rightLeg:[940,3690]}};
+ photos.red.feet={frame:[1920,3450,700,770],clip:photos.red.front.clip,points:{leftLeg:[2490,3930],rightLeg:[2070,3930]}};
  const names={blue:'Clarisa Azalia',red:'Aurellia Cassandra'};
- const labels={back:'belakang',front:'depan atau serong',sideLeft:'detail kepala',sideRight:'detail tangan'};
+ const labels={back:'belakang',front:'depan atau serong',sideLeft:'detail kepala',sideRight:'detail tangan',feet:'detail kaki'};
  const photo=pose=>photos[state.color][pose]||photos[state.color].back;
  function fit(p){const [x,y,w,h]=p.frame,scale=Math.min(420/w,500/h);return{x:(460-w*scale)/2,y:(540-h*scale)/2,w:w*scale,h:h*scale,scale,sourceX:x,sourceY:y};}
  function anchor(id,pose){
@@ -34,8 +36,7 @@
   const p=photo(pose),f=fit(p),point=anchor(id,pose),clipId='posture-photo-'+state.color+'-'+pose+'-'+context;
   const clip=p.clip?'<defs><clipPath id="'+clipId+'" clipPathUnits="userSpaceOnUse"><polygon points="'+p.clip+'"/></clipPath></defs>':'';
   const image='<svg x="'+f.x+'" y="'+f.y+'" width="'+f.w+'" height="'+f.h+'" viewBox="'+p.frame.join(' ')+'" overflow="hidden">'+clip+'<image href="'+source+'" x="0" y="0" width="3466" height="5000"'+(p.clip?' clip-path="url(#'+clipId+')"':'')+'/></svg>';
-  const guide=document.getElementById('xrayToggleBtn')?.getAttribute('aria-pressed')==='true'
-   ?'<g class="posture-point-guide" aria-hidden="true" fill="none" stroke="#FF4800" stroke-width="2.5"><circle cx="'+point[0]+'" cy="'+point[1]+'" r="18"/><path d="M'+(point[0]-26)+' '+point[1]+'H'+(point[0]+26)+'M'+point[0]+' '+(point[1]-26)+'V'+(point[1]+26)+'" stroke-dasharray="4 4"/></g>':'';
+  const guide='<g class="posture-point-guide" aria-hidden="true" fill="none" stroke="#FF4800" stroke-width="2.5"><circle cx="'+point[0]+'" cy="'+point[1]+'" r="18"/><path d="M'+(point[0]-26)+' '+point[1]+'H'+(point[0]+26)+'M'+point[0]+' '+(point[1]-26)+'V'+(point[1]+26)+'" stroke-dasharray="4 4"/></g>';
   return '<g role="img" aria-label="Foto '+names[state.color]+' dari poster v15, '+labels[pose]+'.">'+image+guide+'</g>';
  }
  function choose(color){
@@ -46,7 +47,7 @@
   }
   document.getElementById('sec-biomech')?.classList.toggle('ts-pose-art-active',state.ready);
   const zoom=document.getElementById('posturePhotoZoom');if(zoom)zoom.disabled=!state.ready;
-  status(state.ready?'Foto '+names[color]+' dari poster v15. Pilih titik untuk melihat penjelasan dan detail fotonya.':'Memuat foto poster…');
+  status(state.ready?'Foto '+names[color]+'. Pilih titik tubuh untuk melihat penjelasannya.':'Memuat foto…');
   if(typeof window.renderBiomechViewport==='function')window.renderBiomechViewport();
  }
  window.tsPosturePoseArt={

@@ -117,14 +117,11 @@
             const posture = workspace('sec-biomech', 'Postur tubuh', 'Pilih titik pada tubuh.', dialog);
             if (posture) {
                 move($('.lab-biomech-stage'), posture.stage);
-                posture.root.querySelector('.lw-limitation').textContent = 'Foto poster v15 · materi latihan, bukan hasil pengukuran.';
+                posture.root.querySelector('.lw-limitation').textContent = 'Foto untuk pembelajaran postur berdiri.';
                 move($('#dossierTitle'), posture.panel);
                 move($('#labCalloutPicker'), posture.panel);
                 move($('#posturePhotoZoom'), posture.panel);
-                const options = details(posture.panel, 'Foto & pembesaran');
-                move($('#labMobilePosePicker'), options);
-                move($('#xrayToggleBtn'), options);
-                move($('#postureArtControls'), options);
+                move($('#postureArtControls'), posture.panel);
                 const pointInfo = details(posture.panel, 'Penjelasan titik');
                 move($('#dossierBody'), pointInfo);
                 move($('#dossierViewNote'), pointInfo);

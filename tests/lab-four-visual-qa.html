@@ -23,7 +23,7 @@ frame.addEventListener('load',()=>{
   section.style.margin='0';
   main.classList.remove('space-y-16');main.style.padding='14px 14px 20px';main.style.margin='0 auto';
   const pose=new URL(location.href).searchParams.get('pose');
-  if(id==='sec-biomech' && ['back','front','sideLeft','sideRight'].includes(pose))win.switchPose(pose);
+  if(id==='sec-biomech'){const point={back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose];if(point)win.selectBiomechCallout(point);}
   if(id==='sec-optics'){
    const params=new URL(location.href).searchParams;
    if(params.has('dist')||params.has('height')){
