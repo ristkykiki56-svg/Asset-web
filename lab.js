@@ -1,72 +1,3 @@
-let sfxActive = false;
-        let audioCtx = null;
-
-        function ensureAudio() {
-            if (!audioCtx) {
-                const Cls = window.AudioContext || window.webkitAudioContext;
-                if (Cls) audioCtx = new Cls();
-            }
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            return audioCtx;
-        }
-
-        function playMechTick(freq = 900) {
-            if (!sfxActive) return;
-            try {
-                const ctx = ensureAudio();
-                if (!ctx) return;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.06, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.04);
-            } catch (e) {}
-        }
-
-        function playSteelImpactSound() {
-            if (!sfxActive) return;
-            try {
-                const ctx = ensureAudio();
-                if (!ctx) return;
-                [1240, 1890, 2920].forEach((f, idx) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = idx === 0 ? 'square' : 'sine';
-                    osc.frequency.setValueAtTime(f, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(f * 0.93, ctx.currentTime + 0.42);
-                    gain.gain.setValueAtTime(0.07 / (idx + 1), ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0008, ctx.currentTime + 0.44);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.45);
-                });
-            } catch (e) {}
-        }
-
-        function toggleAudioSfx() {
-            sfxActive = !sfxActive;
-            document.getElementById('sfxDot').style.backgroundColor = sfxActive ? '#0E7C47' : '#7E838C';
-            document.getElementById('sfxLabel').textContent = sfxActive ? 'AUDIO: AKTIF' : 'AUDIO: BISU';
-            document.getElementById('sfxSwitchBtn').setAttribute('aria-pressed', String(sfxActive));
-            if (sfxActive) playMechTick(1050);
-        }
-
-        function togglePaperTheme() {
-            const root = document.documentElement;
-            const isDark = root.classList.toggle('cad-dark');
-            document.getElementById('themeText').textContent = isDark ? 'MODE: DARKROOM CAD' : 'MODE: KERTAS CETAK';
-            document.getElementById('themeSwitchBtn').setAttribute('aria-pressed',String(isDark));
-            playMechTick(760);
-            renderBiomechViewport();
-            drawOscilloscope(oscProgress);
-        }
-
         const POSTER_BIOMECH_DATA = [
             {
                 id: 'spine', num: '01', pose: 'back', x: 52, y: 40,
@@ -264,7 +195,6 @@ let sfxActive = false;
             if (!item) return;
             activeBiomechId = item.id;
             currentPose = item.pose;
-            playMechTick(880);
 
             const viewLabels = {
                 back: 'Postur: punggung dan bahu',
@@ -340,7 +270,6 @@ let sfxActive = false;
         let oscProgress = 0.65;
         let oscPulling = false;
         let oscReq = null;
-        let oscShotFired = false;
         let oscPlaybackMode = false;
 
         function computePosterTriggerCurve(t) {
@@ -445,8 +374,6 @@ let sfxActive = false;
             oscPlaybackMode = playback;
             oscPulling = true;
             oscProgress = 0;
-            oscShotFired = false;
-            playMechTick(600);
             if (oscReq) cancelAnimationFrame(oscReq);
 
             function frame() {
@@ -459,10 +386,6 @@ let sfxActive = false;
                 else if (oscProgress < 0.58) lbl.textContent = 'B · MENUJU PELEPASAN';
                 else if (oscProgress < 0.64) {
                     lbl.textContent = 'TITIK PELEPASAN';
-                    if (!oscShotFired) {
-                        oscShotFired = true;
-                        playSteelImpactSound();
-                    }
                 } else {
                     lbl.textContent = 'C · GERAKAN LANJUTAN';
                 }
@@ -564,7 +487,6 @@ let sfxActive = false;
             document.getElementById('optEyeDist').value = 85;
             document.getElementById('optCheekHeight').value = 0;
             document.getElementById('optLat').value = 0;
-            playMechTick(1020);
             updateOpticalSim();
         }
 
@@ -751,7 +673,6 @@ let sfxActive = false;
             const key = `${animal}-${idx}`;
             const el = document.getElementById(`target-${animal}-${idx}`);
             if (!el) return;
-            playSteelImpactSound();
             selectRangeAnimal(animal);
 
             if (downedSet.has(key)) {
@@ -768,7 +689,6 @@ let sfxActive = false;
 
         function resetSilhouetteRack() {
             downedSet.clear();
-            playMechTick(840);
             document.querySelectorAll('.steel-target-btn').forEach(b => {b.classList.remove('steel-knocked');b.setAttribute('aria-pressed','false');});
             updateRackCounters();
         }
@@ -865,7 +785,6 @@ let sfxActive = false;
         };
 
         function inspectHardware(key) {
-            playMechTick(860);
             const item = HARDWARE_SPECS[key];
             if (!item) return;
             const componentSelect = document.getElementById('labHardwarePicker');
@@ -922,7 +841,6 @@ let sfxActive = false;
 function setupLabMobileExperience() {
     const media = window.matchMedia('(max-width: 767px)');
     const disclosures = Array.from(document.querySelectorAll('[data-lab-mobile-collapse]'));
-    const settings = document.querySelector('.lab-settings');
     const picker = document.getElementById('labMobileModuleSelect');
     if (!picker) return;
     const anatomySelect = document.getElementById('labCalloutPicker');
@@ -998,7 +916,6 @@ function setupLabMobileExperience() {
             const compactReference = panel.matches('.lab-notice-wrap,.lab-sources-wrap,.lab-facts');
             panel.open = !media.matches && !compactReference;
         }
-        if (settings) settings.open = !media.matches;
         showModule(active, false);
     };
     const postureStage = document.querySelector('.lab-biomech-stage');

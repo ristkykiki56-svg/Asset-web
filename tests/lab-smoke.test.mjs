@@ -40,7 +40,7 @@ test('pointer cancellation, keyboard input, pose sync, and RAF throttling are im
  assert.match(js,/setupOcularVisibility/);
  assert.match(js,/const reducedMotion = window\.matchMedia/);
  assert.match(js,/cancelAnimationFrame\(oscReq\)/);
- assert.match(js,/let sfxActive = false/);
+ assert.doesNotMatch(js,/sfxActive|AudioContext/);
 });
 test('disclaimers separate illustration from rules and provenance',()=>{
  assert.match(html,/SIMULASI EDUKATIF — BUKAN PERATURAN ATAU DATA TERUKUR/);
@@ -80,7 +80,7 @@ test('mobile Lab offers five focused lessons without removing desktop content',(
  assert.match(js,/tier\.classList\.toggle\('is-current'/);
  assert.match(css,/lab-mobile-focused main#main-content/);
  assert.match(css,/\.lab-mobile-stepper/);
- assert.match(css,/lab-settings:not\(\[open\]\)/);
+ assert.doesNotMatch(html,/class="lab-settings"/);
 });
 
 test('mobile disclosure markup preserves balanced major HTML containers',()=>{

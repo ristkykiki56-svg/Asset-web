@@ -17,23 +17,6 @@
             --on-character: #FFFFFF;
         }
 
-        html.cad-dark {
-            --bg-paper: #0D0F12;
-            --bg-surface: #14171C;
-            --bg-subtle: #1C2027;
-            --ink-900: #F3F1EA;
-            --ink-700: #C6C4BC;
-            --ink-500: #7E838C;
-            --rule-light: #2A2F37;
-            --rule-heavy: #F3F1EA;
-            --clarisa-blue: #3B82F6;
-            --aurellia-red: #F43F5E;
-            --imssu-orange: #FF5714;
-            --walnut-gold: #E5A93C;
-            --ok-green: #10B981;
-            --on-character: #111315;
-        }
-
         * {
             box-sizing: border-box;
         }
@@ -164,7 +147,6 @@
 button:focus-visible,input:focus-visible,a:focus-visible,[role="button"]:focus-visible{outline:3px solid var(--imssu-orange)!important;outline-offset:3px}
 input[type=range].mech-slider:focus-visible{outline:3px solid var(--imssu-orange)!important;outline-offset:6px}
 #tactileTriggerBtn{touch-action:none}
-html.cad-dark .tech-sheet{color:var(--ink-900)}
 /* Dark text stays legible on orange labels and their darker hover surfaces. */
 [class~="bg-[#FF4800]"],[class~="hover:bg-[#FF4800]"]:hover{color:var(--on-orange)}
 @media(min-width:1280px){.lab-header-row{flex-wrap:nowrap}.lab-brand{flex:0 1 auto}.lab-section-nav{order:0;flex:0 1 auto}}
@@ -231,9 +213,6 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 .lab-heading-short,
 .lab-section-hint,
 .lab-mobile-scroll-hint { display: none; }
-
-.lab-settings { margin-left: auto; min-width: 0; }
-.lab-settings > summary,
 .lab-mobile-disclosure > summary { display: none; }
 .lab-mobile-disclosure { min-width: 0; }
 .lab-facts > div { height: 100%; }
@@ -242,7 +221,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-header { position: sticky; top: 0; z-index: 50; }
   .lab-header-row {
     display: grid;
-    grid-template-columns: 44px minmax(0,1fr) auto;
+    grid-template-columns: 44px minmax(0,1fr);
     align-items: center;
     gap: 8px 10px;
     min-height: 0;
@@ -269,41 +248,6 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   }
   .lab-section-nav { display: none !important; }
   .lab-local-nav { display: none; }
-  .lab-settings { grid-column: 3; position: relative; margin: 0; z-index: 55; }
-  .lab-settings > summary {
-    display: flex;
-    align-items: center;
-    gap: .65rem;
-    justify-content: space-between;
-    list-style: none;
-    min-height: 44px;
-    padding: 0 .65rem;
-    border: 1px solid var(--rule-light);
-    cursor: pointer;
-    background: var(--bg-surface);
-    font: 600 12px 'Plus Jakarta Sans', sans-serif;
-  }
-  .lab-settings > summary::-webkit-details-marker { display: none; }
-  .lab-settings > .lab-controls {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 6px);
-    width: min(250px, calc(100vw - 32px));
-    margin: 0;
-    padding: .5rem;
-    border: 1px solid var(--rule-heavy);
-    background: var(--bg-surface);
-    box-shadow: 0 12px 25px rgba(0,0,0,.16);
-    flex-direction: column;
-    z-index: 60;
-  }
-  .lab-settings:not([open]) > .lab-controls { display: none; }
-  .lab-settings .lab-controls button {
-    min-height: 44px;
-    width: 100%;
-    justify-content: flex-start;
-    padding: .6rem .75rem;
-  }
   .lab-mobile-picker {
     grid-column: 1 / -1;
     display: grid;
@@ -451,7 +395,6 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   #sec-hardware #hardwareBlueprintSvg { min-width: 640px; }
   #sec-hardware .lab-mobile-disclosure button { min-height: 44px; align-items: center; }
   .lab-mobile-disclosure:focus-within > summary,
-  .lab-settings:focus-within > summary,
   .lab-mobile-picker select:focus-visible,
   .lab-mobile-back:focus-visible,
   .lab-hardware-scroll:focus-visible { outline: 2px solid var(--clarisa-blue); outline-offset: 2px; }
@@ -608,7 +551,7 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 @media(min-width:1200px) {
   .lab-header-row {
     display:grid!important;
-    grid-template-columns:minmax(200px,.95fr) minmax(445px,2.35fr) auto;
+    grid-template-columns:minmax(200px,.95fr) minmax(445px,2.35fr);
     gap:.8rem;min-height:64px;padding:.45rem 0;align-items:center
   }
   .lab-brand {grid-column:1;flex:none!important;min-width:0;}
@@ -617,15 +560,11 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
   .lab-brand-text p {font-size:10px}
   .lab-section-nav {grid-column:2;order:0!important;width:100%!important;flex:none!important;overflow:visible;white-space:nowrap}
   .lab-section-nav a {min-height:42px;flex:1 1 0!important;justify-content:center;padding:.4rem .25rem;font-size:11px}
-  .lab-settings {grid-column:3;justify-self:end;min-width:0;margin:0}
-  .lab-settings .lab-controls {margin:0;flex-wrap:nowrap;gap:.3rem}
-  .lab-settings .lab-controls button {min-height:42px;padding:.4rem .55rem;font-size:10px}
   .lab-local-nav {padding-top:.45rem;padding-bottom:.45rem}
 }
 @media(min-width:768px) and (max-width:1199px) {
   .lab-header-row {gap:.45rem 1rem}
   .lab-brand {flex:1 1 230px}
-  .lab-settings {margin-left:auto}
   .lab-section-nav {order:3;flex:1 0 100%;width:100%;display:flex;white-space:nowrap;overflow-x:auto}
   .lab-section-nav a {flex:1 0 0;min-width:105px;min-height:42px;justify-content:center}
 }
@@ -731,7 +670,6 @@ main .inline-flex{max-width:100%;flex-wrap:wrap}
 #sec-trigger button[aria-pressed="true"] {outline-offset:1px}
 #sec-biomech #dossierTitle,#sec-hardware #hwSpecTitle {text-wrap:pretty}
 #sec-biomech select,#sec-hardware select {color-scheme:light}
-html.cad-dark #sec-biomech select,html.cad-dark #sec-hardware select {color-scheme:dark}
 @media(max-width:767px) {
   #sec-hardware #hwSpecTitle {font-size:18px}
   #sec-hardware #hwSpecBody {font-size:14px}
@@ -802,8 +740,6 @@ html.cad-dark #sec-biomech select,html.cad-dark #sec-hardware select {color-sche
   max-width:38ch;text-align:right;line-height:1.45;overflow-wrap:anywhere
 }
 #sec-hardware #hwSpecBody {font-size:14px;line-height:1.75}
-html.cad-dark #sec-hardware .lab-hardware-scroll {background:#E9E9E3}
-html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {color:#394348}
 @media(max-width:767px){
  #sec-hardware .lab-hardware-scroll {padding:10px}
  #hardwareBlueprintSvg.hw-illustration {min-width:680px}
@@ -869,7 +805,6 @@ html.cad-dark #sec-hardware .lab-hardware-scroll > .lab-mobile-scroll-hint {colo
 #sec-imssu .grid.grid-cols-4.gap-2 button {
   min-height:56px;font-family:'Plus Jakarta Sans',sans-serif;
 }
-html.cad-dark #sec-biomech .lab-biomech-stage {background:linear-gradient(180deg,rgba(36,43,47,.2),rgba(23,30,36,.03))}
 @media(max-width:767px) {
  #sec-biomech .lab-biomech-stage {height:clamp(340px,107vw,420px)}
  #sec-trigger #triggerVectorDiagram,#sec-trigger #triggerMechanismDiagram {height:180px}

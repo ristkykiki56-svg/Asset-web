@@ -16,13 +16,11 @@
  .lw-active body{height:100dvh;overflow:hidden}
  .lw-active body>section,.lw-active body>footer,.lw-active .lab-local-nav{display:none!important}
  .lw-active .lab-header{height:64px;position:relative}
- .lw-active .lab-header-row{height:64px;min-height:0;padding:8px 0;grid-template-columns:44px minmax(0,1fr) auto;gap:8px}
+ .lw-active .lab-header-row{height:64px;min-height:0;padding:8px 0;grid-template-columns:44px minmax(0,1fr);gap:8px}
  .lw-active .lab-header .lab-brand{display:none!important}
  .lw-active .lab-mobile-picker{grid-column:2;grid-row:1;display:block;border:0;padding:0}
  .lw-active .lab-mobile-picker label{display:none}
  .lw-active .lab-mobile-picker select{height:44px;padding-inline:8px 22px;font-size:13px}
- .lw-active .lab-settings{grid-column:3;grid-row:1}
- .lw-active .lab-settings>summary{padding-inline:8px;font-size:11px;gap:5px}
  .lw-active #main-content{display:flex;flex-direction:column;height:calc(100dvh - 64px);max-width:none;width:100%;padding:0!important;margin:0;gap:0;overflow:hidden}
  .lw-active #main-content>.lab-notice-wrap,.lw-active #main-content>.lab-sources-wrap{display:none!important}
  .lw-active #main-content>section[id^="sec-"]{display:none!important;margin:0!important;padding:0!important;min-height:0;overflow:hidden}
