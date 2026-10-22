@@ -138,3 +138,34 @@
  html.lw-active,.lw-active body{overflow:auto}
  .lw-active #main-content{height:550px;overflow:visible}
 }
+
+/* Trigger stages use one selection color throughout the sequence. */
+.trigger-stage-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.trigger-stage-buttons button{flex:1;min-width:100px;min-height:44px;padding:10px;border:1px solid var(--rule-heavy);background:var(--bg-surface);color:var(--ink-900);font-weight:700}
+.trigger-stage-buttons button[aria-pressed="true"]{background:var(--clarisa-blue);color:white;border-color:var(--clarisa-blue)}
+.trigger-stage-buttons button:focus-visible{outline:3px solid var(--clarisa-blue);outline-offset:3px}
+.trigger-stage-explanation{border-top:1px solid var(--rule-light);padding-top:12px;line-height:1.65}
+.trigger-stage-explanation h3{font-weight:750;margin-bottom:6px}
+.trigger-stage-explanation p{margin:6px 0}
+@media(max-width:767px){
+ #sec-trigger .lw-trigger-direction{padding:8px 14px}
+ #sec-trigger .lw-trigger-direction #triggerVectorDiagram{width:100%;height:auto;max-height:100%}
+ .lw-direction-controls{flex-direction:column;align-items:stretch;padding:0;gap:6px}
+ .lw-direction-controls .trigger-stage-buttons{display:flex;gap:4px}
+ .lw-direction-controls .trigger-stage-buttons button{min-width:0;padding:8px 4px;font-size:11px}
+ .lw-direction-controls .trigger-stage-explanation{font-size:12px;line-height:1.6}
+ #sec-optics .lw-stage.lw-optics-pair{display:grid;grid-template-rows:minmax(80px,1fr) minmax(100px,1.2fr);gap:0}
+ .lw-optics-pair>.lw-view{padding:3px 14px;flex-direction:column;gap:2px}
+ .lw-optics-caption{flex:none;font-size:10px;line-height:1.3;color:var(--ink-700);margin:0;text-align:center}
+ .lw-optics-pair .lw-optics-lens{border-top:1px solid var(--rule-light)}
+ .lw-optics-pair .lw-optics-lens #ocularLensCanvas{height:calc(100% - 18px)!important;width:auto!important;max-width:100%;min-height:0;flex:0 1 auto;object-fit:contain}
+ #sec-optics .lw-panel>#opticsDetailToggle{width:100%;min-height:44px;font-size:12px;margin:0 0 6px}
+ #sec-optics .lw-workbench{grid-template-rows:auto 0 minmax(180px,1fr) auto auto}
+}
+
+@media(max-width:767px){
+ .lw-optics-pair #opticalSidePan{container-type:size;justify-content:center}
+ .lw-optics-pair #opticalSidePan:not(.is-detail-zoom) #opticalAlignmentArtwork{width:min(100%,calc(100cqh * 2.5))!important;height:auto!important}
+ .lw-optics-pair #opticalSidePan:not(.is-detail-zoom) #opticalAlignmentIllustration{width:min(100%,calc(100cqh * 835 / 282))!important;height:auto!important}
+ .lw-optics-pair .lw-optics-head #opticalSidePan.is-detail-zoom{overflow:auto;justify-content:flex-start;align-items:flex-start}
+}

@@ -36,8 +36,8 @@ test('copy gate: posture explains body parts with original poster photos',()=>{
 
 test('copy gate: optics describes both the moving-head and lens-only controls', () => {
   assert.match(html, /Jarak dan tinggi mata menggeser kepala/);
-  assert.match(html, /Posisi lateral dan variasi pandangan hanya mengubah tampilan dalam lensa/);
-  assert.match(html, /Dua kontrol posisi menggeser kepala/);
+  assert.match(html, /Posisi lateral mengubah tampilan dalam lensa/);
+  assert.match(html, /Jarak dan tinggi mata menggeser kepala/);
   assert.match(js, /optLatLabel'\)\.textContent = .*mm \(MODEL\)/);
   assert.match(js, /optCheekHeightLabel'\)\.textContent = .*mm \(MODEL\)/);
   assert.match(optics, /getForeground:\(\)=>foreground/);

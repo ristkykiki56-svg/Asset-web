@@ -36,19 +36,3 @@ test('all ten anatomy selections show standalone teaching and select the matchin
  assert.match(nodes.get('dossierBody').textContent,/tumpuan/);
  assert.match(nodes.get('dossierViewNote').textContent,/siku/);
 });
-
-test('trigger direction and contact descriptions match selected controls without claiming measured force',()=>{
- const source=read('lab.js'),nodes=new Map();
- const get=id=>{if(!nodes.has(id))nodes.set(id,{setAttribute(){},classList:{toggle(){}},querySelectorAll:()=>[]});return nodes.get(id);};
- const context=vm.createContext({document:{getElementById:get,querySelector:get,querySelectorAll:()=>[]},playMechTick(){}});
- vm.runInContext(source.slice(source.indexOf('        function selectFingerVector'),source.indexOf('        let oscProgress')),context);
- for(const [key,word] of [['C','kiri'],['B','tengah'],['A','kanan']]){
-  context.selectFingerVector(key);
-  assert.match(get('vectorExplanationBox').innerHTML,new RegExp(word,'i'));
- }
- for(const [value,word] of [[-22,'atas'],[0,'Tengah'],[22,'bawah']]){
-  context.adjustTriggerShoeContact(value);
-  assert.match(get('searWeightReadout').textContent,new RegExp(word,'i'));
-  assert.doesNotMatch(get('shoeHeightText').textContent,/berat|leverage|gf/i);
- }
-});

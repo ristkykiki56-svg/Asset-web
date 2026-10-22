@@ -44,7 +44,7 @@ test('desktop anatomy index renders all ten entries with readable viewpoint labe
  const source=read('lab.js'),list={innerHTML:''};
  const context=vm.createContext({document:{getElementById:()=>list}});
  vm.runInContext(source.slice(source.indexOf('const POSTER_BIOMECH_DATA'),source.indexOf('        // Anchor locations')),context);
- vm.runInContext(source.slice(source.indexOf('        function renderBiomechIndexTable'),source.indexOf('        function selectFingerVector')),context);
+ vm.runInContext(source.slice(source.indexOf('        function renderBiomechIndexTable'),source.indexOf('        const TRIGGER_STAGES')),context);
  vm.runInContext('renderBiomechIndexTable()',context);
  assert.equal((list.innerHTML.match(/<button/g)||[]).length,10);
  assert.doesNotMatch(list.innerHTML,/undefined|WebP|slider/);

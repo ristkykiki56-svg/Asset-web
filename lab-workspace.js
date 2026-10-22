@@ -127,7 +127,7 @@
                 move($('#dossierViewNote'), pointInfo);
             }
 
-            const trigger = workspace('sec-trigger', 'Pelatuk', 'Bandingkan arah atau amati kurva.', dialog);
+            const trigger = workspace('sec-trigger', 'Pelatuk', 'Pilih tahap A, B, atau C, lalu amati kurva.', dialog);
             if (trigger) {
                 const curve = el('div', 'lw-view lw-trigger-curve');
                 const direction = el('div', 'lw-view lw-trigger-direction');
@@ -138,14 +138,12 @@
                 move($('#oscPhaseLabel'), curve);
                 move($('#triggerOscCanvas'), curve);
                 move($('#triggerVectorDiagram'), direction);
-                move($('#triggerMechanismDiagram'), direction);
-                attribute($('#triggerVectorDiagram'), 'aria-hidden', 'true');
+
                 direction.querySelectorAll('[tabindex]').forEach(node => attribute(node, 'tabindex', '-1'));
                 move($('#tactileTriggerBtn'), curvePanel);
                 move($('button[onclick="runIdealCurvePlayback()"]'), curvePanel);
-                move($('#btnVec-C')?.parentElement, directionPanel);
-                move($('input[oninput^="adjustTriggerShoeContact"]')?.parentElement, directionPanel);
-                move($('#vectorExplanationBox'), details(directionPanel, 'Penjelasan arah'));
+                move($('#triggerStageButtons'), directionPanel);
+                move($('#triggerStageExplanation'), directionPanel);
                 const curveInfo = details(trigger.panel, 'Cara membaca kurva');
                 move($('#triggerCurveHelp'), curveInfo);
                 let mark;
@@ -155,17 +153,21 @@
                     mark(key);
                     redraw();
                 };
-                mark = tabs(trigger, 'trigger', [['curve', 'Kurva'], ['direction', 'Arah']], select);
-                select('curve');
+                mark = tabs(trigger, 'trigger', [['direction', 'Tahapan'], ['curve', 'Kurva']], select);
+                select('direction');
             }
 
             const optics = workspace('sec-optics', 'Optik', 'Pilih kontrol, lalu amati gambarnya.', dialog);
             if (optics) {
+                optics.root.querySelector('.lw-limitation').textContent = 'Angka contoh ilustrasi, bukan rekomendasi setelan.';
                 const head = el('div', 'lw-view lw-optics-head');
                 const lens = el('div', 'lw-view lw-optics-lens');
+                optics.stage.classList.add('lw-optics-pair');
+                head.append(el('p', 'lw-optics-caption', 'Posisi mata terhadap okuler'));
+                lens.append(el('p', 'lw-optics-caption', 'Pandangan melalui lensa'));
                 optics.stage.append(head, lens);
                 move($('#opticalSidePan'), head);
-                move($('#opticsDetailToggle'), head);
+                move($('#opticsDetailToggle'), optics.panel);
                 move($('#ocularLensCanvas'), lens);
                 const label = el('label', 'lw-parameter-label', 'Kontrol');
                 const parameter = el('select', 'lw-parameter-choice');
@@ -173,8 +175,8 @@
                 label.append(parameter);
                 optics.panel.append(label);
                 const definitions = [
-                    ['optEyeDist', 'Jarak mata', 'head'], ['optCheekHeight', 'Tinggi mata', 'head'],
-                    ['optLat', 'Posisi ke samping', 'lens'], ['optPressure', 'Variasi pandangan', 'lens']
+                    ['optEyeDist', 'Jarak mata'], ['optCheekHeight', 'Tinggi mata'],
+                    ['optLat', 'Posisi ke samping']
                 ];
                 const wrappers = definitions.map(([id]) => {
                     const wrapper = document.getElementById(id)?.parentElement;
@@ -190,18 +192,10 @@
                     redraw();
                 };
                 listen(parameter, 'change', showParameter);
-                let mark;
-                const select = mode => {
-                    head.hidden = mode !== 'head';
-                    lens.hidden = mode !== 'lens';
-                    parameter.replaceChildren(...definitions.filter(item => item[2] === mode).map(([id, title]) => {
-                        const option = el('option', '', title); option.value = id; return option;
-                    }));
-                    mark(mode);
-                    showParameter();
-                };
-                mark = tabs(optics, 'optics', [['head', 'Posisi kepala'], ['lens', 'Dalam lensa']], select);
-                select('head');
+                parameter.replaceChildren(...definitions.map(([id, title]) => {
+                    const option = el('option', '', title); option.value = id; return option;
+                }));
+                showParameter();
                 move($('#sec-optics button[onclick="calibratePerfectOptics()"]'), optics.panel);
                 move($('#opticsExplanation'), details(optics.panel, 'Cara membaca gambar'));
             }

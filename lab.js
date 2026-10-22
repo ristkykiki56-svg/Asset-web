@@ -309,64 +309,33 @@ let sfxActive = false;
             }).join('');
         }
 
-        function selectFingerVector(vec) {
-            playMechTick(vec === 'B' ? 980 : 520);
-            ['A', 'B', 'C'].forEach(v => {
-                const btn = document.getElementById(`btnVec-${v}`);
-                const path = document.getElementById(`svgVec${v}`);
-                btn.setAttribute('aria-pressed', String(v === vec));
-                const marker = document.querySelector('#triggerVectorDiagram [data-trigger-vector="' + v + '"]');
-                if (marker) {
-                    marker.setAttribute('aria-pressed', String(v === vec));
-                    marker.classList.toggle('is-selected', v === vec);
-                }
-                if (v === vec) {
-                    btn.className = v === 'B'
-                        ? 'py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition'
-                        : 'py-2 px-2 border-2 border-[#D11F26] bg-[#D11F26] text-white font-bold transition';
-                    path.setAttribute('stroke', v === 'B' ? '#0E7C47' : '#D11F26');
-                    path.setAttribute('stroke-width', '5.5');
-                } else {
-                    btn.className = 'py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition';
-                    path.setAttribute('stroke', '#9CA3AF');
-                    path.setAttribute('stroke-width', '3.5');
-                }
-            });
-
-            const stamp = document.getElementById('activeVectorStamp');
-            const dev = document.getElementById('vecDeviationReadout');
-            const box = document.getElementById('vectorExplanationBox');
-
-            if (vec === 'B') {
-                stamp.textContent = 'VEKTOR B: GARIS TENGAH';
-                stamp.className = 'px-2 py-0.5 bg-[#0E7C47] text-white font-bold';
-                dev.textContent = 'Vektor lurus (contoh)';
-                dev.className = 'text-[var(--ok-green)]';
-                box.className = 'p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>ARAH B:</strong> Pilihan B menyorot garis tengah berwarna hijau. Bandingkan dengan garis C dan A untuk melihat perbedaan arah gerak yang digambarkan.';
-            } else if (vec === 'C') {
-                stamp.textContent = 'VEKTOR C: ARAH MIRING (MODEL)';
-                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = 'Vektor bergeser kiri (contoh)';
-                dev.className = 'text-[var(--aurellia-red)]';
-                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>ARAH C:</strong> Pilihan C menyorot jalur yang melengkung ke kiri pada gambar. Pilih B untuk membandingkannya dengan garis tengah.';
-            } else {
-                stamp.textContent = 'VEKTOR A: ARAH MIRING (MODEL)';
-                stamp.className = 'px-2 py-0.5 bg-[#D11F26] text-white font-bold';
-                dev.textContent = 'Vektor bergeser kanan (contoh)';
-                dev.className = 'text-[var(--aurellia-red)]';
-                box.className = 'p-3.5 border-l-4 border-[#D11F26] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed';
-                box.innerHTML = '<strong>ARAH A:</strong> Pilihan A menyorot jalur yang melengkung ke kanan pada gambar. Pilih B untuk membandingkannya dengan garis tengah.';
+        const TRIGGER_STAGES = {
+            A: {title:'A · Tarikan awal (Take-up)', body:'Pergerakan awal pelatuk sebelum tahanan mulai terasa. Tahap ini mendahului pergerakan menuju titik pelepasan.', progress:0.18, x:75},
+            B: {title:'B · Sebelum pelepasan (Creep)', body:'Pergerakan pelatuk setelah tahanan mulai terasa hingga mencapai titik pelepasan. Pelepasan menandai akhir tahap ini.', progress:0.48, x:205},
+            C: {title:'C · Setelah pelepasan (Over-travel)', body:'Pergerakan pelatuk yang masih berlanjut setelah titik pelepasan. Tahap ini terjadi sesudah mekanisme penahan terlepas.', progress:0.82, x:345}
+        };
+        let selectedTriggerStage = '';
+        function selectTriggerStage(key, syncCurve = true) {
+            const stage = TRIGGER_STAGES[key];
+            if (!stage) return;
+            for (const id of ['A','B','C']) {
+                const selected = id === key;
+                document.getElementById('btnStage-'+id).setAttribute('aria-pressed', String(selected));
+                document.getElementById('triggerZone'+id).setAttribute('stroke-width', selected ? '3' : '1');
+                document.getElementById('triggerZone'+id).setAttribute('stroke', selected ? '#0057A5' : '#65747B');
             }
-        }
-
-        function adjustTriggerShoeContact(val) {
-            const v = parseFloat(val);
-            document.getElementById('mechFingerPad').setAttribute('transform', `translate(0, ${v})`);
-            document.getElementById('searWeightReadout').textContent = Math.abs(v) <= 5 ? 'Tengah bilah' : v < -5 ? 'Bagian atas bilah' : 'Bagian bawah bilah';
-            document.getElementById('shoeHeightText').textContent =
-                Math.abs(v) <= 5 ? 'TENGAH BILAH' : v < -5 ? 'BAGIAN ATAS BILAH' : 'BAGIAN BAWAH BILAH';
+            document.getElementById('triggerTravelMarker').setAttribute('cx', stage.x);
+            if (selectedTriggerStage !== key) {
+                document.getElementById('triggerStageTitle').textContent = stage.title;
+                document.getElementById('triggerStageBody').textContent = stage.body;
+                selectedTriggerStage = key;
+            }
+            if (syncCurve) {
+                endLiveTriggerPull(true);
+                oscProgress = stage.progress;
+                drawOscilloscope(stage.progress);
+                document.getElementById('oscPhaseLabel').textContent = stage.title;
+            }
         }
 
         let oscProgress = 0.65;
@@ -376,10 +345,10 @@ let sfxActive = false;
         let oscPlaybackMode = false;
 
         function computePosterTriggerCurve(t) {
-            if (t < 0.28) return 0.72 * Math.sin((t / 0.28) * (Math.PI / 2));
-            if (t < 0.58) return 0.72 + ((t - 0.28) / 0.30) * 0.11;
-            if (t < 0.64) return 0.83 - ((t - 0.58) / 0.06) * 0.09;
-            return 0.74;
+            if (t < 0.28) return 0.42 * Math.sin((t / 0.28) * (Math.PI / 2));
+            if (t < 0.58) return 0.42 + ((t - 0.28) / 0.30) * 0.06;
+            if (t < 0.64) return 0.48 + ((t - 0.58) / 0.06) * 0.30;
+            return 0.78 + ((t - 0.64) / 0.36) * 0.04;
         }
 
         function drawOscilloscope(prog = 0) {
@@ -401,7 +370,7 @@ let sfxActive = false;
             }
 
             // 4 Phase Vertical Dividers (Penarikan Awal | Stabil | Pelepasan | Gerakan Lanjutan)
-            [0.28, 0.58, 0.66, 1.0].forEach(p => {
+            [0.28, 0.58, 0.64, 1.0].forEach(p => {
                 const x = padL + p * pw;
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
                 ctx.setLineDash([4, 4]);
@@ -420,7 +389,7 @@ let sfxActive = false;
 
             ctx.fillStyle = '#94A3B8';
             ctx.font = 'bold 10px IBM Plex Mono';
-            ctx.fillText('PROGRES (MODEL)', padL + 6, padT + 10);
+            ctx.fillText('KURVA CONTOH', padL + 6, padT + 10);
             ctx.fillText('URUTAN MODEL →', padL + pw - 103, padT + ph + 22);
 
             // Reference Curve
@@ -465,8 +434,8 @@ let sfxActive = false;
                 const on =
                     (n === 1 && prog > 0 && prog < 0.28) ||
                     (n === 2 && prog >= 0.28 && prog < 0.58) ||
-                    (n === 3 && prog >= 0.58 && prog < 0.67) ||
-                    (n === 4 && prog >= 0.67);
+                    (n === 3 && prog >= 0.58 && prog < 0.64) ||
+                    (n === 4 && prog >= 0.64);
                 el.className = on
                     ? 'p-1.5 border border-[#FF4800] bg-[#FF4800]/20 text-white'
                     : 'p-1.5 border border-slate-800 text-slate-400';
@@ -484,19 +453,19 @@ let sfxActive = false;
             function frame() {
                 if (!oscPulling) return;
                 oscProgress = Math.min(1, oscProgress + 0.0085);
-                document.getElementById('mechTriggerBlade').setAttribute('transform', `rotate(${oscProgress * 10}, 132, 44)`);
+                selectTriggerStage(oscProgress < 0.28 ? 'A' : oscProgress < 0.64 ? 'B' : 'C', false);
 
                 const lbl = document.getElementById('oscPhaseLabel');
-                if (oscProgress < 0.28) lbl.textContent = 'FASE 1: PENARIKAN AWAL';
-                else if (oscProgress < 0.58) lbl.textContent = 'FASE 2: STABIL DI TITIK TAHANAN';
-                else if (oscProgress < 0.67) {
-                    lbl.textContent = 'FASE 3: PELEPASAN PEMICU (MODEL)';
+                if (oscProgress < 0.28) lbl.textContent = 'A · TARIKAN AWAL';
+                else if (oscProgress < 0.58) lbl.textContent = 'B · MENUJU PELEPASAN';
+                else if (oscProgress < 0.64) {
+                    lbl.textContent = 'TITIK PELEPASAN';
                     if (!oscShotFired) {
                         oscShotFired = true;
                         playSteelImpactSound();
                     }
                 } else {
-                    lbl.textContent = 'FASE 4: GERAKAN LANJUTAN';
+                    lbl.textContent = 'C · GERAKAN LANJUTAN';
                 }
 
                 drawOscilloscope(oscProgress);
@@ -506,13 +475,12 @@ let sfxActive = false;
             oscReq = requestAnimationFrame(frame);
         }
 
-        function endLiveTriggerPull() {
-            if (oscPlaybackMode) return;
+        function endLiveTriggerPull(force = false) {
+            if (oscPlaybackMode && force !== true) return;
             oscPulling = false;
             if (oscReq != null) cancelAnimationFrame(oscReq);
             oscReq = null;
             document.getElementById('tactileTriggerBtn').setAttribute('aria-pressed','false');
-            document.getElementById('mechTriggerBlade').setAttribute('transform', 'rotate(0, 132, 44)');
         }
 
         function runIdealCurvePlayback() {
@@ -548,7 +516,6 @@ let sfxActive = false;
             document.addEventListener('visibilitychange', () => {if(document.hidden) endLiveTriggerPull();});
         }
 
-        let ocularTick = 0;
         let ocularVisible = false;
         let ocularReq = null;
         let ocularLast = 0;
@@ -574,13 +541,10 @@ let sfxActive = false;
             const dist = parseFloat(document.getElementById('optEyeDist').value);
             const comb = parseFloat(document.getElementById('optCheekHeight').value);
             const lat = parseFloat(document.getElementById('optLat').value);
-            const press = parseFloat(document.getElementById('optPressure').value);
 
             document.getElementById('optEyeDistLabel').textContent = `${dist} mm (CONTOH MODEL)`;
             document.getElementById('optCheekHeightLabel').textContent = `${comb > 0 ? '+' : ''}${comb.toFixed(1)} mm (MODEL)`;
             document.getElementById('optLatLabel').textContent = `${lat > 0 ? '+' : ''}${lat.toFixed(1)} mm (MODEL)`;
-            document.getElementById('optPressureLabel').textContent =
-                `${press}% (VARIASI GAMBAR)`;
 
             // The camera is fixed; only the illustrative head moves in this side view.
             // Increasing the eye-distance slider increases the gap from the fixed ocular lens.
@@ -615,7 +579,6 @@ let sfxActive = false;
             document.getElementById('optEyeDist').value = 85;
             document.getElementById('optCheekHeight').value = 0;
             document.getElementById('optLat').value = 0;
-            document.getElementById('optPressure').value = 50;
             playMechTick(1020);
             updateOpticalSim();
         }
@@ -634,11 +597,6 @@ let sfxActive = false;
             const dist = parseFloat(document.getElementById('optEyeDist').value);
             const comb = parseFloat(document.getElementById('optCheekHeight').value);
             const lat = parseFloat(document.getElementById('optLat').value);
-            const press = parseFloat(document.getElementById('optPressure').value);
-
-            const tremor = Math.abs(press - 50) > 20 ? (Math.abs(press - 50) - 20) * 0.15 : 0.25;
-            const tx = Math.sin(ocularTick * 2.8) * tremor;
-            const ty = Math.cos(ocularTick * 3.5) * tremor;
 
             ctx.fillStyle = '#090B0E';
             ctx.fillRect(0, 0, w, h);
@@ -647,7 +605,7 @@ let sfxActive = false;
 
             ctx.save();
             ctx.beginPath();
-            ctx.arc(cx - lat * 2.5 + tx, cy + comb * 2.5 + ty, exitPupilRadius, 0, Math.PI * 2);
+            ctx.arc(cx - lat * 2.5, cy + comb * 2.5, exitPupilRadius, 0, Math.PI * 2);
             ctx.clip();
 
             // Neutral field-study illustration, not a simulated optical measurement.
@@ -678,7 +636,7 @@ let sfxActive = false;
 
             // A restrained conceptual silhouette; deliberately no score or aim feedback.
             ctx.save();
-            ctx.translate(cx + tx, cy + ty);
+            ctx.translate(cx, cy);
             ctx.fillStyle = '#25302B';
             ctx.beginPath();
             ctx.moveTo(-19,-13);
@@ -1060,11 +1018,11 @@ let sfxActive = false;
 
         window.addEventListener('DOMContentLoaded', function () {
             setupTriggerInput();
-            selectFingerVector('B');
+            selectTriggerStage('A');
             setupOcularVisibility();
             renderBiomechIndexTable();
             selectBiomechCallout('spine');
-            drawOscilloscope(0.65);
+            drawOscilloscope(oscProgress);
             updateOpticalSim();
             buildSilhouetteRack();
             selectRangeAnimal('ram');

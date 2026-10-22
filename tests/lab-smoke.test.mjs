@@ -26,11 +26,11 @@ test('production CSS is static, not Tailwind Play CDN',()=>{
  assert.match(utilities,/\.lg\\:col-span-6/);
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
-test('seven remaining sliders and thirteen unique SVG keyboard controls remain accessible',()=>{
+test('five remaining sliders and ten unique SVG keyboard controls remain accessible',()=>{
  const sliders=[...html.matchAll(/<input\b[^>]*type="range"[^>]*>/g)].map(x=>x[0]);
- assert.equal(sliders.length,7);
+ assert.equal(sliders.length,5);
  assert.ok(sliders.every(x=>x.includes('aria-label=')));
- assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,13);
+ assert.equal((html.match(/tabindex="0" role="button"/g)||[]).length,10);
  assert.match(js,/btn\.setAttribute\('aria-label', `Titik/);
  assert.match(js,/btn\.setAttribute\('aria-pressed','false'\)/);
 });
@@ -111,7 +111,7 @@ test('educational model avoids unsupported ideal-settings and explains recorded 
  assert.doesNotMatch(html,/Take-Up \(0–70 gf\)/);
  assert.doesNotMatch(html,/LUBANG #2 — OPTIMAL/);
  assert.doesNotMatch(html,/85 mm \(IDEAL\)/);
- assert.match(html,/LETAK JARI:/);
+ assert.match(html,/Tiga tahap pergerakan pelatuk/);
  assert.match(html,/bukan rekaman gaya, waktu, atau performa atlet/);
  assert.match(html,/ATURAN · IMSSU 2025/);
  assert.match(html,/MODEL · BUKAN DATA UKUR/);
@@ -177,8 +177,8 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  assert.match(html,/id="svgAthleteLayer"/);
  assert.match(js,/tsPosturePoseArt\?\.figure\(currentPose, activeBiomechId\)/);
  assert.match(html,/id="triggerVectorDiagram"/);
- assert.match(html,/id="triggerMechanismDiagram"/);
- for(const id of ['svgVecA','svgVecB','svgVecC','mechTriggerBlade','mechFingerPad','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
+
+ for(const id of ['triggerTravelMarker','triggerZoneA','triggerZoneB','triggerZoneC','ocularLensCanvas','opticFixedScope','optStaticRifle','svgShooterHeadSide']){
   assert.equal((html.match(new RegExp('id="'+id+'"','g'))||[]).length,1,id);
  }
  assert.match(html,/id="opticalAlignmentIllustration"/);
@@ -196,7 +196,7 @@ test('four remaining Lab visuals use layered illustrations and preserve DOM wiri
  }
  assert.match(css,/Four-module visual refinement/);
  assert.doesNotMatch(js,/id="targetSteel-/);
- assert.match(html,/role="group" aria-labelledby="triggerVectorTitle/);
+ assert.match(html,/role="img" aria-labelledby="triggerStageDiagramTitle/);
 });
 
 
@@ -223,8 +223,8 @@ test('interactive diagram markers expose a single keyboard path and truthful pre
  assert.equal((hardware.match(/class="hw-region cursor-pointer" data-hw-key=/g)||[]).length,5);
  assert.doesNotMatch(hardware,/class="hw-region cursor-pointer" tabindex="0"/);
  assert.equal((hardware.match(/class="hw-marker cursor-pointer"[^\n]*aria-pressed=/g)||[]).length,10);
- assert.equal((html.match(/data-trigger-vector="[ABC]" aria-pressed=/g)||[]).length,3);
- assert.match(js,/marker\.setAttribute\('aria-pressed', String\(v === vec\)\)/);
+ assert.equal((html.match(/id="btnStage-[ABC]"[^>]*aria-pressed=/g)||[]).length,3);
+ assert.match(js,/getElementById\('btnStage-'\+id\)\.setAttribute\('aria-pressed', String\(selected\)\)/);
  assert.match(js,/if \(node\.classList\.contains\('hw-marker'\)\) node\.setAttribute\('aria-pressed', String\(selected\)\)/);
 });
 
@@ -272,7 +272,7 @@ test('optics study uses a fixed detailed scope and only a slider-driven head',()
   assert.doesNotMatch(html, /id="svgSideCheekpiece"/);
   assert.match(html, /id="opticalAlignmentIllustration"[^>]*viewBox="0 0 835 282"/);
   assert.match(html, /TINGGI POSISI MATA/);
-  assert.match(html, /VARIASI PANDANGAN/);
+  assert.doesNotMatch(html, /VARIASI PANDANGAN/);
   assert.match(js, /const dx = \(dist - 85\) \* 0\.6/);
   assert.match(js, /const dy = -7 - comb \* 0\.85/);
   assert.doesNotMatch(js, /getElementById\('svgSideCheekpiece'\)/);

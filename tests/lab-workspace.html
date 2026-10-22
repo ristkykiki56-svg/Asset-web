@@ -23,8 +23,19 @@ for(const width of [320,375,390]){
   assert(d.documentElement.scrollWidth<=width,width+': no page overflow '+id);
  }
  picker.value='sec-optics';picker.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
- const lens=d.querySelector('[data-lw-optics="lens"]');lens.click();await settle(f);
  assert(!d.querySelector('#ocularLensCanvas').closest('[hidden]'),width+': lens visible');
+ assert(!d.querySelector('#opticalSidePan').closest('[hidden]'),width+': eye position visible with lens');
+ assert(!d.querySelector('#optPressure'),width+': percentage variation removed');
+ const side=d.querySelector('#opticalSidePan'),stage=d.querySelector('#sec-optics .lw-stage');
+ for(const control of ['optEyeDist','optCheekHeight','optLat']){
+  const choice=d.querySelector('#sec-optics .lw-parameter-choice');choice.value=control;choice.dispatchEvent(new Event('change',{bubbles:true}));await settle(f);
+  const top=side.getBoundingClientRect(),lens=d.querySelector('#ocularLensCanvas').getBoundingClientRect(),area=stage.getBoundingClientRect();
+  assert(top.height>0&&lens.height>=60,width+': both optical views visible for '+control);
+  assert(top.bottom<=lens.top&&lens.bottom<=area.bottom+1,width+': optical views fit together for '+control);
+ }
+ const art=d.querySelector('#opticalAlignmentArtwork:not([hidden]),#opticalAlignmentIllustration:not([hidden])');
+ if(art){const r=art.getBoundingClientRect(),v=side.getBoundingClientRect();assert(r.top>=v.top-1&&r.bottom<=v.bottom+1,width+': full eye-position image fits its view');}
+
  const primary=[...d.querySelectorAll('#sec-optics .lw-panel input[type=range]')].find(input=>input.getBoundingClientRect().height>0);
  assert(!!primary,width+': active optical control');
  if(primary){primary.value=primary.max;primary.dispatchEvent(new Event('input',{bubbles:true}));await settle(f);

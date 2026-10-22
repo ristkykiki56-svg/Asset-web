@@ -244,126 +244,48 @@
             <div class="tech-rule-heavy pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div>
                     <div class="font-mono-tech text-xs text-[var(--aurellia-red)] font-bold uppercase tracking-wider">
-                        BAGIAN 02 // MEKANIKA BILAH PELATUK, VEKTOR JARI (C–B–A) &amp; KURVA ILUSTRATIF
+                        BAGIAN 02 // TAHAPAN PERGERAKAN PELATUK (A → B → C) &amp; KURVA ILUSTRATIF
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
-<span class="lab-heading-long">Memahami pergerakan pelatuk lewat diagram</span><span class="lab-heading-short">Pelatuk</span>
+<span class="lab-heading-long">Memahami tahapan pergerakan pelatuk</span><span class="lab-heading-short">Pelatuk</span>
 </h2>
-<p class="lab-section-hint">Pilih A, B, atau C untuk membandingkan arah gerak. Tekan dan tahan tombol simulasi atau putar contoh untuk melihat empat fase. Grafik bukan rekaman tarikan pelatuk.</p>
+<p class="lab-section-hint">Pilih tahap A, B, atau C untuk memahami pergerakan pelatuk sebelum dan setelah pelepasan. Putar urutan untuk melihat hubungannya dengan kurva ilustrasi.</p>
                 </div>
                 <div class="font-mono-tech text-xs px-3 py-1.5 border border-[var(--rule-heavy)] bg-[var(--bg-surface)]">
-                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">PERBANDINGAN ARAH GERAKAN—BUKAN STANDAR TARIKAN</strong>
+                    MODEL DIAGRAM: <strong class="text-[var(--ok-green)]">TAHAP PERGERAKAN PELATUK</strong>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 tech-sheet">
-                <!-- Left 6 Cols: Vector C-B-A & Mechanical Sear Cutaway from prototype -->
                 <div class="lg:col-span-6 tech-border-b lg:border-b-0 lg:tech-border-r p-4 sm:p-6 space-y-5">
-                    <div class="flex items-center justify-between border-b border-[var(--rule-light)] pb-2 font-mono-tech text-[11px]">
-                        <span class="font-bold">FIG 2.1 — PERGERAKAN PEMICU (C/B/A) &amp; TUAS BILAH PELATUK</span>
-                        <span id="activeVectorStamp" class="px-2 py-0.5 bg-[#0E7C47] text-white font-bold">VEKTOR B: GARIS TENGAH</span>
+                    <h3 class="font-bold">Tiga tahap pergerakan pelatuk</h3>
+                    <svg id="triggerVectorDiagram" viewBox="0 0 420 180" class="w-full" role="img" aria-labelledby="triggerStageDiagramTitle triggerStageDiagramDesc">
+                        <title id="triggerStageDiagramTitle">Urutan pergerakan pelatuk dari A ke C</title>
+                        <desc id="triggerStageDiagramDesc">A adalah tarikan awal, B pergerakan setelah tahanan terasa hingga pelepasan, dan C pergerakan setelah pelepasan. Panjang bagian hanya membantu membaca urutan.</desc>
+                        <rect id="triggerZoneA" x="15" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <rect id="triggerZoneB" x="145" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <rect id="triggerZoneC" x="285" y="30" width="120" height="90" rx="6" fill="#E8EDF0" stroke="#65747B"/>
+                        <g fill="#182B35" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700">
+                            <text x="75" y="58">A · Take-up</text><text x="205" y="58">B · Creep</text><text x="345" y="58">C · Over-travel</text>
+                        </g>
+                        <path d="M30 88H390" stroke="#52646D" stroke-width="2"/>
+                        <path d="M382 82L390 88L382 94" fill="none" stroke="#52646D" stroke-width="2"/>
+                        <circle id="triggerTravelMarker" cx="75" cy="88" r="8" fill="#0057A5" stroke="white" stroke-width="2"/>
+                        <path d="M275 20V130" stroke="#182B35" stroke-width="2" stroke-dasharray="4 4"/>
+                        <g fill="#182B35" text-anchor="middle" font-family="sans-serif" font-size="12">
+                            <text x="75" y="147">Tarikan awal</text><text x="205" y="147">Sebelum pelepasan</text><text x="345" y="147">Setelah pelepasan</text>
+                            <text x="275" y="16">Pelepasan</text>
+                        </g>
+                    </svg>
+                    <div id="triggerStageButtons" class="trigger-stage-buttons" role="group" aria-label="Pilih tahap pergerakan pelatuk">
+                        <button type="button" id="btnStage-A" aria-controls="triggerStageExplanation" aria-pressed="true" onclick="selectTriggerStage('A')">A · Tarikan awal</button>
+                        <button type="button" id="btnStage-B" aria-controls="triggerStageExplanation" aria-pressed="false" onclick="selectTriggerStage('B')">B · Sebelum pelepasan</button>
+                        <button type="button" id="btnStage-C" aria-controls="triggerStageExplanation" aria-pressed="false" onclick="selectTriggerStage('C')">C · Setelah pelepasan</button>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Left Diagram: Exact Poster "PELATUK" C - B - A Vector Diagram -->
-                        <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">TIGA JALUR PERGERAKAN · SKEMA</span>
-                            <svg id="triggerVectorDiagram" viewBox="0 0 230 220" class="w-full h-48" role="group" aria-labelledby="triggerVectorTitle triggerVectorDesc">
-<title id="triggerVectorTitle">Tiga arah pergerakan ilustratif</title><desc id="triggerVectorDesc">Pilih A, B, atau C untuk melihat perbandingan garis, bukan ukuran gaya atau anjuran posisi nyata.</desc>
-<defs>
-<linearGradient id="triggerGraphite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68777B"/><stop offset=".33" stop-color="#39494B"/><stop offset="1" stop-color="#202A2E"/></linearGradient>
-<linearGradient id="triggerPlate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3F4F0"/><stop offset="1" stop-color="#D8DDD8"/></linearGradient>
-</defs>
-<path d="M22 166H207" stroke="#C6C9C3" stroke-width="1" stroke-dasharray="4 5"/>
-<path d="M115 18V178" stroke="#D1D6D0" stroke-width="1" stroke-dasharray="4 4"/>
-<rect x="57" y="13" width="116" height="57" rx="9" fill="url(#triggerGraphite)" stroke="#263338" stroke-width="2"/>
-<path d="M62 22H167" stroke="#DAE2E0" opacity=".5" stroke-width="2"/>
-<rect x="99" y="63" width="33" height="21" rx="5" fill="url(#triggerPlate)" stroke="#455259" stroke-width="1.5"/>
-<path id="svgVecC" d="M95 75 C94 111 82 141 62 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
-<path id="svgVecB" d="M115 75 L115 170" fill="none" stroke="#0E7C47" stroke-width="5" stroke-linecap="round"/>
-<path id="svgVecA" d="M135 75 C136 109 151 143 168 170" fill="none" stroke="#96A0A1" stroke-width="4.2" stroke-linecap="round"/>
-<circle cx="95" cy="75" r="4" fill="#D1D9D8"/><circle cx="115" cy="75" r="4" fill="#D1D9D8"/><circle cx="135" cy="75" r="4" fill="#D1D9D8"/>
-<text x="115" y="45" text-anchor="middle" fill="#EDF1F0" font-family="IBM Plex Mono" font-size="10" font-weight="700" letter-spacing="1">MODEL ARAH</text>
-<g tabindex="0" role="button" data-trigger-vector="C" aria-pressed="false" aria-label="Pilih skema C: garis melengkung kiri" onclick="selectFingerVector('C')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('C');}" class="trigger-vector-node cursor-pointer" transform="translate(62,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">C</text>
-</g>
-<g tabindex="0" role="button" data-trigger-vector="B" aria-pressed="true" aria-label="Pilih skema B: garis tengah" onclick="selectFingerVector('B')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('B');}" class="trigger-vector-node cursor-pointer" transform="translate(115,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">B</text>
-</g>
-<g tabindex="0" role="button" data-trigger-vector="A" aria-pressed="false" aria-label="Pilih skema A: garis melengkung kanan" onclick="selectFingerVector('A')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFingerVector('A');}" class="trigger-vector-node cursor-pointer" transform="translate(168,185)">
-<rect x="-16" y="-16" width="32" height="32" rx="8" fill="#FFFFFF" stroke="#85908E" stroke-width="1.4"/>
-<text x="0" y="5" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" font-weight="700" fill="#263239">A</text>
-</g>
-</svg>
-                            <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>POLA GARIS MODEL:</span>
-                                <strong id="vecDeviationReadout" class="text-[var(--ok-green)]">0.0 mm (NOL)</strong>
-                            </div>
-                        </div>
-
-                        <!-- Right Diagram: Mechanical Sear & Blue Anodized Trigger Shoe Cutaway -->
-                        <div class="border border-[var(--rule-light)] bg-[var(--bg-paper)] p-3 flex flex-col items-center">
-                            <span class="font-mono-tech text-[10px] uppercase text-[var(--ink-500)] mb-2">AREA PERGERAKAN · BUKAN MEKANISME INTERNAL</span>
-                            <svg id="triggerMechanismDiagram" viewBox="0 0 240 220" class="w-full h-48" role="img" aria-labelledby="triggerMechanismTitle triggerMechanismDesc">
-<title id="triggerMechanismTitle">Ilustrasi eksternal bilah dan bidang sentuh</title>
-<desc id="triggerMechanismDesc">Diagram skematis interaksi arah garis dan bidang sentuh, bukan mekanisme internal atau panduan penyetelan.</desc>
-<defs>
-<linearGradient id="triggerOuterMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E9B9D"/><stop offset=".4" stop-color="#45575D"/><stop offset="1" stop-color="#24333A"/></linearGradient>
-<linearGradient id="triggerAccentBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#163C68"/><stop offset=".5" stop-color="#3373AD"/><stop offset="1" stop-color="#1C4E84"/></linearGradient>
-</defs>
-<path d="M29 170H207" stroke="#CDD0C8" stroke-width="1" stroke-dasharray="4 4"/>
-<path d="M38 30H198Q207 30 207 39V56H38Z" fill="url(#triggerOuterMetal)" stroke="#2E3A3F" stroke-width="2"/>
-<path d="M44 35H197" stroke="#EDF1EF" stroke-width="2" opacity=".4"/>
-<path d="M57 57V160Q57 180 77 180H186" fill="none" stroke="url(#triggerOuterMetal)" stroke-width="8" stroke-linecap="round"/>
-<path d="M62 59V155" stroke="#D9E0DC" stroke-width="1.4" opacity=".44"/>
-<circle cx="132" cy="44" r="7" fill="#2C414A" stroke="#C3CDCA" stroke-width="2"/>
-<g id="mechTriggerBlade" transform="rotate(0, 132, 44)">
- <rect x="127" y="44" width="10" height="118" rx="5" fill="url(#triggerAccentBlue)" stroke="#1C4568" stroke-width="1.5"/>
- <path d="M129 52V156" stroke="#BBD8EE" stroke-width="1.6" opacity=".48"/>
- <circle cx="132" cy="86" r="3" fill="#DFECEB"/><circle cx="132" cy="112" r="3" fill="#DFECEB"/><circle cx="132" cy="137" r="3" fill="#DFECEB"/>
- <g id="mechFingerPad" transform="translate(0, 0)">
-  <ellipse cx="158" cy="109" rx="21" ry="13" fill="#DB8B6B" fill-opacity=".42" stroke="#CB6745" stroke-width="1.8"/>
-  <circle cx="137" cy="109" r="13" fill="none" stroke="#537A82" stroke-width="1.4" stroke-dasharray="4 3"/>
-  <path d="M190 109H148" stroke="#DD7146" stroke-width="2" stroke-dasharray="3 3"/>
- </g>
-</g>
-<text x="157" y="72" fill="#465455" font-size="9" font-family="IBM Plex Mono" font-weight="700">BILAH</text>
-<text x="165" y="142" fill="#A95338" font-size="9" font-family="IBM Plex Mono" font-weight="700">AREA CONTOH</text>
-</svg>
-                            <div class="w-full pt-2 border-t border-[var(--rule-light)] flex justify-between font-mono-tech text-[11px]">
-                                <span>LETAK JARI:</span>
-                                <strong id="searWeightReadout" class="text-[var(--clarisa-blue)]">Tengah bilah</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vector Selector Buttons & Vertical Shoe Contact Slider -->
-                    <div class="space-y-3 pt-1">
-                        <div class="grid grid-cols-3 gap-2 font-mono-tech text-xs">
-                            <button onclick="selectFingerVector('C')" id="btnVec-C" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [C] Arah kiri
-                            </button>
-                            <button onclick="selectFingerVector('B')" id="btnVec-B" aria-pressed="true" class="py-2 px-2 border-2 border-[#0E7C47] bg-[#0E7C47] text-white font-bold transition">
-                                [B] Garis lurus (contoh)
-                            </button>
-                            <button onclick="selectFingerVector('A')" id="btnVec-A" aria-pressed="false" class="py-2 px-2 border border-[var(--rule-light)] hover:border-[var(--rule-heavy)] transition">
-                                [A] Arah kanan
-                            </button>
-                        </div>
-
-                        <div class="p-3 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                            <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>POSISI JARI PADA BILAH PELATUK:</span>
-                                <strong id="shoeHeightText">TENGAH BILAH</strong>
-                            </div>
-                            <input type="range" min="-22" max="22" value="0" oninput="adjustTriggerShoeContact(this.value)" class="mech-slider" aria-label="Posisi jari pada diagram pelatuk ilustrasi">
-                        </div>
-
-                        <div id="vectorExplanationBox" aria-live="polite" class="p-3.5 border-l-4 border-[#0E7C47] bg-[var(--bg-paper)] text-xs text-[var(--ink-700)] leading-relaxed">
-                            <strong>ARAH TENGAH:</strong> Pilihan B menyorot garis tengah berwarna hijau. Pilih C atau A untuk membandingkan arah pada gambar.
-                        </div>
+                    <div id="triggerStageExplanation" class="trigger-stage-explanation">
+                        <h3 id="triggerStageTitle">A · Tarikan awal (Take-up)</h3>
+                        <p id="triggerStageBody">Pergerakan awal pelatuk sebelum tahanan mulai terasa. Tahap ini mendahului pergerakan menuju titik pelepasan.</p>
+                        <p class="lab-diagram-context">A, B, dan C menunjukkan urutan pergerakan. Panjang bagian pada gambar tidak mewakili jarak atau setelan pelatuk tertentu.</p>
                     </div>
                 </div>
 
@@ -385,12 +307,12 @@
                                 <div>Tarikan awal</div>
                             </div>
                             <div id="oscStage-2" class="p-1.5 border border-slate-800 text-slate-300">
-                                <div class="font-bold text-amber-400">2. STABIL</div>
-                                <div>Titik tahanan</div>
+                                <div class="font-bold text-amber-400">2. TAHANAN</div>
+                                <div>Menuju pelepasan</div>
                             </div>
                             <div id="oscStage-3" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-emerald-400">3. PELEPASAN</div>
-                                <div>Pelatuk terlepas</div>
+                                <div>Titik pelepasan</div>
                             </div>
                             <div id="oscStage-4" class="p-1.5 border border-slate-800 text-slate-300">
                                 <div class="font-bold text-orange-400">4. GERAKAN LANJUTAN</div>
@@ -399,7 +321,7 @@
                         </div>
                     </div>
 
-                    <p id="triggerCurveHelp" class="lab-diagram-context lab-trigger-curve-context">Tekan dan tahan untuk menjalankan garis melalui empat tahap: penarikan awal, titik tahanan, pelepasan, dan gerakan lanjutan. Lepaskan tombol untuk mengakhiri putaran, atau pilih Putar contoh otomatis. Kurva ini <strong>bukan rekaman gaya, waktu, atau performa atlet</strong>.</p>
+                    <p id="triggerCurveHelp" class="lab-diagram-context lab-trigger-curve-context">Kurva memperlihatkan tarikan awal (A), pergerakan menuju pelepasan (B), titik pelepasan, lalu gerakan lanjutan (C). Tekan dan tahan untuk mengikuti urutannya, atau pilih Putar contoh otomatis. Bentuk garis membantu menjelaskan tahapan dan <strong>bukan rekaman gaya, waktu, atau performa atlet</strong>.</p>
                     <!-- Interactive Tactile Trigger Paddle -->
                     <div class="lab-trigger-action space-y-3">
                         <p class="lab-action-label">COBA SIMULASI · LANGKAH 02</p><div class="flex flex-col sm:flex-row gap-2 font-mono-tech text-xs">
@@ -434,10 +356,10 @@
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-0.5">
 <span class="lab-heading-long">Jarak mata dan lensa teleskop</span><span class="lab-heading-short">Pandangan optik</span>
 </h2>
-<p class="lab-section-hint">Ubah satu kontrol setiap kali. Jarak dan tinggi mata menggeser kepala sedikit pada gambar samping serta mengubah lingkaran pandangan. Posisi lateral dan variasi pandangan hanya mengubah tampilan dalam lensa. Angka merupakan contoh untuk mencoba gambar.</p>
+<p class="lab-section-hint">Ubah satu kontrol setiap kali. Jarak dan tinggi mata menggeser kepala sedikit pada gambar samping serta mengubah lingkaran pandangan. Posisi lateral mengubah tampilan dalam lensa. Amati posisi mata dan pandangan lensa secara bersamaan. Angka merupakan contoh ilustrasi, bukan rekomendasi setelan.</p>
                 </div>
                 <button onclick="calibratePerfectOptics()" class="font-mono-tech text-xs px-4 py-2 bg-[var(--ink-900)] text-[var(--bg-surface)] font-bold uppercase hover:bg-[#FF4800] transition">
-                    Reset Posisi Model Optik
+                    Kembalikan posisi awal
                 </button>
             </div>
 
@@ -551,14 +473,14 @@
 </svg>
                         </div>
                         <button id="opticsDetailToggle" type="button" class="optical-detail-toggle" aria-controls="opticalSidePan" aria-pressed="false">Perbesar detail gambar</button>
-                        <p class="optical-side-hint">Gambar awal ditampilkan utuh. Perbesar detail gambar untuk melihat bagian mata dan okuler. Dua kontrol posisi menggeser kepala; dua kontrol lainnya hanya mengubah tampilan dalam lensa.
+                        <p class="optical-side-hint">Gambar awal ditampilkan utuh. Perbesar detail gambar untuk melihat bagian mata dan okuler. Jarak dan tinggi mata menggeser kepala. Kontrol ke samping hanya mengubah pandangan dalam lensa.
                         <span id="opticsArtworkStatus" class="sr-only" role="status">Memuat ilustrasi optik…</span></p>
                     </div>
                 </div>
 
                 <!-- Right 7 Cols: Precision Optical Sliders & Poster Guidelines -->
                 <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-5">
-                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Coba empat kontrol pandangan</summary>
+                    <details class="lab-mobile-disclosure " data-lab-mobile-collapse open><summary>Coba tiga kontrol posisi mata</summary>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- 1. Eye Relief Distance -->
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
@@ -578,7 +500,7 @@
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>2. TINGGI POSISI MATA (MODEL):</span>
-                                <strong id="optCheekHeightLabel" class="text-[var(--ok-green)]">0.0 mm (SEJAJAR)</strong>
+                                <strong id="optCheekHeightLabel" class="text-[var(--ok-green)]">0.0 mm (CONTOH)</strong>
                             </div>
                             <input id="optCheekHeight" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Perubahan tinggi posisi kepala pada ilustrasi, bukan pengukuran, milimeter">
                             <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
@@ -592,44 +514,31 @@
                         <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
                             <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
                                 <span>3. POSISI MATA KE SAMPING:</span>
-                                <strong id="optLatLabel" class="text-[var(--ok-green)]">0.0 mm (TENGAH)</strong>
+                                <strong id="optLatLabel" class="text-[var(--ok-green)]">0.0 mm (CONTOH)</strong>
                             </div>
                             <input id="optLat" type="range" min="-20" max="20" value="0" oninput="updateOpticalSim()" class="mech-slider" aria-label="Posisi mata ke samping pada ilustrasi, milimeter">
                         </div>
 
-                        <!-- 4. Cheek Pressure & Pulse Tremor -->
-                        <div class="p-3.5 bg-[var(--bg-paper)] border border-[var(--rule-light)]">
-                            <div class="flex justify-between font-mono-tech text-[11px] mb-1.5">
-                                <span>4. VARIASI PANDANGAN:</span>
-                                <strong id="optPressureLabel" class="text-[var(--ok-green)]">50% (CONTOH MODEL)</strong>
-                            </div>
-                            <input id="optPressure" type="range" min="10" max="100" value="50" oninput="updateOpticalSim()" class="mech-slider" aria-label="Variasi letak pandangan di dalam lensa">
-                            <div class="flex justify-between font-mono-tech text-[10px] text-[var(--ink-500)] mt-1">
-                                <span>Variasi 10</span>
-                                <span>Variasi 50</span>
-                                <span>Variasi 100</span>
-                            </div>
-                        </div>
                     </div>
 </details>
 
                     <!-- Educational descriptions supplied in the original prototype; not an authoritative rules quotation -->
                     <div id="opticsExplanation" class="border border-[var(--rule-heavy)] bg-[var(--bg-paper)] p-4 space-y-3">
                         <div class="font-mono-tech text-xs font-bold uppercase border-b border-[var(--rule-light)] pb-1.5">
-                            ILUSTRASI KONSEP: POSISI KEPALA DAN LENSA
+                            MEMAHAMI POSISI MATA DAN PANDANGAN LENSA
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[var(--ink-700)] leading-relaxed">
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // GAMBAR SAMPING</strong>
-                                Okuler adalah ujung teleskop yang dekat dengan mata. Perbesar detail untuk melihat celah antara mata dan okuler; geser gambar untuk memeriksa bagian lainnya.
+                                <strong class="font-mono-tech text-[11px] text-[var(--clarisa-blue)] block mb-1">01 // POSISI MATA</strong>
+                                Okuler adalah lensa teleskop yang paling dekat dengan mata. Gambar samping memperlihatkan jarak dan tinggi mata terhadap okuler. Perbesar detail untuk melihat celahnya lebih jelas.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // DUA KONTROL POSISI</strong>
-                                Jarak dan tinggi mata menggeser kepala sedikit, sementara senapan dan teleskop tetap diam. Keduanya juga mengubah bagian pandangan yang terlihat di dalam lensa.
+                                <strong class="font-mono-tech text-[11px] text-[var(--aurellia-red)] block mb-1">02 // PERUBAHAN POSISI</strong>
+                                Jarak mata mengubah celah mata terhadap okuler. Tinggi mata menggeser posisi kepala ke atas atau ke bawah. Amati perubahan area terang pada pandangan lensa saat mengubah salah satu kontrol.
                             </div>
                             <div class="p-2.5 bg-[var(--bg-surface)] border border-[var(--rule-light)]">
-                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // TAMPILAN DALAM LENSA</strong>
-                                Area terang menunjukkan bagian pandangan yang terlihat; area gelap menutupinya dari tepi. Posisi lateral menggeser area terang ke samping. Variasi pandangan mengubah letaknya sedikit.
+                                <strong class="font-mono-tech text-[11px] text-[var(--ok-green)] block mb-1">03 // PANDANGAN LENSA</strong>
+                                Area terang menunjukkan bagian pandangan yang terlihat; area gelap menggambarkan bayangan di tepi. Kontrol ke samping menggeser area terang tanpa menggerakkan gambar kepala dari samping. Ilustrasi ini tidak menghitung kondisi optik teleskop tertentu.
                             </div>
                         </div>
                     </div>
