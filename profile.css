@@ -326,4 +326,6 @@ footer{font-size:12px}
 .porprov-poster{margin:0}
 .porprov-poster img{width:100%;height:auto;border-radius:20px;box-shadow:0 16px 44px rgba(11,16,32,.12)}
 .porprov-poster figcaption{margin-top:10px;color:var(--muted);font-size:11px}
+.imssu p{max-width:760px;color:#475467;font-size:15px}
+.imssu p.lede{font-size:17px;color:var(--text);font-weight:600}
 @media(max-width:680px){.porprov{grid-template-columns:1fr;gap:24px}}
