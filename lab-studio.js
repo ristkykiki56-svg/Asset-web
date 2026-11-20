@@ -368,8 +368,22 @@
   }
 
   /* =========================================================================
-     03 · OPTIK (Eye Relief & Lunar Shadow Vignette)
+     03 · OPTIK (Eye Relief & Lunar Shadow Vignette with Realistic Range & Ram)
      ========================================================================= */
+  const OPTICS_ASSETS = {
+    bg: 'assets/match/range-bg.webp',
+    ram: 'assets/silhouettes/ram.webp'
+  };
+  const opticsImgs = {};
+  // Guarded: node vm test sandboxes have no Image constructor; the lens
+  // renderer already falls back to gradients when an image is absent.
+  if (typeof Image === 'function') Object.entries(OPTICS_ASSETS).forEach(([k, src]) => {
+    const im = new Image();
+    im.onload = () => renderOcularLoop();
+    im.src = src;
+    opticsImgs[k] = im;
+  });
+
   function renderOcularLoop() {
     const canvas = document.getElementById('ocularLensCanvas');
     if (!canvas) return;
@@ -378,6 +392,10 @@
     const dist = parseFloat(document.getElementById('optEyeDist').value);
     const comb = parseFloat(document.getElementById('optCheekHeight').value);
     const lat = parseFloat(document.getElementById('optLat').value);
+    // Images are preloaded at module scope; tolerate a standalone call
+    // (tests slice this function out) where opticsImgs does not exist.
+    const bgImg = typeof opticsImgs !== 'undefined' ? opticsImgs.bg : null;
+    const ramImg = typeof opticsImgs !== 'undefined' ? opticsImgs.ram : null;
 
     ctx.fillStyle = '#090B0E';
     ctx.fillRect(0, 0, w, h);
@@ -388,36 +406,56 @@
     ctx.arc(cx - lat * 2.5, cy + comb * 2.5, exitPupilRadius, 0, Math.PI * 2);
     ctx.clip();
 
-    const sky = ctx.createLinearGradient(0, 15, 0, cy + 35);
-    sky.addColorStop(0, '#C4CDD0'); sky.addColorStop(0.58, '#E4E5DD'); sky.addColorStop(1, '#D4D5C7');
-    ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = '#AAB5A8';
-    ctx.beginPath();
-    ctx.moveTo(0, cy + 10); ctx.quadraticCurveTo(80, cy + 1, 156, cy + 17);
-    ctx.quadraticCurveTo(224, cy + 7, 300, cy + 16);
-    ctx.lineTo(300, 300); ctx.lineTo(0, 300); ctx.closePath(); ctx.fill();
-    const ground = ctx.createLinearGradient(0, cy + 14, 0, h);
-    ground.addColorStop(0, '#849286'); ground.addColorStop(0.36, '#68796A'); ground.addColorStop(1, '#46574D');
-    ctx.fillStyle = ground; ctx.fillRect(0, cy + 32, w, h);
+    // 1. Photorealistic outdoor shooting range backdrop
+    if (bgImg && bgImg.complete && bgImg.naturalWidth > 0) {
+      const bgH = h * 1.15;
+      const bgW = bgH * (bgImg.naturalWidth / bgImg.naturalHeight);
+      ctx.drawImage(bgImg, cx - bgW / 2, cy - bgH / 2 - 4, bgW, bgH);
+    } else {
+      const sky = ctx.createLinearGradient(0, 0, 0, h);
+      sky.addColorStop(0, '#B9CCD6'); sky.addColorStop(0.55, '#6D8C5B'); sky.addColorStop(1, '#3D5634');
+      ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+    }
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.fillStyle = '#25302B';
-    ctx.beginPath();
-    ctx.moveTo(-19, -13); ctx.lineTo(9, -13); ctx.lineTo(15, -20);
-    ctx.bezierCurveTo(19, -29, 32, -25, 31, -17);
-    ctx.bezierCurveTo(31, -12, 27, -10, 23, -13);
-    ctx.lineTo(19, -7); ctx.lineTo(18, 11); ctx.lineTo(12, 11); ctx.lineTo(10, 3);
-    ctx.lineTo(-11, 3); ctx.lineTo(-13, 12); ctx.lineTo(-19, 12); ctx.lineTo(-18, 2);
-    ctx.lineTo(-23, -7); ctx.closePath(); ctx.fill();
-    ctx.restore();
+    // 2. Dark steel silhouette rail & real textured metallic Ram target
+    const railY = cy + 20;
+    ctx.fillStyle = '#1B2027';
+    ctx.fillRect(cx - 110, railY, 220, 10);
+    ctx.fillStyle = '#38414D';
+    ctx.fillRect(cx - 110, railY, 220, 2);
 
-    ctx.strokeStyle = '#111315'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
-    ctx.strokeStyle = '#466875'; ctx.lineWidth = 1.1;
-    ctx.beginPath(); ctx.arc(cx, cy, 24, 0, Math.PI * 2); ctx.stroke();
-    ctx.fillStyle = '#B4603B';
-    ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, Math.PI * 2); ctx.fill();
+    if (ramImg && ramImg.complete && ramImg.naturalWidth > 0) {
+      const rw = 74, rh = 58;
+      ctx.drawImage(ramImg, cx - rw / 2, railY - rh + 4, rw, rh);
+    }
+
+    // 3. Precision Duplex Mil-Dot Reticle + Glowing Red Center Dot
+    ctx.strokeStyle = 'rgba(12, 15, 19, 0.88)';
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.moveTo(0, cy); ctx.lineTo(w, cy);
+    ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
+    ctx.stroke();
+
+    ctx.lineWidth = 3.4;
+    ctx.beginPath();
+    ctx.moveTo(0, cy); ctx.lineTo(cx - 66, cy);
+    ctx.moveTo(cx + 66, cy); ctx.lineTo(w, cy);
+    ctx.moveTo(cx, cy + 66); ctx.lineTo(cx, h);
+    ctx.stroke();
+
+    ctx.lineWidth = 1.1;
+    for (let k = -2; k <= 2; k++) {
+      if (k === 0) continue;
+      const d = k * 22;
+      ctx.beginPath();
+      ctx.moveTo(cx + d, cy - 3.5); ctx.lineTo(cx + d, cy + 3.5);
+      ctx.moveTo(cx - 3.5, cy + d); ctx.lineTo(cx + 3.5, cy + d);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#FF3B1F';
+    ctx.beginPath(); ctx.arc(cx, cy, 2.6, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
 
     // Subtle optical distinction: too close (< 85mm) produces a softer feathered vignette,
@@ -730,7 +768,13 @@
       else if (isDesktop && hwViewMode !== 'all') setHardwareView('all', false);
     };
     syncTriggerDeck();
-    window.addEventListener('resize', syncTriggerDeck);
+    let lastWinW = window.innerWidth;
+    window.addEventListener('resize', () => {
+      if (window.innerWidth !== lastWinW) {
+        lastWinW = window.innerWidth;
+        syncTriggerDeck();
+      }
+    });
     switchTab(MODULE_IDS.includes(initialHash) ? initialHash : 'sec-biomech', false);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootStudio, { once: true });

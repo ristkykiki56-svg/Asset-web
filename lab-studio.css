@@ -3285,7 +3285,7 @@ dialog.studio-dialog::backdrop {
 
   /* TAB 01 (Postur): height adapts to both phone width & svh height */
   #sec-biomech .lab-biomech-stage {
-    height: clamp(210px, 36svh, 360px);
+    height: clamp(240px, 64vw, 330px);
   }
   .pose-angle-btn .pa-name {
     font-size: clamp(9.5px, 2.8vw, 11.5px);
@@ -3296,13 +3296,13 @@ dialog.studio-dialog::backdrop {
 
   /* TAB 02 (Pelatuk): fluid oscilloscope height */
   #sec-trigger #triggerOscCanvas {
-    height: clamp(120px, 20svh, 185px);
+    height: clamp(138px, 36vw, 170px);
   }
 
   /* TAB 03 (Optik): circular lens constrained by BOTH vw & svh so all 3 sliders stay on-screen */
   #sec-optics #ocularLensCanvas {
-    width: min(230px, 54vw, 29svh);
-    height: min(230px, 54vw, 29svh);
+    width: min(215px, 54vw);
+    height: min(215px, 54vw);
   }
 
   /* TAB 04 (Siluet): 5 silhouettes & 4 distance tabs scale down cleanly to 320px */
@@ -3328,7 +3328,7 @@ dialog.studio-dialog::backdrop {
     padding: 7px 3px;
   }
   #sec-hardware #hardwareBlueprintSvg {
-    max-height: clamp(150px, 26svh, 250px);
+    max-height: clamp(165px, 44vw, 230px);
   }
 
   /* TAB 06 (Match IMSSU): fluid HUD & viewport for both short (667px) and tall (930px) phones */
@@ -3340,7 +3340,7 @@ dialog.studio-dialog::backdrop {
     padding: 4px 7px;
   }
   #sec-match .match-viewport-wrap {
-    min-height: clamp(205px, 34svh, 380px);
+    min-height: clamp(240px, 64vw, 330px);
   }
   #sec-match .ammo-pellet {
     width: clamp(18px, 5.2vw, 24px);
