@@ -16,10 +16,10 @@ function failure(msg){document.body.dataset.snapshot='error';const out=document.
 frame.addEventListener('load',async()=>{
  try{
   const doc=frame.contentDocument,win=frame.contentWindow;
-  const main=doc.getElementById('main-content');
+  const main=doc.querySelector('main');
   const section=doc.getElementById('sec-biomech');
   if(!main||!section)throw Error('Lab posture section unavailable');
-  for(const selector of ['.lab-header','.lab-local-nav','body > section.tech-border-b','.lab-notice-wrap','.lab-sources-wrap','.lab-mobile-stepper','footer']){
+  for(const selector of ['.studio-header','.studio-subbar','.mobile-nav','.studio-tablist','footer']){
     doc.querySelectorAll(selector).forEach(el=>el.style.setProperty('display','none','important'));
   }
   main.querySelectorAll('section[id^="sec-"]').forEach(el=>{
@@ -27,7 +27,6 @@ frame.addEventListener('load',async()=>{
   });
   section.style.setProperty('display','block','important');
   section.style.margin='0';
-  main.classList.remove('space-y-16');
   main.style.padding='14px 14px 20px';
   main.style.margin='0 auto';
   for(let tries=0;tries<100&&!win.tsPosturePoseArt?.isActive();tries++){
@@ -36,9 +35,14 @@ frame.addEventListener('load',async()=>{
   if(!win.tsPosturePoseArt?.isActive())throw Error('Photo has not loaded');
   doc.querySelector('[data-pose-color="'+color+'"]').click();
   win.selectBiomechCallout({back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose]);
-  const expected='poster-v15.png';
-  if(!doc.querySelector('#svgAthleteLayer image[href$="'+expected+'"]'))throw Error('Missing original photo');
-  // Rendering and SVG updates are synchronous; record readiness without an iframe RAF gate.
+  const expected='assets/posture/poses/'+color+'-'+pose+'.webp';
+  const img=doc.querySelector('#biomechPoseImg');
+  if(!img||!img.getAttribute('src')?.endsWith(expected))throw Error('Missing pose photo '+expected);
+  for(let tries=0;tries<100&&!img.naturalWidth;tries++){
+    await new Promise(resolve=>win.setTimeout(resolve,50));
+  }
+  if(!img.naturalWidth)throw Error('Pose photo not loaded');
+  // Rendering and pin updates are synchronous; record readiness without an iframe RAF gate.
   win.positionBiomechPins();
   win.scrollTo(0,0);
   document.body.dataset.sprite=expected;
