@@ -34,8 +34,9 @@ frame.addEventListener('load',async()=>{
   }
   if(!win.tsPosturePoseArt?.isActive())throw Error('Photo has not loaded');
   doc.querySelector('[data-pose-color="'+color+'"]').click();
+  // The pose-angle button already selects that pose's first callout point
+  // (selectBiomechCallout is internal to lab-studio.js, not on window).
   doc.querySelector('[data-pose-angle="'+pose+'"]').click();
-  win.selectBiomechCallout({back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose]);
   const expected='assets/posture/poses/'+color+'-'+pose+'.webp';
   const img=doc.querySelector('#biomechPoseImg');
   if(!img||!img.getAttribute('src')?.endsWith(expected))throw Error('Missing pose photo '+expected);
