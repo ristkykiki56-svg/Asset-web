@@ -34,6 +34,7 @@ frame.addEventListener('load',async()=>{
   }
   if(!win.tsPosturePoseArt?.isActive())throw Error('Photo has not loaded');
   doc.querySelector('[data-pose-color="'+color+'"]').click();
+  doc.querySelector('[data-pose-angle="'+pose+'"]').click();
   win.selectBiomechCallout({back:'spine',front:'elbowHip',sideLeft:'head',sideRight:'rightHand',feet:'leftLeg'}[pose]);
   const expected='assets/posture/poses/'+color+'-'+pose+'.webp';
   const img=doc.querySelector('#biomechPoseImg');
