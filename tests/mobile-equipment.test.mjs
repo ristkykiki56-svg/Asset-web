@@ -4,42 +4,52 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('hardware rail layout keeps every 44px hit area separated and connected to its source point',()=>{
- const js=read('lab-workspace.js'),a=js.indexOf('    function layoutHardwarePins'),b=js.indexOf("    window.addEventListener");
- assert.ok(a>=0,'missing collision-free layout');
- const context=vm.createContext({});vm.runInContext(js.slice(a,b),context);
- for(const width of [280,320,375,390,767])for(const height of [130,180,260,400])for(const count of [4,6]){
-  const source=Array.from({length:count},(_,i)=>({key:String(i),x:40+i*30,y:height/2}));
-  const pins=context.layoutHardwarePins(source,width,height);
-  assert.equal(pins.length,count);
-  for(let i=0;i<count;i++){
-   const p=pins[i];assert.ok(p.x>=22&&p.x<=width-22&&p.y>=22&&p.y<=height-22);
-   assert.equal(p.anchorX,source[i].x);assert.equal(p.anchorY,source[i].y);
-   for(const q of pins.slice(i+1))assert.ok(Math.abs(p.x-q.x)>=44||Math.abs(p.y-q.y)>=44,'overlap at '+width+' x '+height);
+ const html=read('lab.html');
+ const svg=html.match(/<svg id="hardwareBlueprintSvg"[\s\S]*?<\/svg>/)?.[0];
+ assert.ok(svg,'missing hardware diagram');
+ const markers=[...svg.matchAll(/<g class="hw-marker cursor-pointer"[^>]*data-hw-key="([^"]+)"[^>]*>([\s\S]*?)<\/g>/g)].map(m=>{
+  const key=m[1],body=m[2];
+  const hit=body.match(/<rect class="hw-hitbox" x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"/);
+  const disc=body.match(/<circle class="hw-marker-disc" cx="([\d.]+)" cy="([\d.]+)"/);
+  assert.ok(hit,key+' needs a hitbox');
+  assert.ok(disc,key+' needs a disc center');
+  return {key,x:+disc[1],y:+disc[2],hx:+hit[1],hy:+hit[2],hw:+hit[3],hh:+hit[4]};
+ });
+ assert.equal(markers.length,10);
+ for(const p of markers){
+  assert.ok(p.hw>=44&&p.hh>=44,p.key+' hitbox must be at least 44px');
+  assert.ok(p.x>=p.hx&&p.x<=p.hx+p.hw&&p.y>=p.hy&&p.y<=p.hy+p.hh,p.key+' center must sit inside its hitbox');
+  for(const q of markers){
+   if(q===p)continue;
+   assert.ok(Math.hypot(p.x-q.x,p.y-q.y)>=44,p.key+' and '+q.key+' centers must stay 44px apart');
   }
  }
 });
 test('unhelpful controls are removed and key explanations are directly visible',()=>{
- const html=read('lab.html'),js=read('lab.js'),workspace=read('lab-workspace.js');
+ const html=read('lab.html'),js=read('lab-studio.js');
  assert.doesNotMatch(html,/trajectoryCanvas|windRangeInput|adjustRifleBalancePoint|svgCobFulcrum/);
  assert.doesNotMatch(js,/renderTrajectoryGraph|triggerBallisticTrace|adjustRifleBalancePoint/);
- assert.ok(workspace.includes("move($('#hwSpecBody'), hardware.panel)"));
- assert.ok(workspace.includes("move($('#hwSpecNote'), hardware.panel)"));
- assert.ok(workspace.includes("move($('#silhouetteHelp'), silhouette.panel)"));
+ assert.ok(html.includes('id="hwSpecBody"')&&html.includes('id="hwSpecNote"'),'component explanation is directly available');
+ assert.ok(js.includes("document.getElementById('hwSpecBody').textContent = item.body"));
+ assert.ok(js.includes("document.getElementById('hwSpecNote').textContent = item.note"));
+ const panel=html.slice(html.indexOf('id="sec-imssu"'),html.indexOf('</section>',html.indexOf('id="sec-imssu"')));
+ assert.ok(panel.includes('stage-lead'),'silhouette explanation stays beside the rack');
 });
 
 
 test('component picker, index and explanation use the same ten names',()=>{
- const html=read('lab.html'),js=read('lab.js'),context=vm.createContext({});
- vm.runInContext(js.slice(js.indexOf('        const HARDWARE_SPECS'),js.indexOf('        function inspectHardware')),context);
+ const html=read('lab.html'),js=read('lab-studio.js'),context=vm.createContext({});
+ vm.runInContext(js.slice(js.indexOf('  const HARDWARE_SPECS'),js.indexOf('  function inspectHardware')),context);
  const specs=vm.runInContext('HARDWARE_SPECS',context);
  assert.equal(Object.keys(specs).length,10);
+ const norm=text=>text.replace(/&amp;/g,'&').replace(/ & /g,' dan ');
  for(const [key,item] of Object.entries(specs)){
-  const option=html.match(new RegExp('<option value="'+key+'">[^·]+· ([^<]+)'));
-  assert.equal(option?.[1],item.title,key+' picker');
-  const start=html.indexOf('onclick="inspectHardware(\''+key+'\')" class="text-left');
-  assert.ok(start>=0,key+' index button');
-  const label=html.slice(start).match(/<span>\[\d+\] ([^<]+)<\/span>/);
-  assert.equal(label?.[1],item.title,key+' index');
+  const button=html.match(new RegExp('<button[^>]*data-hw-part="'+key+'"[^>]*>([\\s\\S]*?)</button>'));
+  assert.ok(button,key+' picker button');
+  assert.ok(norm(button[1]).includes(item.title),key+' picker label');
+  const marker=html.match(new RegExp('<g class="hw-marker cursor-pointer"[^>]*data-hw-key="'+key+'"[^>]*aria-label="([^"]+)"'));
+  assert.ok(marker,key+' diagram marker');
+  assert.ok(marker[1].includes(item.title),key+' marker label');
  }
 });
 
@@ -47,7 +57,7 @@ test('silhouette counts survive changing groups and reset without a trajectory d
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{classList:{add(){},remove(){},toggle(){}},setAttribute(k,v){this[k]=v;}});return nodes.get(id);};
  for(const animal of ['chicken','pig','turkey','ram'])for(let i=0;i<5;i++)get('target-'+animal+'-'+i);
  const context=vm.createContext({document:{getElementById:get,querySelector:()=>({classList:{toggle(){}}}),querySelectorAll:()=>[...nodes.values()]},playSteelImpactSound(){},playMechTick(){}});
- const js=read('lab.js');vm.runInContext(js.slice(js.indexOf('        const RANGE_SPECS'),js.indexOf('        // Text is indexed')),context);
+ const js=read('lab-studio.js');vm.runInContext(js.slice(js.indexOf('  const RANGE_SPECS'),js.indexOf('  const HARDWARE_SPECS')),context);
  context.hitSteelTarget('chicken',0);context.hitSteelTarget('chicken',1);
  assert.equal(get('rackGroupScore').textContent,'2 / 5');
  context.hitSteelTarget('ram',0);assert.equal(get('rackGroupScore').textContent,'1 / 5');

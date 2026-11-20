@@ -4,17 +4,16 @@ import {readFileSync} from 'node:fs';
 
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
 const html = read('lab.html');
-const js = read('lab.js');
-const css = read('lab.css');
+const js = read('lab-studio.js');
+const css = read('lab-studio.css');
 const posture = read('posture-art.js');
-const optics = read('optics-poster-artwork.js');
 
 // Gate for copy affected by the five-lesson raster migration. Keep scope
 // deliberately narrow: legacy technical quotations elsewhere are not rewritten.
 test('copy gate: five lesson introductions and equipment descriptions are plain, specific Indonesian', () => {
-  const introductions = [...html.matchAll(/<p\b[^>]*class="lab-section-hint"[^>]*>([^<]+)<\/p>/g)].map(match => match[1]);
+  const introductions = [...html.matchAll(/<p\b[^>]*class="stage-lead"[^>]*>([^<]+)<\/p>/g)].map(match => match[1]);
   assert.equal(introductions.length, 5, 'expected one introduction per lesson');
-  const block = js.slice(js.indexOf('const HARDWARE_SPECS = {'), js.indexOf('function inspectHardware(key)'));
+  const block = js.slice(js.indexOf('const HARDWARE_SPECS = {'), js.indexOf('function inspectHardware(key'));
   assert.ok(block.length > 1500, 'hardware descriptions must be present');
   const descriptions = [...block.matchAll(/\b(?:code|title|body|note): '([^']+)'/g)].map(match => match[1]);
   assert.equal(descriptions.length, 40, 'ten components need a code, title, body and note');
@@ -27,7 +26,7 @@ test('copy gate: five lesson introductions and equipment descriptions are plain,
 });
 
 test('copy gate: posture explains body parts with original poster photos',()=>{
- assert.match(html,/Foto dan penjelasan akan mengikuti titik yang dipilih/);
+ assert.match(html,/Foto dan penjelasan mengikuti titik yang dipilih/);
  assert.doesNotMatch(html,/Gunakan gambar karakter|membuka skema SVG|id="archSlider"/);
  assert.doesNotMatch(posture,/Slider tersedia|Matikan opsi/);
  const anatomy=js.slice(js.indexOf('const POSTER_BIOMECH_DATA'),js.indexOf('let currentPose'));
@@ -41,12 +40,13 @@ test('copy gate: optics explains lens changes without referring to a side image'
 });
 
 test('copy gate: silhouette failure retains the animal silhouette and 20 buttons', () => {
-  assert.match(html, /Di ponsel, satu kelompok ditampilkan setiap kali/);
+  assert.match(html, /Setiap kelompok berisi lima sasaran \(total 20 sasaran\)/);
   assert.match(js, /const SILHOUETTE_RASTERS =/);
   assert.match(js, /const SILHOUETTE_FALLBACK_PATHS =/);
   assert.match(js, /document\.createElementNS\(ns, 'svg'\)/);
   assert.match(css, /#sec-imssu \.silhouette-fallback svg/);
   assert.match(js, /for \(let i = 0; i < 5; i\+\+\)/);
+  for (const animal of ['ram','turkey','pig','chicken']) assert.ok(html.includes(`id="rackRow-${animal}"`),animal+' rack row');
 });
 
 test('copy gate: hardware photo and separate scope diagram have component-specific copy', () => {
@@ -55,7 +55,7 @@ test('copy gate: hardware photo and separate scope diagram have component-specif
 
   assert.match(js, /title: 'Penopang Depan'/);
   assert.match(js, /Nomor 04 bukan pengatur teleskop/);
-  assert.match(html, /Gambar senapan dan ilustrasi teleskop ditampilkan secara terpisah/);
+  assert.match(html, /skema teleskop yang terpisah dari foto senapan merah/);
   assert.doesNotMatch(html, /DISTRIBUSI BERAT &amp; TITIK KESEIMBANGAN SENAPAN/);
   assert.doesNotMatch(html, /\[04\] Penyelarasan Peninggi/);
 });
