@@ -1,27 +1,67 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync, existsSync} from 'node:fs';
 import vm from 'node:vm';
 import {createHash} from 'node:crypto';
 const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 async function adapter(){
- const buttons=[],elements={postureArtControls:{addEventListener(){}},postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}}};
- const context=vm.createContext({window:{renderBiomechViewport(){}},document:{readyState:'complete',getElementById:id=>elements[id],querySelectorAll:()=>buttons},Image:class{naturalWidth=3466;set src(value){queueMicrotask(()=>this.onload());}},queueMicrotask});
+ const buttons=[],elements={postureArtControls:{addEventListener(){}},postureArtStatus:{dataset:{}}};
+ const context=vm.createContext({window:{renderBiomechViewport(){}},document:{readyState:'complete',getElementById:id=>elements[id],querySelectorAll:()=>buttons},queueMicrotask});
  vm.runInContext(read('posture-art.js'),context);await new Promise(resolve=>setImmediate(resolve));return context.window.tsPosturePoseArt;
 }
-test('Posture uses the original poster photograph without synthetic characters or mirror views',async()=>{
+// Real adapter plus the Lab Studio posture viewport, wired to mock DOM nodes.
+function studioViewport(){
+ const buttons=[],status={textContent:'Memuat foto…'};
+ const elements={postureArtControls:{addEventListener(){}},postureArtStatus:status};
+ let frame=null;
+ const img={_src:null,getAttribute(k){return k==='src'?this._src:null;},setAttribute(k,v){if(k==='src')this._src=v;},alt:'',onerror:null};
+ const pins={querySelector:()=>null,appendChild:b=>buttons.push(b)};
+ frame={querySelector:sel=>sel==='#biomechPoseImg'?img:sel==='#biomechTargetRing'?null:sel==='#biomechPinsOverlay'?pins:null};
+ const stage={};
+ Object.defineProperty(stage,'innerHTML',{set(){frame={querySelector:sel=>sel==='#biomechPoseImg'?img:sel==='#biomechTargetRing'?null:sel==='#biomechPinsOverlay'?pins:null};}});
+ stage.querySelector=sel=>sel==='.pose-img-frame'?frame:null;
+ const context=vm.createContext({window:{},document:{readyState:'complete',getElementById:id=>elements[id],querySelector:sel=>sel==='.lab-biomech-stage'?stage:null,createElement:tag=>tag==='button'?{type:'',className:'',dataset:{},style:{},hidden:false,setAttribute(k,v){this[k]=v;},addEventListener(){}}:{},querySelectorAll:()=>[]},queueMicrotask});
+ vm.runInContext(read('posture-art.js'),context);
+ const source=read('lab-studio.js');
+ vm.runInContext(source.slice(source.indexOf('  const POSTER_BIOMECH_DATA'),source.indexOf('  function positionBiomechPins')),context);
+ vm.runInContext(source.slice(source.indexOf('  function renderBiomechViewport'),source.indexOf('  function renderBiomechIndexTable')),context);
+ context.window.renderBiomechViewport=context.renderBiomechViewport;
+ return {context,art:context.window.tsPosturePoseArt,img,status,buttons,stage};
+}
+test('Posture uses the athletes real pre-cropped photos without synthetic characters or mirror views',async()=>{
  const art=await adapter();
- assert.match(art.figure('front','head'),/poster-v15\.png/);
- for(const pose of ['back','front','sideLeft','sideRight']){
-  const photo=art.figure(pose,'head');assert.doesNotMatch(photo,/scale\(-1|blue-front\.webp|red-front\.webp/);
-  const p=art.anchor({id:'head'},pose);assert.ok(p[0]>=0&&p[0]<=460&&p[1]>=0&&p[1]<=540);
+ assert.equal(art.isActive(),true);
+ assert.doesNotMatch(read('posture-art.js'),/scale\(-1/);
+ const seen=new Set();
+ for(const color of ['blue','red']){
+  art.choose(color);
+  assert.equal(art.person(),color==='blue'?'Clarisa Azalia':'Aurellia Cassandra');
+  for(const pose of ['back','front','sideLeft','sideRight','feet']){
+   const p=art.getPose(pose);
+   assert.match(p.src,/^assets\/posture\/poses\/(blue|red)-(back|front|sideLeft|sideRight|feet)\.webp$/);
+   const path=new URL('../'+p.src,import.meta.url);
+   assert.ok(existsSync(path),p.src+' missing');
+   const bytes=readFileSync(path);
+   assert.equal(bytes.toString('ascii',0,4),'RIFF');
+   assert.equal(bytes.toString('ascii',8,12),'WEBP');
+   assert.ok(bytes.length>10000,p.src+' too small to be a real photo');
+   const hash=createHash('sha256').update(bytes).digest('hex');
+   assert.ok(!seen.has(hash),p.src+' duplicates another pose');
+   seen.add(hash);
+   for(const [id,pt] of Object.entries(p.points)){
+    assert.ok(pt[0]>=0&&pt[0]<=100&&pt[1]>=0&&pt[1]<=100,id+' pin out of range');
+   }
+  }
  }
+ assert.equal(seen.size,10);
 });
 test('photo detail is centered around the selected point',async()=>{
- const art=await adapter(),point=art.anchor({id:'head'},'sideLeft');
- const detail=art.detail('sideLeft','head');
- assert.ok(detail.includes('viewBox="'+(point[0]-75)+' '+(point[1]-75)+' 150 150"'));
- assert.match(read('lab.html'),/id="posturePhotoZoom"/);
+ const art=await adapter(),point=art.pointPct('head','sideLeft');
+ assert.deepEqual(Array.from(point),[71.9,40]);
+ const detail=art.detailHtml('sideLeft','head');
+ assert.ok(detail.includes('transform-origin:71.9% 40%'));
+ assert.ok(detail.includes('left:71.9%;top:40%;'));
+ assert.ok(detail.includes('assets/posture/poses/blue-sideLeft.webp'));
 });
 
 test('poster asset is the exact original file supplied by the owner',()=>{
@@ -29,45 +69,62 @@ test('poster asset is the exact original file supplied by the owner',()=>{
  assert.equal(createHash('sha256').update(bytes).digest('hex'),'2e688a77dac3365daa85a0e6020ea4c5505d7885f971f521a1836b9a061b4133');
 });
 
-test('changing athlete selects separate photo coordinates and detail IDs stay unique',async()=>{
+test('changing athlete selects separate photo coordinates and detail outputs stay unique',async()=>{
  const art=await adapter();
- const blue=art.anchor({id:'leftWrist'},'sideRight');
+ const blue=art.pointPct('leftWrist','sideRight');
  art.choose('red');
- const red=art.anchor({id:'leftWrist'},'sideRight');
- assert.notDeepEqual(Array.from(blue),Array.from(red));
- assert.match(art.figure('front','elbowHip'),/Aurellia Cassandra/);
- const main=art.figure('front','elbowHip'),detail=art.detail('front','elbowHip');
- const ids=[...((main+detail).matchAll(/\bid="([^"]+)"/g))].map(match=>match[1]);
- assert.equal(new Set(ids).size,ids.length);
+ const red=art.pointPct('leftWrist','sideRight');
+ assert.notDeepEqual(blue,red);
+ assert.equal(art.person(),'Aurellia Cassandra');
+ const main=art.detailHtml('front','elbowHip');
+ assert.ok(main.includes('Aurellia Cassandra'));
+ assert.ok(main.includes('assets/posture/poses/red-front.webp'));
+ art.choose('blue');
+ const other=art.detailHtml('front','elbowHip');
+ assert.ok(other.includes('Clarisa Azalia'));
+ assert.ok(other.includes('assets/posture/poses/blue-front.webp'));
+ assert.notEqual(main,other);
 });
 
-test('mobile photo labels remain separated and within a short viewport',()=>{
- const nodes=['leftArm','elbowHip','leftLeg'].map((id,index)=>({hidden:false,dataset:{biomechId:id,svgX:150,svgY:120+index*5},style:{setProperty(){}}}));
- const overlay={getBoundingClientRect:()=>({left:0,top:0,width:320,height:150}),querySelectorAll:()=>nodes};
- const svg={getScreenCTM:()=>({}),createSVGPoint:()=>({matrixTransform(){return{x:this.x,y:this.y};}})};
- const document={documentElement:{classList:{contains:()=>true}},getElementById:id=>id==='biomechDraftSvg'?svg:overlay};
- const context=vm.createContext({document,Set,Math});
- const source=read('lab.js');
- vm.runInContext(source.slice(source.indexOf('        function positionBiomechPins'),source.indexOf('        function renderBiomechViewport')),context);
- context.positionBiomechPins();
- const tops=nodes.map(node=>parseFloat(node.style.top));
- assert.ok(tops.every(top=>top>=22&&top<=128));
- for(let i=1;i<tops.length;i++)assert.ok(tops[i]-tops[i-1]>=44);
- const workspace=read('lab-workspace.js');
- assert.ok(workspace.includes("move($('#posturePhotoZoom'), posture.panel)"),'zoom stays outside the photo pin rails');
- assert.ok(!workspace.includes("move($('#posturePhotoZoom'), posture.stage)"));
+test('mobile photo labels remain separated and within a short viewport',async()=>{
+ const {context,art,buttons}=studioViewport();
+ context.renderBiomechViewport();
+ assert.equal(buttons.length,10);
+ const points=vm.runInContext('POSTER_BIOMECH_DATA',context);
+ for(const btn of buttons){
+  const point=points.find(p=>p.id===btn.dataset.biomechId);
+  if(point.pose==='back'){
+   assert.equal(btn.hidden,false,point.id+' must show in the back pose');
+   const [px,py]=art.pointPct(point.id,'back');
+   assert.equal(btn.style.left,px+'%');
+   assert.equal(btn.style.top,py+'%');
+  }else{
+   assert.equal(btn.hidden,true,point.id+' must hide outside its pose');
+  }
+ }
+ // Visible pin dots (10-13px) must never overlap at a 320px phone width.
+ for(const color of ['blue','red']){
+  art.choose(color);
+  for(const pose of ['back','front','sideLeft','sideRight','feet']){
+   const p=art.getPose(pose),pts=Object.values(p.points),w=320,h=w/p.aspect;
+   for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+    const d=Math.hypot((pts[i][0]-pts[j][0])/100*w,(pts[i][1]-pts[j][1])/100*h);
+    assert.ok(d>=20,pose+' pins too close: '+d.toFixed(1)+'px');
+   }
+  }
+ }
 });
 
-test('the photo area reports loading and failure instead of leaving a blank diagram',()=>{
- let pendingImage;
- const stage={},zoom={},elements={posturePhotoLoading:stage,posturePhotoZoom:zoom,postureArtControls:{addEventListener(){}},postureArtStatus:{dataset:{}},'sec-biomech':{classList:{toggle(){}}}};
- const context=vm.createContext({window:{renderBiomechViewport(){}},document:{readyState:'complete',getElementById:id=>elements[id],querySelectorAll:()=>[]},Image:class{constructor(){pendingImage=this;}set src(value){}naturalWidth=3466;}});
- vm.runInContext(read('posture-art.js'),context);
- assert.equal(stage.hidden,false);
- assert.match(stage.textContent,/Memuat/);
- assert.equal(zoom.disabled,true);
- pendingImage.onload();assert.equal(stage.hidden,true);assert.equal(zoom.disabled,false);
- pendingImage.onerror();assert.equal(stage.hidden,false);assert.match(stage.textContent,/tidak dapat dimuat/);
+test('the photo area reports loading and failure instead of leaving a blank diagram',async()=>{
+ const html=read('lab.html');
+ assert.match(html,/<p id="postureArtStatus" aria-live="polite">Memuat foto…<\/p>/);
+ const {context,img,status}=studioViewport();
+ context.renderBiomechViewport();
+ assert.equal(img.alt,'Foto postur Clarisa Azalia');
+ assert.equal(typeof img.onerror,'function');
+ img.onerror();
+ assert.match(status.textContent,/tidak dapat dimuat/);
+ assert.match(read('lab-studio.js'),/Foto postur tidak dapat dimuat/);
 });
 
 
@@ -75,32 +132,30 @@ test('both athletes have a separate feet crop with two distinct ankle anchors an
  const art=await adapter();
  for(const athlete of ['blue','red']){
   art.choose(athlete);
-  const crop=art.getPhoto('feet');
-  assert.notDeepEqual(Array.from(crop.frame),Array.from(art.getPhoto('front').frame));
-  const left=art.anchor({id:'leftLeg'},'feet'),right=art.anchor({id:'rightLeg'},'feet');
-  assert.ok(Math.hypot(left[0]-right[0],left[1]-right[1])>60);
+  const feet=art.getPose('feet'),front=art.getPose('front');
+  assert.notEqual(feet.src,front.src);
+  const left=art.pointPct('leftLeg','feet'),right=art.pointPct('rightLeg','feet');
+  assert.ok(Math.hypot(left[0]-right[0],left[1]-right[1])>30);
   for(const id of ['leftLeg','rightLeg']){
-   assert.ok(crop.points[id],athlete+' must define '+id+' rather than use a center fallback');
-   const p=art.anchor({id},'feet');
-   assert.ok(p[0]>26&&p[0]<434&&p[1]>26&&p[1]<514);
-   assert.ok(art.detail('feet',id).includes('viewBox="'+(p[0]-75)+' '+(p[1]-75)+' 150 150"'));
+   const p=art.pointPct(id,'feet');
+   assert.ok(p[0]>0&&p[0]<100&&p[1]>0&&p[1]<100);
+   const detail=art.detailHtml('feet',id);
+   assert.ok(detail.includes(`transform-origin:${p[0]}% ${p[1]}%`));
   }
  }
 });
 
 
-test('Clarisa rear crop preserves the outside of the left thigh, calf and shoe',async()=>{
- const art=await adapter(),polygon=art.getPhoto('back').clip.split(' ').map(pair=>pair.split(',').map(Number));
- const inside=([x,y])=>{
-  let hit=false;
-  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
-   const [a,b]=polygon[i],[c,d]=polygon[j];
-   if((b>y)!==(d>y)&&x<(c-a)*(y-b)/(d-b)+a)hit=!hit;
-  }
-  return hit;
- };
- // Visible source-photo samples along the trouser edge and the left shoe.
- for(const point of [[825,1100],[830,1200],[840,1400],[845,1580],[830,1700],[850,1780]]){
-  assert.ok(inside(point),'crop must retain source pixel '+point.join(','));
+test('Clarisa rear crop is a distinct real photo, not a duplicate of another pose',async()=>{
+ const art=await adapter();
+ const back=readFileSync(new URL('../assets/posture/poses/blue-back.webp',import.meta.url));
+ assert.equal(back.toString('ascii',0,4),'RIFF');
+ assert.equal(back.toString('ascii',8,12),'WEBP');
+ assert.ok(back.length>10000);
+ const hash=createHash('sha256').update(back).digest('hex');
+ for(const pose of ['front','sideLeft','sideRight','feet']){
+  const other=readFileSync(new URL('../assets/posture/poses/blue-'+pose+'.webp',import.meta.url));
+  assert.notEqual(createHash('sha256').update(other).digest('hex'),hash,pose+' must not duplicate the back photo');
  }
+ assert.deepEqual(Array.from(art.getPose('back').points.spine),[52.27,40.83]);
 });

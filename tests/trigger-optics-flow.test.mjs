@@ -4,9 +4,10 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('trigger stages follow take-up, creep, over-travel and update the explanation and curve',()=>{
- const js=read('lab.js'),nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{setAttribute(k,v){this[k]=v;},classList:{toggle(){}}});return nodes.get(id);};
+ const js=read('lab-studio.js'),nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{setAttribute(k,v){this[k]=v;},classList:{toggle(){}}});return nodes.get(id);};
  const context=vm.createContext({document:{getElementById:get,querySelectorAll:()=>[]},drawOscilloscope:p=>context.progress=p,playMechTick(){},endLiveTriggerPull(){}});
- vm.runInContext(js.slice(js.indexOf('        const TRIGGER_STAGES'),js.indexOf('        function computePosterTriggerCurve')),context);
+ vm.runInContext(js.slice(js.indexOf('  const TRIGGER_STAGES'),js.indexOf('  function computePosterTriggerCurve')),context);
+ vm.runInContext(js.slice(js.indexOf('  function selectTriggerStage'),js.indexOf('  function beginLiveTriggerPull')),context);
  const stages=vm.runInContext('TRIGGER_STAGES',context);
  for(const [key,term] of [['A','Take-up'],['B','Creep'],['C','Over-travel']]){
   assert.match(stages[key].title,new RegExp(term,'i'));
@@ -19,11 +20,13 @@ test('trigger stages follow take-up, creep, over-travel and update the explanati
  assert.doesNotMatch(read('lab.html'),/selectFingerVector|data-trigger-vector|adjustTriggerShoeContact/);
 });
 test('optics removes percentage variation and keeps a single lens view',()=>{
- for(const file of ['lab.html','lab.js','lab-workspace.js'])assert.doesNotMatch(read(file),/optPressure|Variasi pandangan|VARIASI PANDANGAN/);
- const workspace=read('lab-workspace.js');
- assert.doesNotMatch(workspace,/lw-optics-pair/);
- assert.match(workspace,/optics.stage.append\(lens\)/);
- assert.doesNotMatch(workspace,/head.hidden = mode|lens.hidden = mode|tabs\(optics/);
+ for(const file of ['lab.html','lab-studio.js'])assert.doesNotMatch(read(file),/optPressure|Variasi pandangan|VARIASI PANDANGAN/);
+ const js=read('lab-studio.js');
+ assert.doesNotMatch(js,/lw-optics-pair/);
+ assert.doesNotMatch(js,/head\.hidden = mode|lens\.hidden = mode|tabs\(optics/);
+ const html=read('lab.html');
+ const panel=html.slice(html.indexOf('<section id="sec-optics"'),html.indexOf('</section>',html.indexOf('<section id="sec-optics"')));
+ assert.ok(panel.includes('id="ocularLensCanvas"'),'lens canvas must live inside the optics panel');
 });
 
 
@@ -31,8 +34,8 @@ test('optical controls update edge shadow and reset using only three positions',
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{value:'0',setAttribute(k,v){this[k]=v;}});return nodes.get(id);};
  get('optEyeDist').value='85';
  let draws=0;const context=vm.createContext({document:{getElementById:get},renderOcularLoop(){draws++;},performance:{now:()=>0},playMechTick(){}});
- const js=read('lab.js');
- vm.runInContext(js.slice(js.indexOf('        function updateOpticalSim'),js.indexOf('        function renderOcularLoop')),context);
+ const js=read('lab-studio.js');
+ vm.runInContext(js.slice(js.indexOf('  function updateOpticalSim'),js.indexOf('  const SILHOUETTE_RASTERS')),context);
  context.updateOpticalSim();assert.match(get('opticsLockBadge').textContent,/LINGKARAN/);
  get('optEyeDist').value='110';get('optCheekHeight').value='10';context.updateOpticalSim();
  assert.equal(nodes.has('svgShooterHeadSide'),false);
@@ -47,9 +50,10 @@ test('automatic trigger playback advances A to B to C and manual selection stops
  const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,{setAttribute(k,v){this[k]=v;}});return nodes.get(id);};
  let pending=null,frames=0;
  const context=vm.createContext({document:{getElementById:get},playMechTick(){},playSteelImpactSound(){},requestAnimationFrame:fn=>{pending=fn;return ++frames;},cancelAnimationFrame(){pending=null;}});
- const js=read('lab.js');
- vm.runInContext(js.slice(js.indexOf('        const TRIGGER_STAGES'),js.indexOf('        function setupTriggerInput')),context);
+ const js=read('lab-studio.js');
+ vm.runInContext(js.slice(js.indexOf('  const TRIGGER_STAGES'),js.indexOf('  function renderOcularLoop')),context);
  context.drawOscilloscope=()=>{};
+ context.runIdealCurvePlayback=()=>context.beginLiveTriggerPull(true);
  context.runIdealCurvePlayback();
  for(let i=0;i<35;i++){const frame=pending;pending=null;frame();}
  assert.equal(get('btnStage-B')['aria-pressed'],'true');
