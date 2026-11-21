@@ -26,6 +26,15 @@ test('remove generic reveal so content never waits for JS to become visible', ()
   assert.match(motion, /classList\.add\('js-anim'\)/);
   assert.match(css, /html\.js-anim \[data-reveal\] \{/);
   assert.match(css, /html\.js-anim \.hero-title/);
+  // The visible rules must carry the same prefix: html.js-anim [data-reveal]
+  // is (0,2,1), which beats a bare [data-reveal].is-in (0,2,0), so without
+  // the prefix the reveal class is added but the block stays invisible.
+  // Same for the hero visible rules against html.js-anim .hero-title.
+  assert.match(css, /html\.js-anim \[data-reveal\]\.is-in \{/);
+  assert.match(css, /html\.js-anim\.motion-ready \.hero-title \{ opacity: 1/);
+  assert.match(css, /html\.js-anim\.motion-ready \.hero-lead \{ opacity: 1/);
+  assert.match(css, /html\.js-anim\.motion-ready \.hero-actions \{ opacity: 1/);
+  assert.match(css, /html\.js-anim\.motion-ready \.hero-facts \{ opacity: 1/);
 });
 
 test('hero has targeted entrance and reduced motion safeguard', () => {
