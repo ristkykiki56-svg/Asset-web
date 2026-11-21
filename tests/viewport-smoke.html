@@ -49,12 +49,21 @@ iframe{display:block;border:0;height:920px;width:320px}
       // visible once its reveal class is added (a specificity slip in the
       // CSS can leave it at opacity 0 forever). Disable transitions AND
       // animations inside the frame first, so the check reads the final
-      // cascade state instead of racing them under virtual time: the
-      // [data-reveal] blocks use transitions, but the hero title uses a
-      // keyframe animation, which a transition-only override does not stop.
+      // cascade state instead of racing them under virtual time. That
+      // alone only helps transitions that start after the override: the
+      // hero transition starts at page load, before this style lands, and
+      // stays frozen mid-flight because virtual time does not advance it.
+      // So restart it: remove and re-add .motion-ready (with a forced
+      // reflow between) so a fresh transition runs with 0s duration.
+      // This still guards the real bug: if the visible rule lost the
+      // specificity fight, the fresh transition would end at opacity 0.
       const noAnim = doc.createElement('style');
       noAnim.textContent = '*{transition-duration:0s !important;transition-delay:0s !important;animation-duration:0s !important;animation-delay:0s !important}';
       doc.head.appendChild(noAnim);
+      const rootEl = doc.documentElement;
+      rootEl.classList.remove('motion-ready');
+      void rootEl.offsetHeight;
+      rootEl.classList.add('motion-ready');
       const revealEl = doc.querySelector('.featured-item[data-reveal]');
       revealEl.scrollIntoView({block: 'center'});
       const heroTitle = doc.querySelector('.hero-title');
