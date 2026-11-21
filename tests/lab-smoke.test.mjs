@@ -296,3 +296,21 @@ test('porprov and rules share the homepage dark theme and site chrome',()=>{
  assert.match(chromeCss,/\.mobile-drawer/);
  assert.match(chromeCss,/\.site-footer/);
 });
+
+test('porprov article v2 editorial structure (ui-craft-editorial)',()=>{
+ for (const cls of ['byline','stat-strip','dropcap','pull-stat','pull-quote','article-sources']) {
+   assert.match(porprov,new RegExp('class="'+cls+'"'),cls);
+ }
+ for (const num of ['1.040','360','350','330','240']) assert.ok(porprov.includes(num),num);
+ assert.match(porprov,/Herry Suprianto, Ketua KONI Kota Depok/);
+ assert.match(porprov,/Perjalanan ke Porprov/);
+ assert.match(porprov,/Hari pertandingan/);
+ assert.match(porprov,/Sumber/);
+ assert.match(porprov,/href="https:\/\/www\.cakrawarta\.com\/the-twins-shooter-bersinar-di-porprov-xv-jabar-2026-atlet-menembak-depok-sabet-emas-dan-perunggu\.html"/);
+ assert.match(porprov,/href="https:\/\/porprov\.konijabar\.or\.id\/kontingen\/kota-depok"/);
+ assert.doesNotMatch(porprov,/class="facts"/);
+ assert.match(porprovCss,/\.stat-strip/);
+ assert.match(porprovCss,/\.dropcap::first-letter/);
+ assert.match(porprovCss,/\.pull-quote/);
+ assert.match(porprovCss,/\.article-sources/);
+});
