@@ -1160,11 +1160,7 @@ section[id] {
   .tl-step p {
     grid-column: 2;
   }
-}
 
-@media (max-width: 720px) {
-  .header-inner { height: 54px; }
-  .brand-sub { display: none; }
   .site-nav { display: none; }
 
   section[id] { scroll-margin-top: 72px; }
@@ -1258,6 +1254,11 @@ section[id] {
   .mobile-drawer-inner a:last-of-type {
     border-bottom: 0;
   }
+}
+
+@media (max-width: 720px) {
+  .header-inner { height: 54px; }
+  .brand-sub { display: none; }
 
   .mobile-drawer-inner a.drawer-cta {
     justify-content: center;
