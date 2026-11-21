@@ -47,13 +47,13 @@ iframe{display:block;border:0;height:920px;width:320px}
       if (doc.querySelectorAll('#grid .sb-row:not([hidden])').length !== 25) errors.push('reset filter failed');
       // Scroll-reveal guard: hidden-until-JS content must actually become
       // visible once its reveal class is added (a specificity slip in the
-      // CSS can leave it at opacity 0 forever). Disable transitions inside
-      // the frame first, so the check reads the final cascade state instead
-      // of racing the 0.6s transition under virtual time: polling the
-      // opacity can exhaust the 8s virtual-time budget without ever
-      // settling, and a fixed wait can catch it mid-flight.
+      // CSS can leave it at opacity 0 forever). Disable transitions AND
+      // animations inside the frame first, so the check reads the final
+      // cascade state instead of racing them under virtual time: the
+      // [data-reveal] blocks use transitions, but the hero title uses a
+      // keyframe animation, which a transition-only override does not stop.
       const noAnim = doc.createElement('style');
-      noAnim.textContent = '*{transition-duration:0s !important;transition-delay:0s !important}';
+      noAnim.textContent = '*{transition-duration:0s !important;transition-delay:0s !important;animation-duration:0s !important;animation-delay:0s !important}';
       doc.head.appendChild(noAnim);
       const revealEl = doc.querySelector('.featured-item[data-reveal]');
       revealEl.scrollIntoView({block: 'center'});
