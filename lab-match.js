@@ -599,7 +599,7 @@
     if (trigFill) trigFill.style.width = Math.round(G.triggerProg * 100) + '%';
     const trigBtnEl = document.getElementById('matchTriggerBtn');
     if (trigBtnEl) {
-      const inBreak = G.triggerHeld && !G.triggerFiredThisHold && G.triggerProg >= 0.55;
+      const inBreak = G.triggerHeld && !G.triggerFiredThisHold && G.triggerProg >= 0.72;
       trigBtnEl.classList.toggle('is-break-ready', inBreak);
       trigBtnEl.textContent = inBreak ? 'LEPAS · BREAK!' : 'TAHAN PELATUK';
     }
@@ -862,7 +862,7 @@
         G.triggerHeld = false;
         trigBtn.setAttribute('aria-pressed', 'false');
         if (!G.triggerFiredThisHold && G.phase === 'fire') {
-          if (G.triggerProg >= 0.55) {
+          if (G.triggerProg >= 0.72) {
             // Clean release inside break zone!
             G.triggerFiredThisHold = true;
             fireShot(false);

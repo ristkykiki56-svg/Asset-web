@@ -2955,13 +2955,40 @@ dialog.studio-dialog::backdrop {
   overflow: hidden;
 }
 
-.trigger-break-zone {
+.trigger-stage-tick {
   position: absolute;
-  left: 55%;
-  width: 37%;
+  left: 40%;
   top: 0;
   bottom: 0;
-  background: rgba(16, 185, 129, 0.35);
+  width: 1px;
+  background: var(--line-strong);
+  z-index: 2;
+}
+
+.trigger-break-zone {
+  position: absolute;
+  left: 72%;
+  width: 20%;
+  top: 0;
+  bottom: 0;
+  background: rgba(127, 176, 142, 0.32);
+  border-left: 1.5px solid var(--green);
+  border-right: 1px solid rgba(127, 176, 142, 0.45);
+}
+
+.mc-stage-scale {
+  display: grid;
+  grid-template-columns: 40% 32% 28%;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+  color: var(--mute-dark);
+}
+
+.mc-stage-scale strong {
+  color: var(--green);
+  font-weight: 700;
 }
 
 .mc-bar-fill {
@@ -2972,7 +2999,7 @@ dialog.studio-dialog::backdrop {
 }
 
 .mc-bar-fill.is-orange { background: var(--orange); }
-.mc-bar-fill.is-blue { background: #38BDF8; }
+.mc-bar-fill.is-blue { background: var(--blue); }
 .mc-bar-fill.is-low { background: var(--red); }
 
 .mc-actions {
