@@ -6,6 +6,8 @@ const js=readFileSync(new URL('../lab-studio.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../lab-studio.css',import.meta.url),'utf8');
 const home=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const rules=readFileSync(new URL('../rules.html',import.meta.url),'utf8');
+const site=readFileSync(new URL('../site.css',import.meta.url),'utf8');
+const porprov=readFileSync(new URL('../porprov-2026.html',import.meta.url),'utf8');
 
 test('lab lives at its own static /lab route; homepage stays an athlete profile',()=>{
  assert.match(html,/<title>Laboratorium Interaktif \| Twin Shooter<\/title>/);
@@ -251,4 +253,19 @@ test('original poster photograph is present with the expected PNG dimensions',()
  assert.equal(bytes.subarray(1,4).toString(),'PNG');
  assert.equal(bytes.readUInt32BE(16),3466);
  assert.equal(bytes.readUInt32BE(20),5000);
+});
+
+test('all pages share the homepage font stack (Barlow Condensed / Archivo / JetBrains Mono)',()=>{
+ const link='family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700';
+ for (const [name,doc] of [['lab',html],['rules',rules],['porprov',porprov],['homepage',home]]) {
+   assert.ok(doc.includes(link), name + ' page does not load the shared homepage font link');
+   assert.doesNotMatch(doc,/Cormorant Garamond|Instrument Serif|Plus Jakarta Sans|IBM Plex Mono/);
+ }
+ assert.match(css,/--font-display: 'Barlow Condensed'/);
+ assert.match(css,/--font-sans: 'Archivo'/);
+ assert.match(css,/--font-mono: 'JetBrains Mono'/);
+ assert.doesNotMatch(css,/--font-serif|Plus Jakarta Sans|IBM Plex Mono|Cormorant Garamond|Instrument Serif/);
+ assert.match(site,/--font-sans:'Archivo'/);
+ assert.match(site,/h1,h2,h3\{font-family:var\(--font-display\)\}/);
+ assert.doesNotMatch(site,/font-family:Inter/);
 });

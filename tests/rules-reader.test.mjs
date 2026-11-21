@@ -24,6 +24,11 @@ test('Rules: two original PDFs are preserved byte-for-byte', () => {
   }
 });
 
+test('Rules reader uses the shared JetBrains Mono for document numbers', () => {
+  assert.match(css, /'JetBrains Mono',monospace/);
+  assert.doesNotMatch(css, /ui-monospace|SFMono-Regular|Consolas/);
+});
+
 test('Rules: local PDF.js main module and matching worker are available', () => {
   assert.ok(statSync(new URL('assets/pdfjs/pdf.min.mjs',root)).size > 100_000);
   assert.ok(statSync(new URL('assets/pdfjs/pdf.worker.min.mjs',root)).size > 700_000);
