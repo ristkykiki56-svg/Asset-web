@@ -13,7 +13,7 @@ const porprovCss=readFileSync(new URL('../profile.css',import.meta.url),'utf8');
 const chromeCss=readFileSync(new URL('../site-chrome.css',import.meta.url),'utf8');
 
 test('lab lives at its own static /lab route; homepage stays an athlete profile',()=>{
- assert.match(html,/<title>Laboratorium Interaktif \| Twin Shooter<\/title>/);
+ assert.match(html,/<title>Lab IMSSU: Latihan Menembak Interaktif \| Twin Shooter<\/title>/);
  assert.match(html,/href="https:\/\/twinshooter.vercel.app\/lab"/);
  assert.match(html,/href="https:\/\/twinshooter\.vercel\.app\/"[^>]*>← Profil Twin Shooter<\/a>/);
  assert.match(home,/href="\/lab">Laboratorium ↗<\/a>/);
@@ -313,4 +313,23 @@ test('porprov article v2 editorial structure (ui-craft-editorial)',()=>{
  assert.match(porprovCss,/\.dropcap::first-letter/);
  assert.match(porprovCss,/\.pull-quote/);
  assert.match(porprovCss,/\.article-sources/);
+});
+
+test('lab page SEO: IMSSU title, OG, JSON-LD, one H1',()=>{
+ assert.match(html,/Latihan Menembak Interaktif/);
+ assert.match(html,/name="description" content="Latihan menembak IMSSU interaktif: postur, pelatuk, optik, siluet, peralatan, dan simulasi match 40 tembakan/);
+ assert.match(html,/property="og:title" content="Lab IMSSU: Latihan Menembak Interaktif \| Twin Shooter"/);
+ assert.match(html,/property="og:description" content="Latihan menembak IMSSU interaktif/);
+ assert.match(html,/property="og:url" content="https:\/\/twinshooter\.vercel\.app\/lab"/);
+ assert.match(html,/property="og:image" content="https:\/\/twinshooter\.vercel\.app\/assets\/twin-shooter-og\.png"/);
+ assert.match(html,/name="twitter:card" content="summary_large_image"/);
+ assert.match(html,/"@type":"WebPage","@id":"https:\/\/twinshooter\.vercel\.app\/lab#webpage"/);
+ assert.match(html,/"dateModified":"2026-11-21"/);
+ assert.equal((html.match(/<h1/g)||[]).length,1);
+ assert.match(html,/<h1 id="lab-title">Laboratorium IMSSU: latihan menembak interaktif<\/h1>/);
+ assert.doesNotMatch(html,/<h1 class="stage-title"/);
+ assert.match(html,/<h2 class="stage-title">Postur berdiri dan bagian penopang tubuh<\/h2>/);
+ assert.match(html,/Enam modul untuk mempelajari postur, pelatuk, optik, siluet, peralatan, dan simulasi match 40 tembakan/);
+ assert.match(html,/bukan standar resmi IMSSU/);
+ assert.match(css,/\.lab-intro/);
 });
