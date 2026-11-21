@@ -24,7 +24,7 @@
     if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') setMenuOpen(false);
   });
   document.addEventListener('click', function (e) {
-    if (menuBtn.getAttribute('aria-expanded') === 'true' && !e.target.closest('.site-header')) {
+    if (menuBtn.getAttribute('aria-expanded') === 'true' && !e.target.closest('.site-header, .studio-header')) {
       setMenuOpen(false);
     }
   });
