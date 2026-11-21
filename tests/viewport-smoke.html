@@ -47,13 +47,28 @@ iframe{display:block;border:0;height:920px;width:320px}
       if (doc.querySelectorAll('#grid .sb-row:not([hidden])').length !== 25) errors.push('reset filter failed');
       // Scroll-reveal guard: hidden-until-JS content must actually become
       // visible once its reveal class is added (a specificity slip in the
-      // CSS can leave it at opacity 0 forever). Virtual time fast-forwards
-      // the 1.5s wait, which covers the 0.6s transition plus stagger delay.
+      // CSS can leave it at opacity 0 forever). Disable transitions AND
+      // animations inside the frame first, so the check reads the final
+      // cascade state instead of racing them under virtual time. That
+      // alone only helps transitions that start after the override: the
+      // hero transition starts at page load, before this style lands, and
+      // stays frozen mid-flight because virtual time does not advance it.
+      // So restart it: remove and re-add .motion-ready (with a forced
+      // reflow between) so a fresh transition runs with 0s duration.
+      // This still guards the real bug: if the visible rule lost the
+      // specificity fight, the fresh transition would end at opacity 0.
+      const noAnim = doc.createElement('style');
+      noAnim.textContent = '*{transition-duration:0s !important;transition-delay:0s !important;animation-duration:0s !important;animation-delay:0s !important}';
+      doc.head.appendChild(noAnim);
+      const rootEl = doc.documentElement;
+      rootEl.classList.remove('motion-ready');
+      void rootEl.offsetHeight;
+      rootEl.classList.add('motion-ready');
       const revealEl = doc.querySelector('.featured-item[data-reveal]');
       revealEl.scrollIntoView({block: 'center'});
       const heroTitle = doc.querySelector('.hero-title');
       heroTitle.scrollIntoView({block: 'center'});
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 2000));
       const revealOpacity = doc.defaultView.getComputedStyle(revealEl).opacity;
       if (revealOpacity !== '1') errors.push('data-reveal block stayed invisible (opacity ' + revealOpacity + ')');
       const heroOpacity = doc.defaultView.getComputedStyle(heroTitle).opacity;

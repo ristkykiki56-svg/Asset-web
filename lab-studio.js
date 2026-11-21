@@ -256,7 +256,7 @@
     ctx.stroke();
 
     ctx.fillStyle = '#94A3B8';
-    ctx.font = 'bold 10px IBM Plex Mono';
+    ctx.font = 'bold 10px "JetBrains Mono", monospace';
     ctx.fillText('KURVA CONTOH', padL + 6, padT + 10);
     ctx.fillText('URUTAN MODEL →', padL + pw - 103, padT + ph + 20);
 

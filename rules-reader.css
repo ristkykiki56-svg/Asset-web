@@ -15,7 +15,7 @@
 .rules-document{display:flex;gap:11px;align-items:center;text-decoration:none;min-width:0;min-height:60px;padding:7px 14px;border:1px solid #d3d7d7;border-radius:4px;background:#fff;color:#1c282d;transition:border-color .15s,box-shadow .15s}
 .rules-document:hover{border-color:#707e81;box-shadow:0 2px 12px rgba(21,28,33,.06)}
 .rules-document.is-selected{border-color:#252e34;box-shadow:inset 0 3px #252e34}
-.rules-doc-number{font:700 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;opacity:.65}
+.rules-doc-number{font:700 11px/1.4 'JetBrains Mono',monospace;opacity:.65}
 .rules-doc-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
 .rules-doc-copy strong{font-size:14px;line-height:1.25;font-weight:770}
 .rules-doc-copy small{color:#68767c;font-size:11px;line-height:1.4}
