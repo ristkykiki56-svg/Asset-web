@@ -82,6 +82,10 @@
   background: var(--bg-card);
   color: var(--ink-primary);
   transition: border-color 0.15s ease, background-color 0.15s ease;
+  /* Keep the card clear of the 62px sticky site header when it is
+     scrolled into view: without this its centre sits underneath the
+     header and a click lands on the header instead of the card. */
+  scroll-margin-top: 70px;
 }
 
 .rules-document:hover {
