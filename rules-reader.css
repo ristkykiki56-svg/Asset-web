@@ -377,7 +377,7 @@
 /* Stable svh sizing — zero mobile address-bar dvh jitter */
 .rules-pdf-viewport {
   width: 100%;
-  height: min(calc(var(--pdf-page-height, 9999px) + 16px), clamp(700px, calc(100svh - 90px), 1600px));
+  height: min(calc(var(--pdf-page-height, 9999px) + 16px), clamp(760px, calc(100svh - 75px), 1700px));
   max-height: none;
   min-height: 0;
   overflow: auto;
