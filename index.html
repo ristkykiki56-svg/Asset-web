@@ -2,13 +2,13 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111110" />
   <meta name="description" content="Latihan menembak IMSSU di Depok bersama Clarisa Azalia &amp; Aurellia Cassandra, PERBAKIN Kota Depok. Tim IMSSU Depok raih 2 emas 1 perunggu di Porprov XV Jawa Barat 2026." />
   <title>Twin Shooter: Latihan Menembak IMSSU Depok | Clarisa Azalia &amp; Aurellia Cassandra</title>
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <link rel="canonical" href="https://twinshooter.vercel.app/" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="/" />
+  <link rel="icon" type="image/webp" href="/assets/brand-logo.webp" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="id_ID" />
   <meta property="og:site_name" content="Twin Shooter" />
@@ -18,274 +18,495 @@
   <meta property="og:image" content="https://twinshooter.vercel.app/assets/twin-shooter-og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Twin Shooter, Clarisa Azalia dan Aurellia Cassandra" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Twin Shooter | Clarisa Azalia &amp; Aurellia Cassandra" />
-  <meta name="twitter:description" content="Latihan menembak IMSSU di Depok bersama Clarisa Azalia &amp; Aurellia Cassandra, PERBAKIN Kota Depok. Tim IMSSU Depok raih 2 emas 1 perunggu di Porprov XV Jawa Barat 2026." />
-  <meta name="twitter:image" content="https://twinshooter.vercel.app/assets/twin-shooter-og.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" type="image/webp" href="/assets/clarisa.webp" fetchpriority="high" />
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://twinshooter.vercel.app/#website","url":"https://twinshooter.vercel.app/","name":"Twin Shooter","inLanguage":"id-ID"},{"@type":"AboutPage","@id":"https://twinshooter.vercel.app/#about","url":"https://twinshooter.vercel.app/","name":"Twin Shooter, Clarisa Azalia & Aurellia Cassandra","inLanguage":"id-ID","isPartOf":{"@id":"https://twinshooter.vercel.app/#website"},"about":[{"@id":"https://twinshooter.vercel.app/#clarisa"},{"@id":"https://twinshooter.vercel.app/#aurellia"}]},{"@type":"Person","@id":"https://twinshooter.vercel.app/#clarisa","name":"Clarisa Azalia","affiliation":{"@type":"Organization","name":"PERBAKIN Kota Depok"},"knowsAbout":"Air Rifle Multi Range"},{"@type":"Person","@id":"https://twinshooter.vercel.app/#aurellia","name":"Aurellia Cassandra","affiliation":{"@type":"Organization","name":"PERBAKIN Kota Depok"},"knowsAbout":["Air Rifle Multi Range","Air Rifle 3 Position"]}]}</script>
-  <link rel="stylesheet" href="/site.css" />
-  <link rel="stylesheet" href="/profile.css" />
-  
+  <link rel="stylesheet" href="/homepage-editorial.css" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Lewati navigasi</a>
-  <header class="header wrap">
-    <a class="brand" href="/"><span class="mark">TS</span><span><strong>Twin Shooter</strong><small>Profil Atlet</small></span></a>
-    <nav class="nav"><a href="#athletes">Profil</a><a href="#journey">Riwayat</a><a href="#achievements">Prestasi</a><a href="/porprov-2026">Porprov 2026</a><a href="/lab">Laboratorium</a><a class="rules" href="/rules">Peraturan</a></nav>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="brand-emblem" aria-hidden="true"><img src="/assets/brand-logo.webp" alt="" width="36" height="36" /></span>
+        <span>
+          <strong class="brand-name">Twin Shooter</strong>
+          <small class="brand-sub">PERBAKIN Kota Depok</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Navigasi utama">
+        <a href="#athletes">Profil</a>
+        <a href="#p70-showcase">P 70</a>
+        <a href="#journey">Riwayat</a>
+        <a href="#achievements">Prestasi</a>
+        <a href="/porprov-2026">Porprov 2026</a>
+        <a href="/rules">Peraturan</a>
+        <a class="nav-lab" href="/lab">Laboratorium ↗</a>
+      </nav>
+      <button id="menuToggle" type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Buka menu navigasi">
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+    <nav id="mobileDrawer" class="mobile-drawer" aria-label="Menu navigasi mobile" hidden>
+      <div class="wrap mobile-drawer-inner">
+        <a href="#athletes"><span>01</span>Profil Atlet</a>
+        <a href="#p70-showcase"><span>02</span>Feinwerkbau P 70</a>
+        <a href="#journey"><span>03</span>Riwayat 2020–2023</a>
+        <a href="#achievements"><span>04</span>25 Prestasi</a>
+        <a href="/porprov-2026"><span>05</span>Porprov 2026 ↗</a>
+        <a href="/rules"><span>06</span>Peraturan IMSSU ↗</a>
+        <a class="drawer-cta" href="/lab">Buka Laboratorium Interaktif ↗</a>
+      </div>
+    </nav>
+    <div class="scroll-reticle-track" aria-hidden="true"><div id="scrollReticleFill" class="scroll-reticle-fill"></div></div>
   </header>
 
   <main id="main-content">
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="kicker">AIR RIFLE / PERBAKIN KOTA DEPOK</p>
-        <h1 id="hero-title">Clarisa Azalia<br><span>&amp; Aurellia Cassandra</span></h1>
-        <p class="lead">Keduanya mulai berlatih pada Oktober 2020, kemudian mengikuti seleksi dan pertandingan menembak sepanjang 2021–2023.</p>
-        <div class="actions">
-          <a class="btn primary" href="#achievements">Lihat prestasi <span aria-hidden="true">↗</span></a>
-          <a class="btn" href="/rules">Peraturan IMSSU</a>
+    <!-- 1. HERO — DUAL-IDENTITY DARK EDITORIAL STAGE -->
+    <section class="hero-section" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="kicker">Air Rifle Silhouette · PERBAKIN Kota Depok</p>
+          <h1 id="hero-title" class="hero-title">Clarisa Azalia<span class="twin-amp">&amp; Aurellia Cassandra</span></h1>
+          <p class="hero-lead">Keduanya mulai berlatih pada Oktober 2020, kemudian mengikuti seleksi dan pertandingan menembak sepanjang 2021–2023.</p>
+          <div class="hero-facts" aria-label="Ringkasan perjalanan atlet">
+            <div><strong>2020</strong><span>Mulai berlatih</span></div>
+            <div><strong>2021</strong><span>Seleksi Kota Depok</span></div>
+            <div><strong>2023</strong><span>POPNAS XVI</span></div>
+          </div>
         </div>
-        <div class="facts" aria-label="Ringkasan perjalanan atlet">
-          <div><b>2020</b><span>Mulai berlatih</span></div>
-          <div><b>2021</b><span>Seleksi Kota Depok</span></div>
-          <div><b>2023</b><span>POPNAS XVI</span></div>
-        </div>
-      </div>
 
-      <div class="duo" aria-label="Foto Clarisa dan Aurellia">
-        <article class="athlete first">
-          <div class="photo"><img src="/assets/clarisa.webp" width="260" height="359" fetchpriority="high" decoding="async" alt="Clarisa Azalia memegang air rifle"></div>
-          <div class="cap"><span class="photo-index">01 / CLARISA</span><strong>Clarisa Azalia</strong><small>Air Rifle · Multi Range</small></div>
-        </article>
-        <article class="athlete">
-          <div class="photo"><img src="/assets/aurellia.webp" width="260" height="359" decoding="async" alt="Aurellia Cassandra memegang air rifle"></div>
-          <div class="cap"><span class="photo-index">02 / AURELLIA</span><strong>Aurellia Cassandra</strong><small>Air Rifle · Multi Range · 3 Position</small></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="band" aria-labelledby="featured-title">
-      <div class="wrap band-layout">
-        <div class="band-heading">
-          <p class="kicker">SOROTAN HASIL / 2023</p>
-          <h2 id="featured-title">Prestasi yang tercatat</h2>
-          <a class="band-link" href="#achievements">Lihat semua hasil <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="band-features">
-          <article class="band-feature">
-            <p class="feature-label">CLARISA AZALIA · POPNAS XVI</p>
-            <p class="feature-result">Juara 2</p>
-            <p class="feature-class">Multi Range Women · 2023</p>
+        <div class="duo-stage" aria-label="Foto Clarisa dan Aurellia">
+          <article class="twin-card is-clarisa">
+            <div class="twin-photo"><img src="/assets/clarisa.webp" width="260" height="359" fetchpriority="high" decoding="async" alt="Clarisa Azalia memegang air rifle" /></div>
+            <div class="twin-cap">
+              <span class="twin-idx">01 · CLARISA</span>
+              <strong>Clarisa Azalia</strong>
+              <small>Air Rifle · Multi Range</small>
+            </div>
           </article>
-          <article class="band-feature">
-            <p class="feature-label">AURELLIA CASSANDRA · JABAR OPEN</p>
-            <p class="feature-result">Juara 1</p>
-            <p class="feature-class">Multi Range Women Junior · 2023</p>
+          <article class="twin-card is-aurellia">
+            <div class="twin-photo"><img src="/assets/aurellia.webp" width="260" height="359" decoding="async" alt="Aurellia Cassandra memegang air rifle" /></div>
+            <div class="twin-cap">
+              <span class="twin-idx">02 · AURELLIA</span>
+              <strong>Aurellia Cassandra</strong>
+              <small>Air Rifle · Multi Range · 3 Position</small>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="athletes" class="section wrap">
-      <div class="heading"><p class="kicker">PROFIL ATLET</p><h2>Clarisa &amp; Aurellia</h2><p>PERBAKIN Kota Depok · Arsip profil dan pertandingan 2021–2023</p></div>
-      <div class="cards2">
-        <article class="profile"><div class="top"><span>CLARISA</span><span>01</span></div><h3>Clarisa Azalia</h3><p class="role">Atlet Menembak · PERBAKIN Kota Depok</p><div class="meta"><div><span>Senapan</span><strong>Feinwerkbau P 70</strong></div><div><span>Organisasi</span><strong>PERBAKIN Kota Depok</strong></div><div><span>Periode</span><strong>2021–2023</strong></div></div><div class="highlight"><span class="medal silver">02</span><div><strong>POPNAS XVI 2023</strong><small>Juara 2 · Multi Range Women</small></div></div><p class="note">Dandim 0411 Cup 2022: Juara 1 Open Multi Range, IMSSU Junior, dan Multi Range Prestasi.</p></article>
-        <article class="profile"><div class="top"><span>AURELLIA</span><span>02</span></div><h3>Aurellia Cassandra</h3><p class="role">Atlet Menembak · PERBAKIN Kota Depok</p><div class="meta"><div><span>Senapan</span><strong>Feinwerkbau P 70</strong></div><div><span>Organisasi</span><strong>PERBAKIN Kota Depok</strong></div><div><span>Periode</span><strong>2021–2023</strong></div></div><div class="highlight"><span class="medal gold">01</span><div><strong>Jabar Open 2023</strong><small>Juara 1 · Multi Range Women Junior</small></div></div><p class="note">Lulus seleksi POPNAS XVI 2023 dan mewakili Jawa Barat di kelas Woman 3 Position.</p></article>
+    <!-- 2. SOROTAN HASIL 2023 -->
+    <section class="highlight-band" aria-labelledby="featured-title">
+      <div class="wrap highlight-grid">
+        <div>
+          <p class="kicker">Sorotan Hasil / 2023</p>
+          <h2 id="featured-title" class="sec-title">Prestasi yang tercatat</h2>
+          <a class="text-cta" href="#achievements">Lihat semua hasil ↓</a>
+        </div>
+        <div class="featured-pair">
+          <article class="featured-item" data-reveal style="--d:0ms">
+            <div class="featured-top">
+              <p class="featured-label">CLARISA AZALIA · POPNAS XVI</p>
+              <span class="podium-chip silver">PERAK · 02</span>
+            </div>
+            <p class="featured-rank">Juara 2</p>
+            <p class="featured-class">Multi Range Women · 2023</p>
+          </article>
+          <article class="featured-item is-red" data-reveal style="--d:90ms">
+            <div class="featured-top">
+              <p class="featured-label">AURELLIA CASSANDRA · JABAR OPEN</p>
+              <span class="podium-chip gold">EMAS · 01</span>
+            </div>
+            <p class="featured-rank">Juara 1</p>
+            <p class="featured-class">Multi Range Women Junior · 2023</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="section wrap">
-      <div class="heading"><p class="kicker">KEMAMPUAN</p><h2>Nomor yang dilatih</h2></div>
-      <div class="disciplines">
-        <article class="discipline main"><span>01</span><b>Air Rifle Multi Range</b><p>18 m, 27 m, 33 m, dan 41 m dengan posisi berdiri.</p></article>
-        <article class="discipline"><span>02</span><b>Air Rifle 3 Position</b><p>15 target pada jarak 33 m dalam 15 menit dengan posisi tiarap, berjongkok, dan berdiri.</p></article>
-        <article class="discipline"><span>03</span><b>Air Rifle Banchrest</b><p>25 target dalam 20 menit pada jarak 25 m / 41 m dengan posisi duduk.</p></article>
-        <article class="discipline"><span>04</span><b>Air Pistol</b><p>60 target dalam 1 jam 45 menit pada jarak 10 m dengan posisi berdiri.</p></article>
+    <!-- 3. PROFIL ATLET (DUAL-IDENTITY SPLIT) -->
+    <section id="athletes" class="section-white">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="kicker">Profil Atlet</p>
+          <h2 class="sec-title">Clarisa &amp; Aurellia</h2>
+          <p class="sec-sub">PERBAKIN Kota Depok · Arsip profil dan pertandingan 2021–2023</p>
+        </div>
+        <div class="dual-profiles">
+          <article class="profile-col is-clarisa" data-reveal style="--d:0ms">
+            <div class="profile-top"><span>CLARISA</span><span>01</span></div>
+            <h3>Clarisa Azalia</h3>
+            <p class="profile-role">Atlet Menembak · PERBAKIN Kota Depok</p>
+            <div class="profile-specs">
+              <div><span>Senapan</span><strong>Feinwerkbau P 70</strong></div>
+              <div><span>Organisasi</span><strong>PERBAKIN Kota Depok</strong></div>
+              <div><span>Periode</span><strong>2021–2023</strong></div>
+            </div>
+            <div class="profile-medal-strip">
+              <span class="medal-dot silver">02</span>
+              <div><strong>POPNAS XVI 2023</strong><small>Juara 2 · Multi Range Women</small></div>
+            </div>
+            <p class="profile-note">Dandim 0411 Cup 2022: Juara 1 Open Multi Range, IMSSU Junior, dan Multi Range Prestasi.</p>
+          </article>
+
+          <article class="profile-col is-aurellia" data-reveal style="--d:110ms">
+            <div class="profile-top"><span>AURELLIA</span><span>02</span></div>
+            <h3>Aurellia Cassandra</h3>
+            <p class="profile-role">Atlet Menembak · PERBAKIN Kota Depok</p>
+            <div class="profile-specs">
+              <div><span>Senapan</span><strong>Feinwerkbau P 70</strong></div>
+              <div><span>Organisasi</span><strong>PERBAKIN Kota Depok</strong></div>
+              <div><span>Periode</span><strong>2021–2023</strong></div>
+            </div>
+            <div class="profile-medal-strip">
+              <span class="medal-dot gold">01</span>
+              <div><strong>Jabar Open 2023</strong><small>Juara 1 · Multi Range Women Junior</small></div>
+            </div>
+            <p class="profile-note">Lulus seleksi POPNAS XVI 2023 dan mewakili Jawa Barat di kelas Woman 3 Position.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="journey" class="section wrap">
-      <div class="heading"><p class="kicker">RIWAYAT</p><h2>2020–2023</h2></div>
-      <div class="journey">
-        <article class="step"><b>2020</b><h3>Mulai latihan</h3><p>Keduanya mulai mengikuti latihan menembak pada Oktober 2020.</p></article>
-        <article class="step"><b>2021</b><h3>Seleksi atlet Kota Depok</h3><p>Keduanya lolos mengikuti seleksi atlet menembak PERBAKIN Kota Depok pada 9 Oktober 2021.</p></article>
-        <article class="step"><b>2022</b><h3>Kompetisi 2022</h3><p>KASAU Cup, RBSC, HTR Shooting Competition, Dandim Cup, dan pertandingan lain sepanjang 2022.</p></article>
-        <article class="step"><b>2023</b><h3>Kompetisi 2023</h3><p>Jabar Open, seleksi POPNAS, POPNAS, KASAU Cup, Prakasa Cup, dan pertandingan lain sepanjang 2023.</p></article>
+    <!-- 3B. SHOWCASE INTERAKTIF FEINWERKBAU P 70 (DIRECT BREAKDOWN + PRECISION FOCUS FRAME) -->
+    <section id="p70-showcase" class="p70-section" aria-labelledby="p70-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="kicker">Arsitektur Perangkat · PCP 4,5 mm (.177)</p>
+          <h2 id="p70-title" class="sec-title">Feinwerkbau P 70 Breakdown</h2>
+          <p class="sec-sub">Senapan match udara tekan yang digunakan Clarisa &amp; Aurellia. Pilih salah satu modul di bawah atau ketuk langsung bagian senapan untuk menyorot komponennya.</p>
+        </div>
+
+        <div class="p70-stage-card" data-reveal style="--d:40ms">
+          <div id="p70Viewport" class="p70-viewport">
+            <img class="p70-render" src="/assets/p70-exploded.webp" width="1200" height="675" decoding="async" alt="Tampilan breakdown 5 sub-rakitan senapan Feinwerkbau P 70" />
+
+            <!-- Invisible precision hit-zones matching each floating sub-assembly -->
+            <button type="button" class="p70-zone" data-part="0" style="left:26.5%;top:23.5%;width:31.5%;height:14.5%;" aria-label="Pilih 01 Optik dan Mounting"></button>
+            <button type="button" class="p70-zone" data-part="1" style="left:31%;top:35%;width:65.5%;height:16%;" aria-label="Pilih 02 Laras 425 mm dan Receiver"></button>
+            <button type="button" class="p70-zone" data-part="2" style="left:50.5%;top:47.5%;width:36%;height:7.5%;" aria-label="Pilih 03 Tabung Udara 200 Bar"></button>
+            <button type="button" class="p70-zone" data-part="3" style="left:34.5%;top:67.5%;width:10.5%;height:15%;" aria-label="Pilih 04 Unit Pelatuk Match"></button>
+            <button type="button" class="p70-zone" data-part="4" style="left:3.5%;top:49.5%;width:70%;height:32%;" aria-label="Pilih 05 Popor, Cheekpiece dan Buttplate"></button>
+
+            <!-- Single non-blocking gliding architectural corner-bracket frame -->
+            <div id="p70Frame" class="p70-frame" aria-hidden="true">
+              <span class="p70-corner tl"></span>
+              <span class="p70-corner tr"></span>
+              <span class="p70-corner bl"></span>
+              <span class="p70-corner br"></span>
+              <span id="p70FrameTag" class="p70-frame-tag">01 · OPTIK</span>
+            </div>
+          </div>
+
+          <div class="p70-module-bar" role="tablist" aria-label="Pilih sub-rakitan Feinwerkbau P 70">
+            <button type="button" class="p70-tab is-active" data-part="0" role="tab" aria-selected="true"><span>01</span>Optik &amp; Mounting</button>
+            <button type="button" class="p70-tab" data-part="1" role="tab" aria-selected="false"><span>02</span>Laras &amp; Receiver</button>
+            <button type="button" class="p70-tab" data-part="2" role="tab" aria-selected="false"><span>03</span>Tabung 200 Bar</button>
+            <button type="button" class="p70-tab" data-part="3" role="tab" aria-selected="false"><span>04</span>Pelatuk Match</button>
+            <button type="button" class="p70-tab" data-part="4" role="tab" aria-selected="false"><span>05</span>Popor &amp; Ergonomi</button>
+          </div>
+
+          <div class="p70-readout" aria-live="polite">
+            <div class="p70-readout-main">
+              <span id="p70PartCode" class="p70-part-code">MODUL 01 / 05</span>
+              <h3 id="p70PartTitle">Optik &amp; Mounting Rel Receiver</h3>
+              <p id="p70PartDesc">Bagian atas receiver P 70 beralur rel untuk dudukan cincin teleskop. Di nomor IMSSU Multi Range, turret elevasi disetel guna mengompensasi lintasan peluru 4,5 mm di jarak 18 m, 27 m, 33 m, dan 41 m.</p>
+            </div>
+            <div class="p70-specs-grid">
+              <div><span id="p70Spec1L">DUDUKAN</span><strong id="p70Spec1V">Alur Rel Receiver Atas</strong></div>
+              <div><span id="p70Spec2L">JARAK BIDIK</span><strong id="p70Spec2V">18 · 27 · 33 · 41 m</strong></div>
+              <div><span id="p70Spec3L">SIMULASI</span><strong id="p70Spec3V"><a href="/lab">Uji Optik di Lab ↗</a></strong></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="achievements" class="section wrap">
-      <div class="heading"><p class="kicker">PRESTASI</p><h2>Hasil pertandingan 2021–2023</h2><p>25 catatan hasil dan seleksi. Saring berdasarkan atlet atau tahun.</p></div>
-      <div class="filters" role="group" aria-label="Filter prestasi"><button type="button" class="filter active" data-filter="all" aria-pressed="true">Semua</button><button type="button" class="filter" data-filter="clarisa" aria-pressed="false">Clarisa</button><button type="button" class="filter" data-filter="aurellia" aria-pressed="false">Aurellia</button><button type="button" class="filter" data-filter="2021" aria-pressed="false">2021</button><button type="button" class="filter" data-filter="2022" aria-pressed="false">2022</button><button type="button" class="filter" data-filter="2023" aria-pressed="false">2023</button></div>
-      <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
-      <div id="grid" class="grid">
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2021">
-          <div class="row"><span class="badge bronze" aria-hidden="true">03</span><span>2021</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Fun Game Menembak Black Hawk</h3>
-          <p class="result">Juara 3</p><p class="class">Pemula</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2021">
-          <div class="row"><span class="badge rank" aria-hidden="true">—</span><span>2021</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Seleksi Atlet Menembak Kota Depok</h3>
-          <p class="result">Peringkat 4</p><p class="class">Multi Range</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2021">
-          <div class="row"><span class="badge rank" aria-hidden="true">—</span><span>2021</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Jateng Online Shooting Series 3</h3>
-          <p class="result">Peringkat 8</p><p class="class">Wilayah Banten</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2021">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2021</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Kejuaraan Nasional KASAL Cup</h3>
-          <p class="result">Juara 2</p><p class="class">Air Rifle</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2021">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2021</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Seleksi Atlet Menembak Kota Depok</h3>
-          <p class="result">Peringkat 1</p><p class="class">Multi Range</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2021">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2021</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Jateng Online Shooting Series 3</h3>
-          <p class="result">Peringkat 1</p><p class="class">Wilayah Banten</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2022">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2022</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Fun Game Menembak RBSC</h3>
-          <p class="result">Juara 2</p><p class="class">Fun Game</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2022">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2022</span></div>
-          <p class="who">Clarisa Azalia</p><h3>HTR Shooting Competition</h3>
-          <p class="result">Juara 2</p><p class="class">Multi Range</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2022">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2022</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Dandim 0411 Cup, Kota Metro Lampung</h3>
-          <p class="result">Juara 1</p><p class="class">Open Multi Range</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2022">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2022</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Dandim 0411 Cup, Kota Metro Lampung</h3>
-          <p class="result">Juara 1</p><p class="class">Multi Range IMSSU Junior</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2022">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2022</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Dandim 0411 Cup, Kota Metro Lampung</h3>
-          <p class="result">Juara 1</p><p class="class">Multi Range Prestasi</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2022">
-          <div class="row"><span class="badge bronze" aria-hidden="true">03</span><span>2022</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Kejuaraan Nasional KASAU Cup</h3>
-          <p class="result">Juara 3</p><p class="class">Air Rifle Multi Range Women</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2022">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2022</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Fun Game Menembak RBSC</h3>
-          <p class="result">Juara 1</p><p class="class">Fun Game</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2022">
-          <div class="row"><span class="badge rank" aria-hidden="true">—</span><span>2022</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>HTR Shooting Competition</h3>
-          <p class="result">Peringkat 5</p><p class="class">Multi Range</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2022">
-          <div class="row"><span class="badge rank" aria-hidden="true">—</span><span>2022</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Kejuaraan Nasional Bupati Cup Jabar</h3>
-          <p class="result">Peringkat 5</p><p class="class">Multi Range</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2022">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2022</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Dandim 0411 Cup, Kota Metro Lampung</h3>
-          <p class="result">Juara 2</p><p class="class">Multi Range IMSSU Junior</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2023">
-          <div class="row"><span class="badge bronze" aria-hidden="true">03</span><span>2023</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Kejuaraan Nasional Jabar Open</h3>
-          <p class="result">Juara 3</p><p class="class">Multi Range Women Junior</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2023">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2023</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Kejuaraan Walikota Tanggerang</h3>
-          <p class="result">Juara 2</p><p class="class">Multi Range Prestasi</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2023">
-          <div class="row"><span class="badge qualify" aria-hidden="true">✓</span><span>2023</span></div>
-          <p class="who">Clarisa Azalia</p><h3>Seleksi POPNAS XVI</h3>
-          <p class="result">Lolos Seleksi</p><p class="class">Mewakili Jawa Barat · Multi Range</p>
-        </article>
-        <article class="achievement clarisa" data-athlete="clarisa" data-year="2023">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2023</span></div>
-          <p class="who">Clarisa Azalia</p><h3>POPNAS XVI Sumatra Selatan</h3>
-          <p class="result">Juara 2</p><p class="class">Multi Range Women</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2023">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2023</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Kejuaraan Nasional KASAU Cup</h3>
-          <p class="result">Juara 2</p><p class="class">Air Rifle Multi Range</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2023">
-          <div class="row"><span class="badge silver" aria-hidden="true">02</span><span>2023</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Latihan Bersama Kota Bekasi</h3>
-          <p class="result">Juara 2</p><p class="class">Multi Range Open</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2023">
-          <div class="row"><span class="badge gold" aria-hidden="true">01</span><span>2023</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Kejuaraan Nasional Jabar Open</h3>
-          <p class="result">Juara 1</p><p class="class">Multi Range Women Junior</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2023">
-          <div class="row"><span class="badge qualify" aria-hidden="true">✓</span><span>2023</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Seleksi POPNAS XVI</h3>
-          <p class="result">Lulus Seleksi</p><p class="class">Mewakili Jawa Barat · Woman 3 Position</p>
-        </article>
-        <article class="achievement aurellia" data-athlete="aurellia" data-year="2023">
-          <div class="row"><span class="badge bronze" aria-hidden="true">03</span><span>2023</span></div>
-          <p class="who">Aurellia Cassandra</p><h3>Kejuaraan Nasional Prakasa Cup</h3>
-          <p class="result">Juara 3</p><p class="class">IMSSU Metal Silhoutte · Multi Range 18–41 m</p>
-        </article>
+    <!-- 4. NOMOR YANG DILATIH -->
+    <section class="section-paper">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="kicker">Kemampuan</p>
+          <h2 class="sec-title">Nomor yang dilatih</h2>
+        </div>
+        <div class="disciplines-grid">
+          <article class="disc-card is-primary" data-reveal style="--d:0ms">
+            <span class="disc-num">01 · UTAMA</span>
+            <h3>Air Rifle Multi Range</h3>
+            <p>18 m, 27 m, 33 m, dan 41 m dengan posisi berdiri.</p>
+            <div class="disc-chips" aria-hidden="true"><span>18 m</span><span>27 m</span><span>33 m</span><span>41 m</span></div>
+          </article>
+          <article class="disc-card" data-reveal style="--d:75ms">
+            <span class="disc-num">02</span>
+            <h3>Air Rifle 3 Position</h3>
+            <p>15 target pada jarak 33 m dalam 15 menit dengan posisi tiarap, berjongkok, dan berdiri.</p>
+            <div class="disc-chips" aria-hidden="true"><span>33 m</span><span>15 target</span><span>15 mnt</span></div>
+          </article>
+          <article class="disc-card" data-reveal style="--d:150ms">
+            <span class="disc-num">03</span>
+            <h3>Air Rifle Benchrest</h3>
+            <p>25 target dalam 20 menit pada jarak 25 m / 41 m dengan posisi duduk.</p>
+            <div class="disc-chips" aria-hidden="true"><span>25 / 41 m</span><span>25 target</span><span>20 mnt</span></div>
+          </article>
+          <article class="disc-card" data-reveal style="--d:225ms">
+            <span class="disc-num">04</span>
+            <h3>Air Pistol</h3>
+            <p>60 target dalam 1 jam 45 menit pada jarak 10 m dengan posisi berdiri.</p>
+            <div class="disc-chips" aria-hidden="true"><span>10 m</span><span>60 target</span><span>1j 45m</span></div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="section wrap"><div class="rules-card"><div><p class="kicker">PERATURAN</p><h2>IMSSU Air Rifle .177</h2><p>Baca atau unduh PDF peraturan.</p><p><a href="/lab" style="color:#a4e1db;text-underline-offset:4px;font-weight:750">Jelajahi laboratorium interaktif ↗</a></p></div><a class="btn" href="/rules">Buka peraturan</a></div></section>
+    <!-- 5. RIWAYAT 2020-2023 -->
+    <section id="journey" class="section-white">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="kicker">Riwayat</p>
+          <h2 class="sec-title">Perjalanan 2020–2023</h2>
+        </div>
+        <div class="timeline"><div id="timelineFill" class="timeline-fill" aria-hidden="true"></div>
+          <article class="tl-step"><span class="tl-year">2020</span><h3>Mulai latihan</h3><p>Keduanya mulai mengikuti latihan menembak pada Oktober 2020.</p></article>
+          <article class="tl-step"><span class="tl-year">2021</span><h3>Seleksi atlet Kota Depok</h3><p>Keduanya lolos mengikuti seleksi atlet menembak PERBAKIN Kota Depok pada 9 Oktober 2021.</p></article>
+          <article class="tl-step"><span class="tl-year">2022</span><h3>Kompetisi 2022</h3><p>KASAU Cup, RBSC, HTR Shooting Competition, Dandim Cup, dan pertandingan lain sepanjang 2022.</p></article>
+          <article class="tl-step"><span class="tl-year">2023</span><h3>Kompetisi 2023</h3><p>Jabar Open, seleksi POPNAS, POPNAS, KASAU Cup, Prakasa Cup, dan pertandingan lain sepanjang 2023.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PRESTASI (COMPACT EDITORIAL SCOREBOOK + AUTO MEDAL TALLY) -->
+    <section id="achievements" class="section-slate">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="kicker">Prestasi</p>
+          <h2 class="sec-title">Hasil pertandingan 2021–2023</h2>
+          <p class="sec-sub">25 catatan hasil dan seleksi. Saring berdasarkan atlet atau tahun untuk melihat ringkasan medali.</p>
+        </div>
+
+        <div class="tally-bar">
+          <div class="medal-tally" aria-live="polite">
+            <span><strong id="tallyGold">0</strong>Juara 1</span>
+            <span><strong id="tallySilver">0</strong>Juara 2</span>
+            <span><strong id="tallyBronze">0</strong>Juara 3</span>
+            <span><strong id="tallyTotal">25</strong>Catatan</span>
+          </div>
+          <div class="filters" role="group" aria-label="Filter prestasi">
+            <button type="button" class="filter active" data-filter="all" aria-pressed="true">Semua</button>
+            <button type="button" class="filter" data-filter="clarisa" aria-pressed="false">Clarisa</button>
+            <button type="button" class="filter" data-filter="aurellia" aria-pressed="false">Aurellia</button>
+            <button type="button" class="filter" data-filter="2021" aria-pressed="false">2021</button>
+            <button type="button" class="filter" data-filter="2022" aria-pressed="false">2022</button>
+            <button type="button" class="filter" data-filter="2023" aria-pressed="false">2023</button>
+          </div>
+        </div>
+
+        <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
+        <div id="grid" class="scorebook">
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2021" data-medal="bronze">
+            <span class="sb-badge bronze" aria-hidden="true">03</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Fun Game Menembak Black Hawk</strong><span>Pemula · 2021</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 3</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2021" data-medal="rank">
+            <span class="sb-badge rank" aria-hidden="true">—</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Seleksi Atlet Menembak Kota Depok</strong><span>Multi Range · 2021</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Peringkat 4</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2021" data-medal="rank">
+            <span class="sb-badge rank" aria-hidden="true">—</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Jateng Online Shooting Series 3</strong><span>Wilayah Banten · 2021</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Peringkat 8</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2021" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional KASAL Cup</strong><span>Air Rifle · 2021</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2021" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Seleksi Atlet Menembak Kota Depok</strong><span>Multi Range · 2021</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Peringkat 1</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2021" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2021</span>
+            <div class="sb-event"><strong>Jateng Online Shooting Series 3</strong><span>Wilayah Banten · 2021</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Peringkat 1</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2022" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Fun Game Menembak RBSC</strong><span>Fun Game · 2022</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2022" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>HTR Shooting Competition</strong><span>Multi Range · 2022</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2022" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Dandim 0411 Cup, Kota Metro Lampung</strong><span>Open Multi Range · 2022</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 1</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2022" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Dandim 0411 Cup, Kota Metro Lampung</strong><span>Multi Range IMSSU Junior · 2022</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 1</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2022" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Dandim 0411 Cup, Kota Metro Lampung</strong><span>Multi Range Prestasi · 2022</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 1</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2022" data-medal="bronze">
+            <span class="sb-badge bronze" aria-hidden="true">03</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional KASAU Cup</strong><span>Air Rifle Multi Range Women · 2022</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 3</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2022" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Fun Game Menembak RBSC</strong><span>Fun Game · 2022</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 1</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2022" data-medal="rank">
+            <span class="sb-badge rank" aria-hidden="true">—</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>HTR Shooting Competition</strong><span>Multi Range · 2022</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Peringkat 5</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2022" data-medal="rank">
+            <span class="sb-badge rank" aria-hidden="true">—</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional Bupati Cup Jabar</strong><span>Multi Range · 2022</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Peringkat 5</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2022" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2022</span>
+            <div class="sb-event"><strong>Dandim 0411 Cup, Kota Metro Lampung</strong><span>Multi Range IMSSU Junior · 2022</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2023" data-medal="bronze">
+            <span class="sb-badge bronze" aria-hidden="true">03</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional Jabar Open</strong><span>Multi Range Women Junior · 2023</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 3</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2023" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Kejuaraan Walikota Tangerang</strong><span>Multi Range Prestasi · 2023</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2023" data-medal="qualify">
+            <span class="sb-badge qualify" aria-hidden="true">✓</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Seleksi POPNAS XVI</strong><span>Mewakili Jawa Barat · Multi Range · 2023</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Lolos Seleksi</span>
+          </article>
+          <article class="sb-row clarisa" data-athlete="clarisa" data-year="2023" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>POPNAS XVI Sumatra Selatan</strong><span>Multi Range Women · 2023</span></div>
+            <span class="sb-athlete">Clarisa Azalia</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2023" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional KASAU Cup</strong><span>Air Rifle Multi Range · 2023</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2023" data-medal="silver">
+            <span class="sb-badge silver" aria-hidden="true">02</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Latihan Bersama Kota Bekasi</strong><span>Multi Range Open · 2023</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 2</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2023" data-medal="gold">
+            <span class="sb-badge gold" aria-hidden="true">01</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional Jabar Open</strong><span>Multi Range Women Junior · 2023</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 1</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2023" data-medal="qualify">
+            <span class="sb-badge qualify" aria-hidden="true">✓</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Seleksi POPNAS XVI</strong><span>Mewakili Jawa Barat · Woman 3 Position · 2023</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Lulus Seleksi</span>
+          </article>
+          <article class="sb-row aurellia" data-athlete="aurellia" data-year="2023" data-medal="bronze">
+            <span class="sb-badge bronze" aria-hidden="true">03</span>
+            <span class="sb-year">2023</span>
+            <div class="sb-event"><strong>Kejuaraan Nasional Prakasa Cup</strong><span>IMSSU Metal Silhouette · Multi Range 18–41 m · 2023</span></div>
+            <span class="sb-athlete">Aurellia Cassandra</span>
+            <span class="sb-result">Juara 3</span>
+          </article>
+        </div>
+
+        <!-- 7. CTA BANNER: LAB INTERAKTIF & PERATURAN IMSSU -->
+        <div class="cta-banner" data-reveal style="--d:40ms">
+          <div>
+            <p class="kicker" style="margin-bottom:8px;">Laboratorium &amp; Peraturan IMSSU</p>
+            <h2>Pelajari teknik Air Rifle .177 &amp; coba simulasi Match</h2>
+            <p>Eksplorasi postur berdiri, kurva pelatuk, lensa optik, sasaran siluet 18–41 m, hingga simulasi menembak IMSSU, atau baca dokumen peraturan resmi.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-orange" href="/lab">Jelajahi Laboratorium ↗</a>
+            <a class="btn btn-ghost-dark" href="/rules">Buka Peraturan IMSSU</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="wrap"><div><strong>Twin Shooter</strong><br>Clarisa Azalia × Aurellia Cassandra</div><div>Profil atlet 2021–2023</div></footer>
-
-  <script>
-    const cards=Array.from(document.querySelectorAll('#grid .achievement'));
-    const buttons=Array.from(document.querySelectorAll('.filter'));
-    const status=document.getElementById('results-status');
-    function applyFilter(filter){
-      let visible=0;
-      for(const card of cards){
-        const match=filter==='all'||card.dataset.athlete===filter||card.dataset.year===filter;
-        card.hidden=!match;
-        if(match)visible++;
-      }
-      for(const button of buttons){
-        const active=button.dataset.filter===filter;
-        button.classList.toggle('active',active);
-        button.setAttribute('aria-pressed',String(active));
-      }
-      status.textContent=visible+' hasil pertandingan ditampilkan.';
-    }
-    buttons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.filter)));
-    applyFilter('all');
-    // Timeline motion is decorative: milestones are always readable.
-    const timeline = document.querySelector('.journey');
-    if (timeline &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        timeline.classList.add('motion-active');
-        observer.disconnect();
-      }, {threshold: .12});
-      observer.observe(timeline);
-      timeline.classList.add('motion-pending');
-    }
-  </script>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div><strong>Twin Shooter</strong> · Clarisa Azalia × Aurellia Cassandra</div>
+      <div>PERBAKIN Kota Depok · Arsip profil atlet 2021–2023</div>
+    </div>
+  </footer>
+  <script defer src="/homepage-motion.js"></script>
 </body>
 </html>

@@ -22,29 +22,29 @@ iframe{display:block;border:0;height:920px;width:320px}
   window.addEventListener('load', () => {
     try {
       const doc = frame.contentDocument;
-      if (!doc || !doc.querySelector('.hero')) throw new Error('Homepage was not loaded');
-      const imgs = [...doc.querySelectorAll('.duo img')];
+      if (!doc || !doc.querySelector('.hero-section')) throw new Error('Homepage was not loaded');
+      const imgs = [...doc.querySelectorAll('.duo-stage img')];
       if (imgs.length !== 2 || imgs.some(img => img.naturalWidth < 1)) errors.push('athlete photos missing');
       for (const width of widths) {
         frame.style.width = width + 'px';
         const root = doc.documentElement;
         const actual = Math.max(root.scrollWidth, doc.body.scrollWidth);
         if (actual > width + 1) errors.push(width + 'px horizontal overflow (' + actual + 'px)');
-        for (const selector of ['.hero h1', '.duo', '.band', '.band-features', '#achievements']) {
+        for (const selector of ['.hero-section h1', '.duo-stage', '.highlight-band', '#p70-showcase', '#achievements']) {
           const el = doc.querySelector(selector);
           if (!el || el.getBoundingClientRect().width <= 0) errors.push(width + 'px missing layout ' + selector);
         }
       }
-      const all = doc.querySelectorAll('#grid .achievement:not([hidden])').length;
+      const all = doc.querySelectorAll('#grid .sb-row:not([hidden])').length;
       if (all !== 25) errors.push('expected 25 results, got ' + all);
       const clarisa = doc.querySelector('[data-filter="clarisa"]');
       clarisa.click();
-      const filtered = doc.querySelectorAll('#grid .achievement:not([hidden])').length;
+      const filtered = doc.querySelectorAll('#grid .sb-row:not([hidden])').length;
       if (!filtered || filtered >= 25) errors.push('athlete filter did not change results');
       if (clarisa.getAttribute('aria-pressed') !== 'true') errors.push('aria-pressed not updated');
       if (!doc.querySelector('#results-status').textContent.includes(String(filtered))) errors.push('live status not updated');
       doc.querySelector('[data-filter="all"]').click();
-      if (doc.querySelectorAll('#grid .achievement:not([hidden])').length !== 25) errors.push('reset filter failed');
+      if (doc.querySelectorAll('#grid .sb-row:not([hidden])').length !== 25) errors.push('reset filter failed');
       result.dataset.status = errors.length ? 'fail' : 'pass';
       result.textContent = errors.length ? errors.join(' | ') : 'PASS: responsive widths, images, 25 results, filter & aria feedback';
     } catch(err) {
