@@ -35,7 +35,9 @@ async function openDoc(doc,width,height,screenshot){
  await page.setViewport({width,height,deviceScaleFactor:1});
  const suffix=doc==='minutes'?'?doc=minutes':'';
  const response=await page.goto(base+'/rules.html'+suffix,{waitUntil:'domcontentloaded',timeout:30000});
- assert(response.ok(),'Rules HTTP '+response.status());
+ // 304 means the cached copy is still good: the page loads fine from cache.
+ // The second openDoc call navigates to the same URL, so Chrome revalidates.
+ assert(response.ok()||response.status()===304,'Rules HTTP '+response.status());
  await waitRendered(doc,1);
  if(screenshot){
    await page.evaluate(()=>document.querySelector('.rules-reading').scrollIntoView({block:'start'}));
