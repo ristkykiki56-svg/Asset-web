@@ -25,7 +25,7 @@ test('Rules: two original PDFs are preserved byte-for-byte', () => {
 });
 
 test('Rules reader uses the shared JetBrains Mono for document numbers', () => {
-  assert.match(css, /'JetBrains Mono',monospace/);
+  assert.match(css, /\.rules-doc-number\s*\{[^}]*font-family: var\(--font-mono\)/);
   assert.doesNotMatch(css, /ui-monospace|SFMono-Regular|Consolas/);
 });
 
@@ -54,7 +54,7 @@ test('Rules: document and page navigation, zoom, search, direct file actions', (
   }
   assert.match(script,/window\.addEventListener\('popstate'/);
   assert.match(script,/history\[replace \? 'replaceState' : 'pushState'\]/);
-  assert.match(css,/@media\(max-width:720px\)/);
+  assert.match(css,/@media \(max-width: 720px\)/);
   assert.match(html,/lang="id"/);
   assert.match(html,/45 halaman · Risalah rapat/);
   assert.match(script,/Risalah rapat 13 Juli 2026/);

@@ -3,32 +3,33 @@
  */
 
 :root {
-  --paper: #F5F4EF;
-  --surface: #FFFFFF;
-  --slate: #EDF0F4;
-  --sand: #F6F2E8;
-  --dark: #0D1015;
-  --dark-2: #151A22;
-  --dark-3: #1E2530;
-  --dark-line: #28313E;
-  --ink: #111315;
-  --ink-2: #343A42;
-  --mute: #5A626D;
-  --ink-dark: #F4F6F9;
-  --ink-dark-2: #B9C2CF;
-  --mute-dark: #8A95A5;
-  --line: #DDD9CE;
-  --line-strong: #111315;
-  --blue: #0055B8;
-  --red: #D11F26;
-  --orange: #FF4800;
-  --orange-deep: #B53200;
-  --green: #0E7C47;
+  color-scheme: dark;
+  --paper: #111110;
+  --surface: #1C1B19;
+  --slate: #161514;
+  --sand: #23211E;
+  --dark: #111110;
+  --dark-2: #1C1B19;
+  --dark-3: #23211E;
+  --dark-line: #2E2C29;
+  --ink: #EDEBE6;
+  --ink-2: #B7B2A8;
+  --mute: #868178;
+  --ink-dark: #EDEBE6;
+  --ink-dark-2: #B7B2A8;
+  --mute-dark: #868178;
+  --line: #2E2C29;
+  --line-strong: #43403B;
+  --blue: #4B7CB3;
+  --red: #B8433E;
+  --orange: #D9481E;
+  --orange-deep: #C03C16;
+  --green: #7FB08E;
   --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-sans: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --r-sm: 6px;
-  --r-md: 12px;
+  --r-md: 10px;
   --r-pill: 999px;
 }
 
@@ -65,9 +66,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(13, 16, 21, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--dark);
   border-bottom: 1px solid var(--dark-line);
   color: var(--ink-dark);
 }
@@ -470,7 +469,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   background: var(--orange);
   transform: translate(-50%, -50%) scale(1.22);
   z-index: 20;
-  box-shadow: 0 0 0 4px rgba(255, 72, 0, 0.25);
+  box-shadow: 0 0 0 2px var(--orange);
 }
 
 /* Right Column: Editorial Dossier + 10-Point Selector */
@@ -894,7 +893,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
 
 .optics-chamber {
   margin-top: 24px;
-  background: radial-gradient(circle at 50% 52%, #1D252F 0%, #090C10 72%);
+  background: #141312;
   border-radius: var(--r-md);
   padding: 20px 24px 36px;
   display: flex;
@@ -1519,7 +1518,6 @@ dialog.studio-dialog {
 
 dialog.studio-dialog::backdrop {
   background: rgba(13, 16, 21, 0.72);
-  backdrop-filter: blur(4px);
 }
 
 .dialog-head {
@@ -1627,8 +1625,6 @@ dialog.studio-dialog::backdrop {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     background: rgba(13, 16, 21, 0.98);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--dark-line);
     padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
     gap: 2px;
@@ -2116,7 +2112,7 @@ dialog.studio-dialog::backdrop {
   height: 13px;
   background: var(--orange);
   border: 2.5px solid #FFFFFF;
-  box-shadow: 0 2px 8px rgba(255, 72, 0, 0.55);
+  box-shadow: none;
 }
 
 #sec-biomech .callout-node[aria-pressed="true"]::after {
@@ -2156,8 +2152,8 @@ dialog.studio-dialog::backdrop {
 }
 
 .osc-screen.is-break {
-  border-color: #10B981;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.4), inset 0 0 24px rgba(16, 185, 129, 0.12);
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 1px var(--green);
 }
 
 .osc-phase-pill.is-break {
@@ -2630,7 +2626,7 @@ dialog.studio-dialog::backdrop {
   border-radius: 9px;
   overflow: hidden;
   padding: 0;
-  box-shadow: 0 2px 8px rgba(255, 72, 0, 0.35);
+  box-shadow: none;
 }
 
 .studio-emblem img {
@@ -2756,7 +2752,6 @@ dialog.studio-dialog::backdrop {
   position: absolute;
   inset: 0;
   background: rgba(9, 12, 16, 0.88);
-  backdrop-filter: blur(6px);
   display: grid;
   place-items: center;
   padding: 20px;
@@ -2949,7 +2944,7 @@ dialog.studio-dialog::backdrop {
   margin-bottom: 4px;
 }
 
-.mc-gauge-head strong { color: #34D399; }
+.mc-gauge-head strong { color: var(--green); }
 
 .mc-bar-track {
   position: relative;
@@ -2978,7 +2973,7 @@ dialog.studio-dialog::backdrop {
 
 .mc-bar-fill.is-orange { background: var(--orange); }
 .mc-bar-fill.is-blue { background: #38BDF8; }
-.mc-bar-fill.is-low { background: #EF4444; }
+.mc-bar-fill.is-low { background: var(--red); }
 
 .mc-actions {
   display: grid;
@@ -3197,7 +3192,7 @@ dialog.studio-dialog::backdrop {
 
 .mc-fire-btn.is-break-ready {
   background: #0E7C47;
-  box-shadow: 0 2px 0 #09522E, 0 0 16px rgba(16, 185, 129, 0.55);
+  box-shadow: 0 2px 0 #263A2C;
 }
 
 /* Non-overlapping Onboarding & Coach Hints in dark top/bottom scope bands */
@@ -3419,3 +3414,130 @@ dialog.studio-dialog::backdrop {
 .lab-intro .lab-eyebrow{margin:0 0 8px;color:var(--mute);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 .lab-intro h1{margin:0;font-family:var(--font-display);font-size:clamp(32px,4vw,48px);line-height:1.02;letter-spacing:-.02em;color:var(--ink)}
 .lab-intro p{max-width:65ch;margin:12px 0 0;color:var(--ink-2);font-size:15px;line-height:1.7}
+
+/* =========================================================================
+   GUNMETAL & WARM BRASS UNIFICATION + OVERLAY MOBILE MENU (LAB STUDIO)
+   ========================================================================= */
+
+.studio-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.studio-menu-toggle,
+.studio-mobile-drawer {
+  display: none;
+}
+
+.lab-intro h1,
+.stage-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Keep archival white-bg reference images framed cleanly on dark Gunmetal */
+.sil-ref-card img,
+.ref-illustration img {
+  background: #F4F2EC;
+  border-radius: var(--r-sm);
+  padding: 6px;
+}
+
+@media (max-width: 900px) {
+  .studio-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--line-strong);
+    background: var(--dark-2);
+    color: var(--ink);
+    cursor: pointer;
+    flex: none;
+  }
+
+  .studio-menu-toggle .menu-bars {
+    width: 17px;
+    height: 12px;
+    position: relative;
+    display: block;
+  }
+
+  .studio-menu-toggle .menu-bars span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1.75px;
+    background: var(--ink);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.16s ease, top 0.2s ease;
+  }
+
+  .studio-menu-toggle .menu-bars span:nth-child(1) { top: 0; }
+  .studio-menu-toggle .menu-bars span:nth-child(2) { top: 5px; }
+  .studio-menu-toggle .menu-bars span:nth-child(3) { top: 10px; }
+
+  .studio-menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(1) { top: 5px; transform: rotate(45deg); }
+  .studio-menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(2) { opacity: 0; }
+  .studio-menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(3) { top: 5px; transform: rotate(-45deg); }
+
+  .studio-mobile-drawer {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 65;
+    background: var(--slate);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-strong);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .studio-drawer-inner {
+    padding: 10px 16px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .studio-drawer-inner a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .studio-drawer-inner a span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--mute);
+    min-width: 20px;
+  }
+
+  .studio-drawer-inner a.drawer-cta {
+    justify-content: center;
+    margin-top: 14px;
+    border-radius: var(--r-pill);
+    background: var(--orange);
+    color: #FAF8F5;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 0;
+  }
+
+  .studio-subbar {
+    display: none;
+  }
+}

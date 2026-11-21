@@ -9,13 +9,13 @@ const rules=readFileSync(new URL('../rules.html',import.meta.url),'utf8');
 const site=readFileSync(new URL('../site.css',import.meta.url),'utf8');
 const porprov=readFileSync(new URL('../porprov-2026.html',import.meta.url),'utf8');
 const readerCss=readFileSync(new URL('../rules-reader.css',import.meta.url),'utf8');
-const porprovCss=readFileSync(new URL('../profile.css',import.meta.url),'utf8');
+const porprovCss=readFileSync(new URL('../porprov-editorial.css',import.meta.url),'utf8');
 const chromeCss=readFileSync(new URL('../site-chrome.css',import.meta.url),'utf8');
 
 test('lab lives at its own static /lab route; homepage stays an athlete profile',()=>{
  assert.match(html,/<title>Lab IMSSU: Latihan Menembak Interaktif \| Twin Shooter<\/title>/);
  assert.match(html,/href="https:\/\/twinshooter.vercel.app\/lab"/);
- assert.match(html,/href="https:\/\/twinshooter\.vercel\.app\/"[^>]*>← Profil Twin Shooter<\/a>/);
+ assert.match(html,/href="\/"[^>]*>← Profil Twin Shooter<\/a>/);
  assert.match(home,/href="\/lab">Laboratorium ↗<\/a>/);
  assert.match(home,/<h1 id="hero-title" class="hero-title">Clarisa Azalia/);
  assert.equal((home.match(/<article class="sb-row /g)||[]).length,25);
@@ -49,7 +49,7 @@ test('disclaimers separate illustration from rules and provenance',()=>{
  assert.match(html,/Bukan hasil ukur atlet atau rekomendasi setelan senapan/);
  assert.match(html,/bukan rekomendasi setelan/);
  assert.doesNotMatch(html,/ANTI-SLOP EDITION|REV\.14|DOKTRIN POSTER/);
- assert.match(html,/href="https:\/\/twinshooter\.vercel\.app\/rules"/);
+ assert.match(html,/href="\/rules"/);
 });
 
 test('published claims distinguish official rules from unvalidated demonstrations',()=>{
