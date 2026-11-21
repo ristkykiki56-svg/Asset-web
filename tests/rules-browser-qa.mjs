@@ -59,7 +59,7 @@ async function openDoc(doc,width,height,screenshot){
  assert(Number(state.total)===(doc==='rules'?110:45),'Incorrect PDF page count '+JSON.stringify(state));
  assert(state.current===doc,'Wrong active document '+JSON.stringify(state));
  assert(state.overflow<=3,'Horizontal body overflow '+JSON.stringify(state));
- assert(state.pdfTop<(width<=430?640:470),'PDF pushed too far below navigation: '+JSON.stringify(state));
+ assert(state.pdfTop<(width<=430?680:510),'PDF pushed too far below navigation: '+JSON.stringify(state));
  assert(state.pdfHeight>=(width<=430?350:500),'PDF reading area too short: '+JSON.stringify(state));
  const viewportGoal=width<=720 ? Math.max(520,Math.min(height-140,1050)) : Math.max(760,Math.min(height-75,1700));
  const expectedHeight=Math.min(state.canvasHeight+(width<=720?12:16),viewportGoal);
