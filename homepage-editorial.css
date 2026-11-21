@@ -1377,13 +1377,13 @@ html.js-anim .duo-stage .twin-card {
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.motion-ready .hero-section .kicker { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 40ms; }
-.motion-ready .hero-title { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 110ms; }
-.motion-ready .hero-lead { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 190ms; }
-.motion-ready .hero-actions { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 260ms; }
-.motion-ready .hero-facts { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 330ms; }
-.motion-ready .duo-stage .twin-card.is-clarisa { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 180ms; }
-.motion-ready .duo-stage .twin-card.is-aurellia { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 280ms; }
+html.js-anim.motion-ready .hero-section .kicker { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 40ms; }
+html.js-anim.motion-ready .hero-title { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 110ms; }
+html.js-anim.motion-ready .hero-lead { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 190ms; }
+html.js-anim.motion-ready .hero-actions { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 260ms; }
+html.js-anim.motion-ready .hero-facts { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 330ms; }
+html.js-anim.motion-ready .duo-stage .twin-card.is-clarisa { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 180ms; }
+html.js-anim.motion-ready .duo-stage .twin-card.is-aurellia { opacity: 1; transform: translate3d(0, 0, 0); transition-delay: 280ms; }
 .motion-ready .twin-card {
   transition: border-color 0.25s ease;
   will-change: transform;
@@ -1402,7 +1402,7 @@ html.js-anim [data-reveal] {
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms);
 }
 
-[data-reveal].is-in {
+html.js-anim [data-reveal].is-in {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }

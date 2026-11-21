@@ -19,7 +19,7 @@ iframe{display:block;border:0;height:920px;width:320px}
   const result = document.getElementById('result');
   const widths = [320, 360, 375, 390, 680, 768, 900, 1024, 1280, 1440];
   const errors = [];
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
     try {
       const doc = frame.contentDocument;
       if (!doc || !doc.querySelector('.hero-section')) throw new Error('Homepage was not loaded');
@@ -45,8 +45,21 @@ iframe{display:block;border:0;height:920px;width:320px}
       if (!doc.querySelector('#results-status').textContent.includes(String(filtered))) errors.push('live status not updated');
       doc.querySelector('[data-filter="all"]').click();
       if (doc.querySelectorAll('#grid .sb-row:not([hidden])').length !== 25) errors.push('reset filter failed');
+      // Scroll-reveal guard: hidden-until-JS content must actually become
+      // visible once its reveal class is added (a specificity slip in the
+      // CSS can leave it at opacity 0 forever). Virtual time fast-forwards
+      // the 1.5s wait, which covers the 0.6s transition plus stagger delay.
+      const revealEl = doc.querySelector('.featured-item[data-reveal]');
+      revealEl.scrollIntoView({block: 'center'});
+      const heroTitle = doc.querySelector('.hero-title');
+      heroTitle.scrollIntoView({block: 'center'});
+      await new Promise(r => setTimeout(r, 1500));
+      const revealOpacity = doc.defaultView.getComputedStyle(revealEl).opacity;
+      if (revealOpacity !== '1') errors.push('data-reveal block stayed invisible (opacity ' + revealOpacity + ')');
+      const heroOpacity = doc.defaultView.getComputedStyle(heroTitle).opacity;
+      if (heroOpacity !== '1') errors.push('hero title stayed invisible (opacity ' + heroOpacity + ')');
       result.dataset.status = errors.length ? 'fail' : 'pass';
-      result.textContent = errors.length ? errors.join(' | ') : 'PASS: responsive widths, images, 25 results, filter & aria feedback';
+      result.textContent = errors.length ? errors.join(' | ') : 'PASS: responsive widths, images, 25 results, filter & aria feedback, reveal opacity';
     } catch(err) {
       result.dataset.status='fail';
       result.textContent='EXCEPTION: ' + String(err.message || err);
