@@ -29,6 +29,15 @@ test('Rules reader uses the shared JetBrains Mono for document numbers', () => {
   assert.doesNotMatch(css, /ui-monospace|SFMono-Regular|Consolas/);
 });
 
+test('Rules page uses the shared dark site chrome, not the old masthead', () => {
+  assert.match(html, /class="site-header"/);
+  assert.match(html, /site-nav\.js/);
+  assert.match(html, /theme-color" content="#111110"/);
+  assert.doesNotMatch(html, /rules-masthead/);
+  assert.match(css, /var\(--bg-card\)/);
+  assert.doesNotMatch(css, /#f3f1eb/);
+});
+
 test('Rules: local PDF.js main module and matching worker are available', () => {
   assert.ok(statSync(new URL('assets/pdfjs/pdf.min.mjs',root)).size > 100_000);
   assert.ok(statSync(new URL('assets/pdfjs/pdf.worker.min.mjs',root)).size > 700_000);

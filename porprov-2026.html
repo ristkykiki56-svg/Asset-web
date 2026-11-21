@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#111110" />
   <meta name="description" content="Tim menembak IMSSU Kota Depok raih 2 emas 1 perunggu di Porprov XV Jawa Barat 2026. Clarisa Azalia &amp; Aurellia Cassandra, PERBAKIN Kota Depok." />
   <title>IMSSU Depok Raih 2 Emas 1 Perunggu di Porprov XV 2026</title>
   <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -29,12 +29,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/site.css" />
   <link rel="stylesheet" href="/profile.css" />
+  <link rel="stylesheet" href="/site-chrome.css" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Lewati navigasi</a>
-  <header class="header wrap">
-    <a class="brand" href="/"><span class="mark">TS</span><span><strong>Twin Shooter</strong><small>Profil Atlet</small></span></a>
-    <nav class="nav"><a href="/#athletes">Profil</a><a href="/#journey">Riwayat</a><a href="/#achievements">Prestasi</a><a href="/porprov-2026">Porprov 2026</a><a href="/lab">Laboratorium</a><a class="rules" href="/rules">Peraturan</a></nav>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="brand-emblem" aria-hidden="true"><img src="/assets/brand-logo.webp" alt="" width="36" height="36" /></span>
+        <span>
+          <strong class="brand-name">Twin Shooter</strong>
+          <small class="brand-sub">PERBAKIN Kota Depok</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Navigasi utama">
+        <a href="/#athletes">Profil</a>
+        <a href="/#p70-showcase">P 70</a>
+        <a href="/#journey">Riwayat</a>
+        <a href="/#achievements">Prestasi</a>
+        <a href="/porprov-2026" aria-current="page">Porprov 2026</a>
+        <a href="/rules">Peraturan</a>
+        <a class="nav-lab" href="/lab">Laboratorium ↗</a>
+      </nav>
+      <button id="menuToggle" type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Buka menu navigasi">
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+    <nav id="mobileDrawer" class="mobile-drawer" aria-label="Menu navigasi mobile" hidden>
+      <div class="wrap mobile-drawer-inner">
+        <a href="/#athletes"><span>01</span>Profil Atlet</a>
+        <a href="/#p70-showcase"><span>02</span>Feinwerkbau P 70</a>
+        <a href="/#journey"><span>03</span>Riwayat 2020–2023</a>
+        <a href="/#achievements"><span>04</span>25 Prestasi</a>
+        <a href="/porprov-2026"><span>05</span>Porprov 2026 ↗</a>
+        <a href="/rules"><span>06</span>Peraturan IMSSU ↗</a>
+        <a class="drawer-cta" href="/lab">Buka Laboratorium Interaktif ↗</a>
+      </div>
+    </nav>
   </header>
 
   <main id="main-content">
@@ -70,6 +101,12 @@
     </section>
   </main>
 
-  <footer class="wrap"><div><strong>Twin Shooter</strong><br>Clarisa Azalia × Aurellia Cassandra</div><div>Profil atlet 2021–2023 · Porprov XV 2026</div></footer>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div><strong>Twin Shooter</strong> · Clarisa Azalia × Aurellia Cassandra</div>
+      <div>PERBAKIN Kota Depok · Porprov XV 2026</div>
+    </div>
+  </footer>
+  <script defer src="/site-nav.js"></script>
 </body>
 </html>

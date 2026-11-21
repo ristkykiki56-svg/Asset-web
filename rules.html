@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="theme-color" content="#111110">
   <meta name="description" content="Baca seluruh halaman IMSSU Sporting Rules 2025 beserta terjemahan dan risalah General Assembly 2026 langsung di Twin Shooter.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://twinshooter.vercel.app/rules">
@@ -26,15 +26,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/site.css">
   <link rel="stylesheet" href="/rules-reader.css">
+  <link rel="stylesheet" href="/site-chrome.css">
   <script type="module" src="/rules-reader.js"></script>
 </head>
 <body class="rules-page">
   <a class="skip-link" href="#main-content">Lewati navigasi</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <span class="brand-emblem" aria-hidden="true"><img src="/assets/brand-logo.webp" alt="" width="36" height="36" /></span>
+        <span>
+          <strong class="brand-name">Twin Shooter</strong>
+          <small class="brand-sub">PERBAKIN Kota Depok</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Navigasi utama">
+        <a href="/#athletes">Profil</a>
+        <a href="/#p70-showcase">P 70</a>
+        <a href="/#journey">Riwayat</a>
+        <a href="/#achievements">Prestasi</a>
+        <a href="/porprov-2026">Porprov 2026</a>
+        <a href="/rules" aria-current="page">Peraturan</a>
+        <a class="nav-lab" href="/lab">Laboratorium ↗</a>
+      </nav>
+      <button id="menuToggle" type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Buka menu navigasi">
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+    <nav id="mobileDrawer" class="mobile-drawer" aria-label="Menu navigasi mobile" hidden>
+      <div class="wrap mobile-drawer-inner">
+        <a href="/#athletes"><span>01</span>Profil Atlet</a>
+        <a href="/#p70-showcase"><span>02</span>Feinwerkbau P 70</a>
+        <a href="/#journey"><span>03</span>Riwayat 2020–2023</a>
+        <a href="/#achievements"><span>04</span>25 Prestasi</a>
+        <a href="/porprov-2026"><span>05</span>Porprov 2026 ↗</a>
+        <a href="/rules"><span>06</span>Peraturan IMSSU ↗</a>
+        <a class="drawer-cta" href="/lab">Buka Laboratorium Interaktif ↗</a>
+      </div>
+    </nav>
+  </header>
   <main class="rules-shell" id="main-content">
-    <header class="rules-masthead">
-      <a href="/" class="rules-back" aria-label="Kembali ke Twin Shooter">← <span>Twin Shooter</span></a>
-      <span class="rules-masthead-label">ARSIP DOKUMEN / IMSSU</span>
-    </header>
     <section class="rules-intro" aria-labelledby="page-title">
       <div>
         <p class="rules-eyebrow">REFERENSI PERATURAN DAN RAPAT</p>
@@ -133,5 +164,6 @@
       <a href="/">Kembali ke Twin Shooter</a>
     </footer>
   </main>
+  <script defer src="/site-nav.js"></script>
 </body>
 </html>

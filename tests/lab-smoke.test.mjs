@@ -8,6 +8,9 @@ const home=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const rules=readFileSync(new URL('../rules.html',import.meta.url),'utf8');
 const site=readFileSync(new URL('../site.css',import.meta.url),'utf8');
 const porprov=readFileSync(new URL('../porprov-2026.html',import.meta.url),'utf8');
+const readerCss=readFileSync(new URL('../rules-reader.css',import.meta.url),'utf8');
+const porprovCss=readFileSync(new URL('../profile.css',import.meta.url),'utf8');
+const chromeCss=readFileSync(new URL('../site-chrome.css',import.meta.url),'utf8');
 
 test('lab lives at its own static /lab route; homepage stays an athlete profile',()=>{
  assert.match(html,/<title>Laboratorium Interaktif \| Twin Shooter<\/title>/);
@@ -268,4 +271,28 @@ test('all pages share the homepage font stack (Barlow Condensed / Archivo / JetB
  assert.match(site,/--font-sans:'Archivo'/);
  assert.match(site,/h1,h2,h3\{font-family:var\(--font-display\)\}/);
  assert.doesNotMatch(site,/font-family:Inter/);
+});
+
+test('porprov and rules share the homepage dark theme and site chrome',()=>{
+ assert.match(site,/color-scheme:dark/);
+ assert.match(site,/--paper:#111110/);
+ assert.match(site,/--ink:#EDEBE6/);
+ assert.match(site,/--accent:#D9481E/);
+ assert.doesNotMatch(site,/#0b1020|#f4f1ea|#12a8a2/);
+ for (const [name,doc] of [['porprov',porprov],['rules',rules]]) {
+   assert.match(doc,/site-chrome\.css/);
+   assert.match(doc,/class="site-header"/);
+   assert.match(doc,/id="mobileDrawer"/);
+   assert.match(doc,/id="menuToggle"/);
+   assert.match(doc,/site-nav\.js/);
+   assert.match(doc,/theme-color" content="#111110"/);
+ }
+ assert.doesNotMatch(porprov,/class="header wrap"/);
+ assert.doesNotMatch(rules,/rules-masthead/);
+ assert.match(readerCss,/var\(--bg-card\)/);
+ assert.doesNotMatch(readerCss,/#f3f1eb|#087f82/);
+ assert.doesNotMatch(porprovCss,/rgba\(244,241,234|color:#086f70/);
+ assert.match(chromeCss,/\.site-header/);
+ assert.match(chromeCss,/\.mobile-drawer/);
+ assert.match(chromeCss,/\.site-footer/);
 });
