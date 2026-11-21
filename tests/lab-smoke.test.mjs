@@ -11,9 +11,9 @@ test('lab lives at its own static /lab route; homepage stays an athlete profile'
  assert.match(html,/<title>Laboratorium Interaktif \| Twin Shooter<\/title>/);
  assert.match(html,/href="https:\/\/twinshooter.vercel.app\/lab"/);
  assert.match(html,/href="https:\/\/twinshooter\.vercel\.app\/"[^>]*>← Profil Twin Shooter<\/a>/);
- assert.match(home,/href="\/lab">Laboratorium<\/a>/);
- assert.match(home,/<h1 id="hero-title">Clarisa Azalia/);
- assert.equal((home.match(/<article class="achievement /g)||[]).length,25);
+ assert.match(home,/href="\/lab">Laboratorium ↗<\/a>/);
+ assert.match(home,/<h1 id="hero-title" class="hero-title">Clarisa Azalia/);
+ assert.equal((home.match(/<article class="sb-row /g)||[]).length,25);
  assert.match(rules,/Dokumen IMSSU/);
 });
 test('production CSS is static, not Tailwind Play CDN',()=>{
