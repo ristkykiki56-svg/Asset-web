@@ -1,17 +1,27 @@
 :root{
-  color-scheme:light;
-  --ink:#0b1020;--paper:#f4f1ea;--card:#fff;--text:#101522;
-  --muted:#667085;--line:rgba(16,21,34,.13);
-  --teal:#12a8a2;--red:#ef4a4a;--gold:#d59a2c;
-  --silver:#9ca7b5;--bronze:#b56d42;
+  color-scheme:dark;
+  --ink:#EDEBE6;--paper:#111110;--card:#1C1B19;--text:#EDEBE6;
+  --muted:#868178;--line:#2E2C29;
+  --teal:#D9481E;--red:#B8433E;--gold:#D4AF5F;
+  --silver:#C5C2BB;--bronze:#C78A64;
+  --bg-base:#111110;--bg-alt:#161514;--bg-card:#1C1B19;--bg-card-2:#23211E;--bg-footer:#0C0C0B;
+  --line-soft:#252320;--line-strong:#43403B;
+  --ink-primary:#EDEBE6;--ink-secondary:#B7B2A8;--ink-muted:#868178;
+  --accent:#D9481E;--accent-hover:#C03C16;--accent-ink:#E57857;
+  --blue:#4B7CB3;--blue-ink:#7FA7D4;--red-ink:#DA7B77;
+  --gold-bg:#252015;--gold-line:#4C3F23;
+  --silver-bg:#22211F;--silver-line:#43413C;
+  --bronze-bg:#251C16;--bronze-line:#4B3527;
+  --green:#7FB08E;--green-bg:#18211A;--green-line:#304536;
   --font-display:'Barlow Condensed','Arial Narrow',sans-serif;
   --font-sans:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
+  --r-sm:6px;--r-md:10px;--r-pill:999px;
   font-family:var(--font-sans);
 }
 h1,h2,h3{font-family:var(--font-display)}
-:where(a,button,summary):focus-visible{outline:3px solid #087f82;outline-offset:3px}
-.skip-link{position:absolute;z-index:1000;top:8px;left:8px;transform:translateY(-140%);background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;font-weight:700;text-decoration:none}
+:where(a,button,summary):focus-visible{outline:3px solid #D9481E;outline-offset:3px}
+.skip-link{position:absolute;z-index:1000;top:8px;left:8px;transform:translateY(-140%);background:var(--accent);color:#FAF8F5;border-radius:10px;padding:12px 16px;font-weight:700;text-decoration:none}
 .skip-link:focus{transform:translateY(0)}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 [hidden]{display:none!important}
