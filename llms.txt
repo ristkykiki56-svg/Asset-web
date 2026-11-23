@@ -1,0 +1,89 @@
+# Twin Shooter
+
+> Twin Shooter adalah situs profil dan arsip prestasi Clarisa Azalia dan Aurellia Cassandra, atlet menembak IMSSU (International Metallic Silhouette Shooting Union) dari Kota Depok. Situs ini berbahasa Indonesia.
+
+## Halaman
+
+- [Beranda](https://twinshooter.vercel.app/): Profil Clarisa Azalia dan Aurellia Cassandra, prestasi, linimasa, dan bedah interaktif senapan Feinwerkbau P70 (5 modul).
+- [Porprov XV 2026](https://twinshooter.vercel.app/porprov-2026): Artikel prestasi tim IMSSU Depok di Porprov XV Jawa Barat 2026, 2 emas 1 perunggu.
+- [Peraturan](https://twinshooter.vercel.app/rules): Dokumen IMSSU untuk dibaca langsung: Sporting Rules 2025 (bilingual) dan risalah OGA 2026.
+- [Lab IMSSU](https://twinshooter.vercel.app/lab): Latihan interaktif: postur, pelatuk, optik, siluet, peralatan, dan simulasi match 40 tembakan. Angka simulasi bersifat ilustratif, bukan standar resmi.
+
+## Dokumen
+
+- [IMSSU Sporting Rules 2025 (bilingual, PDF)](https://twinshooter.vercel.app/assets/documents/imssu-sporting-rules-2025-bilingual.pdf)
+- [Risalah OGA IMSSU 2026 (PDF)](https://twinshooter.vercel.app/assets/documents/imssu-oga-minutes-2026.pdf)
+
+## Atlet
+
+### Clarisa Azalia
+
+- Atlet IMSSU Kota Depok, berlatih sejak Oktober 2020.
+- Porprov XV Jawa Barat 2026: emas perorangan (360 poin) dan emas beregu (1.040 poin bersama Aurellia Cassandra dan Huriyyah Muhanna As Syami).
+- POPNAS XVI 2023: juara 2, Multi Range Women. Mewakili Jawa Barat.
+
+### Aurellia Cassandra
+
+- Atlet IMSSU Kota Depok, berlatih sejak Oktober 2020.
+- Porprov XV Jawa Barat 2026: perunggu perorangan (350 poin) dan emas beregu (1.040 poin).
+- Jabar Open 2023: juara 1, Multi Range Women Junior.
+
+### Tim IMSSU Depok di Porprov XV 2026
+
+- Sabtu 14 November 2026, Lapangan Tembak Divisi 1 Kostrad, Cilodong. Nomor IMSSU Multi Range (MR) 18-41 meter.
+- Perolehan tim: 2 emas, 1 perunggu. Pelatih: Anang.
+- Huriyyah Muhanna As Syami: anggota tim beregu emas (330 poin). Fielan Adila Maharani: peringkat 31 (240 poin), atlet IMSSU termuda se-Jawa Barat, kelas 6 SD.
+
+## Apa itu IMSSU
+
+- IMSSU (International Metallic Silhouette Shooting Union) didirikan 8 Oktober 1992 di Paris. Anggota pendiri: Australia, Belgia, Prancis, Belanda, Selandia Baru, Afrika Selatan, Swiss, Amerika Serikat, dan AETSM.
+- Cabang menembak silhouette metal: sasaran baja berbentuk ayam, babi, kalkun, dan domba jantan, disusun dalam bank berisi 5, ditembak dari kiri ke kanan, dari yang terdekat ke yang terjauh. Sasaran hanya dihitung jika jatuh dari dudukannya.
+- Satu match terdiri dari 40 tembakan: minimal 10 tembakan per jenis hewan. Senapan ditembak dalam posisi berdiri, tanpa sandaran.
+- Nomor di Porprov XV 2026: IMSSU Multi Range, jarak 18 m, 27 m, 33 m, dan 41 m.
+- Organisasi pendukung tim: PERBAKIN Kota Depok, KONI Kota Depok, Disporyata Kota Depok.
+
+## Senapan: Feinwerkbau P70
+
+Senapan match udara tekan (PCP) yang digunakan Clarisa dan Aurellia. Kaliber 4,5 mm (.177), panjang total 1100 mm, bobot sekitar 4,9 kg. Lima modulnya:
+
+### 01 Optik dan Mounting Rel Receiver
+
+Bagian atas receiver P70 beralur rel untuk dudukan cincin teleskop. Di nomor IMSSU Multi Range, turret elevasi disetel guna mengompensasi lintasan peluru 4,5 mm di jarak 18 m, 27 m, 33 m, dan 41 m.
+
+- Dudukan: alur rel receiver atas.
+- Jarak bidik: 18, 27, 33, 41 m.
+- Simulasi: uji optik di Lab (https://twinshooter.vercel.app/lab).
+
+### 02 Laras 425 mm dan Receiver Single-Shot
+
+Laras baja presisi kaliber 4,5 mm (.177) sepanjang 425 mm dengan mekanisme single-shot tuas kokang samping (side lever) dan ruang muat langsung untuk peluru diabolo timah. Diproduksi di Oberndorf, Jerman (1995-2004).
+
+- Kaliber / laras: 4,5 mm (.177), 425 mm.
+- Aksi: single-shot side lever.
+- Pabrikan: Feinwerkbau, Jerman.
+
+### 03 Tabung Udara Tekan 200 Bar (PCP)
+
+P70 adalah seri senapan angin udara tekan pertama Feinwerkbau. Tabung aluminium di bawah laras dapat dilepas-pasang dengan tekanan isi maksimal 200 bar, lalu diturunkan regulator internal ke tekanan kerja stabil tiap tembakan.
+
+- Tekanan maks: 200 bar (udara tekan).
+- Sistem: regulator internal PCP.
+- Tabung: aluminium lepas-pasang.
+
+### 04 Unit Pelatuk Match 2-Tahap
+
+Mekanisme pelatuk match mekanis yang dapat disetel penuh, mulai dari panjang tarikan tahap pertama (first stage), titik henti (breakpoint), bobot tarik, hingga posisi bilah, agar tembakan lepas bersih tanpa hentakan jari.
+
+- Mekanisme: match 2-tahap.
+- Penyetelan: bobot, travel, dan bilah.
+- Simulasi: uji pelatuk di Lab (https://twinshooter.vercel.app/lab).
+
+### 05 Popor, Cheekpiece, dan Buttplate
+
+Popor target dengan sandaran pipi (cheekpiece) dan bantalan bahu (buttplate) yang dapat diatur ketinggian serta sudutnya, ditambah rel bawah untuk menyeimbangkan bobot unit (sekitar 4,9 kg versi standar; 3,55 kg versi Junior).
+
+- Ergonomi: cheekpiece dan buttplate.
+- Bobot unit: sekitar 4,9 kg (3,55 kg Junior).
+- Simulasi: cek postur di Lab (https://twinshooter.vercel.app/lab).
+
+Detail interaktif kelima modul ada di Beranda, bagian Feinwerkbau P70 Breakdown (https://twinshooter.vercel.app/#p70-showcase).
