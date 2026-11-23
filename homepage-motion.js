@@ -217,7 +217,7 @@
         desc: 'Bagian atas receiver P 70 beralur rel untuk dudukan cincin teleskop. Di nomor IMSSU Multi Range, turret elevasi disetel guna mengompensasi lintasan peluru 4,5 mm di jarak 18 m, 27 m, 33 m, dan 41 m.',
         s1l: 'DUDUKAN', s1v: 'Alur Rel Receiver Atas',
         s2l: 'JARAK BIDIK', s2v: '18 · 27 · 33 · 41 m',
-        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab">Uji Optik di Lab ↗</a>'
+        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab#sec-optics">Uji Optik di Lab ↗</a>'
       },
       {
         tag: '02 · LARAS 425 MM',
@@ -244,10 +244,10 @@
         box: { l: 34.5, t: 67.5, w: 10.5, h: 15.0, bottom: true },
         code: 'MODUL 04 / 05',
         title: 'Unit Pelatuk Match 2-Tahap',
-        desc: 'Mekanisme pelatuk match mekanis yang dapat disetel penuh—mulai dari panjang tarikan tahap pertama (first stage), titik henti (breakpoint), bobot tarik, hingga posisi bilah—agar tembakan lepas bersih tanpa hentakan jari.',
+        desc: 'Mekanisme pelatuk match mekanis yang dapat disetel penuh, mulai dari panjang tarikan tahap pertama (first stage), titik henti (breakpoint), bobot tarik, hingga posisi bilah, agar tembakan lepas bersih tanpa hentakan jari.',
         s1l: 'MEKANISME', s1v: 'Match 2-Tahap',
         s2l: 'PENYETELAN', s2v: 'Bobot, Travel & Bilah',
-        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab">Uji Pelatuk di Lab ↗</a>'
+        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab#sec-trigger">Uji Pelatuk di Lab ↗</a>'
       },
       {
         tag: '05 · POPOR',
@@ -257,7 +257,7 @@
         desc: 'Popor target dengan sandaran pipi (cheekpiece) dan bantalan bahu (buttplate) yang dapat diatur ketinggian serta sudutnya, ditambah rel bawah untuk menyeimbangkan bobot unit (±4,9 kg versi standar; 3,55 kg versi Junior).',
         s1l: 'ERGONOMI', s1v: 'Cheekpiece & Buttplate',
         s2l: 'BOBOT UNIT', s2v: '±4,9 kg (3,55 kg Junior)',
-        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab">Cek Postur di Lab ↗</a>'
+        s3l: 'SIMULASI', s3v: '<a href="https://twinshooter.vercel.app/lab#sec-biomech">Cek Postur di Lab ↗</a>'
       }
     ];
 

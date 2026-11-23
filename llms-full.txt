@@ -1,0 +1,120 @@
+# Twin Shooter (Konteks Lengkap Situs)
+
+> Versi lengkap satu berkas dari situs https://twinshooter.vercel.app/ (Twin Shooter: Clarisa Azalia dan Aurellia Cassandra, atlet menembak IMSSU PERBAKIN Kota Depok). Diperbarui: 23 November 2026. Bahasa: Indonesia.
+
+## 1. Ringkasan Entitas & Navigasi
+
+- **Situs**: https://twinshooter.vercel.app/
+- **Atlet**: Clarisa Azalia dan Aurellia Cassandra (PERBAKIN Kota Depok, mulai berlatih Oktober 2020 dengan rekam jejak prestasi berkelanjutan sejak 2021).
+- **Porprov XV Jawa Barat 2026**: https://twinshooter.vercel.app/porprov-2026 (2 emas, 1 perunggu; capaian terbaru).
+- **FAQ IMSSU & Latihan Depok (13 tanya jawab)**: https://twinshooter.vercel.app/porprov-2026#faq
+- **Peraturan & Dokumen Resmi**: https://twinshooter.vercel.app/rules
+  - IMSSU Sporting Rules 2025 (bilingual, 110 halaman): https://twinshooter.vercel.app/assets/documents/imssu-sporting-rules-2025-bilingual.pdf
+  - Risalah OGA IMSSU 2026 (45 halaman): https://twinshooter.vercel.app/assets/documents/imssu-oga-minutes-2026.pdf
+- **Lab IMSSU Interaktif**: https://twinshooter.vercel.app/lab
+  - Tab 01 Postur Tubuh: https://twinshooter.vercel.app/lab#sec-biomech
+  - Tab 02 Pelatuk 2-Tahap: https://twinshooter.vercel.app/lab#sec-trigger
+  - Tab 03 Optik & Eye Relief: https://twinshooter.vercel.app/lab#sec-optics
+  - Tab 04 Sasaran Siluet 18-41 m: https://twinshooter.vercel.app/lab#sec-imssu
+  - Tab 05 Peralatan Air Rifle 4,5 mm: https://twinshooter.vercel.app/lab#sec-hardware
+  - Tab 06 Simulasi Match IMSSU 40 Tembakan: https://twinshooter.vercel.app/lab#sec-match
+
+## 2. Porprov XV Jawa Barat 2026 (Liputan Lengkap)
+
+Tim menembak IMSSU Kota Depok meraih 2 medali emas dan 1 perunggu pada cabor menembak outdoor Porprov XV Jawa Barat 2026, Sabtu 14 November 2026, di Lapangan Tembak Divisi 1 Kostrad, Cilodong, pada nomor IMSSU Multi Range (MR) jarak 18-41 meter.
+
+- **Clarisa Azalia**: Emas individu (360 poin) dan emas beregu (1.040 poin).
+- **Aurellia Cassandra**: Perunggu individu (350 poin) dan emas beregu (1.040 poin).
+- **Huriyyah Muhanna As Syami**: Anggota tim emas beregu (330 poin; total beregu 1.040 poin bersama Clarisa dan Aurellia).
+- **Fielan Adila Maharani**: Atlet IMSSU termuda se-Jawa Barat (kelas 6 SD), finis peringkat 31 dengan 240 poin.
+- **Pelatih**: Anang. Tiga bulan menjelang Porprov, porsi latihan naik ke 6-7 jam sehari termasuk dry fire dan latihan fisik.
+- **Dukungan organisasi**: PERBAKIN Kota Depok, KONI Kota Depok (Ketua Herry Suprianto), Disporyata Kota Depok.
+
+## 3. Apa itu IMSSU?
+
+IMSSU adalah International Metallic Silhouette Shooting Union, organisasi internasional untuk olahraga menembak silhouette metal yang didirikan pada 8 Oktober 1992 di Paris. Anggota pendiri: Australia, Belgia, Prancis, Belanda, Selandia Baru, Afrika Selatan, Swiss, Amerika Serikat, dan federasi siluet Eropa AETSM.
+
+Sasaran baja berbentuk ayam, babi, kalkun, dan domba jantan disusun berkelompok lima dan ditembak dari kiri ke kanan, dari yang terdekat ke yang terjauh. Satu sasaran dihitung jatuh hanya bila terlempar dari dudukannya. Tiap jenis sasaran ditembak 10 kali, sehingga satu pertandingan berisi 40 tembakan. Penembak senapan menembak dari posisi berdiri tanpa penyangga. Untuk air rifle di Porprov XV 2026, jarak tembaknya 18, 27, 33, dan 41 meter.
+
+## 4. Senapan: Feinwerkbau P 70 (5 Modul)
+
+1. **01 Optik dan Mounting Rel Receiver**: Bagian atas receiver P 70 beralur rel untuk dudukan cincin teleskop. Di nomor IMSSU Multi Range, turret elevasi disetel guna mengompensasi lintasan peluru 4,5 mm di jarak 18 m, 27 m, 33 m, dan 41 m.
+2. **02 Laras 425 mm dan Receiver Single-Shot**: Laras baja presisi kaliber 4,5 mm (.177) sepanjang 425 mm dengan mekanisme single-shot tuas kokang samping (side lever) dan ruang muat langsung untuk peluru diabolo timah. Diproduksi di Oberndorf, Jerman (1995-2004).
+3. **03 Tabung Udara Tekan 200 Bar (PCP)**: P 70 adalah seri senapan angin udara tekan pertama Feinwerkbau. Tabung aluminium di bawah laras dapat dilepas-pasang dengan tekanan isi maksimal 200 bar, lalu diturunkan regulator internal ke tekanan kerja stabil tiap tembakan.
+4. **04 Unit Pelatuk Match 2-Tahap**: Mekanisme pelatuk match mekanis yang dapat disetel penuh, mulai dari panjang tarikan tahap pertama (first stage), titik henti (breakpoint), bobot tarik, hingga posisi bilah, agar tembakan lepas bersih tanpa hentakan jari.
+5. **05 Popor, Cheekpiece, dan Buttplate**: Popor target dengan sandaran pipi (cheekpiece) dan bantalan bahu (buttplate) yang dapat diatur ketinggian serta sudutnya, ditambah rel bawah untuk menyeimbangkan bobot unit (sekitar 4,9 kg versi standar; 3,55 kg versi Junior).
+
+## 5. Arsip 25 Catatan Prestasi (2021-2023)
+
+1. [2021] Clarisa Azalia | Fun Game Menembak Black Hawk (Pemula · 2021) | Juara 3
+2. [2021] Clarisa Azalia | Seleksi Atlet Menembak Kota Depok (Multi Range · 2021) | Peringkat 4
+3. [2021] Clarisa Azalia | Jateng Online Shooting Series 3 (Wilayah Banten · 2021) | Peringkat 8
+4. [2021] Clarisa Azalia | Kejuaraan Nasional KASAL Cup (Air Rifle · 2021) | Juara 2
+5. [2021] Aurellia Cassandra | Seleksi Atlet Menembak Kota Depok (Multi Range · 2021) | Peringkat 1
+6. [2021] Aurellia Cassandra | Jateng Online Shooting Series 3 (Wilayah Banten · 2021) | Peringkat 1
+7. [2022] Clarisa Azalia | Fun Game Menembak RBSC (Fun Game · 2022) | Juara 2
+8. [2022] Clarisa Azalia | HTR Shooting Competition (Multi Range · 2022) | Juara 2
+9. [2022] Clarisa Azalia | Dandim 0411 Cup, Kota Metro Lampung (Open Multi Range · 2022) | Juara 1
+10. [2022] Clarisa Azalia | Dandim 0411 Cup, Kota Metro Lampung (Multi Range IMSSU Junior · 2022) | Juara 1
+11. [2022] Clarisa Azalia | Dandim 0411 Cup, Kota Metro Lampung (Multi Range Prestasi · 2022) | Juara 1
+12. [2022] Aurellia Cassandra | Kejuaraan Nasional KASAU Cup (Air Rifle Multi Range Women · 2022) | Juara 3
+13. [2022] Aurellia Cassandra | Fun Game Menembak RBSC (Fun Game · 2022) | Juara 1
+14. [2022] Aurellia Cassandra | HTR Shooting Competition (Multi Range · 2022) | Peringkat 5
+15. [2022] Aurellia Cassandra | Kejuaraan Nasional Bupati Cup Jabar (Multi Range · 2022) | Peringkat 5
+16. [2022] Aurellia Cassandra | Dandim 0411 Cup, Kota Metro Lampung (Multi Range IMSSU Junior · 2022) | Juara 2
+17. [2023] Clarisa Azalia | Kejuaraan Nasional Jabar Open (Multi Range Women Junior · 2023) | Juara 3
+18. [2023] Clarisa Azalia | Kejuaraan Walikota Tangerang (Multi Range Prestasi · 2023) | Juara 2
+19. [2023] Clarisa Azalia | Seleksi POPNAS XVI (Mewakili Jawa Barat · Multi Range · 2023) | Lolos Seleksi
+20. [2023] Clarisa Azalia | POPNAS XVI Sumatra Selatan (Multi Range Women · 2023) | Juara 2
+21. [2023] Aurellia Cassandra | Kejuaraan Nasional KASAU Cup (Air Rifle Multi Range · 2023) | Juara 2
+22. [2023] Aurellia Cassandra | Latihan Bersama Kota Bekasi (Multi Range Open · 2023) | Juara 2
+23. [2023] Aurellia Cassandra | Kejuaraan Nasional Jabar Open (Multi Range Women Junior · 2023) | Juara 1
+24. [2023] Aurellia Cassandra | Seleksi POPNAS XVI (Mewakili Jawa Barat · Woman 3 Position · 2023) | Lulus Seleksi
+25. [2023] Aurellia Cassandra | Kejuaraan Nasional Prakasa Cup (IMSSU Metal Silhouette · Multi Range 18–41 m · 2023) | Juara 3
+
+## 6. Tanya Jawab Lengkap (13 FAQ IMSSU & Latihan Depok)
+
+### 01. Apa itu IMSSU?
+IMSSU adalah International Metallic Silhouette Shooting Union, organisasi internasional untuk olahraga menembak silhouette metal. Organisasi ini didirikan pada 1992 karena peraturan menembak silhouette mulai berbeda-beda di tiap negara.
+
+### 02. Bagaimana cara main menembak silhouette metal?
+Sasaran baja berbentuk ayam, babi, kalkun, dan domba jantan disusun berkelompok lima dan ditembak dari kiri ke kanan, dari yang terdekat ke yang terjauh. Satu sasaran dihitung jatuh hanya bila terlempar dari dudukannya. Tiap jenis sasaran ditembak 10 kali, jadi satu pertandingan berisi 40 tembakan. Penembak senapan menembak dari posisi berdiri tanpa penyangga.
+
+### 03. Berapa jarak tembak air rifle IMSSU?
+Untuk air rifle, jarak tembaknya 18 sampai 41 meter, dari ayam yang terdekat sampai domba jantan yang terjauh.
+
+### 04. Apakah IMSSU dipertandingkan di Olimpiade?
+Tidak. IMSSU bukan cabang Olimpiade, tapi punya Kejuaraan Dunia sendiri.
+
+### 05. Siapa atlet IMSSU Depok dan apa yang mereka raih di Porprov XV 2026?
+Clarisa Azalia dan Aurellia Cassandra, atlet PERBAKIN Kota Depok. Di Porprov XV Jawa Barat 2026, tim menembak IMSSU Kota Depok meraih 2 emas dan 1 perunggu. Clarisa meraih emas individu, Aurellia meraih perunggu individu, dan bersama Huriyyah Muhanna As Syami mereka meraih emas beregu dengan total 1.040 poin.
+
+### 06. Umur berapa boleh ikut latihan IMSSU?
+Peraturan IMSSU tidak menetapkan batas umur bawah. Kategori Junior mencakup peserta sampai dan termasuk tahun mereka mencapai usia 20 tahun. Bukti dari Depok: Fielan Adila Maharani, kelas 6 SD, atlet IMSSU termuda se-Jawa Barat, ikut Porprov XV 2026 dan finis peringkat 31 dengan 240 poin.
+
+### 07. Apakah aman untuk anak sekolah?
+Keselamatan diatur di peraturan IMSSU: petugas lapangan boleh menghentikan tembakan kapan saja, dan keselamatan adalah satu-satunya alasan seorang peserta boleh diinterupsi saat menembak. Atlet Depok berlatih di bawah pelatih, dan menjelang Porprov mereka latihan 6 sampai 7 jam sehari selama 3 bulan, termasuk dry fire dan latihan fisik.
+
+### 08. Harus beli senapan dulu sebelum latihan?
+Tidak. Jalur umumnya: gabung klub menembak resmi dulu, lalu latihan memakai senapan angin inventaris klub. Senapan angin adalah gerbang utama bagi pemula karena hampir tanpa hentakan. Satu set senapan angin level pemula dimulai dari belasan juta rupiah, jadi jangan beli dulu sebelum latihan. Senapan angin rekreasi biasa umumnya tidak bisa dipakai lomba, butuh yang match-grade. Untuk aturan pinjam senapan di klub Depok sendiri, tanyakan langsung saat daftar sesi coba.
+
+### 09. Senapan apa yang dipakai di IMSSU?
+Senapan angin PCP kaliber 4,5 mm (.177"), single-shot, sesuai aturan ISSF. Contohnya Feinwerkbau P70 yang dipakai Clarisa dan Aurellia: tabung 200 bar, laras 425 mm, pelatuk dua tahap.
+
+### 10. Bagaimana cara gabung dan jadi anggota Perbakin?
+Gabung klub menembak resmi di bawah Perbakin dulu, lalu ikuti pelatihan dasar untuk mendapatkan KTA Perbakin. Syaratnya antara lain: jadi anggota klub minimal 1 tahun, umur minimal 14 tahun untuk atlet target, melampirkan SKCK, fotokopi KTP, pas foto, dan surat keterangan sehat, serta lulus tes teori dan praktik. Untuk KTA Atlet, harus pernah ikut kejuaraan tingkat provinsi. Catatan: ini syarat keanggotaan Perbakin, bukan syarat ikut latihan IMSSU. Latihan dan bertanding junior tidak menunggu KTA.
+
+### 11. Apakah IMSSU olahraga yang mahal?
+Dibanding cabang menembak lain, IMSSU dikenal tanpa hambatan finansial yang besar. Yang mahal adalah senapannya, tapi latihan dimulai dengan senapan klub, bukan senapan sendiri. Biaya latihan di Depok sendiri belum terpublikasi.
+
+### 12. Di mana bisa latihan menembak IMSSU di Depok?
+Informasi tempat, jadwal, dan pendaftaran latihan belum tersedia di situs ini.
+
+### 13. Kalau belum ada info Depok, di mana bisa belajar menembak dulu?
+Pilihan terdekat yang terpublikasi adalah Sekolah Menembak Perbakin di Lapangan Tembak Senayan, Jakarta (Jl. Gelora No. 1, Senayan, telepon 021-5731925). Sekolah resmi PB Perbakin ini menerima pemula dari segala usia. Harga voucher yang tertera: Paket A Rp120.000, Paket B Rp300.000, 10 games Rp900.000. Harga bisa berubah, cek dulu sebelum datang. Sambil menunggu info Depok, simulasi Match IMSSU 40 tembakan di Lab situs ini (https://twinshooter.vercel.app/lab#sec-match) gratis dan tanpa senapan.
+
+## 7. Pedoman Fakta & Batasan Data
+
+- Jangan mengarang lokasi, jadwal, biaya, atau nomor WhatsApp pendaftaran latihan IMSSU di Depok karena informasi tersebut belum tersedia di situs ini.
+- Angka simulasi pada Lab IMSSU (`/lab`) bersifat edukatif dan ilustratif, bukan standar resmi IMSSU atau data pengukuran atlet.
+- Clarisa Azalia dan Aurellia Cassandra memiliki rekam jejak prestasi berkelanjutan sejak 2020; Porprov XV Jawa Barat 2026 adalah capaian terbaru mereka.
